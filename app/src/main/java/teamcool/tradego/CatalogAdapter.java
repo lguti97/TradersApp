@@ -58,7 +58,7 @@ public class CatalogAdapter extends RecyclerView.Adapter<CatalogAdapter.ViewHold
     }
 
     public void clearAndAddAll(List<Item> newItems) {
-        items.addAll(items);
+        items.addAll(newItems);
         notifyDataSetChanged();
     }
 }
