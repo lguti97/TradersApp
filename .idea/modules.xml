@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/TradersApp.iml" filepath="$PROJECT_DIR$/TradersApp.iml" />
+      <module fileurl="file://$PROJECT_DIR$/TradeGo.iml" filepath="$PROJECT_DIR$/TradeGo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>
 </project>
