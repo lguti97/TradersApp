@@ -3,12 +3,15 @@ package teamcool.tradego;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -16,7 +19,10 @@ import butterknife.ButterKnife;
  */
 public class CatalogListFragment extends Fragment {
 
-    //BindView(R.id.listViewHere) TypeOfListView listViewHere;
+    @BindView(R.id.rvItems)
+    RecyclerView rvItems;
+    //BindView to swipContainer SwipeRefreshLayout, toolbar
+
     private CatalogAdapter catalogAdapter;
     private ArrayList<Item> items;
 
@@ -35,5 +41,13 @@ public class CatalogListFragment extends Fragment {
         super.onCreate(savedInstanceState);
         items = new ArrayList<>();
         catalogAdapter = new CatalogAdapter(items);
+
+        //set layout to StaggeredGrid
+        rvItems.setLayoutManager(new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL));
+        rvItems.setAdapter(catalogAdapter);
+        rvItems.setHasFixedSize(true);
+        //rvItems.addOnScrollLisnener for endless scrolling
+        //swipeContainer set on refresh listener
+        //swipeContainer setColorSchemeResources to configure refreshing colors
     }
 }
