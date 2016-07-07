@@ -1,4 +1,4 @@
-package teamcool.tradego;
+package teamcool.tradego.Activities;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,6 +11,8 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;
+
+import teamcool.tradego.R;
 
 public class MainActivity extends AppCompatActivity {
 
