@@ -1,7 +1,9 @@
-package teamcool.tradego;
+package teamcool.tradego.Activities;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import teamcool.tradego.R;
 
 public class MainActivity extends AppCompatActivity {
 

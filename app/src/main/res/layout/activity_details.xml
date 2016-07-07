@@ -7,7 +7,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="teamcool.tradego.DetailsActivity">
+    tools:context=".Activities.DetailsActivity">
 
     <TextView
         android:layout_width="wrap_content"
@@ -20,21 +20,48 @@
         android:textSize="20sp"
        />
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="230dp"
-        android:id="@+id/ivItem"
-        android:layout_below="@+id/tvItemName"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:src="@mipmap/ic_launcher"/>
+    <HorizontalScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvItemName"
+        android:id="@+id/horizontalScrollView">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:orientation="horizontal"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:id="@+id/ivItem1"
+                tools:src="@mipmap/ic_launcher"/>
+
+            <ImageView
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:id="@+id/ivItem2"
+                tools:src="@mipmap/ic_launcher"/>
+
+            <ImageView
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:id="@+id/ivItem3"
+                tools:src="@mipmap/ic_launcher"/>
+
+
+
+        </LinearLayout>
+
+
+    </HorizontalScrollView>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="70dp"
         android:text="Description"
-        android:id="@+id/tvDescription"
-        android:layout_below="@+id/ivItem"
+        android:id="@+id/tvItemDescription"
+        android:layout_below="@id/horizontalScrollView"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
@@ -42,25 +69,18 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Status"
-        android:id="@+id/tvStatus"
+        android:id="@+id/tvItemStatus"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_below="@id/tvDescription"/>
-
-    <EditText
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:id="@+id/etStatus"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@+id/tvDescription"
-        android:layout_above="@+id/btnMessenger" />
+        android:layout_below="@id/tvItemDescription"/>
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Messenger"
         android:id="@+id/btnMessenger"
-        android:layout_above="@+id/btnVenmo"
+        android:onClick="onMessengerClick"
+        android:layout_alignTop="@+id/tvItemNegotiable"
         android:layout_alignRight="@+id/btnVenmo"
         android:layout_alignEnd="@+id/btnVenmo" />
 
@@ -69,9 +89,10 @@
         android:layout_height="wrap_content"
         android:text="Venmo"
         android:id="@+id/btnVenmo"
-        android:layout_alignParentBottom="true"
-        android:layout_toRightOf="@+id/etStatus"
-        android:layout_toEndOf="@+id/etStatus" />
+        android:layout_below="@+id/btnMessenger"
+        android:layout_toRightOf="@+id/tvVenmo"
+        android:layout_toEndOf="@+id/tvVenmo"
+        android:onClick="onVenmoClick"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -79,7 +100,7 @@
         android:text="Like the item? Make a Transaction!"
         android:id="@+id/tvVenmo"
         android:textSize="17sp"
-        android:layout_alignParentBottom="true"
+        android:layout_alignBottom="@+id/btnVenmo"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
@@ -92,5 +113,35 @@
         android:layout_alignBottom="@+id/btnMessenger"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Price"
+        android:id="@+id/tvItemPrice"
+        android:layout_below="@+id/tvItemStatus"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="20dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Negotiable"
+        android:id="@+id/tvItemNegotiable"
+        android:layout_below="@+id/tvItemPrice"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="20dp" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="numberDecimal"
+        android:ems="10"
+        android:id="@+id/etPrice"
+        android:layout_above="@+id/tvItemNegotiable"
+        android:layout_alignTop="@+id/tvItemPrice"
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>

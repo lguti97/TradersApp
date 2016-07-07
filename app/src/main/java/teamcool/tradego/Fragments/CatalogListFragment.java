@@ -1,4 +1,4 @@
-package teamcool.tradego;
+package teamcool.tradego.Fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -13,6 +13,9 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import teamcool.tradego.Item;
+import teamcool.tradego.CatalogAdapter;
+import teamcool.tradego.R;
 
 /**
  * Created by selinabing on 7/6/16.
