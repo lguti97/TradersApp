@@ -23,10 +23,11 @@ public class CatalogListFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_catalog_list, container, false);
-        ButterKnife.bind(this,view);
+        View v = inflater.inflate(R.layout.fragment_catalog_list, container, false);
+        ButterKnife.bind(this, v);
         //listViewHere.setAdapter(catalogAdapter);
         //set listView's onItemLongClickListener, onItemClickListener, etc.
+        return v;
     }
 
     @Override
