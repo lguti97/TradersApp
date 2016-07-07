@@ -3,6 +3,7 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="wrap_content" android:background="@color/colorPrimaryDark">
     <!--android:background="@android:drawable/dialog_holo_light_frame"-->
+    <!--RelativeLayout here is for background color-->
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -19,7 +20,7 @@
         <ImageView
             android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:id="@+id/ivDisplayImage"
+            android:id="@+id/ivNewsFeedDisplayImg"
             android:scaleType="fitStart"
             android:adjustViewBounds="true"
             android:src="@mipmap/ic_launcher"
@@ -30,9 +31,9 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/tvItem"
-            android:text="TextView"
-            android:layout_below="@id/ivDisplayImage"
+            android:id="@+id/tvNewsFeedItemName"
+            android:text="Item name here"
+            android:layout_below="@id/ivNewsFeedDisplayImg"
             android:layout_marginTop="10dp"
             android:padding="2dp"
             android:layout_centerHorizontal="true"
