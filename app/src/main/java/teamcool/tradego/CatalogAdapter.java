@@ -38,7 +38,7 @@ public class CatalogAdapter extends RecyclerView.Adapter<CatalogAdapter.ViewHold
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
-        View catalogView = inflater.inflate(R.layout.layout_here, parent, false);
+        View catalogView = inflater.inflate(R.layout.item_each, parent, false);
         ViewHolder viewHolder = new ViewHolder(catalogView);
         return viewHolder;
     }
