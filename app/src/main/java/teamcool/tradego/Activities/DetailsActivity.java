@@ -16,7 +16,6 @@ public class DetailsActivity extends AppCompatActivity {
 
 
 
-
     public void onMessengerClick(View view) {
         //Launch the messenger app
     }
