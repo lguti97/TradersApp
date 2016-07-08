@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:id="@+id/newsfeed_drawer_layout"
     tools:context="teamcool.tradego.NewsFeedActivity">
 
-    <include
-        layout="@layout/toolbar"
+    <FrameLayout
+        android:id="@+id/flNewsfeedContainer"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
 
+<<<<<<< HEAD
     <com.astuetz.PagerSlidingTabStrip
         android:id="@+id/tabs"
         android:layout_width="match_parent"
@@ -19,11 +21,43 @@
         app:pstsShouldExpand="true"
         app:pstsTextAllCaps="true"
         android:fillViewport="false" />
+=======
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+>>>>>>> master
 
-    <android.support.v4.view.ViewPager
-        android:id="@+id/viewpager"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/tabs" />
+            <include
+                android:id="@+id/newsFeedToolbar"
+                layout="@layout/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
-</RelativeLayout>
+            <com.astuetz.PagerSlidingTabStrip
+                android:id="@+id/tabs"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_below="@id/newsFeedToolbar"
+                app:pstsShouldExpand="true"
+                app:pstsTextAllCaps="true" />
+
+            <android.support.v4.view.ViewPager
+                android:id="@+id/viewpager"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tabs" />
+        </RelativeLayout>
+
+    </FrameLayout>
+
+
+    <android.support.design.widget.NavigationView
+        android:id="@+id/nvNewsFeedNavDrawer"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:background="@android:color/white"
+        app:menu="@menu/newsfeed_drawer_view"
+        app:headerLayout="@layout/newsfeed_nav_header"/>
+
+</android.support.v4.widget.DrawerLayout>
