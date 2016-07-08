@@ -1,4 +1,4 @@
-package teamcool.tradego;
+package teamcool.tradego.Activities;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -20,6 +20,9 @@ import com.astuetz.PagerSlidingTabStrip;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import teamcool.tradego.Fragments.CategoriesTimelineFragment;
+import teamcool.tradego.Fragments.TopTimelineFragment;
+import teamcool.tradego.R;
 
 public class NewsFeedActivity extends AppCompatActivity {
 
