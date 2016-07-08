@@ -1,6 +1,7 @@
 package teamcool.tradego;
 
 import android.os.Bundle;
+<<<<<<< HEAD
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -9,6 +10,10 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
+=======
+import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.view.ViewPager;
+>>>>>>> master
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
@@ -23,6 +28,7 @@ import butterknife.ButterKnife;
 
 public class NewsFeedActivity extends AppCompatActivity {
 
+<<<<<<< HEAD
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.viewpager) ViewPager viewpager;
     @BindView(R.id.tabs) PagerSlidingTabStrip tabStrip;
@@ -75,6 +81,16 @@ public class NewsFeedActivity extends AppCompatActivity {
     }
 
 
+=======
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
+    @BindView(R.id.viewpager)
+    ViewPager viewpager;
+    @BindView(R.id.tabs)
+    PagerSlidingTabStrip tabStrip;
+    FragmentStatePagerAdapter fragmentStatePagerAdapter;
+
+>>>>>>> master
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,6 +103,7 @@ public class NewsFeedActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
 
         //viewpager setup
+<<<<<<< HEAD
         fragmentStatePagerAdapter = new catalogPagerAdapter(getSupportFragmentManager());
         viewpager.setAdapter(fragmentStatePagerAdapter); //may cause problems (?)
         tabStrip.setViewPager(viewpager);
@@ -94,6 +111,9 @@ public class NewsFeedActivity extends AppCompatActivity {
 
         //setup navigation drawer
         setupNavDrawerTabs(navDrawer);
+=======
+        //fragmentStatePagerAdapter =
+>>>>>>> master
     }
 
     @Override
@@ -132,6 +152,7 @@ public class NewsFeedActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+<<<<<<< HEAD
         switch (item.getItemId()) {
             case android.R.id.home:
                 drawerLayout.openDrawer(GravityCompat.START);
@@ -182,4 +203,8 @@ public class NewsFeedActivity extends AppCompatActivity {
         drawerLayout.closeDrawers();
     }
 
+=======
+        return super.onOptionsItemSelected(item);
+    }
+>>>>>>> master
 }
