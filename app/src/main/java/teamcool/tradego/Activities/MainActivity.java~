@@ -1,0 +1,62 @@
+package teamcool.tradego.Activities;
+
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.util.Log;
+import android.widget.Toast;
+
+import com.parse.Parse;
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
+import com.parse.ParseUser;
+import com.parse.SignUpCallback;
+
+import com.parse.Parse;
+import com.parse.ParseObject;
+
+public class MainActivity extends AppCompatActivity {
+
+    public static final String YOUR_APPLICATION_ID = "tradego";
+<<<<<<< ce5af946119a79d0e0b03542e3ec92c045e2b281
+    //public static final String YOUR_CLIENT_KEY = "1997";
+=======
+    public static final String YOUR_CLIENT_KEY = "1997";
+>>>>>>> added the parse server
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+<<<<<<< ce5af946119a79d0e0b03542e3ec92c045e2b281
+=======
+
+>>>>>>> added the parse server
+        /*
+        Parse.enableLocalDatastore(this);
+        Parse.initialize(this, YOUR_APPLICATION_ID, YOUR_CLIENT_KEY); */
+
+<<<<<<< ce5af946119a79d0e0b03542e3ec92c045e2b281
+
+        Parse.initialize(new Parse.Configuration.Builder(getApplicationContext())
+                .applicationId(YOUR_APPLICATION_ID)
+                .server("http://tradego.herokuapp.com/parse/").build());
+=======
+        Parse.initialize(new Parse.Configuration.Builder(getApplicationContext())
+                .applicationId(YOUR_APPLICATION_ID).clientKey(YOUR_CLIENT_KEY)
+                .server("http://tradego.herokuapp:1337/parse").build());
+>>>>>>> added the parse server
+
+        ParseObject testObject = new ParseObject("TestObject");
+        testObject.put("foo", "bar");
+        testObject.saveInBackground();
+
+<<<<<<< ce5af946119a79d0e0b03542e3ec92c045e2b281
+
+        //Toast.makeText(this, testObject.get("foo"), Toast.LENGTH_SHORT).show(); */
+
+=======
+>>>>>>> added the parse server
+    }
+
+}
