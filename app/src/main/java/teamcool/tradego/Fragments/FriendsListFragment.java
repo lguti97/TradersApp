@@ -54,5 +54,4 @@ public class FriendsListFragment extends Fragment {
         //swipeContainer setColorSchemeResources to configure refreshing colors
     }
 
-
 }
