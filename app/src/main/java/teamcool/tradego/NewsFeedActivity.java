@@ -28,7 +28,10 @@ public class NewsFeedActivity extends AppCompatActivity {
     @BindView(R.id.tabs) PagerSlidingTabStrip tabStrip;
     @BindView(R.id.newsfeed_drawer_layout) DrawerLayout drawerLayout;
     @BindView(R.id.nvNewsFeedNavDrawer) NavigationView navDrawer;
-
+    //NOTE: if getting reference to navDrawer's header is required
+    // delete the header setting from xml
+    // and add the header programmatically using "navDrawer.inflateHeaderView(R.layout.headers_xml_file)"
+    // otherwise it would cause null pointer exceptions when used with recycler vieww!!!
 
     FragmentStatePagerAdapter fragmentStatePagerAdapter;
 
@@ -155,7 +158,7 @@ public class NewsFeedActivity extends AppCompatActivity {
 
     public void selectDrawerItem(MenuItem item) {
         Fragment fragment = null;
-        Class fragmentClass;
+        Class fragmentClass = null;
         switch(item.getItemId()) {
             /*
             case R.id.nav_first_fragment:
@@ -171,7 +174,7 @@ public class NewsFeedActivity extends AppCompatActivity {
         }
 
         //replace existing fragment
-        getSupportFragmentManager().beginTransaction().replace(R.id.flcontent, fragment).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.flNewsfeedContainer, fragment).commit();
 
         //highlight the selected item
         item.setChecked(true);
