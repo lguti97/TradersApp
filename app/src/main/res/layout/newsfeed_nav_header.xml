@@ -1,4 +1,4 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="192dp"
     android:background="?attr/colorPrimaryDark"
@@ -7,11 +7,43 @@
     android:orientation="vertical"
     android:gravity="bottom">
 
+
+    <ImageView
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/ic_camera"
+        android:id="@+id/ivNavProfilePic"
+        android:layout_marginLeft="40dp"/>
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Header"
-        android:textColor="@android:color/white"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
+        android:layout_toRightOf="@id/ivNavProfilePic"
+        android:text="John Doe"
+        android:id="@+id/tvNavUserName" />
 
-</LinearLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/ivNavProfilePic"
+        android:text="42 friends"
+        android:layout_below="@id/tvNavUserName"
+        android:id="@+id/tvNavNumFriends" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/ivNavProfilePic"
+        android:text="150 items sold"
+        android:layout_below="@id/tvNavNumFriends"
+        android:id="@+id/tvNavItemsSold" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/ivNavProfilePic"
+        android:layout_below="@id/tvNavItemsSold"
+        android:text="251 items bough"
+        android:id="@+id/tvNavItemsBought" />
+
+</RelativeLayout>

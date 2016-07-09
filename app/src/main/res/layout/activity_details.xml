@@ -74,15 +74,14 @@
         android:layout_alignParentStart="true"
         android:layout_below="@id/tvItemDescription"/>
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Messenger"
-        android:id="@+id/btnMessenger"
-        android:onClick="onMessengerClick"
+
+    <include layout="@layout/messenger_button_send_blue_round"
+        android:layout_height="70dp"
+        android:layout_width="70dp"
         android:layout_alignTop="@+id/tvItemNegotiable"
         android:layout_alignRight="@+id/btnVenmo"
-        android:layout_alignEnd="@+id/btnVenmo" />
+        android:id="@+id/btnMessenger"
+        ></include>
 
     <Button
         android:layout_width="wrap_content"

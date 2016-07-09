@@ -11,9 +11,9 @@ import java.util.List;
 import butterknife.ButterKnife;
 
 /**
- * Created by selinabing on 7/6/16.
+ * Created by kshah97 on 7/8/16.
  */
-public class CatalogAdapter extends RecyclerView.Adapter<CatalogAdapter.ViewHolder> {
+public class FriendsAdapter extends RecyclerView.Adapter<FriendsAdapter.ViewHolder> {
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
@@ -28,41 +28,39 @@ public class CatalogAdapter extends RecyclerView.Adapter<CatalogAdapter.ViewHold
         }
     }
 
-    private List<Item> items;
+    private List<User> friends;
 
-    public CatalogAdapter(List<Item> items) {
-        this.items = items;
+    public FriendsAdapter(List<User> friends) {
+        this.friends = friends;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
-        View catalogView = inflater.inflate(R.layout.item_each, parent, false);
-        ViewHolder viewHolder = new ViewHolder(catalogView);
+        View friendsView = inflater.inflate(R.layout.friend_each, parent, false);
+        ViewHolder viewHolder = new ViewHolder(friendsView);
         return viewHolder;
     }
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        Item item = items.get(position);
+        User friend = friends.get(position);
         //populate each item by setting its text and media
     }
 
     @Override
     public int getItemCount() {
-        return items.size();
+        return friends.size();
     }
 
     public void clear() {
-        items.clear();
+        friends.clear();
         notifyDataSetChanged();
     }
 
-    public void clearAndAddAll(List<Item> newItems) {
-        items.addAll(newItems);
+    public void clearAndAddAll(List<User> newFriends) {
+        friends.addAll(newFriends);
         notifyDataSetChanged();
     }
-
-
 }
