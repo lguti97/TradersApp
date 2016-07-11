@@ -4,6 +4,12 @@ import com.parse.ParseClassName;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+
 /**
  * Created by kshah97 on 7/6/16.
  */
@@ -12,62 +18,12 @@ import com.parse.ParseUser;
 
 public class Item extends ParseObject {
 
-    /*
-
-    private String item_name;
-    private String category;
-    private float price;
-    private String status;
-    private String description;
-
-
-    public String getItem_name() {
-        return item_name;
-    }
-
-    public void setItem_name(String item_name) {
-        this.item_name = item_name;
-    }
-
-    public String getCategory() {
-        return category;
-    }
-
-    public void setCategory(String category) {
-        this.category = category;
-    }
-
-    public float getPrice() {
-        return price;
-    }
-
-    public void setPrice(float price) {
-        this.price = price;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    */
 
     public Item(){
         super();
     }
 
-    public Item(String item_name, String category, String description, String status, float price) {
+    public Item(String item_name, String category, String description, String status, double price) {
         super();
         setItem_name(item_name);
         setCategory(category);
@@ -93,11 +49,11 @@ public class Item extends ParseObject {
         put("category",category);
     }
 
-    public float getPrice() {
-        return (float) getDouble("price");
+    public double getPrice() {
+        return getDouble("price");
     }
 
-    public void setPrice(float price) {
+    public void setPrice(double price) {
         put("price",price);
     }
 
@@ -124,6 +80,37 @@ public class Item extends ParseObject {
     // Associate each item with a user
     public void setOwner(ParseUser user) {
         put("owner", user);
+    }
+
+    public static Item fromJSON(JSONObject object) {
+        Item item = null;
+        try {
+            item = new Item(object.getString("item_name"),
+                    object.getString("category"),
+                    object.getString("description"),
+                    object.getString("status"),
+                    object.getDouble("price"));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return item;
+    }
+
+    public static ArrayList<Item> fromJSONArray(JSONArray jsonArray){
+        ArrayList<Item> items = new ArrayList<>();
+        for (int i = 0; i < jsonArray.length(); i++) {
+            try {
+                JSONObject itemJson = jsonArray.getJSONObject(i);
+                Item item = Item.fromJSON(itemJson);
+                if (item != null) {
+                    items.add(item);
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+                continue;
+            }
+        }
+        return items;
     }
 
 }

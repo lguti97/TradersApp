@@ -34,7 +34,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Log in with Facbeook"
+        android:text="Log in with Facebook"
         android:onClick="regUser"
         android:id="@+id/btnReg"
         android:layout_alignParentTop="true"
