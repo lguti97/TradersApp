@@ -16,6 +16,7 @@ import com.parse.LogInCallback;
 import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseFacebookUtils;
+import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.interceptors.ParseLogInterceptor;
@@ -28,6 +29,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import teamcool.tradego.FBGraphClient;
+import teamcool.tradego.Item;
 import teamcool.tradego.R;
 import teamcool.tradego.User;
 
@@ -48,6 +50,9 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
+
+        ParseObject.registerSubclass(User.class);
+        ParseObject.registerSubclass(Item.class);
 
         //Connects to the Parse Server
         Parse.initialize(new Parse.Configuration.Builder(this)
