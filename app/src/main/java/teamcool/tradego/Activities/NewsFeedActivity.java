@@ -15,14 +15,22 @@ import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.astuetz.PagerSlidingTabStrip;
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseQuery;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import teamcool.tradego.Fragments.CategoriesTimelineFragment;
 import teamcool.tradego.Fragments.TopTimelineFragment;
 import teamcool.tradego.R;
+import teamcool.tradego.User;
 
 public class NewsFeedActivity extends AppCompatActivity {
 
@@ -190,7 +198,31 @@ public class NewsFeedActivity extends AppCompatActivity {
         // user either search for friends name or for the desired item
 
         //friends name here:
+        // queryFriendsInDatabaseOnName(query);
         
     }
+
+    private List<User> queryFriendsInDatabaseOnName(final String name) {
+        final ArrayList<User> friends = new ArrayList<>();
+        ParseQuery<User> query = ParseQuery.getQuery(User.class);
+        query.whereContains("name",name);
+        query.findInBackground(new FindCallback<User>() {
+            @Override
+            public void done(List<User> objects, ParseException e) {
+                if (e == null) {
+                    if (objects.size() == 0) {
+                        //no user matching exists
+                        Toast.makeText(getApplicationContext(), name + " is not found", Toast.LENGTH_SHORT).show();
+                    } else {
+                        friends.addAll(objects);
+                    }
+                } else {
+                    e.printStackTrace();
+                }
+            }
+        });
+        return friends;
+    }
+
 
 }
