@@ -92,7 +92,8 @@ public class User extends ParseObject {
                     object.getString("id"),
                     object.getJSONObject("location").getString("name"),
                     object.getString("timezone"),
-                    Item.fromJSONArray(object.getJSONArray("items")),
+                    new ArrayList<Item>(),
+                    //Item.fromJSONArray(object.getJSONArray("items")),
                     new ArrayList<User>());
         } catch (JSONException e) {
             e.printStackTrace();
