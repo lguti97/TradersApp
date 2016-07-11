@@ -41,7 +41,7 @@ public class LoginActivity extends AppCompatActivity {
 
     final List<String> permissions = Arrays.asList("public_profile", "email", "user_friends", "user_location", "user_photos");
     static String currentUserFbId;
-    
+
     AccessToken accessToken;
     FBGraphClient fbGraphClient;
 
