@@ -34,9 +34,18 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Register"
+        android:text="Log in with Facbeook"
         android:onClick="regUser"
         android:id="@+id/btnReg"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="68dp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="login"
+        android:id="@+id/button"
         android:layout_below="@+id/etPassword"
         android:layout_centerHorizontal="true" />
 </RelativeLayout>

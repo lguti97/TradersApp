@@ -20,6 +20,7 @@ import android.widget.Toast;
 import java.io.File;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import teamcool.tradego.R;
 
 public class AddItemActivity extends AppCompatActivity {
@@ -31,11 +32,12 @@ public class AddItemActivity extends AppCompatActivity {
     @BindView(R.id.ivItem3) ImageView ivItem3;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_item);
-
+        ButterKnife.bind(this);
         //Take first image of the item to be sold
 
         ivItem1.setOnClickListener(new View.OnClickListener() {

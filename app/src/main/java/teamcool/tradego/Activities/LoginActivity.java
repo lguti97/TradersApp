@@ -31,9 +31,7 @@ public class LoginActivity extends AppCompatActivity {
 
     @BindView(R.id.etUserName) EditText etUserName;
     @BindView(R.id.etPassword) EditText etPassword;
-    String UserName;
-    String Password;
-    int RESULT_CODE = 20;
+    final List<String> permissions = Arrays.asList("public_profile", "email");
 
 
     @Override
@@ -48,45 +46,41 @@ public class LoginActivity extends AppCompatActivity {
                 .addNetworkInterceptor(new ParseLogInterceptor())
                 .server("https://tradego.herokuapp.com/parse/").build());
 
+        ParseFacebookUtils.initialize(getApplicationContext());
 
     }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         ParseFacebookUtils.onActivityResult(requestCode, resultCode, data);
-        Toast.makeText(this, "YOU LOGGED IN!", Toast.LENGTH_SHORT).show();
     }
-    /*
-    //Creates a Temporary User
-    public void userCreate (){
-        ParseUser user = new ParseUser();
-        user.setPassword(Password);
-        user.setUsername(UserName);
-        user.setEmail("gutierrez.luis97@gmail.com");
-        user.signUpInBackground(new SignUpCallback() {
+
+    //When button is pressed user will login through Facebook
+
+    public void regUser(View view) {
+        ParseFacebookUtils.logInWithReadPermissionsInBackground(this, permissions, new LogInCallback() {
             @Override
-            public void done(ParseException e) {
-                if (e == null){
-                    //TODO. Create an intent here to go to the friend import activity
-                    Toast.makeText(getApplicationContext(), "Does this work", Toast.LENGTH_SHORT).show();
+            public void done(ParseUser user, ParseException e) {
+                if (user == null) {
+                    Log.d("MyApp", "User cancelled Facebook login");
+                    Toast.makeText(getApplicationContext(), "cancelled login", Toast.LENGTH_SHORT).show();
+                } else if (user.isNew()) {
+                    Log.d("MyApp", "User signed up and logged in through Facebook");
+                    Toast.makeText(getApplicationContext(), "already signed up", Toast.LENGTH_SHORT).show();
+                    Intent i = new Intent (LoginActivity.this, AddItemActivity.class);
+                    startActivity(i);
+
                 } else {
-                    //TODO. Create another page for error.
+                    Log.d("MyApp", "User logged in through Facebook!!!");
+                    Toast.makeText(getApplicationContext(), "thanks for registering", Toast.LENGTH_SHORT).show();
+                    Intent i = new Intent (LoginActivity.this, AddItemActivity.class);
+                    startActivity(i);
                 }
 
             }
         });
     }
-    */
-
-
-
-    //When button is pressed, user can register. Will go into the User Object class in the parse server
-    public void regUser(View view) {
-        Intent i = new Intent(LoginActivity.this, FacebookLoginActivity.class);
-        startActivityForResult(i, RESULT_CODE);
-    }
-
-
 
 }
