@@ -25,13 +25,14 @@ public class User extends ParseObject {
         super();
     }
 
-    public User(String username, String user_id, String location, String timezone, List<Item> items) {
+    public User(String username, String user_id, String location, String timezone, List<Item> items, List<User> friends) {
         super();
         setUsername(username);
         setUser_id(user_id);
         setItems(items);
         setLocation(location);
         setTimezone(timezone);
+        setFriends(friends);
 
     }
 
@@ -76,14 +77,23 @@ public class User extends ParseObject {
         put("timezone",timezone);
     }
 
+    public List<User> getFriends() {
+        return getList("friends");
+    }
+
+    public void setFriends(List<User> friends) {
+        put("friends",friends);
+    }
+
     public static User fromJSON(JSONObject object) {
         User user = null;
         try {
             user = new User(object.getString("name"),
                     object.getString("id"),
-                    object.getString("location"),
+                    object.getJSONObject("location").getString("name"),
                     object.getString("timezone"),
-                    Item.fromJSONArray(object.getJSONArray("items")));
+                    Item.fromJSONArray(object.getJSONArray("items")),
+                    null);
         } catch (JSONException e) {
             e.printStackTrace();
         }

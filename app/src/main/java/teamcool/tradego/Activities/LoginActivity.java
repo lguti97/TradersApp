@@ -90,7 +90,11 @@ public class LoginActivity extends AppCompatActivity {
                 GraphRequest request = GraphRequest.newMeRequest(accessToken, new GraphRequest.GraphJSONObjectCallback() {
                     @Override
                     public void onCompleted(JSONObject object, GraphResponse response) {
-                        storeUserInDatabase(object);
+                        if (object != null) {
+                            storeUserInDatabase(object);
+                        } else {
+                            Log.d("DEBUG","Login - object null, response: "+response.toString());
+                        }
                     }
                 });
                 Bundle params = new Bundle();
