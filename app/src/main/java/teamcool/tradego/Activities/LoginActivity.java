@@ -31,7 +31,7 @@ public class LoginActivity extends AppCompatActivity {
 
     @BindView(R.id.etUserName) EditText etUserName;
     @BindView(R.id.etPassword) EditText etPassword;
-    final List<String> permissions = Arrays.asList("public_profile", "email");
+    final List<String> permissions = Arrays.asList("public_profile", "email", "user_friends");
 
 
     @Override
