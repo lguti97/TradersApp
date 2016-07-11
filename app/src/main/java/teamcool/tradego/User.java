@@ -25,7 +25,7 @@ public class User extends ParseObject {
         super();
     }
 
-    public User(String username, String user_id, String location, String timezone, List<Item> items, List<User> friends) {
+    public User(String username, String user_id, String location, String timezone, String profilePicUrl, List<Item> items, List<User> friends) {
         super();
         setUsername(username);
         setUser_id(user_id);
@@ -33,6 +33,7 @@ public class User extends ParseObject {
         setLocation(location);
         setTimezone(timezone);
         setFriends(friends);
+        setProfilePicURL(profilePicUrl);
 
     }
 
@@ -85,6 +86,16 @@ public class User extends ParseObject {
         put("friends",friends);
     }
 
+    public String getProfilePicURL () {
+        return getString("profile_pic_url");
+    }
+
+    public void setProfilePicURL(String profilePicUrl) {
+        put("profile_pic_url",profilePicUrl);
+    }
+
+
+
     public static User fromJSON(JSONObject object) {
         User user = null;
         try {
@@ -92,6 +103,7 @@ public class User extends ParseObject {
                     object.getString("id"),
                     object.getJSONObject("location").getString("name"),
                     object.getString("timezone"),
+                    object.getString("profile_pic"),
                     new ArrayList<Item>(),
                     //Item.fromJSONArray(object.getJSONArray("items")),
                     new ArrayList<User>());

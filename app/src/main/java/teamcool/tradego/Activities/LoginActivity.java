@@ -38,8 +38,9 @@ public class LoginActivity extends AppCompatActivity {
     @BindView(R.id.etUserName) EditText etUserName;
     @BindView(R.id.etPassword) EditText etPassword;
 
-    final List<String> permissions = Arrays.asList("public_profile", "email", "user_friends", "user_location");
-    String currentUserFbId;
+    final List<String> permissions = Arrays.asList("public_profile", "email", "user_friends", "user_location", "user_photos");
+    static String currentUserFbId;
+
     AccessToken accessToken;
     FBGraphClient fbGraphClient;
 
@@ -104,7 +105,6 @@ public class LoginActivity extends AppCompatActivity {
                 });
                 Bundle params = new Bundle();
                 params.putString("fields","id,name,location,timezone");
-                //params.putString("fields","location");
                 request.setParameters(params);
                 request.executeAsync();
                 //DEBUG info: if one of the fields turns out to be empty,
@@ -126,20 +126,24 @@ public class LoginActivity extends AppCompatActivity {
         query.findInBackground(new FindCallback<User>() {
             @Override
             public void done(List<User> objects, ParseException e) {
-                // if no users of this ID exist, then save it;
-                // otherwise, update it;
-                if (objects.size() == 0) {
-                    user.saveInBackground();
+                if (e == null) {
+                    // if no users of this ID exist, then save it;
+                    // otherwise, update it;
+                    if (objects.size() == 0) {
+                        user.saveInBackground();
+                    } else {
+                        //assume only one object exists, therefore get the 0-th index object
+                        // assumption holds true based on invariant: only 1 object of this fb id exists
+                        // first time user logs in, 0 of this fbid exists, created
+                        // n-th time log in, if user of this fbid exists, updated
+                        String objectID = objects.get(0).getObjectId();
+                        fbGraphClient.updateUserData(objectID, user.getString("name"),
+                                user.getString("location"),
+                                user.getString("timezone"),
+                                user.getItems());
+                    }
                 } else {
-                    //assume only one object exists, therefore get the 0-th index object
-                    // assumption holds true based on invariant: only 1 object of this fb id exists
-                    // first time user logs in, 0 of this fbid exists, created
-                    // n-th time log in, if user of this fbid exists, updated
-                    String objectID = objects.get(0).getObjectId();
-                    fbGraphClient.updateUserData(objectID, user.getString("name"),
-                            user.getString("location"),
-                            user.getString("timezone"),
-                            user.getItems());
+                    e.printStackTrace();
                 }
             }
         });
