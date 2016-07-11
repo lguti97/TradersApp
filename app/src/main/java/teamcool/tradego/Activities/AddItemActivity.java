@@ -80,12 +80,11 @@ public class AddItemActivity extends AppCompatActivity {
 
     }
 
-    public void onCameraClick(View view) {
-        //Launch camera and save image into ivimage
-
-    }
 
     public void onAddItemClick(View view) {
+
+        Intent i = new Intent(this, NewsFeedActivity.class);
+        startActivity(i);
 
     }
 

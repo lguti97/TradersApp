@@ -17,7 +17,7 @@ public class UserCatalogFragment extends CatalogListFragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        populateTimeLine();
+        populateCatalog();
     }
 
     @Nullable
@@ -34,7 +34,9 @@ public class UserCatalogFragment extends CatalogListFragment {
         super.onViewCreated(view, savedInstanceState);
     }
 
-    public void populateTimeLine() {
+    public void populateCatalog() {
+
+        //for each item in the users' items list, populate the catalog.
         return; //placeholder
     }
 

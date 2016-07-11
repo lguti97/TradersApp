@@ -12,7 +12,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:id="@+id/rlHorizontalScroll"
-        android:layout_height="match_parent">
+        android:layout_height="200dp">
 
     <HorizontalScrollView
         android:layout_width="wrap_content"
@@ -28,27 +28,33 @@
                 android:layout_width="200dp"
                 android:layout_height="200dp"
                 android:id="@+id/ivItem1"
-                tools:src="@mipmap/ic_launcher"/>
+                tools:src="@mipmap/ic_launcher"
+                android:src="@drawable/placeholder"/>
 
             <ImageView
                 android:layout_width="200dp"
                 android:layout_height="200dp"
                 android:id="@+id/ivItem2"
-                tools:src="@mipmap/ic_launcher"/>
+                tools:src="@mipmap/ic_launcher"
+                android:src="@drawable/placeholder"/>
 
             <ImageView
                 android:layout_width="200dp"
                 android:layout_height="200dp"
                 android:id="@+id/ivItem3"
-                tools:src="@mipmap/ic_launcher"/>
+                tools:src="@mipmap/ic_launcher"
+                android:src="@drawable/placeholder"/>
 
         </LinearLayout>
 
     </HorizontalScrollView>
 
+    </RelativeLayout>
 
-
-
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/rlHorizontalScroll">
 
     <TextView
         android:layout_width="wrap_content"
@@ -57,7 +63,7 @@
         android:id="@+id/tvItemName"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="5dp" />
+        android:layout_marginTop="15dp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -67,7 +73,7 @@
         android:layout_below="@+id/tvItemName"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="5dp" />
+        android:layout_marginTop="15dp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -77,7 +83,7 @@
         android:layout_below="@+id/tvItemPrice"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="5dp" />
+        android:layout_marginTop="15dp" />
 
     <TextView
         android:layout_width="match_parent"
@@ -87,7 +93,7 @@
         android:layout_below="@+id/tvItemNegotiable"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="5dp" />
+        android:layout_marginTop="15dp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -97,7 +103,7 @@
         android:layout_below="@+id/tvItemDescription"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="5dp" />
+        android:layout_marginTop="15dp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -107,7 +113,7 @@
         android:layout_below="@+id/tvItemCategory"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="5dp" />
+        android:layout_marginTop="15dp" />
 
     <Button
         android:layout_width="wrap_content"
@@ -122,11 +128,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/spCategory"
-        android:layout_alignBottom="@+id/tvItemCategory"
-        android:layout_toEndOf="@+id/tvItemDescription"
-        android:layout_toRightOf="@id/tvItemDescription"
+        android:layout_toRightOf="@id/tvItemCategory"
         android:spinnerMode="dropdown"
-        android:layout_below="@+id/tvItemDescription" />
+        android:layout_below="@+id/tvItemDescription"
+        android:layout_alignBottom="@+id/tvItemCategory"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
     <Spinner
         android:layout_width="wrap_content"
@@ -160,5 +167,7 @@
         android:checked="false" />
 
     </RelativeLayout>
+
+
 
 </RelativeLayout>
