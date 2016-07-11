@@ -36,7 +36,9 @@ public class LoginActivity extends AppCompatActivity {
     @BindView(R.id.etUserName) EditText etUserName;
     @BindView(R.id.etPassword) EditText etPassword;
 
-    final List<String> permissions = Arrays.asList("public_profile", "email", "user_friends");
+
+    final List<String> permissions = Arrays.asList("public_profile", "email", "user_friends", "user_location");
+
     String currentUserFbId;
     AccessToken accessToken;
     FBGraphClient fbGraphClient;
@@ -98,7 +100,8 @@ public class LoginActivity extends AppCompatActivity {
                     }
                 });
                 Bundle params = new Bundle();
-                params.putString("fields","id,location,name,timezone");
+                params.putString("fields","id,name,location,timezone");
+                //params.putString("fields","location");
                 request.setParameters(params);
                 request.executeAsync();
                 //DEBUG info: if one of the fields turns out to be empty,
