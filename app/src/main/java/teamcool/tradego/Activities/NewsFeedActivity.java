@@ -120,8 +120,8 @@ public class NewsFeedActivity extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextSubmit(String query) {
-                //To be added
-                return false;
+                searchAndDisplay(query);
+                return true;
             }
 
             @Override
@@ -183,6 +183,14 @@ public class NewsFeedActivity extends AppCompatActivity {
         item.setChecked(true);
         setTitle(item.getTitle());
         drawerLayout.closeDrawers();
+    }
+
+    public void searchAndDisplay(String query) {
+        //two possibilities exist:
+        // user either search for friends name or for the desired item
+
+        //friends name here:
+        
     }
 
 }

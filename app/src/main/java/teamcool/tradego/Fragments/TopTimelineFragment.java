@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import butterknife.ButterKnife;
+import teamcool.tradego.FBGraphClient;
 import teamcool.tradego.R;
 
 /**
@@ -14,10 +15,12 @@ import teamcool.tradego.R;
  */
 public class TopTimelineFragment extends CatalogListFragment {
 
+    FBGraphClient fbGraphClient;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //populate time line
+        populateTimeLine();
     }
 
     @Nullable
@@ -34,6 +37,8 @@ public class TopTimelineFragment extends CatalogListFragment {
         super.onViewCreated(view, savedInstanceState);
     }
 
-    //method to populate timeline
+    public void populateTimeLine() {
+        fbGraphClient.getFriends();
+    }
 
 }

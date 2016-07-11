@@ -52,7 +52,11 @@ public class FriendsListFragment extends Fragment {
         //rvFriends.addOnScrollLisnener for endless scrolling
         //swipeContainer set on refresh listener
         //swipeContainer setColorSchemeResources to configure refreshing colors
+
+        populate();
     }
 
-
+    public void populate() {
+        //
+    }
 }

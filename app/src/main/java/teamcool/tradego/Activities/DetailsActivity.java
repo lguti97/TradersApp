@@ -34,13 +34,12 @@ public class DetailsActivity extends AppCompatActivity {
 
         final Activity activity = this;
 
+        //when clicked, share a screenshot to messenger
         btnMessenger.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 Uri contentUri = takeScreenshot();
-                //when clicked, share to messenger
-                String imageID = "";
                 ShareToMessengerParams shareToMessengerParams = ShareToMessengerParams.newBuilder(contentUri, "image/jpeg").build();
                 MessengerUtils.shareToMessenger(activity, REQUEST_CODE_SHARE_TO_MESSENGER, shareToMessengerParams);
             }
