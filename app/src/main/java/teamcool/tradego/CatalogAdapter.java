@@ -64,5 +64,9 @@ public class CatalogAdapter extends RecyclerView.Adapter<CatalogAdapter.ViewHold
         notifyDataSetChanged();
     }
 
+    public void insert(int index, Item item) {
+        items.add(index,item);
+        notifyItemInserted(index);
+    }
 
 }

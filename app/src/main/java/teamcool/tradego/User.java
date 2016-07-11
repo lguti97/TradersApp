@@ -4,6 +4,10 @@ package teamcool.tradego;
 import com.parse.ParseClassName;
 import com.parse.ParseObject;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,47 +19,21 @@ import java.util.List;
 
 public class User extends ParseObject {
 
-    /*
-
-    private String username;
-    private ArrayList<Item> items;
-    private int user_id;
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public ArrayList<Item> getItems() {
-        return items;
-    }
-
-    public void setItems(ArrayList<Item> items) {
-        this.items = items;
-    }
-
-    public int getUser_id() {
-        return user_id;
-    }
-
-    public void setUser_id(int user_id) {
-        this.user_id = user_id;
-    }
-
-    */
+    private String timezone;
 
     public User(){
         super();
     }
 
-    public User(String username, int user_id, ArrayList<Item> items) {
+    public User(String username, String user_id, String location, String timezone, List<Item> items, List<User> friends) {
         super();
         setUsername(username);
         setUser_id(user_id);
         setItems(items);
+        setLocation(location);
+        setTimezone(timezone);
+        setFriends(friends);
+
     }
 
 
@@ -67,12 +45,11 @@ public class User extends ParseObject {
         put("username",username);
     }
 
-
-    public int getUser_id() {
-        return getInt("user_id");
+    public String getUser_id() {
+        return getString("user_id");
     }
 
-    public void setUser_id(int user_id) {
+    public void setUser_id(String user_id) {
         put("user_id",user_id);
     }
 
@@ -80,9 +57,64 @@ public class User extends ParseObject {
         return getList("items");
     }
 
-    public void setItems(ArrayList<Item> items) {
+    public void setItems(List<Item> items) {
         put("items",items);
     }
 
+    public String getLocation() {
+        return getString("location");
+    }
+
+    public void setLocation(String location) {
+        put("location",location);
+    }
+
+    public String getTimezone() {
+        return getString("timezone");
+    }
+
+    public void setTimezone(String timezone) {
+        put("timezone",timezone);
+    }
+
+    public List<User> getFriends() {
+        return getList("friends");
+    }
+
+    public void setFriends(List<User> friends) {
+        put("friends",friends);
+    }
+
+    public static User fromJSON(JSONObject object) {
+        User user = null;
+        try {
+            user = new User(object.getString("name"),
+                    object.getString("id"),
+                    object.getJSONObject("location").getString("name"),
+                    object.getString("timezone"),
+                    Item.fromJSONArray(object.getJSONArray("items")),
+                    null);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return user;
+    }
+
+    public static ArrayList<User> fromJSONArray(JSONArray jsonArray){
+        ArrayList<User> users = new ArrayList<>();
+        for (int i = 0; i < jsonArray.length(); i++) {
+            try {
+                JSONObject userJson = jsonArray.getJSONObject(i);
+                User user = User.fromJSON(userJson);
+                if (user != null) {
+                    users.add(user);
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+                continue;
+            }
+        }
+        return users;
+    }
 }
 

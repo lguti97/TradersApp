@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -53,4 +54,13 @@ public class CatalogListFragment extends Fragment {
         //swipeContainer set on refresh listener
         //swipeContainer setColorSchemeResources to configure refreshing colors
     }
+
+    public void addAll(List<Item> items) {
+        catalogAdapter.clearAndAddAll(items);
+    }
+
+    public void addItem (int index, Item item) {
+        catalogAdapter.insert(index,item);
+    }
+
 }
