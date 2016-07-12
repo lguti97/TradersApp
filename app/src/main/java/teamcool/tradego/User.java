@@ -94,6 +94,18 @@ public class User extends ParseObject {
         put("profile_pic_url",profilePicUrl);
     }
 
+    public void setCurrentUser (User user) {
+        if (user != null) {
+            setUsername(user.getUsername());
+            setUser_id(user.getUser_id());
+            setItems(user.getItems());
+            setLocation(user.getLocation());
+            setTimezone(user.getTimezone());
+            setFriends(user.getFriends());
+            setProfilePicURL(user.getProfilePicURL());
+        }
+    }
+
     public static User fromJSON(JSONObject object) {
         User user = null;
         try {
@@ -101,10 +113,8 @@ public class User extends ParseObject {
                     object.getString("id"),
                     object.getJSONObject("location").getString("name"),
                     object.getString("timezone"),
-                    "placeholderurl",
-                    //object.getString("profile_pic"),
+                    object.getJSONObject("picture").getJSONObject("data").getString("url"),
                     new ArrayList<Item>(),
-                    //Item.fromJSONArray(object.getJSONArray("items")),
                     new ArrayList<User>());
         } catch (JSONException e) {
             e.printStackTrace();
