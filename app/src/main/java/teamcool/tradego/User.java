@@ -94,8 +94,6 @@ public class User extends ParseObject {
         put("profile_pic_url",profilePicUrl);
     }
 
-
-
     public static User fromJSON(JSONObject object) {
         User user = null;
         try {
@@ -103,7 +101,7 @@ public class User extends ParseObject {
                     object.getString("id"),
                     object.getJSONObject("location").getString("name"),
                     object.getString("timezone"),
-                    null,
+                    "placeholderurl",
                     //object.getString("profile_pic"),
                     new ArrayList<Item>(),
                     //Item.fromJSONArray(object.getJSONArray("items")),
@@ -130,5 +128,6 @@ public class User extends ParseObject {
         }
         return users;
     }
+
 }
 

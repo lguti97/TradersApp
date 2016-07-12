@@ -202,27 +202,7 @@ public class NewsFeedActivity extends AppCompatActivity {
         
     }
 
-    private List<User> queryFriendsInDatabaseOnName(final String name) {
-        final ArrayList<User> friends = new ArrayList<>();
-        ParseQuery<User> query = ParseQuery.getQuery(User.class);
-        query.whereContains("name",name);
-        query.findInBackground(new FindCallback<User>() {
-            @Override
-            public void done(List<User> objects, ParseException e) {
-                if (e == null) {
-                    if (objects.size() == 0) {
-                        //no user matching exists
-                        Toast.makeText(getApplicationContext(), name + " is not found", Toast.LENGTH_SHORT).show();
-                    } else {
-                        friends.addAll(objects);
-                    }
-                } else {
-                    e.printStackTrace();
-                }
-            }
-        });
-        return friends;
-    }
+
 
 
 }

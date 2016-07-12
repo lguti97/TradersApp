@@ -9,6 +9,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.facebook.AccessToken;
+import com.facebook.FacebookSdk;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.parse.FindCallback;
@@ -52,6 +53,7 @@ public class LoginActivity extends AppCompatActivity {
 
         ParseObject.registerSubclass(User.class);
         ParseObject.registerSubclass(Item.class);
+        FacebookSdk.sdkInitialize(this);
 
         //Connects to the Parse Server
         Parse.initialize(new Parse.Configuration.Builder(this)
@@ -88,6 +90,7 @@ public class LoginActivity extends AppCompatActivity {
                 }
 
                 // some changes made due to code redundancy
+                fbGraphClient = new FBGraphClient();
                 currentUserFbId = AccessToken.getCurrentAccessToken().getUserId();
                 accessToken = AccessToken.getCurrentAccessToken();
 
@@ -116,7 +119,6 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
-
 
     private void storeUserInDatabase(JSONObject object) {
         final User user = User.fromJSON(object);
