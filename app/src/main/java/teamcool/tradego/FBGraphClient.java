@@ -47,9 +47,6 @@ public class FBGraphClient {
         return friends;
     }
 
-    //Empty Constructor?
-    public FBGraphClient () {
-    }
 
     public void updateUserData(String objectID, final String username, final String location, final String timezone, final List<Item> items) {
         ParseQuery<User> query = ParseQuery.getQuery(User.class);
