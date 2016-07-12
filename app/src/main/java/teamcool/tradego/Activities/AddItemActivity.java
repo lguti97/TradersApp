@@ -102,8 +102,10 @@ public class AddItemActivity extends AppCompatActivity {
 
         new_item.saveInBackground();
 
-        Intent i = new Intent(this, NewsFeedActivity.class);
-        startActivity(i);
+        Toast.makeText(this, "Item Added!", Toast.LENGTH_SHORT).show();
+
+        //Intent i = new Intent(this, NewsFeedActivity.class);
+        //startActivity(i);
     }
 
 
