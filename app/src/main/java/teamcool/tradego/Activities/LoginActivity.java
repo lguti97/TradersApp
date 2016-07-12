@@ -116,7 +116,7 @@ public class LoginActivity extends AppCompatActivity {
                 // it might be because you have no PERMISSION to access it
                 // look it up in API and add more permissions to the array
 
-                Intent i = new Intent (LoginActivity.this, FriendImportActivity.class);
+                Intent i = new Intent (LoginActivity.this, AddItemActivity.class);
                 startActivity(i);
             }
         });
@@ -128,7 +128,7 @@ public class LoginActivity extends AppCompatActivity {
         final User user = User.fromJSON(object);
 
         ParseQuery<User> query = ParseQuery.getQuery(User.class);
-        query.whereEqualTo("user_id",currentUserFbId);
+        query.whereEqualTo("user_id", currentUserFbId);
         query.findInBackground(new FindCallback<User>() {
             @Override
             public void done(List<User> objects, ParseException e) {
