@@ -26,7 +26,7 @@ public class FBGraphClient {
     public ArrayList<User> getFriends() {
         final ArrayList<User> friends = new ArrayList<>();
         //since getting friends accesses significant amount of data
-        // the fb api erecommended us to use batch request
+        // the fb api recommended us to use batch request
         GraphRequestBatch batch = new GraphRequestBatch(
                 GraphRequest.newMyFriendsRequest(accessToken,
                         new GraphRequest.GraphJSONArrayCallback() {
@@ -39,6 +39,7 @@ public class FBGraphClient {
         return friends;
     }
 
+    //Empty Constructor?
     public FBGraphClient () {
     }
 

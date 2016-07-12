@@ -64,7 +64,7 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-
+    //Required method. No other activity will be launched though
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -94,6 +94,7 @@ public class LoginActivity extends AppCompatActivity {
 
                 // store user info
                 //get current user data using FB's Graph API
+                // Provides JSON objects of the fields you requested
                 GraphRequest request = GraphRequest.newMeRequest(accessToken, new GraphRequest.GraphJSONObjectCallback() {
                     @Override
                     public void onCompleted(JSONObject object, GraphResponse response) {
@@ -118,7 +119,7 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-
+    //Maps Facebook Information into our own User Object.
     private void storeUserInDatabase(JSONObject object) {
         final User user = User.fromJSON(object);
 

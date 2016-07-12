@@ -107,6 +107,7 @@ public class User extends ParseObject {
                     new ArrayList<Item>(),
                     //Item.fromJSONArray(object.getJSONArray("items")),
                     new ArrayList<User>());
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
