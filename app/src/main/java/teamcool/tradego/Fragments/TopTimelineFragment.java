@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import butterknife.ButterKnife;
-import teamcool.tradego.FBGraphClient;
+import teamcool.tradego.Clients.FBGraphClient;
 import teamcool.tradego.R;
 
 /**

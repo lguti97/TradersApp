@@ -1,4 +1,4 @@
-package teamcool.tradego;
+package teamcool.tradego.Clients;
 
 import android.os.Bundle;
 
@@ -12,6 +12,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 
 import java.util.ArrayList;
+
+import teamcool.tradego.Models.Item;
+import teamcool.tradego.Models.User;
 
 /**
  * Created by selinabing on 7/11/16.

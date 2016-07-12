@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 
 import butterknife.ButterKnife;
 import teamcool.tradego.R;
-import teamcool.tradego.User;
+import teamcool.tradego.Models.User;
 
 /**
  * Created by kshah97 on 7/8/16.

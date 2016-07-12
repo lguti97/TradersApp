@@ -1,4 +1,4 @@
-package teamcool.tradego;
+package teamcool.tradego.Models;
 
 
 import com.parse.ParseClassName;

@@ -21,7 +21,11 @@ public class FriendImportActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_friend_import);
 
-        //TODO. Make a RecyclerView
+        //TODO. Look up Recycler View
+
+        //TODO. Setup Adapter
+
+        //TODO.
 
 
 

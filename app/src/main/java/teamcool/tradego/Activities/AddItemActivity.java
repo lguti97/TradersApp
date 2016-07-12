@@ -22,8 +22,8 @@ import java.io.File;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import teamcool.tradego.Item;
-import teamcool.tradego.ParseClient;
+import teamcool.tradego.Clients.ParseClient;
+import teamcool.tradego.Models.Item;
 import teamcool.tradego.R;
 
 public class AddItemActivity extends AppCompatActivity {
@@ -214,7 +214,7 @@ public class AddItemActivity extends AppCompatActivity {
 
                 if(index==1) {
 
-                ivItem1.setImageBitmap(takenImage);
+                    ivItem1.setImageBitmap(takenImage);
 
                 }
                 else if(index ==2) {
