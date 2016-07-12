@@ -109,7 +109,7 @@ public class ParseClient {
     public User getCurrentParseUser() {
         String currentUserFbId = AccessToken.getCurrentAccessToken().getUserId();
         ParseQuery<User> query = ParseQuery.getQuery(User.class);
-        final User user = null;
+        final User user = new User();
         query.whereEqualTo("user_id",currentUserFbId);
         query.findInBackground(new FindCallback<User>() {
             @Override
