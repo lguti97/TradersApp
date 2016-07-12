@@ -23,6 +23,7 @@ import java.io.File;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import teamcool.tradego.Item;
+import teamcool.tradego.ParseClient;
 import teamcool.tradego.R;
 
 public class AddItemActivity extends AppCompatActivity {
@@ -92,11 +93,14 @@ public class AddItemActivity extends AppCompatActivity {
 
     public void onAddItemClick(View view) {
 
+        ParseClient parseClient = new ParseClient();
+
         Item new_item = new Item(etItemName.getText().toString(),
                 category, etItemDescription.getText().toString(),
                 status, Double.parseDouble(etPrice.getText().toString()));
 
-        //new_item.setOwner();
+
+        new_item.setOwner(parseClient.getCurrentParseUser());
 
         new_item.saveInBackground();
 
