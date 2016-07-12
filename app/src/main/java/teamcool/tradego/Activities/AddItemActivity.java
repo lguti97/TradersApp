@@ -12,15 +12,19 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.parse.ParseUser;
+
 import java.io.File;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import teamcool.tradego.Item;
 import teamcool.tradego.R;
 
 public class AddItemActivity extends AppCompatActivity {
@@ -30,7 +34,12 @@ public class AddItemActivity extends AppCompatActivity {
     @BindView(R.id.ivItem1) ImageView ivItem1;
     @BindView(R.id.ivItem2) ImageView ivItem2;
     @BindView(R.id.ivItem3) ImageView ivItem3;
-
+    @BindView(R.id.etPrice) EditText etPrice;
+    @BindView(R.id.etItemName) EditText etItemName;
+    @BindView(R.id.etItemDescription) EditText etItemDescription;
+    String negotiable;
+    String category;
+    String status;
 
 
     @Override
@@ -77,15 +86,24 @@ public class AddItemActivity extends AppCompatActivity {
             }
         });
 
+        onCategorySpinner();
+        onStatusSpinner();
 
     }
 
 
     public void onAddItemClick(View view) {
 
+        Item new_item = new Item(etItemName.getText().toString(),
+                category, etItemDescription.getText().toString(),
+                status, Double.parseDouble(etPrice.getText().toString()));
+
+        new_item.setOwner(ParseUser.getCurrentUser());
+
+        new_item.saveInBackground();
+
         Intent i = new Intent(this, NewsFeedActivity.class);
         startActivity(i);
-
     }
 
 
@@ -98,16 +116,19 @@ public class AddItemActivity extends AppCompatActivity {
             case R.id.rbNo:
                 if (checked)
                     // Do something
+                negotiable = "No";
                     break;
             case R.id.rbYes:
                 if (checked)
                     // Do something
+                negotiable = "Yes";
                     break;
         }
     }
 
-    public void onCategorySpinner(View view) {
-        Spinner spinner = (Spinner) findViewById(R.id.spStatus);
+
+    public void onCategorySpinner() {
+        Spinner spinner = (Spinner) findViewById(R.id.spCategory);
 // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
                 R.array.categories, android.R.layout.simple_spinner_item);
@@ -121,7 +142,7 @@ public class AddItemActivity extends AppCompatActivity {
 
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 //set the string below to tvCategory
-                //parent.getItemAtPosition(position).toString();
+                category = parent.getItemAtPosition(position).toString();
 
             }
 
@@ -132,7 +153,7 @@ public class AddItemActivity extends AppCompatActivity {
 
     }
 
-    public void onStatusSpinner(View view) {
+    public void onStatusSpinner() {
         Spinner spinner = (Spinner) findViewById(R.id.spStatus);
 // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
@@ -147,7 +168,7 @@ public class AddItemActivity extends AppCompatActivity {
 
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 //set the string below to tvStatus
-                //parent.getItemAtPosition(position).toString();
+                status = parent.getItemAtPosition(position).toString();
 
             }
 
