@@ -24,6 +24,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import teamcool.tradego.Clients.ParseClient;
 import teamcool.tradego.Models.Item;
+import teamcool.tradego.Models.User;
 import teamcool.tradego.R;
 
 public class AddItemActivity extends AppCompatActivity {
@@ -99,8 +100,8 @@ public class AddItemActivity extends AppCompatActivity {
                 category, etItemDescription.getText().toString(),
                 status, Double.parseDouble(etPrice.getText().toString()));
 
-
-        new_item.setOwner(parseClient.getCurrentParseUser());
+        User currUser = parseClient.getCurrentParseUser();
+        new_item.setOwner(currUser);
 
         new_item.saveInBackground();
 
