@@ -109,12 +109,13 @@ public class ParseClient {
     public User getCurrentParseUser() {
         String currentUserFbId = AccessToken.getCurrentAccessToken().getUserId();
         ParseQuery<User> query = ParseQuery.getQuery(User.class);
-        final User user = null;
+        final User user = new User();
         query.whereEqualTo("user_id",currentUserFbId);
         query.findInBackground(new FindCallback<User>() {
             @Override
             public void done(List<User> objects, ParseException e) {
                 if (e == null) {
+                    //Log.d("DEBUG","reached no current user");
                     // if no users of this ID exist, return null
                     // otherwise, return it
                     if (objects.size() != 0) {

@@ -136,6 +136,7 @@ public class LoginActivity extends AppCompatActivity {
                     // if no users of this ID exist, then save it;
                     // otherwise, update it;
                     if (objects.size() == 0) {
+                        //Log.d("DEBUG","user does not exist in datbase");
                         user.saveInBackground();
                     } else {
                         //assume only one object exists, therefore get the 0-th index object
