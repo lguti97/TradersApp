@@ -35,11 +35,9 @@ public class ProfileActivity extends AppCompatActivity {
         }
     }
 
+    //populate user header
     private void populateUserHeader(User user) {
         tvUserName.setText(user.getUsername());
     }
-
-    //populate user header
-    //implement fragment manager and fragment transaction
 
 }

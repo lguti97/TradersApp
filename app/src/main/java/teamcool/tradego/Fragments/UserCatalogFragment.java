@@ -8,11 +8,13 @@ import android.view.ViewGroup;
 
 import butterknife.ButterKnife;
 import teamcool.tradego.R;
+import teamcool.tradego.User;
 
 /**
  * Created by kshah97 on 7/8/16.
  */
 public class UserCatalogFragment extends CatalogListFragment {
+    User user;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -35,9 +37,7 @@ public class UserCatalogFragment extends CatalogListFragment {
     }
 
     public void populateCatalog() {
-
-        //for each item in the users' items list, populate the catalog.
-        return; //placeholder
+        addAll(user.getItems());
     }
 
 }
