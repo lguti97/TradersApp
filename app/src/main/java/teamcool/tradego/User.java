@@ -94,6 +94,15 @@ public class User extends ParseObject {
         put("profile_pic_url",profilePicUrl);
     }
 
+<<<<<<< HEAD
+=======
+    public void setCurrentUser(User current_user){
+        put("current_user", current_user);
+    }
+
+
+
+>>>>>>> master
     public static User fromJSON(JSONObject object) {
         User user = null;
         try {
