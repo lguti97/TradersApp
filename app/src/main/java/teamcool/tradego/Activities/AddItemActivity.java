@@ -18,8 +18,6 @@ import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.parse.ParseUser;
-
 import java.io.File;
 
 import butterknife.BindView;
@@ -98,7 +96,7 @@ public class AddItemActivity extends AppCompatActivity {
                 category, etItemDescription.getText().toString(),
                 status, Double.parseDouble(etPrice.getText().toString()));
 
-        new_item.setOwner(ParseUser.getCurrentUser());
+        //new_item.setOwner();
 
         new_item.saveInBackground();
 
