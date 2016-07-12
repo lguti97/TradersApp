@@ -1,16 +1,19 @@
 package teamcool.tradego;
 
+import android.os.Bundle;
 import android.util.Log;
 
 import com.facebook.AccessToken;
 import com.facebook.GraphRequest;
 import com.facebook.GraphRequestBatch;
 import com.facebook.GraphResponse;
+import com.facebook.HttpMethod;
 import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,8 +23,13 @@ import java.util.List;
  */
 public class FBGraphClient {
 
-    AccessToken accessToken = AccessToken.getCurrentAccessToken();
-    String currentUserFbId = AccessToken.getCurrentAccessToken().getUserId();
+    AccessToken accessToken;
+    String currentUserFbId;
+
+    public FBGraphClient () {
+        accessToken = AccessToken.getCurrentAccessToken();
+        currentUserFbId = accessToken.getUserId();
+    }
 
     public ArrayList<User> getFriends() {
         final ArrayList<User> friends = new ArrayList<>();
@@ -68,6 +76,26 @@ public class FBGraphClient {
                 }
             }
         });
+    }
+
+    // REQUIRES: user's unique FacebookID
+    // type: enum{small, normal, album, large, square}
+    public String getUserProfilePicURL(String fbid, String type) {
+        final StringBuilder pictureUrl = new StringBuilder();
+        Bundle params = new Bundle();
+        params.putBoolean("redirect",false);
+        params.putString("type",type);
+        new GraphRequest(accessToken, fbid+"/picture", params, HttpMethod.GET, new GraphRequest.Callback() {
+            @Override
+            public void onCompleted(GraphResponse response) {
+                try {
+                    pictureUrl.append((String) response.getJSONObject().getJSONObject("data").get("url"));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).executeAsync();
+        return pictureUrl.toString();
     }
 
 }

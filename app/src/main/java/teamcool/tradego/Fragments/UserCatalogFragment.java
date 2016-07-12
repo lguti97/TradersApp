@@ -40,4 +40,5 @@ public class UserCatalogFragment extends CatalogListFragment {
         addAll(user.getItems());
     }
 
+
 }
