@@ -12,7 +12,7 @@ import java.util.ArrayList;
 /**
  * Created by lguti on 7/11/16.
  */
-@ParseClassName()
+@ParseClassName("Acquaintance")
 public class Acquaintance extends ParseObject {
     private String profile_url ;
     private String name;
