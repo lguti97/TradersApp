@@ -26,6 +26,7 @@ public class FBGraphClient {
     AccessToken accessToken;
     String currentUserFbId;
 
+
     public FBGraphClient () {
         accessToken = AccessToken.getCurrentAccessToken();
         currentUserFbId = accessToken.getUserId();

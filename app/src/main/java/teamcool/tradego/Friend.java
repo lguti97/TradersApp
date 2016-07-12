@@ -9,8 +9,8 @@ public class Friend {
 
     //TODO. Setup model for import friends
 
-
     public Friend (String profile_url, String name){
+
     }
 
 

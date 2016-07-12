@@ -43,6 +43,7 @@ public class LoginActivity extends AppCompatActivity {
     final List<String> permissions = Arrays.asList("public_profile", "email", "user_friends", "user_location", "user_photos");
     static String currentUserFbId;
 
+    //GraphClient and AccessToken needed to retrieve Facebook data.
     AccessToken accessToken;
     FBGraphClient fbGraphClient;
 
@@ -61,7 +62,7 @@ public class LoginActivity extends AppCompatActivity {
                 .applicationId("tradego")
                 .addNetworkInterceptor(new ParseLogInterceptor())
                 .server("https://tradego.herokuapp.com/parse/").build());
-
+        //initializes with Facebook
         ParseFacebookUtils.initialize(getApplicationContext());
 
     }
@@ -80,14 +81,11 @@ public class LoginActivity extends AppCompatActivity {
             public void done(ParseUser user, ParseException e) {
                 if (user == null) {
                     Log.d("MyApp", "User cancelled Facebook login");
-                    Toast.makeText(getApplicationContext(), "cancelled login", Toast.LENGTH_SHORT).show();
                     return;
                 } else if (user.isNew()) {
                     Log.d("MyApp", "User signed up and logged in through Facebook");
-                    Toast.makeText(getApplicationContext(), "already signed up", Toast.LENGTH_SHORT).show();
                 } else {
                     Log.d("MyApp", "User logged in through Facebook!!!");
-                    Toast.makeText(getApplicationContext(), "thanks for registering", Toast.LENGTH_SHORT).show();
                 }
 
                 // some changes made due to code redundancy
