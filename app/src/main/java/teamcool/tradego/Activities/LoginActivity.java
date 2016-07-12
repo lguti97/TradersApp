@@ -6,7 +6,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.facebook.AccessToken;
 import com.facebook.FacebookSdk;
@@ -31,6 +30,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import teamcool.tradego.FBGraphClient;
 import teamcool.tradego.Item;
+import teamcool.tradego.ParseClient;
 import teamcool.tradego.R;
 import teamcool.tradego.User;
 
@@ -46,6 +46,7 @@ public class LoginActivity extends AppCompatActivity {
     //GraphClient and AccessToken needed to retrieve Facebook data.
     AccessToken accessToken;
     FBGraphClient fbGraphClient;
+    ParseClient parseClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,8 +91,9 @@ public class LoginActivity extends AppCompatActivity {
 
                 // some changes made due to code redundancy
                 fbGraphClient = new FBGraphClient();
-                currentUserFbId = AccessToken.getCurrentAccessToken().getUserId();
-                accessToken = AccessToken.getCurrentAccessToken();
+                parseClient = new ParseClient();
+                currentUserFbId = fbGraphClient.getCurrentUserFbId();
+                accessToken = fbGraphClient.getAccessToken();
 
                 // store user info
                 //get current user data using FB's Graph API
@@ -107,7 +109,7 @@ public class LoginActivity extends AppCompatActivity {
                     }
                 });
                 Bundle params = new Bundle();
-                params.putString("fields","id,name,location,timezone");
+                params.putString("fields","id,name,location,timezone,picture.type(large)");
                 request.setParameters(params);
                 request.executeAsync();
                 //DEBUG info: if one of the fields turns out to be empty,
@@ -141,10 +143,11 @@ public class LoginActivity extends AppCompatActivity {
                         // first time user logs in, 0 of this fbid exists, created
                         // n-th time log in, if user of this fbid exists, updated
                         String objectID = objects.get(0).getObjectId();
-                        fbGraphClient.updateUserData(objectID, user.getString("name"),
-                                user.getString("location"),
-                                user.getString("timezone"),
-                                user.getItems());
+                        parseClient.updateUserDataFromFBAPI(objectID,
+                                user.getUsername(),
+                                user.getLocation(),
+                                user.getTimezone(),
+                                user.getProfilePicURL());
                     }
                 } else {
                     e.printStackTrace();
