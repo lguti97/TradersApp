@@ -14,8 +14,8 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import teamcool.tradego.Item;
-import teamcool.tradego.CatalogAdapter;
+import teamcool.tradego.Models.Item;
+import teamcool.tradego.Adapters.CatalogAdapter;
 import teamcool.tradego.R;
 
 /**

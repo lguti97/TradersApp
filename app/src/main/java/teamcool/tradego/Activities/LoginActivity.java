@@ -28,11 +28,11 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import teamcool.tradego.FBGraphClient;
-import teamcool.tradego.Item;
-import teamcool.tradego.ParseClient;
+import teamcool.tradego.Clients.ParseClient;
+import teamcool.tradego.Clients.FBGraphClient;
+import teamcool.tradego.Models.Item;
 import teamcool.tradego.R;
-import teamcool.tradego.User;
+import teamcool.tradego.Models.User;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -56,6 +56,8 @@ public class LoginActivity extends AppCompatActivity {
 
         ParseObject.registerSubclass(User.class);
         ParseObject.registerSubclass(Item.class);
+
+
         FacebookSdk.sdkInitialize(this);
 
         //Connects to the Parse Server

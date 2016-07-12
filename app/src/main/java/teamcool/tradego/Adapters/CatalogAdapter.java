@@ -1,4 +1,4 @@
-package teamcool.tradego;
+package teamcool.tradego.Adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -9,6 +9,8 @@ import android.view.ViewGroup;
 import java.util.List;
 
 import butterknife.ButterKnife;
+import teamcool.tradego.Models.Item;
+import teamcool.tradego.R;
 
 /**
  * Created by selinabing on 7/6/16.

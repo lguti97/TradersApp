@@ -13,9 +13,9 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import teamcool.tradego.FriendsAdapter;
+import teamcool.tradego.Adapters.FriendsAdapter;
 import teamcool.tradego.R;
-import teamcool.tradego.User;
+import teamcool.tradego.Models.User;
 
 /**
  * Created by kshah97 on 7/8/16.

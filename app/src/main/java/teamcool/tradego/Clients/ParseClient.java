@@ -1,4 +1,4 @@
-package teamcool.tradego;
+package teamcool.tradego.Clients;
 
 import android.util.Log;
 
@@ -10,6 +10,9 @@ import com.parse.ParseQuery;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import teamcool.tradego.Models.Item;
+import teamcool.tradego.Models.User;
 
 /**
  * Created by selinabing on 7/11/16.

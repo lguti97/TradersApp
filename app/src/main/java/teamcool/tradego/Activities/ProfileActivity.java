@@ -10,7 +10,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import teamcool.tradego.Fragments.UserCatalogFragment;
 import teamcool.tradego.R;
-import teamcool.tradego.User;
+import teamcool.tradego.Models.User;
 
 public class ProfileActivity extends AppCompatActivity {
 
