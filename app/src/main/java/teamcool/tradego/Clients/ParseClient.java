@@ -70,7 +70,7 @@ public class ParseClient {
     public User getCurrentParseUser() {
         String currentUserFbId = AccessToken.getCurrentAccessToken().getUserId();
         ParseQuery<User> query = ParseQuery.getQuery(User.class);
-        User user = User.constructBlankUser();
+        User user = User.constructBlankUser(); //to be changed after User class restructured
         query.whereEqualTo("user_id",currentUserFbId);
         List<User> objects = null;
         try {
