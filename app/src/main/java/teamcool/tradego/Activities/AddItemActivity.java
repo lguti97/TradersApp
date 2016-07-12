@@ -28,6 +28,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import teamcool.tradego.Clients.ParseClient;
 import teamcool.tradego.Models.Item;
+import teamcool.tradego.Models.User;
 import teamcool.tradego.R;
 import teamcool.tradego.User;
 
