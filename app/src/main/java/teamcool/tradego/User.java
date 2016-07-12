@@ -130,6 +130,5 @@ public class User extends ParseObject {
         }
         return users;
     }
-
 }
 

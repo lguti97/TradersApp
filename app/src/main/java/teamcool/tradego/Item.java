@@ -77,8 +77,9 @@ public class Item extends ParseObject {
         return getParseUser("owner");
     }
 
+
     // Associate each item with a user
-    public void setOwner(ParseUser user) {
+    public void setOwner(User user) {
         put("owner", user);
     }
 
