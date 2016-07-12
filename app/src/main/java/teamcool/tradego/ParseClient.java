@@ -64,6 +64,48 @@ public class ParseClient {
         return items;
     }
 
+    public List<Item> queryItemsInDatabaseOnCategory(final String category) {
+        final ArrayList<Item> items = new ArrayList<>();
+        ParseQuery<Item> query = ParseQuery.getQuery(Item.class);
+        query.whereEqualTo("category",category);
+        query.findInBackground(new FindCallback<Item>() {
+            @Override
+            public void done(List<Item> objects, ParseException e) {
+                if (e == null) {
+                    if (objects.size() == 0) {
+                        //no matching item exists
+                    } else {
+                        items.addAll(objects);
+                    }
+                } else {
+                    e.printStackTrace();
+                }
+            }
+        });
+        return items;
+    }
+
+    public List<Item> queryItemsInDatabaseOnUser(final User user) {
+        final ArrayList<Item> items = new ArrayList<>();
+        ParseQuery<Item> query = ParseQuery.getQuery(Item.class);
+        query.whereEqualTo("owner",user);
+        query.findInBackground(new FindCallback<Item>() {
+            @Override
+            public void done(List<Item> objects, ParseException e) {
+                if (e == null) {
+                    if (objects.size() == 0) {
+                        //no matching item exists
+                    } else {
+                        items.addAll(objects);
+                    }
+                } else {
+                    e.printStackTrace();
+                }
+            }
+        });
+        return items;
+    }
+
     public User getCurrentParseUser() {
         String currentUserFbId = AccessToken.getCurrentAccessToken().getUserId();
         ParseQuery<User> query = ParseQuery.getQuery(User.class);
@@ -114,6 +156,7 @@ public class ParseClient {
             }
         });
     }
+
 
 
 }
