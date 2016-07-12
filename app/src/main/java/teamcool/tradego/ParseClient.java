@@ -115,7 +115,6 @@ public class ParseClient {
             @Override
             public void done(List<User> objects, ParseException e) {
                 if (e == null) {
-                    //Log.d("DEBUG","reached no current user");
                     // if no users of this ID exist, return null
                     // otherwise, return it
                     if (objects.size() != 0) {
