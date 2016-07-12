@@ -24,6 +24,9 @@ public class ProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
         ButterKnife.bind(this);
+
+
+
         populateUserHeader(user);
 
         if(savedInstanceState == null) {

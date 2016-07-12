@@ -63,7 +63,7 @@
         android:id="@+id/tvItemName"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="15dp" />
+        android:layout_marginTop="30dp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -85,11 +85,11 @@
         android:layout_alignParentStart="true"
         android:layout_marginTop="15dp" />
 
-    <TextView
+    <EditText
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:text="Description"
-        android:id="@+id/tvItemDescription"
+        android:hint="Description"
+        android:id="@+id/etItemDescription"
         android:layout_below="@+id/tvItemNegotiable"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
@@ -100,7 +100,7 @@
         android:layout_height="wrap_content"
         android:text="Category"
         android:id="@+id/tvItemCategory"
-        android:layout_below="@+id/tvItemDescription"
+        android:layout_below="@+id/etItemDescription"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_marginTop="15dp" />
@@ -130,7 +130,7 @@
         android:id="@+id/spCategory"
         android:layout_toRightOf="@id/tvItemCategory"
         android:spinnerMode="dropdown"
-        android:layout_below="@+id/tvItemDescription"
+        android:layout_below="@+id/etItemDescription"
         android:layout_alignBottom="@+id/tvItemCategory"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
@@ -145,6 +145,16 @@
         android:layout_alignStart="@+id/spCategory"
         android:layout_alignBottom="@+id/tvItemStatus" />
 
+
+        <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_toRightOf="@id/tvItemNegotiable"
+            android:layout_above="@id/etItemDescription"
+            >
+
+
     <RadioButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -153,7 +163,8 @@
         android:layout_alignBottom="@+id/tvItemNegotiable"
         android:checked="false"
         android:layout_alignTop="@+id/rbNo"
-        android:layout_marginLeft="200dp" />
+        android:layout_marginLeft="150dp"
+        android:onClick="onRadioButtonClicked"/>
 
     <RadioButton
         android:layout_width="wrap_content"
@@ -164,7 +175,31 @@
         android:layout_alignBottom="@+id/tvItemNegotiable"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:checked="false" />
+        android:checked="false"
+        android:onClick="onRadioButtonClicked"/>
+
+        </RadioGroup>
+
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/etItemName"
+            android:layout_above="@+id/tvItemPrice"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:hint="Enter Item Name" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="numberDecimal"
+            android:ems="10"
+            android:id="@+id/etPrice"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignBottom="@+id/tvItemPrice"
+            android:hint="Enter a Price" />
 
     </RelativeLayout>
 
