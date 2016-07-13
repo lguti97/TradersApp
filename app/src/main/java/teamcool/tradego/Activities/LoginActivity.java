@@ -30,6 +30,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import teamcool.tradego.Clients.ParseClient;
 import teamcool.tradego.Clients.FBGraphClient;
+import teamcool.tradego.Models.Acquaintance;
 import teamcool.tradego.Models.Item;
 import teamcool.tradego.R;
 import teamcool.tradego.Models.User;
@@ -128,6 +129,7 @@ public class LoginActivity extends AppCompatActivity {
     //Maps Facebook Information into our own User Object.
     private void storeUserInDatabase(JSONObject object) {
         final User user = User.fromJSON(object);
+        final Acquaintance acquaintance = Acquaintance.fromJSON(object);
 
         ParseQuery<User> query = ParseQuery.getQuery(User.class);
         query.whereEqualTo("user_id", currentUserFbId);

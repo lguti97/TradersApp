@@ -12,6 +12,7 @@ import java.util.ArrayList;
 /**
  * Created by lguti on 7/11/16.
  */
+
 @ParseClassName("Acquaintance")
 public class Acquaintance extends ParseObject {
     private String profile_url ;
@@ -48,9 +49,9 @@ public class Acquaintance extends ParseObject {
         put("picture", profile_url);
     }
 
-    /*
+    */
     TO CONNECT WITH USER OBJECT
-     */
+    */
 
     //Get User for this acquaintance
     public ParseObject getUser() {
