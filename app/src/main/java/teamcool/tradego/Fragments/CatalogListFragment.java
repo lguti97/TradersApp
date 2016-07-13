@@ -14,8 +14,8 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import teamcool.tradego.Models.Item;
 import teamcool.tradego.Adapters.CatalogAdapter;
+import teamcool.tradego.Models.Item;
 import teamcool.tradego.R;
 
 /**
@@ -28,6 +28,7 @@ public class CatalogListFragment extends Fragment {
     //BindView to swipContainer SwipeRefreshLayout, toolbar
 
     private CatalogAdapter catalogAdapter;
+    //private ArrayList<Item> items;
     private ArrayList<Item> items;
 
     @Nullable
@@ -35,6 +36,10 @@ public class CatalogListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_catalog_list, container, false);
         ButterKnife.bind(this, v);
+        rvItems.setAdapter(catalogAdapter);
+        rvItems.setLayoutManager(new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL));
+
+        rvItems.setHasFixedSize(true);
         //listViewHere.setAdapter(catalogAdapter);
         //set listView's onItemLongClickListener, onItemClickListener, etc.
         return v;
@@ -47,9 +52,7 @@ public class CatalogListFragment extends Fragment {
         catalogAdapter = new CatalogAdapter(items);
 
         //set layout to StaggeredGrid
-        rvItems.setLayoutManager(new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL));
-        rvItems.setAdapter(catalogAdapter);
-        rvItems.setHasFixedSize(true);
+
         //rvItems.addOnScrollLisnener for endless scrolling
         //swipeContainer set on refresh listener
         //swipeContainer setColorSchemeResources to configure refreshing colors

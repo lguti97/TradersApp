@@ -6,25 +6,20 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.squareup.picasso.Picasso;
+import com.parse.ParseUser;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import jp.wasabeef.picasso.transformations.RoundedCornersTransformation;
 import teamcool.tradego.Fragments.UserCatalogFragment;
-
+import teamcool.tradego.R;
 
 //import teamcool.tradego.ParseClient;
-
-
-import teamcool.tradego.R;
-import teamcool.tradego.Models.User;
 
 public class ProfileActivity extends AppCompatActivity {
 
     @BindView(R.id.ivProfileImage) ImageView ivProfileImage;
     @BindView(R.id.tvUserName) TextView tvUserName;
-    User user;
+    ParseUser user;
     //ParseClient parseClient;
 
     @Override
@@ -37,7 +32,9 @@ public class ProfileActivity extends AppCompatActivity {
 
         //user = parseClient.getCurrentParseUser();
 
-        populateUserHeader(user);
+        user = ParseUser.getCurrentUser();
+
+        //populateUserHeader(user);
 
         if(savedInstanceState == null) {
 
@@ -48,16 +45,18 @@ public class ProfileActivity extends AppCompatActivity {
         }
     }
 
+    /*
     //populate user header
-    private void populateUserHeader(User user) {
-/*
+    private void populateUserHeader(ParseUser user) {
+
         tvUserName.setText(user.getUsername());
-        Picasso.with(this).load(user.getProfilePicURL())
+        Picasso.with(this).load(user.getprofilePicUrl())
                 .fit().centerInside()
                 .transform(new RoundedCornersTransformation(10, 10))
                 .into(ivProfileImage);
 
         //tvUserName.setText(user.getUsername());
-*/
+
     }
+    */
 }
