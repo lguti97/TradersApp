@@ -199,7 +199,7 @@ public class NewsFeedActivity extends AppCompatActivity {
         List<Item> items = parseClient.queryItemsInDatabaseOnName(query);
 
         //missing a rank algorithm that sorts items by different criteria
-        // to be completed.
+        // to be completed
 
         
     }
