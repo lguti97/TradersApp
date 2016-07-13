@@ -13,7 +13,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import teamcool.tradego.Models.Item;
-import teamcool.tradego.Models.User;
 
 public class ParseClient {
 
@@ -56,7 +55,7 @@ public class ParseClient {
         return items;
     }
 
-    public List<Item> queryItemsInDatabaseOnUser(User user) {
+    public List<Item> queryItemsInDatabaseOnUser(ParseUser user) {
         List<Item> items = new ArrayList<>();
         ParseQuery<Item> query = ParseQuery.getQuery(Item.class);
         query.whereEqualTo("owner",user);
@@ -67,6 +66,13 @@ public class ParseClient {
         }
         return items;
     }
+
+    /*
+    public int countNumFriendsOfUser(ParseUser user) {
+        ParseQuery<Item> query = ParseQuery.getQuery(Item.class);
+        query.whereEqualTo("owner",ParseUser)
+    }
+    */
 
  }
 
