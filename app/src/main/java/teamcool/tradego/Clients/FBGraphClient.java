@@ -13,7 +13,6 @@ import org.json.JSONException;
 
 import java.util.ArrayList;
 
-import teamcool.tradego.Models.Item;
 import teamcool.tradego.Models.User;
 
 /**

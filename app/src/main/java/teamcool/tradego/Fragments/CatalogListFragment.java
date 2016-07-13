@@ -42,6 +42,14 @@ public class CatalogListFragment extends Fragment {
         rvItems.setHasFixedSize(true);
         //listViewHere.setAdapter(catalogAdapter);
         //set listView's onItemLongClickListener, onItemClickListener, etc.
+
+
+        //set layout to StaggeredGrid
+
+        //rvItems.addOnScrollLisnener for endless scrolling
+        //swipeContainer set on refresh listener
+        //swipeContainer setColorSchemeResources to configure refreshing colors
+
         return v;
     }
 
@@ -51,11 +59,6 @@ public class CatalogListFragment extends Fragment {
         items = new ArrayList<>();
         catalogAdapter = new CatalogAdapter(items);
 
-        //set layout to StaggeredGrid
-
-        //rvItems.addOnScrollLisnener for endless scrolling
-        //swipeContainer set on refresh listener
-        //swipeContainer setColorSchemeResources to configure refreshing colors
     }
 
     public void addAll(List<Item> items) {
