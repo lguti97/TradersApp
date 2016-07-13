@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import java.util.List;
 
 import butterknife.ButterKnife;
+
 //import teamcool.tradego.Item;
 //import teamcool.tradego.ParseClient;
 

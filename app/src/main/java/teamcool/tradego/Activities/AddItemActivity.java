@@ -108,6 +108,7 @@ public class AddItemActivity extends AppCompatActivity {
                 category, etItemDescription.getText().toString(),
                 status,price);
 
+
         //User user = parseClient.getCurrentParseUser();
         //new_item.setOwner(user);
 

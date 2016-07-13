@@ -13,6 +13,7 @@ import butterknife.ButterKnife;
 import jp.wasabeef.picasso.transformations.RoundedCornersTransformation;
 import teamcool.tradego.Fragments.UserCatalogFragment;
 
+
 //import teamcool.tradego.ParseClient;
 
 
