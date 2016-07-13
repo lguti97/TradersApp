@@ -18,7 +18,7 @@ public class ParseClient {
     public ParseClient () {
 
     }
-
+    /*
     public List<User> queryFriendsInDatabaseOnName(String name) {
         List<User> friends = new ArrayList<>();
         ParseQuery<User> query = ParseQuery.getQuery(User.class);
@@ -107,8 +107,5 @@ public class ParseClient {
             object.setProfilePicURL(profilePicURL);
         }
         object.saveInBackground();
-    }
-
-
-
-}
+    } */
+ }

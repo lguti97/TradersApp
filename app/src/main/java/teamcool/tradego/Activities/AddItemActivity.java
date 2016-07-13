@@ -30,7 +30,6 @@ import teamcool.tradego.Clients.ParseClient;
 import teamcool.tradego.Models.Item;
 import teamcool.tradego.Models.User;
 import teamcool.tradego.R;
-import teamcool.tradego.User;
 
 public class AddItemActivity extends AppCompatActivity {
 
@@ -111,13 +110,14 @@ public class AddItemActivity extends AppCompatActivity {
                 category, etItemDescription.getText().toString(),
                 status,price);
 
-        User user = parseClient.getCurrentParseUser();
-        new_item.setOwner(user);
+        //User user = parseClient.getCurrentParseUser();
+        //new_item.setOwner(user);
 
         //new_item.saveInBackground();
 
         // Save the post and return
         new_item.saveInBackground(new SaveCallback() {
+
 
             @Override
             public void done(ParseException e) {
@@ -133,6 +133,9 @@ public class AddItemActivity extends AppCompatActivity {
             }
 
         });
+
+       // new_item.setOwner(parseClient.getCurrentParseUser());
+
 
         this.setResult(Activity.RESULT_OK);
         this.finish();

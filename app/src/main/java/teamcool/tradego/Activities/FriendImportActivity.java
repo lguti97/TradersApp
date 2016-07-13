@@ -26,6 +26,7 @@ public class FriendImportActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_friend_import);
+        /*
         //TODO. Populate data into this ArrayList.
         ArrayList<Acquaintance> acquaintances = new ArrayList<>();
 
@@ -33,7 +34,7 @@ public class FriendImportActivity extends AppCompatActivity {
         AcquaintanceAdapter adapter = new AcquaintanceAdapter(FriendImportActivity.this, acquaintances);
         //rvAcquaintances.setAdapter(adapter);
         //default manager we wanted.
-        rvAcquaintances.setLayoutManager(new LinearLayoutManager(this));
+        rvAcquaintances.setLayoutManager(new LinearLayoutManager(this)); */
 
 
 

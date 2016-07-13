@@ -197,7 +197,7 @@ public class NewsFeedActivity extends AppCompatActivity {
     }
 
     public void searchAndDisplay(String query) {
-        List<Item> items = parseClient.queryItemsInDatabaseOnName(query);
+        //List<Item> items = parseClient.queryItemsInDatabaseOnName(query);
 
         //missing a rank algorithm that sorts items by different criteria
         // to be completed
