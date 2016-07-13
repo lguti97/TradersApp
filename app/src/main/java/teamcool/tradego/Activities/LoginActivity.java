@@ -57,7 +57,6 @@ public class LoginActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         ParseObject.registerSubclass(Item.class);
-
         FacebookSdk.sdkInitialize(this);
 
         //Connects to the Parse Server

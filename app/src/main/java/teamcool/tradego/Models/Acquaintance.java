@@ -2,6 +2,7 @@ package teamcool.tradego.Models;
 
 import com.parse.ParseClassName;
 import com.parse.ParseObject;
+import com.parse.ParseUser;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -15,7 +16,7 @@ import java.util.ArrayList;
 
 
 public class Acquaintance extends ParseObject {
-    /*
+
     private String profile_url ;
     private String name;
 
@@ -55,12 +56,12 @@ public class Acquaintance extends ParseObject {
 
 
     //Get User for this acquaintance
-    public ParseObject getUser() {
-        return getParseObject("owner");
+    public ParseUser getUser() {
+        return getParseUser("owner");
     }
 
     //Associate each acquaintance with the user
-    public void setOwner(ParseObject user) {
+    public void setOwner(ParseUser user) {
         put("owner", user);
     }
 
@@ -93,6 +94,6 @@ public class Acquaintance extends ParseObject {
         }
         return acquaintances;
 
-    } */
+    }
 
 }
