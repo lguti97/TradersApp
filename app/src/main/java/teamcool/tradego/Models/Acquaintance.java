@@ -16,7 +16,7 @@ import java.util.ArrayList;
 
 
 public class Acquaintance extends ParseObject {
-
+    /*
     private String profile_url ;
     private String name;
 
@@ -66,6 +66,7 @@ public class Acquaintance extends ParseObject {
     }
 
     //Deserializes JSON objects into the Acquaintance model
+    //How do we do this though?
     public static Acquaintance fromJSON(JSONObject object){
         Acquaintance acquaintance = null;
         try {
@@ -93,7 +94,6 @@ public class Acquaintance extends ParseObject {
             }
         }
         return acquaintances;
-
-    }
+    } */
 
 }
