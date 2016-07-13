@@ -1,5 +1,7 @@
 package teamcool.tradego.Activities;
 
+import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
@@ -10,22 +12,21 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.astuetz.PagerSlidingTabStrip;
-
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import teamcool.tradego.Clients.ParseClient;
 import teamcool.tradego.Fragments.CategoriesTimelineFragment;
 import teamcool.tradego.Fragments.TopTimelineFragment;
-import teamcool.tradego.Models.Item;
 import teamcool.tradego.R;
 
 public class NewsFeedActivity extends AppCompatActivity {
@@ -44,22 +45,13 @@ public class NewsFeedActivity extends AppCompatActivity {
 
     FragmentStatePagerAdapter fragmentStatePagerAdapter;
 
+    ActionBarDrawerToggle drawerToggle;
 
-    public class catalogPagerAdapter extends FragmentStatePagerAdapter implements PagerSlidingTabStrip.IconTabProvider {
+    public class catalogPagerAdapter extends FragmentStatePagerAdapter {
         final int PAGE_COUNT = 2;
-        //if tab icons are needed:
-        // private int tabIcons[] = {};
         private String tabNames[] = {"Top", "Categories"};
 
         public catalogPagerAdapter(FragmentManager fragmentManager) { super(fragmentManager); }
-
-
-        //if tab icons are needed later..
-        @Override
-        public int getPageIconResId(int position) {
-            return 0; //placeholder;
-            //return tabIcons[position];
-        }
 
 
         @Override
@@ -94,6 +86,8 @@ public class NewsFeedActivity extends AppCompatActivity {
         //configure toolbar
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setHomeButtonEnabled(true);
 
         //viewpager setup
         fragmentStatePagerAdapter = new catalogPagerAdapter(getSupportFragmentManager());
@@ -103,6 +97,21 @@ public class NewsFeedActivity extends AppCompatActivity {
 
         //setup navigation drawer
         setupNavDrawerTabs(navDrawer);
+        drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.drawer_open, R.string.drawer_close) {
+            @Override
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+                invalidateOptionsMenu();
+            }
+
+            @Override
+            public void onDrawerClosed(View drawerView) {
+                super.onDrawerClosed(drawerView);
+                invalidateOptionsMenu();
+            }
+        };
+        drawerToggle.setDrawerIndicatorEnabled(true);
+        drawerLayout.setDrawerListener(drawerToggle);
 
         //initialize clients
         parseClient = new ParseClient();
@@ -111,12 +120,12 @@ public class NewsFeedActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_news_feed, menu);
-        MenuItem searchItem = menu.findItem(R.id.action_search);
+        MenuItem searchItem = menu.findItem(R.id.action_search_nf);
         SearchView searchView = (SearchView) searchItem.getActionView();
 
         //make search box always show by default
         // user dont have to tap on the icon to make a search
-        searchView.setIconifiedByDefault(false);
+        //searchView.setIconifiedByDefault(false);
 
         //expand the SearchView
         searchItem.expandActionView();
@@ -129,9 +138,9 @@ public class NewsFeedActivity extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextSubmit(String query) {
-                //Intent i = new Intent(getApplicationContext(),SearchActivity.class);
-                //i.putExtra("query",query);
-                //startActivity(i);
+                Intent i = new Intent(getApplicationContext(),SearchActivity.class);
+                i.putExtra("query",query);
+                startActivity(i);
                 return true;
             }
 
@@ -146,6 +155,7 @@ public class NewsFeedActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+
         switch (item.getItemId()) {
             case android.R.id.home:
                 drawerLayout.openDrawer(GravityCompat.START);
@@ -157,6 +167,7 @@ public class NewsFeedActivity extends AppCompatActivity {
     @Override
     protected void onPostCreate(@Nullable Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
+        drawerToggle.syncState();
     }
 
     public void setupNavDrawerTabs(NavigationView navigationView) {
@@ -188,7 +199,7 @@ public class NewsFeedActivity extends AppCompatActivity {
         }
 
         //replace existing fragment
-        getSupportFragmentManager().beginTransaction().replace(R.id.flNewsfeedContainer, fragment).commit();
+        //getSupportFragmentManager().beginTransaction().replace(R.id.flNewsfeedContainer, fragment).commit();
 
         //highlight the selected item
         item.setChecked(true);
@@ -196,16 +207,9 @@ public class NewsFeedActivity extends AppCompatActivity {
         drawerLayout.closeDrawers();
     }
 
-    public void searchAndDisplay(String query) {
-        List<Item> items = parseClient.queryItemsInDatabaseOnName(query);
-
-        //missing a rank algorithm that sorts items by different criteria
-        // to be completed.
-
-        
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        drawerToggle.onConfigurationChanged(newConfig);
     }
-
-
-
-
 }

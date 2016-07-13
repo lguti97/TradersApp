@@ -38,7 +38,7 @@ public class TopTimelineFragment extends CatalogListFragment {
     }
 
     public void populateTimeLine() {
-        fbGraphClient.getFriends();
+        //fbGraphClient.getFriends();
     }
 
 }
