@@ -109,12 +109,17 @@ public class AddItemActivity extends AppCompatActivity {
                 status,price);
 
 
+        //User user = parseClient.getCurrentParseUser();
+        //new_item.setOwner(user);
+
+
         new_item.put("author", ParseUser.getCurrentUser());
 
 
 
         // Save the post and return
         new_item.saveInBackground(new SaveCallback() {
+
 
             @Override
             public void done(ParseException e) {
@@ -130,6 +135,9 @@ public class AddItemActivity extends AppCompatActivity {
             }
 
         });
+
+       // new_item.setOwner(parseClient.getCurrentParseUser());
+
 
         this.setResult(Activity.RESULT_OK);
         this.finish();

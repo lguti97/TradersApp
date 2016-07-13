@@ -15,7 +15,6 @@ import java.util.ArrayList;
  */
 
 @ParseClassName("Item")
-
 public class Item extends ParseObject {
 
 
