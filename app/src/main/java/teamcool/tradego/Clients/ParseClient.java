@@ -22,7 +22,7 @@ public class ParseClient {
     public ParseClient () {
 
     }
-
+    /*
     public List<User> queryFriendsInDatabaseOnName(final String name) {
         final ArrayList<User> friends = new ArrayList<>();
         ParseQuery<User> query = ParseQuery.getQuery(User.class);
@@ -159,7 +159,7 @@ public class ParseClient {
                 }
             }
         });
-    }
+    } */
 
 
 

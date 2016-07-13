@@ -37,7 +37,7 @@ public class UserCatalogFragment extends CatalogListFragment {
     }
 
     public void populateCatalog() {
-        addAll(user.getItems());
+        //addAll(user.getItems());
     }
 
 

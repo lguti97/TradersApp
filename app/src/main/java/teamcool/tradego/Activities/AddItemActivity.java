@@ -100,7 +100,7 @@ public class AddItemActivity extends AppCompatActivity {
                 status, Double.parseDouble(etPrice.getText().toString()));
 
 
-        new_item.setOwner(parseClient.getCurrentParseUser());
+       // new_item.setOwner(parseClient.getCurrentParseUser());
 
         new_item.saveInBackground();
 

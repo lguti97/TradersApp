@@ -40,7 +40,7 @@ public class ProfileActivity extends AppCompatActivity {
 
     //populate user header
     private void populateUserHeader(User user) {
-        tvUserName.setText(user.getUsername());
+        //tvUserName.setText(user.getUsername());
     }
 
 }

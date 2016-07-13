@@ -48,6 +48,7 @@ public class LoginActivity extends AppCompatActivity {
     AccessToken accessToken;
     FBGraphClient fbGraphClient;
     ParseClient parseClient;
+    User another_user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,9 +56,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
 
-        ParseObject.registerSubclass(User.class);
         ParseObject.registerSubclass(Item.class);
-
 
         FacebookSdk.sdkInitialize(this);
 
@@ -82,7 +81,7 @@ public class LoginActivity extends AppCompatActivity {
     public void regUser(View view) {
         ParseFacebookUtils.logInWithReadPermissionsInBackground(this, permissions, new LogInCallback() {
             @Override
-            public void done(ParseUser user, ParseException e) {
+            public void done(final ParseUser user, ParseException e) {
                 if (user == null) {
                     Log.d("MyApp", "User cancelled Facebook login");
                     return;
@@ -92,25 +91,23 @@ public class LoginActivity extends AppCompatActivity {
                     Log.d("MyApp", "User logged in through Facebook!!!");
                 }
 
-                // some changes made due to code redundancy
                 fbGraphClient = new FBGraphClient();
                 parseClient = new ParseClient();
                 currentUserFbId = fbGraphClient.getCurrentUserFbId();
                 accessToken = fbGraphClient.getAccessToken();
 
-                // store user info
-                //get current user data using FB's Graph API
-                // Provides JSON objects of the fields you requested
+                //Deserializes the ParseUser in order to have JSONObjects that are retrievable.
                 GraphRequest request = GraphRequest.newMeRequest(accessToken, new GraphRequest.GraphJSONObjectCallback() {
                     @Override
                     public void onCompleted(JSONObject object, GraphResponse response) {
                         if (object != null) {
-                            storeUserInDatabase(object);
+                            another_user = User.fromJSON(object, user);
                         } else {
                             Log.d("DEBUG","Login - object null, response: "+response.toString());
                         }
                     }
                 });
+
                 Bundle params = new Bundle();
                 params.putString("fields","id,name,location,timezone,picture.type(large)");
                 request.setParameters(params);
@@ -119,44 +116,8 @@ public class LoginActivity extends AppCompatActivity {
                 // it might be because you have no PERMISSION to access it
                 // look it up in API and add more permissions to the array
 
-                Intent i = new Intent (LoginActivity.this, AddItemActivity.class);
+                Intent i = new Intent (LoginActivity.this, FriendImportActivity.class);
                 startActivity(i);
-            }
-        });
-    }
-
-
-    //Maps Facebook Information into our own User Object.
-    private void storeUserInDatabase(JSONObject object) {
-        final User user = User.fromJSON(object);
-        final Acquaintance acquaintance = Acquaintance.fromJSON(object);
-
-        ParseQuery<User> query = ParseQuery.getQuery(User.class);
-        query.whereEqualTo("user_id", currentUserFbId);
-        query.findInBackground(new FindCallback<User>() {
-            @Override
-            public void done(List<User> objects, ParseException e) {
-                if (e == null) {
-                    // if no users of this ID exist, then save it;
-                    // otherwise, update it;
-                    if (objects.size() == 0) {
-                        //Log.d("DEBUG","user does not exist in datbase");
-                        user.saveInBackground();
-                    } else {
-                        //assume only one object exists, therefore get the 0-th index object
-                        // assumption holds true based on invariant: only 1 object of this fb id exists
-                        // first time user logs in, 0 of this fbid exists, created
-                        // n-th time log in, if user of this fbid exists, updated
-                        String objectID = objects.get(0).getObjectId();
-                        parseClient.updateUserDataFromFBAPI(objectID,
-                                user.getUsername(),
-                                user.getLocation(),
-                                user.getTimezone(),
-                                user.getProfilePicURL());
-                    }
-                } else {
-                    e.printStackTrace();
-                }
             }
         });
     }
