@@ -19,11 +19,16 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.astuetz.PagerSlidingTabStrip;
+import com.parse.ParseUser;
+import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import jp.wasabeef.picasso.transformations.CropCircleTransformation;
 import teamcool.tradego.Clients.ParseClient;
 import teamcool.tradego.Fragments.CategoriesTimelineFragment;
 import teamcool.tradego.Fragments.TopTimelineFragment;
@@ -112,6 +117,22 @@ public class NewsFeedActivity extends AppCompatActivity {
         };
         drawerToggle.setDrawerIndicatorEnabled(true);
         drawerLayout.setDrawerListener(drawerToggle);
+
+        //navigation drawer populating
+        // using findviewbyid because this is in another xml layout file, ButterKnife causes runtime exception
+        View headerView = navDrawer.getHeaderView(0);
+
+        ImageView ivNavProfilePic = (ImageView) headerView.findViewById(R.id.ivNavProfilePic);
+        TextView tvNavUserName = (TextView) headerView.findViewById(R.id.tvNavUserName);
+        TextView tvNavNumFriends = (TextView) headerView.findViewById(R.id.tvNavNumFriends);
+        TextView tvNavItemsSold = (TextView) headerView.findViewById(R.id.tvNavItemsSold);
+        TextView tvNavItemsBought = (TextView) headerView.findViewById(R.id.tvNavItemsBought);
+        ParseUser currUser = ParseUser.getCurrentUser();
+        Picasso.with(this).load(currUser.getString("profilePicUrl")).fit().transform(new CropCircleTransformation()).into(ivNavProfilePic);
+        tvNavUserName.setText(currUser.getString("username"));
+        tvNavNumFriends.setText("122"+" friends"); //placeholder
+        tvNavItemsSold.setText("150"+" items sold"); //placeholder
+        tvNavItemsBought.setText("251"+" items bought"); //placeholder
 
         //initialize clients
         parseClient = new ParseClient();

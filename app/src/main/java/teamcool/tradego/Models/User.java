@@ -1,6 +1,7 @@
 package teamcool.tradego.Models;
 
 
+import com.parse.ParseException;
 import com.parse.ParseUser;
 
 import org.json.JSONArray;
@@ -8,11 +9,12 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.List;
 
 
 public class User {
     private ParseUser extended_user;
+
+
     private String username;
     private String user_id;
     private String location;
@@ -37,12 +39,21 @@ public class User {
 
     //Adds the updated/extended fields to the ParseUser
     public void setSomeField(String username, String user_id, String location, String timezone, String profilePicUrl) {
-        extended_user.put("username", username);
-        extended_user.put("user_id", user_id);
-        extended_user.put("location", location);
-        extended_user.put("timezone", timezone);
-        extended_user.put("profilePicUrl", profilePicUrl);
-        extended_user.saveInBackground();
+        if (username != null)
+            extended_user.put("username", username);
+        if (user_id != null)
+            extended_user.put("user_id", user_id);
+        if (location != null)
+            extended_user.put("location", location);
+        if (timezone != null)
+            extended_user.put("timezone", timezone);
+        if (profilePicUrl != null)
+            extended_user.put("profilePicUrl", profilePicUrl);
+        try {
+            extended_user.save();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
 
     //Deserializes JSONObjects
