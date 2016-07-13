@@ -18,15 +18,14 @@ import android.view.MenuItem;
 
 import com.astuetz.PagerSlidingTabStrip;
 
-
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import teamcool.tradego.Clients.ParseClient;
 import teamcool.tradego.Fragments.CategoriesTimelineFragment;
 import teamcool.tradego.Fragments.TopTimelineFragment;
 import teamcool.tradego.Models.Item;
-import teamcool.tradego.Clients.ParseClient;
 import teamcool.tradego.R;
 
 public class NewsFeedActivity extends AppCompatActivity {
@@ -130,7 +129,9 @@ public class NewsFeedActivity extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextSubmit(String query) {
-                searchAndDisplay(query);
+                //Intent i = new Intent(getApplicationContext(),SearchActivity.class);
+                //i.putExtra("query",query);
+                //startActivity(i);
                 return true;
             }
 

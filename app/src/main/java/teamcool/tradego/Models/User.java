@@ -12,9 +12,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by kshah97 on 7/6/16.
- */
+
 
 public class User {
     private ParseUser extended_user;
@@ -24,11 +22,10 @@ public class User {
     private String timezone;
     private String profilePicUrl;
 
-
     public User () {
     }
 
-    //Updates member variables
+    //Updates member variables + aliasing
     public User(String username, String user_id, String location, String timezone, String profilePicUrl, ParseUser obj) {
         this.username = username;
         this.user_id = user_id;
@@ -50,7 +47,8 @@ public class User {
         extended_user.saveInBackground();
     }
 
-    //Deserializes JSONObjects and also did some aliasing with the ParseUser
+    //Deserializes JSONObjects
+
     public static User fromJSON(JSONObject object, ParseUser obj) {
         User user = null;
         try {

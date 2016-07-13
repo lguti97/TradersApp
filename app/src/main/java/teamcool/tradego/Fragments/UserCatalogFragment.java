@@ -6,7 +6,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.List;
+
 import butterknife.ButterKnife;
+//import teamcool.tradego.Item;
+//import teamcool.tradego.ParseClient;
 import teamcool.tradego.R;
 import teamcool.tradego.Models.User;
 
@@ -15,10 +19,14 @@ import teamcool.tradego.Models.User;
  */
 public class UserCatalogFragment extends CatalogListFragment {
     User user;
+    //List<Item> items;
+    //ParseClient parseClient;
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //parseClient = new ParseClient();
         populateCatalog();
     }
 
@@ -39,6 +47,5 @@ public class UserCatalogFragment extends CatalogListFragment {
     public void populateCatalog() {
         //addAll(user.getItems());
     }
-
 
 }
