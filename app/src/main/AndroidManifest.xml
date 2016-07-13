@@ -36,10 +36,9 @@
         <activity android:name=".Activities.MainActivity" />
         <activity android:name=".Activities.FriendImportActivity" />
         <activity android:name=".Activities.ProfileActivity" />
-<<<<<<< HEAD
         <activity android:name=".Activities.FriendListActivity"></activity>
-=======
->>>>>>> master
+        <activity android:name=".Activities.SearchActivity" />
+        <activity android:name=".Activities.NewsFeedActivity"></activity>
     </application>
 
 </manifest>
