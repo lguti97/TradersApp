@@ -11,13 +11,11 @@ import com.facebook.AccessToken;
 import com.facebook.FacebookSdk;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
-import com.parse.FindCallback;
 import com.parse.LogInCallback;
 import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseFacebookUtils;
 import com.parse.ParseObject;
-import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.interceptors.ParseLogInterceptor;
 
@@ -28,12 +26,11 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import teamcool.tradego.Clients.ParseClient;
 import teamcool.tradego.Clients.FBGraphClient;
-import teamcool.tradego.Models.Acquaintance;
+import teamcool.tradego.Clients.ParseClient;
 import teamcool.tradego.Models.Item;
-import teamcool.tradego.R;
 import teamcool.tradego.Models.User;
+import teamcool.tradego.R;
 
 public class LoginActivity extends AppCompatActivity {
 
