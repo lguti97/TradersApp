@@ -39,6 +39,7 @@
         <activity android:name=".Activities.FriendListActivity"></activity>
         <activity android:name=".Activities.SearchActivity" />
         <activity android:name=".Activities.NewsFeedActivity"></activity>
+
     </application>
 
 </manifest>
