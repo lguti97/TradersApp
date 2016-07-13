@@ -2,6 +2,7 @@ package teamcool.tradego.Models;
 
 import com.parse.ParseClassName;
 import com.parse.ParseObject;
+import com.parse.ParseUser;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -74,7 +75,7 @@ public class Item extends ParseObject {
 
 
     // Associate each item with a user
-    public void setOwner(User user) {
+    public void setOwner(ParseUser user) {
         put("owner", user);
     }
 

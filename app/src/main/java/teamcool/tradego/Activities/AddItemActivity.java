@@ -20,16 +20,15 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.parse.ParseException;
+import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
 import java.io.File;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import teamcool.tradego.Clients.ParseClient;
 import teamcool.tradego.Models.Item;
 import teamcool.tradego.R;
-import teamcool.tradego.User;
 
 public class AddItemActivity extends AppCompatActivity {
 
@@ -98,7 +97,6 @@ public class AddItemActivity extends AppCompatActivity {
 
     public void onAddItemClick(View view) {
 
-        ParseClient parseClient = new ParseClient();
 
         Double price;
 
@@ -110,10 +108,10 @@ public class AddItemActivity extends AppCompatActivity {
                 category, etItemDescription.getText().toString(),
                 status,price);
 
-        User user = parseClient.getCurrentParseUser();
-        new_item.setOwner(user);
 
-        //new_item.saveInBackground();
+        new_item.put("author", ParseUser.getCurrentUser());
+
+
 
         // Save the post and return
         new_item.saveInBackground(new SaveCallback() {

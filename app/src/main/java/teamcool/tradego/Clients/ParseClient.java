@@ -1,3 +1,4 @@
+
 package teamcool.tradego.Clients;
 
 import android.util.Log;
@@ -14,9 +15,10 @@ import java.util.List;
 import teamcool.tradego.Models.Item;
 import teamcool.tradego.Models.User;
 
-/**
- * Created by selinabing on 7/11/16.
- */
+
+ //Created by selinabing on 7/11/16.
+
+
 public class ParseClient {
 
     public ParseClient () {
@@ -137,6 +139,7 @@ public class ParseClient {
     public void updateUserDataFromFBAPI(String objectID, final String username, final String location, final String timezone, final String profilePicURL) {
         ParseQuery<User> query = ParseQuery.getQuery(User.class);
         query.getInBackground(objectID, new GetCallback<User>() {
+
             @Override
             public void done(User object, ParseException e) {
                 if (e == null) {
@@ -164,3 +167,4 @@ public class ParseClient {
 
 
 }
+

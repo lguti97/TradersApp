@@ -19,8 +19,6 @@ import java.util.List;
 
 public class User extends ParseObject {
 
-    private String timezone;
-
     public User(){
         super();
     }
@@ -106,6 +104,13 @@ public class User extends ParseObject {
         }
     }
 
+    public static User constructBlankUser() {
+        String placeholder_str = "placeholder";
+        List<Item> placeholder_item = new ArrayList<>();
+        List<User> placeholder_friends = new ArrayList<>();
+        return new User(placeholder_str,placeholder_str,placeholder_str,placeholder_str,placeholder_str,placeholder_item,placeholder_friends);
+    }
+
     public static User fromJSON(JSONObject object) {
         User user = null;
         try {
@@ -140,4 +145,3 @@ public class User extends ParseObject {
         return users;
     }
 }
-

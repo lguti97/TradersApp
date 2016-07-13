@@ -54,7 +54,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
 
-        ParseObject.registerSubclass(User.class);
+        //ParseObject.registerSubclass(User.class);
         ParseObject.registerSubclass(Item.class);
 
 
@@ -118,7 +118,7 @@ public class LoginActivity extends AppCompatActivity {
                 // it might be because you have no PERMISSION to access it
                 // look it up in API and add more permissions to the array
 
-                Intent i = new Intent (LoginActivity.this, FriendImportActivity.class);
+                Intent i = new Intent (LoginActivity.this, AddItemActivity.class);
                 startActivity(i);
             }
         });
