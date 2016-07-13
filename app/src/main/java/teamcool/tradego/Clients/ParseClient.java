@@ -1,3 +1,4 @@
+
 package teamcool.tradego.Clients;
 
 import com.facebook.AccessToken;
@@ -10,9 +11,10 @@ import java.util.List;
 import teamcool.tradego.Models.Item;
 import teamcool.tradego.Models.User;
 
-/**
- * Created by selinabing on 7/11/16.
- */
+
+ //Created by selinabing on 7/11/16.
+
+
 public class ParseClient {
 
     public ParseClient () {
@@ -109,3 +111,4 @@ public class ParseClient {
         object.saveInBackground();
     } */
  }
+

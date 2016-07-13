@@ -11,6 +11,7 @@ import java.util.List;
 import butterknife.ButterKnife;
 //import teamcool.tradego.Item;
 //import teamcool.tradego.ParseClient;
+
 import teamcool.tradego.R;
 import teamcool.tradego.Models.User;
 

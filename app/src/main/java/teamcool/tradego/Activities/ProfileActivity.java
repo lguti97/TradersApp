@@ -12,7 +12,10 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import jp.wasabeef.picasso.transformations.RoundedCornersTransformation;
 import teamcool.tradego.Fragments.UserCatalogFragment;
+
 //import teamcool.tradego.ParseClient;
+
+
 import teamcool.tradego.R;
 import teamcool.tradego.Models.User;
 
