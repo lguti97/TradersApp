@@ -1,8 +1,6 @@
 package teamcool.tradego.Models;
 
 
-import com.parse.ParseClassName;
-import com.parse.ParseObject;
 import com.parse.ParseUser;
 
 import org.json.JSONArray;
@@ -10,7 +8,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.List;
 
 
 
@@ -23,6 +20,7 @@ public class User {
     private String profilePicUrl;
 
     public User () {
+
     }
 
     //Updates member variables + aliasing
@@ -100,4 +98,3 @@ public class User {
         return users;
     }
 }
-
