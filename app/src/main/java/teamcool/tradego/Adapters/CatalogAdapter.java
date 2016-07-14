@@ -30,7 +30,9 @@ public class CatalogAdapter extends RecyclerView.Adapter<CatalogAdapter.ViewHold
         }
     }
 
+    //private List<Item> items;
     private List<Item> items;
+
 
     public CatalogAdapter(List<Item> items) {
         this.items = items;
