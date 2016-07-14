@@ -5,11 +5,14 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.parse.ParseUser;
 
 import java.util.List;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import teamcool.tradego.Clients.ParseClient;
 import teamcool.tradego.Models.Item;
@@ -24,6 +27,9 @@ public class CatalogAdapter extends RecyclerView.Adapter<CatalogAdapter.ViewHold
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
         //butterknife binding goes here:
+        @BindView(R.id.tvNewsFeedItemName) TextView itemName;
+        @BindView(R.id.ivNewsFeedDisplayImg) ImageView ivItemImage;
+
 
 
         public ViewHolder(View itemView) {
@@ -57,7 +63,7 @@ public class CatalogAdapter extends RecyclerView.Adapter<CatalogAdapter.ViewHold
         items = parseClient.queryItemsInDatabaseOnUser(ParseUser.getCurrentUser());
         Item item = items.get(position);
         //populate each item by setting its text and media
-
+        holder.itemName.setText(item.getItem_name());
     }
 
     @Override
@@ -79,5 +85,8 @@ public class CatalogAdapter extends RecyclerView.Adapter<CatalogAdapter.ViewHold
         items.add(index,item);
         notifyItemInserted(index);
     }
+
+
+
 
 }

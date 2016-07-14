@@ -5,12 +5,16 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.parse.ParseUser;
 
 import java.util.List;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import teamcool.tradego.R;
-import teamcool.tradego.Models.User;
 
 /**
  * Created by kshah97 on 7/8/16.
@@ -21,6 +25,8 @@ public class FriendsAdapter extends RecyclerView.Adapter<FriendsAdapter.ViewHold
 
         //butterknife binding goes here:
         //@BindView(R.id.someId) Type someId;
+        @BindView(R.id.ivProfileImage) ImageView ivProfileImage;
+        @BindView(R.id.tvUserName) TextView tvUsername;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -30,9 +36,9 @@ public class FriendsAdapter extends RecyclerView.Adapter<FriendsAdapter.ViewHold
         }
     }
 
-    private List<User> friends;
+    private List<ParseUser> friends;
 
-    public FriendsAdapter(List<User> friends) {
+    public FriendsAdapter(List<ParseUser> friends) {
         this.friends = friends;
     }
 
@@ -47,8 +53,14 @@ public class FriendsAdapter extends RecyclerView.Adapter<FriendsAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        User friend = friends.get(position);
+        ParseUser friend = friends.get(position);
         //populate each item by setting its text and media
+        holder.tvUsername.setText(friend.getString("username"));
+        holder.ivProfileImage.setImageResource(0);
+//        Picasso.with(getContext()).load(friend.getString("profilePicUrl"))
+//                .fit().centerInside()
+//                .transform(new RoundedCornersTransformation(10, 10))
+//                .into(holder.ivProfileImage);
     }
 
     @Override
@@ -61,7 +73,7 @@ public class FriendsAdapter extends RecyclerView.Adapter<FriendsAdapter.ViewHold
         notifyDataSetChanged();
     }
 
-    public void clearAndAddAll(List<User> newFriends) {
+    public void clearAndAddAll(List<ParseUser> newFriends) {
         friends.addAll(newFriends);
         notifyDataSetChanged();
     }

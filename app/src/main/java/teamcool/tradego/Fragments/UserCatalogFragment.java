@@ -53,8 +53,6 @@ public class UserCatalogFragment extends CatalogListFragment {
 
         //parseClient.queryItemsInDatabaseOnUser(ParseUser.getCurrentUser()).clear();
         items = parseClient.queryItemsInDatabaseOnUser(ParseUser.getCurrentUser());
-
         addAll(items);
-
     }
 }

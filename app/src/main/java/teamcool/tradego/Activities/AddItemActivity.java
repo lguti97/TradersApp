@@ -1,5 +1,6 @@
 package teamcool.tradego.Activities;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -115,7 +116,7 @@ public class AddItemActivity extends AppCompatActivity {
 
         new_item.saveInBackground();
 
-
+//
 //        // Save the post and return
 //        new_item.saveInBackground(new SaveCallback() {
 //
@@ -134,12 +135,10 @@ public class AddItemActivity extends AppCompatActivity {
 //            }
 //
 //        });
-//
-//
-//
-//
-//        this.setResult(Activity.RESULT_OK);
-//        this.finish();
+
+
+        this.setResult(Activity.RESULT_OK);
+        this.finish();
 
         Toast.makeText(this, "Item Added!", Toast.LENGTH_SHORT).show();
 
