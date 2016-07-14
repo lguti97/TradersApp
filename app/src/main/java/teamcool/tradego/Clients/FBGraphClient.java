@@ -13,6 +13,7 @@ import org.json.JSONException;
 
 import java.util.ArrayList;
 
+import teamcool.tradego.Models.Acquaintance;
 import teamcool.tradego.Models.User;
 
 /**
@@ -37,20 +38,24 @@ public class FBGraphClient {
         return currentUserFbId;
     }
 
-    public ArrayList<User> getFriends() {
-        final ArrayList<User> friends = new ArrayList<>();
-        //since getting friends accesses significant amount of data
-        // the fb api recommended us to use batch request
-        GraphRequestBatch batch = new GraphRequestBatch(
+    public ArrayList<Acquaintance> getFriends() {
+        final ArrayList<Acquaintance> acquaintances = new ArrayList<>();
+        GraphRequest request =
                 GraphRequest.newMyFriendsRequest(accessToken,
                         new GraphRequest.GraphJSONArrayCallback() {
                             @Override
-                            public void onCompleted(JSONArray objects, GraphResponse response) {
-                                friends.addAll(User.fromJSONArray(objects));
+                            public void onCompleted(JSONArray jsonArray, GraphResponse response) {
+                                acquaintances.addAll(Acquaintance.fromJSONArray(jsonArray));
                             }
-                        }));
+                        });
 
-        return friends;
+        Bundle params = new Bundle();
+        params.putString("fields", "name, picture");
+        request.setParameters(params);
+        request.executeAsync();
+
+
+        return acquaintances;
     }
 
 

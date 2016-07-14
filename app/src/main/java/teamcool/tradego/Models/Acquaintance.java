@@ -14,12 +14,8 @@ import java.util.ArrayList;
  * Created by lguti on 7/11/16.
  */
 
-
+@ParseClassName("Acquaintance")
 public class Acquaintance extends ParseObject {
-    /*
-    private String profile_url ;
-    private String name;
-
     //Going to use a One - to - Many Relationship for this
     //Will make a parse object out of this.
 
@@ -29,7 +25,8 @@ public class Acquaintance extends ParseObject {
 
     public Acquaintance(String name, String profile_url){
         super();
-
+        setName(name);
+        setProfile_url(profile_url);
     }
 
     // Will be used to access fields
@@ -43,11 +40,11 @@ public class Acquaintance extends ParseObject {
 
     // To modify field values
 
-    public void setName(){
+    public void setName(String name){
         put("name", name);
     }
 
-    public void setProfile_url(){
+    public void setProfile_url(String profile_url){
         put("picture", profile_url);
     }
 
@@ -70,7 +67,9 @@ public class Acquaintance extends ParseObject {
     public static Acquaintance fromJSON(JSONObject object){
         Acquaintance acquaintance = null;
         try {
-            acquaintance = new Acquaintance(object.getString("name"), object.getString("picture"));
+            acquaintance = new Acquaintance(object.getString("name"), object.getJSONObject("picture").getJSONObject("data").getString("url"));
+            acquaintance.setOwner(ParseUser.getCurrentUser());
+            acquaintance.saveInBackground();
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -94,6 +93,6 @@ public class Acquaintance extends ParseObject {
             }
         }
         return acquaintances;
-    } */
+    }
 
 }

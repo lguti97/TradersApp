@@ -28,6 +28,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import teamcool.tradego.Clients.FBGraphClient;
 import teamcool.tradego.Clients.ParseClient;
+import teamcool.tradego.Models.Acquaintance;
 import teamcool.tradego.Models.Item;
 import teamcool.tradego.Models.User;
 import teamcool.tradego.R;
@@ -54,6 +55,8 @@ public class LoginActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         ParseObject.registerSubclass(Item.class);
+        ParseObject.registerSubclass(Acquaintance.class);
+
         FacebookSdk.sdkInitialize(this);
 
         //Connects to the Parse Server
@@ -112,7 +115,7 @@ public class LoginActivity extends AppCompatActivity {
                 // it might be because you have no PERMISSION to access it
                 // look it up in API and add more permissions to the array
 
-                Intent i = new Intent (LoginActivity.this, NewsFeedActivity.class);
+                Intent i = new Intent (LoginActivity.this, FriendImportActivity.class);
 
                 startActivity(i);
             }

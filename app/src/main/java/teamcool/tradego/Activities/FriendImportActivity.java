@@ -25,24 +25,24 @@ ACTIVITY USED TO IMPORT FRIENDS VIA FACEBOOK/EMAIL
 
 public class FriendImportActivity extends AppCompatActivity {
     String currentUserFbId;
+    ArrayList<Acquaintance> acquaintances;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_friend_import);
+
         FBGraphClient fbGraphClient = new FBGraphClient();
-        currentUserFbId = fbGraphClient.getCurrentUserFbId();
+        //Populates the ArrayList
+        acquaintances = fbGraphClient.getFriends();
 
-
-
-        /*
-        //TODO. Populate data into this ArrayList.
-        ArrayList<Acquaintance> acquaintances = new ArrayList<>();
 
         RecyclerView rvAcquaintances = (RecyclerView) findViewById(R.id.rvAcquaintances);
-        AcquaintanceAdapter adapter = new AcquaintanceAdapter(FriendImportActivity.this, acquaintances);
-        //rvAcquaintances.setAdapter(adapter);
+        AcquaintanceAdapter adapter = new AcquaintanceAdapter(this, acquaintances);
+        rvAcquaintances.setAdapter(adapter);
         //default manager we wanted.
-        rvAcquaintances.setLayoutManager(new LinearLayoutManager(this)); */
+        rvAcquaintances.setLayoutManager(new LinearLayoutManager(this));
 
 
 
