@@ -7,9 +7,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.parse.ParseUser;
+import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import jp.wasabeef.picasso.transformations.RoundedCornersTransformation;
+import teamcool.tradego.Clients.ParseClient;
 import teamcool.tradego.Fragments.UserCatalogFragment;
 import teamcool.tradego.R;
 
@@ -19,8 +22,12 @@ public class ProfileActivity extends AppCompatActivity {
 
     @BindView(R.id.ivProfileImage) ImageView ivProfileImage;
     @BindView(R.id.tvUserName) TextView tvUserName;
+    @BindView(R.id.tvItemsBought) TextView tvItemsBought;
+    @BindView(R.id.tvItemsSold) TextView tvItemsSold;
+
+
     ParseUser user;
-    //ParseClient parseClient;
+    ParseClient parseClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,13 +35,12 @@ public class ProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_profile);
         ButterKnife.bind(this);
 
-        //parseClient = new ParseClient();
+        parseClient = new ParseClient();
 
-        //user = parseClient.getCurrentParseUser();
 
         user = ParseUser.getCurrentUser();
 
-        //populateUserHeader(user);
+        populateUserHeader(user);
 
         if(savedInstanceState == null) {
 
@@ -45,18 +51,19 @@ public class ProfileActivity extends AppCompatActivity {
         }
     }
 
-    /*
+
     //populate user header
     private void populateUserHeader(ParseUser user) {
 
-        tvUserName.setText(user.getUsername());
-        Picasso.with(this).load(user.getprofilePicUrl())
+        tvUserName.setText(user.getString("username"));
+        Picasso.with(this).load(user.getString("profilePicUrl"))
                 .fit().centerInside()
                 .transform(new RoundedCornersTransformation(10, 10))
                 .into(ivProfileImage);
 
-        //tvUserName.setText(user.getUsername());
+        tvItemsBought.setText("Items Bought: " + "32");
+        tvItemsSold.setText("Items sold: " + "56");
 
     }
-    */
+
 }
