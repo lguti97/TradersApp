@@ -28,7 +28,6 @@ public class CatalogListFragment extends Fragment {
     //BindView to swipContainer SwipeRefreshLayout, toolbar
 
     private CatalogAdapter catalogAdapter;
-    //private ArrayList<Item> items;
     private ArrayList<Item> items;
 
     @Nullable

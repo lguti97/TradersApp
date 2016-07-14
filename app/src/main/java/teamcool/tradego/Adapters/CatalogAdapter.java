@@ -6,9 +6,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.parse.ParseUser;
+
 import java.util.List;
 
 import butterknife.ButterKnife;
+import teamcool.tradego.Clients.ParseClient;
 import teamcool.tradego.Models.Item;
 import teamcool.tradego.R;
 
@@ -17,10 +20,11 @@ import teamcool.tradego.R;
  */
 public class CatalogAdapter extends RecyclerView.Adapter<CatalogAdapter.ViewHolder> {
 
+
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
         //butterknife binding goes here:
-        //@BindView(R.id.someId) Type someId;
+
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -30,8 +34,8 @@ public class CatalogAdapter extends RecyclerView.Adapter<CatalogAdapter.ViewHold
         }
     }
 
-    //private List<Item> items;
     private List<Item> items;
+    private ParseClient parseClient;
 
 
     public CatalogAdapter(List<Item> items) {
@@ -49,8 +53,11 @@ public class CatalogAdapter extends RecyclerView.Adapter<CatalogAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
+        parseClient = new ParseClient();
+        items = parseClient.queryItemsInDatabaseOnUser(ParseUser.getCurrentUser());
         Item item = items.get(position);
         //populate each item by setting its text and media
+
     }
 
     @Override
