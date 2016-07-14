@@ -45,7 +45,7 @@
         android:layout_height="wrap_content"
         android:layout_toRightOf="@id/ivNavProfilePic"
         android:layout_below="@id/tvNavItemsSold"
-        android:text="251 items bought"
-        android:id="@+id/tvNavItemsBought" />
+        android:text="251 items on hold"
+        android:id="@+id/tvNavItemsOnhold" />
 
 </RelativeLayout>

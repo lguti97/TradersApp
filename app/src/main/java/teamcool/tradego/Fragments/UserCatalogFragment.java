@@ -52,7 +52,8 @@ public class UserCatalogFragment extends CatalogListFragment {
     public void populateCatalog() {
 
         //parseClient.queryItemsInDatabaseOnUser(ParseUser.getCurrentUser()).clear();
-        items = parseClient.queryItemsInDatabaseOnUser(ParseUser.getCurrentUser());
+        items = parseClient.queryOnholdItemsInDatabaseOnUser(ParseUser.getCurrentUser());
         addAll(items);
+
     }
 }

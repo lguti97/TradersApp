@@ -55,10 +55,11 @@ public class ParseClient {
         return items;
     }
 
-    public List<Item> queryItemsInDatabaseOnUser(ParseUser user) {
+    public List<Item> queryAvailableItemsInDatabaseOnUser(ParseUser user) {
         List<Item> items = new ArrayList<>();
         ParseQuery<Item> query = ParseQuery.getQuery(Item.class);
         query.whereEqualTo("owner",user);
+        query.whereEqualTo("status","available");
         try {
             items = query.find();
         } catch (ParseException e) {
@@ -67,12 +68,71 @@ public class ParseClient {
         return items;
     }
 
-    /*
-    public int countNumFriendsOfUser(ParseUser user) {
+    public List<Item> querySoldItemsInDatabaseOnUser(ParseUser user) {
+        List<Item> items = new ArrayList<>();
         ParseQuery<Item> query = ParseQuery.getQuery(Item.class);
-        query.whereEqualTo("owner",ParseUser)
+        query.whereEqualTo("owner",user);
+        query.whereEqualTo("status","sold");
+        try {
+            items = query.find();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return items;
     }
-    */
+
+    public List<Item> queryOnholdItemsInDatabaseOnUser(ParseUser user) {
+        List<Item> items = new ArrayList<>();
+        ParseQuery<Item> query = ParseQuery.getQuery(Item.class);
+        query.whereEqualTo("owner",user);
+        query.whereEqualTo("status","On hold");
+        try {
+            items = query.find();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return items;
+    }
+
+    public int countNumFriendsOfUser(ParseUser user) {
+        int count = -15251;
+        /*
+        ParseQuery<ParseUser> query = ParseQuery.getQuery(ParseUser.class);
+        try {
+            count = query.count();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        */
+        return count;
+    }
+
+    public int countNumItemsSold(ParseUser user) {
+        int count = -15251;
+        ParseQuery<Item> query = ParseQuery.getQuery(Item.class);
+        query.whereEqualTo("owner",user);
+        query.whereEqualTo("status","Sold");
+        try {
+            count = query.count();
+        }
+        catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return count;
+    }
+
+    public int countNumsItemsOnhold(ParseUser user) {
+        int count = -15251;
+        ParseQuery<Item> query = ParseQuery.getQuery(Item.class);
+        query.whereEqualTo("owner",user);
+        query.whereEqualTo("status","On hold");
+        try {
+            count = query.count();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return count;
+    }
 
  }
 

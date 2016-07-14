@@ -72,12 +72,16 @@ public class Item extends ParseObject {
         put("description",description);
     }
 
+    public String getTransactionTime() { return getString("transaction_time"); }
+
+    public void setTransactionTime(String time) { put("transaction_time",time); }
 
     // Associate each item with a user
     public void setOwner(ParseUser user) {
         put("owner", user);
     }
 
+    public void setBuyer(ParseUser user) { put("buyer", user); }
 
     public static Item fromJSON(JSONObject object) {
         Item item = null;
