@@ -157,6 +157,15 @@ public class NewsFeedActivity extends AppCompatActivity {
         tvNavItemsSold.setText(numItemsSold);
         tvNavItemsOnhold.setText(numItemsOnhold);
 
+        //Launching profiile activity when profile picture in the navigation drawer is clicked
+        ivNavProfilePic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(NewsFeedActivity.this, ProfileActivity.class);
+                startActivity(i);
+            }
+        });
+
     }
 
     @Override
