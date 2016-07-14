@@ -16,6 +16,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -32,6 +33,7 @@ import jp.wasabeef.picasso.transformations.CropCircleTransformation;
 import teamcool.tradego.Clients.ParseClient;
 import teamcool.tradego.Fragments.CategoriesTimelineFragment;
 import teamcool.tradego.Fragments.TopTimelineFragment;
+import teamcool.tradego.Fragments.UserCatalogFragment;
 import teamcool.tradego.R;
 
 public class NewsFeedActivity extends AppCompatActivity {
@@ -52,9 +54,11 @@ public class NewsFeedActivity extends AppCompatActivity {
 
     ActionBarDrawerToggle drawerToggle;
 
+    private int selector;
+
     public class catalogPagerAdapter extends FragmentStatePagerAdapter {
         final int PAGE_COUNT = 2;
-        private String tabNames[] = {"Top", "Categories"};
+        private String tabNames[];
 
         public catalogPagerAdapter(FragmentManager fragmentManager) { super(fragmentManager); }
 
@@ -69,6 +73,7 @@ public class NewsFeedActivity extends AppCompatActivity {
             }
         }
 
+
         @Override
         public int getCount() {
             return PAGE_COUNT;
@@ -76,7 +81,18 @@ public class NewsFeedActivity extends AppCompatActivity {
 
         @Override
         public CharSequence getPageTitle(int position) {
-            return tabNames[position];
+            String tab0Names[] = {"Top", "Categories"};
+            String tab1Names[] = {"Sold", "Onhold"};
+            if (selector == 0) {
+                Log.d("DEBUG","count how many times 0 reached");
+                return tab0Names[position];
+            }
+            else {
+                Log.d("DEBUG","count how many times 1 reached");
+                return tab1Names[position];
+            }
+
+            //return tabNames[position];
         }
     }
 
@@ -88,11 +104,15 @@ public class NewsFeedActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
 
+        parseClient = new ParseClient();
+
         //configure toolbar
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setHomeButtonEnabled(true);
+
+        selector = 0;
 
         //viewpager setup
         fragmentStatePagerAdapter = new catalogPagerAdapter(getSupportFragmentManager());
@@ -126,16 +146,17 @@ public class NewsFeedActivity extends AppCompatActivity {
         TextView tvNavUserName = (TextView) headerView.findViewById(R.id.tvNavUserName);
         TextView tvNavNumFriends = (TextView) headerView.findViewById(R.id.tvNavNumFriends);
         TextView tvNavItemsSold = (TextView) headerView.findViewById(R.id.tvNavItemsSold);
-        TextView tvNavItemsBought = (TextView) headerView.findViewById(R.id.tvNavItemsBought);
+        TextView tvNavItemsOnhold = (TextView) headerView.findViewById(R.id.tvNavItemsOnhold);
         ParseUser currUser = ParseUser.getCurrentUser();
         Picasso.with(this).load(currUser.getString("profilePicUrl")).fit().transform(new CropCircleTransformation()).into(ivNavProfilePic);
         tvNavUserName.setText(currUser.getString("username"));
-        tvNavNumFriends.setText("122"+" friends"); //placeholder
-        tvNavItemsSold.setText("150"+" items sold"); //placeholder
-        tvNavItemsBought.setText("251"+" items bought"); //placeholder
+        String numFriends = parseClient.countNumFriendsOfUser(currUser)+" friends";
+        String numItemsSold = parseClient.countNumItemsSold(currUser)+" items sold";
+        String numItemsOnhold = parseClient.countNumsItemsOnhold(currUser)+" items on hold";
+        tvNavNumFriends.setText(numFriends);
+        tvNavItemsSold.setText(numItemsSold);
+        tvNavItemsOnhold.setText(numItemsOnhold);
 
-        //initialize clients
-        parseClient = new ParseClient();
     }
 
     @Override
@@ -206,15 +227,18 @@ public class NewsFeedActivity extends AppCompatActivity {
         Fragment fragment = null;
         Class fragmentClass = null;
         switch(item.getItemId()) {
-            /*
-            case R.id.nav_first_fragment:
-                fragmentClass = SomeFragment.class;
+            case R.id.nav_catalog_fragment:
+                selector = 1;
+                Log.d("DEBUG","reached selector set 1");
+                tabStrip.setViewPager(viewpager);
+                //fragmentStatePagerAdapter.upd
+                fragmentClass = UserCatalogFragment.class;
                 break;
-            */
+
         }
 
         try {
-            fragment = (Fragment) fragmentClass.newInstance();
+            //fragment = (Fragment) fragmentClass.newInstance();
         } catch (Exception e) {
             e.printStackTrace();
         }

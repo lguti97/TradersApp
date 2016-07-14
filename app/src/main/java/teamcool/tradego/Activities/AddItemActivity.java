@@ -110,10 +110,9 @@ public class AddItemActivity extends AppCompatActivity {
 
 
         //User user = parseClient.getCurrentParseUser();
-        //new_item.setOwner(user);
+        new_item.setOwner(ParseUser.getCurrentUser());
 
 
-        new_item.put("author", ParseUser.getCurrentUser());
 
 
 
