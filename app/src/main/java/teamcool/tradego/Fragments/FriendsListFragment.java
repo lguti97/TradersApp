@@ -9,13 +9,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.parse.ParseUser;
+
 import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import teamcool.tradego.Adapters.FriendsAdapter;
 import teamcool.tradego.R;
-import teamcool.tradego.Models.User;
 
 /**
  * Created by kshah97 on 7/8/16.
@@ -27,13 +28,16 @@ public class FriendsListFragment extends Fragment {
     //BindView to swipContainer SwipeRefreshLayout, toolbar
 
     private FriendsAdapter friendsAdapter;
-    private ArrayList<User> friends;
+    private ArrayList<ParseUser> friends;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_friends, container, false);
         ButterKnife.bind(this, v);
+        rvFriends.setLayoutManager(new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL));
+        rvFriends.setAdapter(friendsAdapter);
+        rvFriends.setHasFixedSize(true);
         //listViewHere.setAdapter(friendsAdapter);
         //set listView's onItemLongClickListener, onItemClickListener, etc.
         return v;
@@ -45,10 +49,7 @@ public class FriendsListFragment extends Fragment {
         friends = new ArrayList();
         friendsAdapter = new FriendsAdapter(friends);
 
-        //set layout to StaggeredGrid
-        rvFriends.setLayoutManager(new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL));
-        rvFriends.setAdapter(friendsAdapter);
-        rvFriends.setHasFixedSize(true);
+
         //rvFriends.addOnScrollLisnener for endless scrolling
         //swipeContainer set on refresh listener
         //swipeContainer setColorSchemeResources to configure refreshing colors

@@ -157,6 +157,20 @@ public class ParseClient {
             e.printStackTrace();
         }
         return count;
+    
+    public Item queryItemBasedonObjectID(String itemId) {
+
+        Item item = new Item();
+        ParseQuery<Item> query = ParseQuery.getQuery(Item.class);
+        query.setCachePolicy(ParseQuery.CachePolicy.CACHE_ELSE_NETWORK); // or CACHE_ONLY
+
+        query.whereEqualTo("objectId", itemId);
+        try {
+            item = query.find().get(0);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return item;
     }
 
  }
