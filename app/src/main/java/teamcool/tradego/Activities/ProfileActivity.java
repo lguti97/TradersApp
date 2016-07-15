@@ -30,7 +30,6 @@ public class ProfileActivity extends AppCompatActivity {
 
     @BindView(R.id.ivProfileImage) ImageView ivProfileImage;
     @BindView(R.id.tvUserName) TextView tvUserName;
-    @BindView(R.id.tvItemsBought) TextView tvItemsBought;
     @BindView(R.id.tvItemsSold) TextView tvItemsSold;
 
     SoldCatalogFragment soldCatalogFragment;
@@ -87,8 +86,7 @@ public class ProfileActivity extends AppCompatActivity {
                 .transform(new RoundedCornersTransformation(10, 10))
                 .into(ivProfileImage);
 
-        tvItemsBought.setText("Items Bought: " + "32");
-        tvItemsSold.setText("Items sold: " + "56");
+        tvItemsSold.setText("Items sold: " + parseClient.countNumItemsSold(user));
 
     }
 

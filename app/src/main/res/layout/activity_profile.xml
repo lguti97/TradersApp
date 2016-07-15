@@ -60,16 +60,10 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/tvItemsBought"
-                    android:text="Items Bought"
-                    />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     android:id="@+id/tvItemsSold"
                     android:text="Items Sold"
-                    android:layout_marginLeft="110dp" />
+                    android:layout_gravity="center"
+                    android:gravity="center" />
 
             </LinearLayout>
 

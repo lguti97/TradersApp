@@ -1,6 +1,7 @@
 package teamcool.tradego.Adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +15,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import teamcool.tradego.Activities.DetailsActivity;
 import teamcool.tradego.Clients.ParseClient;
 import teamcool.tradego.Models.Item;
 import teamcool.tradego.R;
@@ -33,6 +35,7 @@ public class CatalogAdapter extends RecyclerView.Adapter<CatalogAdapter.ViewHold
 
 
 
+
         public ViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this,itemView);
@@ -43,6 +46,7 @@ public class CatalogAdapter extends RecyclerView.Adapter<CatalogAdapter.ViewHold
 
     private List<Item> items;
     private ParseClient parseClient;
+    private Context context;
 
 
     public CatalogAdapter(List<Item> items) {
@@ -51,7 +55,7 @@ public class CatalogAdapter extends RecyclerView.Adapter<CatalogAdapter.ViewHold
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        Context context = parent.getContext();
+        context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
         View catalogView = inflater.inflate(R.layout.item_each, parent, false);
         ViewHolder viewHolder = new ViewHolder(catalogView);
@@ -62,10 +66,21 @@ public class CatalogAdapter extends RecyclerView.Adapter<CatalogAdapter.ViewHold
     public void onBindViewHolder(ViewHolder holder, int position) {
         parseClient = new ParseClient();
         items = parseClient.queryOnholdItemsInDatabaseOnUser(ParseUser.getCurrentUser());
-        Item item = items.get(position);
+        final Item item = items.get(position);
         //populate each item by setting its text and media
-
         holder.itemName.setText(item.getItem_name());
+
+        //on click listener to launch detail activity
+        holder.ivItemImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent i = new Intent(context, DetailsActivity.class);
+                i.putExtra("item_id", item.getObjectId());
+                context.startActivity(i);
+
+            }
+        });
 
     }
 
