@@ -6,7 +6,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.List;
+
 import butterknife.ButterKnife;
+import teamcool.tradego.Clients.ParseClient;
+import teamcool.tradego.Models.Item;
 import teamcool.tradego.R;
 
 /**
@@ -14,10 +18,26 @@ import teamcool.tradego.R;
  */
 public class CategoriesTimelineFragment extends CatalogListFragment {
 
+    List<Item> items;
+    ParseClient parseClient;
+
+    public CategoriesTimelineFragment() {
+
+    }
+
+    public static CategoriesTimelineFragment newInstance (String category) {
+        CategoriesTimelineFragment frag = new CategoriesTimelineFragment();
+        Bundle args = new Bundle();
+        args.putString("category",category);
+        frag.setArguments(args);
+        return frag;
+    }
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //populate time line
+        parseClient = new ParseClient();
+        populate(getArguments().getString("category"));
     }
 
     @Nullable
@@ -34,6 +54,9 @@ public class CategoriesTimelineFragment extends CatalogListFragment {
         super.onViewCreated(view, savedInstanceState);
     }
 
-    //method to populate timeline
+    public void populate(String category) {
+        items = parseClient.queryItemsInDatabaseOnCategory(category);
+        addAll(items);
+    }
 
 }

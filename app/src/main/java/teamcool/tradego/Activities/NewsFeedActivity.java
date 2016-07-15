@@ -61,6 +61,10 @@ public class NewsFeedActivity extends AppCompatActivity {
 
         public catalogPagerAdapter(FragmentManager fragmentManager) { super(fragmentManager); }
 
+        final String tab0Names[] = {"Top", "Sports", "Clothes", "Accessories", "Stationary", "Other"};
+        final String tab1Names[] = {"Available", "Onhold", "Sold"};
+        final String tab2Names[] = {""};
+        final String tab3Names[] = {"Sold", "Bought", "Onhold"};
 
         @Override
         public Fragment getItem(int position) {
@@ -68,44 +72,66 @@ public class NewsFeedActivity extends AppCompatActivity {
                 if (position == 0)
                     return new TopTimelineFragment();
                 else
-                    return new CategoriesTimelineFragment();
+                    return CategoriesTimelineFragment.newInstance(tab0Names[position]);
             }
             else if (selector == 1) {
                 String currentUserObjID = ParseUser.getCurrentUser().getObjectId();
                 if (position == 0)
-                    return UserCatalogFragment.newInstance(currentUserObjID,"Available");
+                    return UserCatalogFragment.newInstance(currentUserObjID,"Available", false);
                 else if (position == 1)
-                    return UserCatalogFragment.newInstance(currentUserObjID,"On hold");
+                    return UserCatalogFragment.newInstance(currentUserObjID,"On hold", false);
                 else
-                    return UserCatalogFragment.newInstance(currentUserObjID,"Sold");
+                    return UserCatalogFragment.newInstance(currentUserObjID,"Sold", false);
+            }
+            else if (selector == 3) {
+                String currentUserObjID = ParseUser.getCurrentUser().getObjectId();
+                if (position == 0) //Sold
+                    return UserCatalogFragment.newInstance(currentUserObjID,"Sold", true);
+                else if (position == 1) //Bought
+                    return UserCatalogFragment.newInstance(currentUserObjID,"Bought", true);
+                else //on hold
+                    return UserCatalogFragment.newInstance(currentUserObjID,"On hold", true);
             }
             else
                 return null;
         }
 
+        @Override
+        public int getItemPosition(Object object) {
+            return POSITION_NONE;
+        }
 
         @Override
         public int getCount() {
             if (selector == 0)
-                return 2;
+                return 6;
             else if (selector == 1)
                 return 3;
+            else if (selector == 2)
+                return 0;
+            else if (selector == 3)
+                return 3;
             else
-                return 2;
+                return 0;
         }
 
         @Override
         public CharSequence getPageTitle(int position) {
-            String tab0Names[] = {"Top", "Categories"};
-            String tab1Names[] = {"Available", "Onhold", "Sold"};
             if (selector == 0) {
                 Log.d("DEBUG","count how many times 0 reached");
                 return tab0Names[position];
             }
-            else {
+            else if (selector == 1) {
                 Log.d("DEBUG","count how many times 1 reached");
                 return tab1Names[position];
             }
+            else if (selector == 2) {
+                return tab2Names[position];
+            }
+            else {
+                return tab3Names[position];
+            }
+
 
             //return tabNames[position];
         }
@@ -248,30 +274,24 @@ public class NewsFeedActivity extends AppCompatActivity {
     }
 
     public void selectDrawerItem(MenuItem item) {
-        Fragment fragment = null;
-        Class fragmentClass = null;
         switch(item.getItemId()) {
             case R.id.nav_home_fragment:
                 selector = 0;
                 break;
             case R.id.nav_catalog_fragment:
                 selector = 1;
-                //fragmentStatePagerAdapter.upd
-                fragmentClass = UserCatalogFragment.class;
                 break;
+            case R.id.nav_friends_fragment:
+                selector = 2;
+                break;
+            case R.id.nav_transaction_history_fragment:
+                selector = 3;
+                break;
+
 
         }
         tabStrip.setViewPager(viewpager);
         fragmentStatePagerAdapter.notifyDataSetChanged();
-
-        try {
-            //fragment = (Fragment) fragmentClass.newInstance();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        //replace existing fragment
-        //getSupportFragmentManager().beginTransaction().replace(R.id.flNewsfeedContainer, fragment).commit();
 
         //highlight the selected item
         item.setChecked(true);

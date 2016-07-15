@@ -118,7 +118,6 @@ public class LoginActivity extends AppCompatActivity {
                 // look it up in API and add more permissions to the array
 
                 Intent i = new Intent (LoginActivity.this, NewsFeedActivity.class);
-                Intent i = new Intent (LoginActivity.this, NewsFeedActivity.class);
 
                 startActivity(i);
             }

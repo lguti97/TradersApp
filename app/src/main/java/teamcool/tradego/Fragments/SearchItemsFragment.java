@@ -2,12 +2,21 @@ package teamcool.tradego.Fragments;
 
 import android.os.Bundle;
 
+import java.util.List;
+
+import teamcool.tradego.Clients.ParseClient;
+import teamcool.tradego.Models.Item;
+
 public class SearchItemsFragment extends CatalogListFragment {
+
+    List<Item> items;
+    ParseClient parseClient;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //populate();
+        parseClient = new ParseClient();
+        populate();
     }
 
     public static SearchItemsFragment newInstance(String query) {
@@ -20,7 +29,8 @@ public class SearchItemsFragment extends CatalogListFragment {
 
     private void populate() {
         String query = getArguments().getString("query");
-        //
+        items = parseClient.queryItemsInDatabaseOnName(query);
+        addAll(items);
     }
 
 }
