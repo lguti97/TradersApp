@@ -123,4 +123,14 @@
         android:layout_alignTop="@+id/tvItemPrice"
         android:layout_centerHorizontal="true" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Category"
+        android:id="@+id/tvItemCategory"
+        android:layout_below="@+id/tvItemNegotiable"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="20dp" />
+
 </RelativeLayout>

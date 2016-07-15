@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.facebook.messenger.MessengerUtils;
@@ -26,7 +27,19 @@ public class DetailsActivity extends AppCompatActivity {
 
     @BindView(R.id.btnMessenger) View btnMessenger;
     Item item;
+    /*
     @BindView(R.id.tvItemDescription) TextView tvItemDescription;
+    @BindView(R.id.tvItemName) TextView tvItemName;
+    @BindView(R.id.tvItemStatus) TextView tvItemStatus;
+    @BindView(R.id.etPrice) EditText etPrice;
+    @BindView(R.id.tvItemNegotiable) EditText tvItemNegotiable;*/
+
+    TextView tvItemDescription;
+    TextView tvItemName;
+    TextView tvItemStatus;
+    EditText etPrice;
+    TextView tvItemNegotiable;
+    TextView tvItemCategory;
 
 
     private static final int REQUEST_CODE_SHARE_TO_MESSENGER = 15251;
@@ -62,7 +75,20 @@ public class DetailsActivity extends AppCompatActivity {
         parseClient = new ParseClient();
         item = parseClient.queryItemBasedonObjectID(itemId);
 
+        tvItemDescription = (TextView) findViewById(R.id.tvItemDescription);
+        tvItemName = (TextView) findViewById(R.id.tvItemName);
+        tvItemStatus = (TextView) findViewById(R.id.tvItemStatus);
+        etPrice = (EditText) findViewById(R.id.etPrice);
+        tvItemNegotiable = (TextView) findViewById(R.id.tvItemNegotiable);
+        tvItemCategory = (TextView) findViewById(R.id.tvItemCategory);
+
+
         tvItemDescription.setText(item.getDescription());
+        tvItemName.setText(item.getItem_name());
+        tvItemStatus.setText("Status: " + item.getStatus());
+        etPrice.setText(String.valueOf(item.getPrice()));
+        tvItemNegotiable.setText("Negotiable: " + item.getNegotiable());
+        tvItemCategory.setText("Category: " + item.getCategory());
 
     }
 

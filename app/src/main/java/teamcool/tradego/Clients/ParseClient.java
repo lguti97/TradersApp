@@ -59,7 +59,7 @@ public class ParseClient {
         List<Item> items = new ArrayList<>();
         ParseQuery<Item> query = ParseQuery.getQuery(Item.class);
         query.whereEqualTo("owner",user);
-        query.whereEqualTo("status","available");
+        query.whereEqualTo("status","Available");
         try {
             items = query.find();
         } catch (ParseException e) {
@@ -72,7 +72,7 @@ public class ParseClient {
         List<Item> items = new ArrayList<>();
         ParseQuery<Item> query = ParseQuery.getQuery(Item.class);
         query.whereEqualTo("owner",user);
-        query.whereEqualTo("status","sold");
+        query.whereEqualTo("status","Sold");
         try {
             items = query.find();
         } catch (ParseException e) {
@@ -126,6 +126,19 @@ public class ParseClient {
         ParseQuery<Item> query = ParseQuery.getQuery(Item.class);
         query.whereEqualTo("owner",user);
         query.whereEqualTo("status","On hold");
+        try {
+            count = query.count();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return count;
+    }
+
+    public int countNumsItemsAvailable(ParseUser user) {
+        int count = -15251;
+        ParseQuery<Item> query = ParseQuery.getQuery(Item.class);
+        query.whereEqualTo("owner",user);
+        query.whereEqualTo("status","Available");
         try {
             count = query.count();
         } catch (ParseException e) {

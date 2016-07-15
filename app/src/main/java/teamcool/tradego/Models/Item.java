@@ -22,13 +22,14 @@ public class Item extends ParseObject {
         super();
     }
 
-    public Item(String item_name, String category, String description, String status, double price) {
+    public Item(String item_name, String category, String description, String status, double price, String negotiable) {
         super();
         setItem_name(item_name);
         setCategory(category);
         setPrice(price);
         setStatus(status);
         setDescription(description);
+        setNegotiable(negotiable);
     }
 
 
@@ -64,6 +65,14 @@ public class Item extends ParseObject {
         put("status",status);
     }
 
+    public String getNegotiable() {
+        return getString("negotiable");
+    }
+
+    public void setNegotiable(String negotiable) {
+        put("negotiable",negotiable);
+    }
+
     public String getDescription() {
         return getString("description");
     }
@@ -90,7 +99,8 @@ public class Item extends ParseObject {
                     object.getString("category"),
                     object.getString("description"),
                     object.getString("status"),
-                    object.getDouble("price"));
+                    object.getDouble("price"),
+                    object.getString("negotiable"));
         } catch (JSONException e) {
             e.printStackTrace();
         }

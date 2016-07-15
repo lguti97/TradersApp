@@ -31,6 +31,9 @@ public class ProfileActivity extends AppCompatActivity {
     @BindView(R.id.ivProfileImage) ImageView ivProfileImage;
     @BindView(R.id.tvUserName) TextView tvUserName;
     @BindView(R.id.tvItemsSold) TextView tvItemsSold;
+    @BindView(R.id.tvItemsonHold) TextView tvItemsOnHold;
+    @BindView(R.id.tvItemsAvailable) TextView tvItemsAvailable;
+
 
     SoldCatalogFragment soldCatalogFragment;
     OnHoldCatalogFragment onHoldCatalogFragment;
@@ -87,6 +90,8 @@ public class ProfileActivity extends AppCompatActivity {
                 .into(ivProfileImage);
 
         tvItemsSold.setText("Items sold: " + parseClient.countNumItemsSold(user));
+        tvItemsOnHold.setText("Items on hold: " + parseClient.countNumsItemsOnhold(user));
+        tvItemsAvailable.setText("Items Available: " + parseClient.countNumsItemsAvailable(user));
 
     }
 
