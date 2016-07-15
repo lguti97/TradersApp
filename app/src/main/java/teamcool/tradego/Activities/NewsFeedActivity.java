@@ -253,6 +253,7 @@ public class NewsFeedActivity extends AppCompatActivity {
 
         }
         tabStrip.setViewPager(viewpager);
+        fragmentStatePagerAdapter.notifyDataSetChanged();
 
         try {
             //fragment = (Fragment) fragmentClass.newInstance();

@@ -42,6 +42,8 @@ public class UserCatalogFragment extends CatalogListFragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        parseClient = new ParseClient();
+        populateCatalog(getArguments().getString("objId"),getArguments().getString("status"));
     }
 
     @Nullable
@@ -56,14 +58,16 @@ public class UserCatalogFragment extends CatalogListFragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         //if swipe container exists, must setOnRefreshListener here, not onCreateView or onCreate
         super.onViewCreated(view, savedInstanceState);
-        parseClient = new ParseClient();
-        //populateCatalog(getArguments().getString("objId"));
     }
 
     public void populateCatalog(String id, String status) {
 
-        //parseClient.queryItemsInDatabaseOnUser(ParseUser.getCurrentUser()).clear();
-        items = parseClient.queryAvailableItemsInDatabaseOnUser(ParseUser.getCurrentUser());
+        if (status.equalsIgnoreCase("Available"))
+            items = parseClient.queryAvailableItemsInDatabaseOnUser(ParseUser.getCurrentUser());
+        else if (status.equalsIgnoreCase("On hold"))
+            items = parseClient.queryOnholdItemsInDatabaseOnUser(ParseUser.getCurrentUser());
+        else
+            items = parseClient.querySoldItemsInDatabaseOnUser(ParseUser.getCurrentUser());
 
         addAll(items);
 
