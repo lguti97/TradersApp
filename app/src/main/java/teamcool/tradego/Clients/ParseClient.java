@@ -94,6 +94,18 @@ public class ParseClient {
         return items;
     }
 
+    public List<Item> queryBoughtItemsInDatabaseOnUser(ParseUser user) {
+        List<Item> items = new ArrayList<>();
+        ParseQuery<Item> query = ParseQuery.getQuery(Item.class);
+        query.whereEqualTo("buyer",user);
+        try {
+            items = query.find();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return items;
+    }
+
     public int countNumFriendsOfUser(ParseUser user) {
         int count = -15251;
         /*
@@ -129,6 +141,19 @@ public class ParseClient {
         try {
             count = query.count();
         } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return count;
+    }
+
+    public int countNumItemsBought(ParseUser user) {
+        int count = -15210;
+        ParseQuery<Item> query = ParseQuery.getQuery(Item.class);
+        query.whereEqualTo("buyer",user);
+        try {
+            count = query.count();
+        }
+        catch (ParseException e) {
             e.printStackTrace();
         }
         return count;

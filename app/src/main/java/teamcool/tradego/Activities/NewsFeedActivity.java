@@ -31,6 +31,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import jp.wasabeef.picasso.transformations.CropCircleTransformation;
 import teamcool.tradego.Clients.ParseClient;
+import teamcool.tradego.Fragments.CatalogListFragment;
 import teamcool.tradego.Fragments.CategoriesTimelineFragment;
 import teamcool.tradego.Fragments.TopTimelineFragment;
 import teamcool.tradego.Fragments.UserCatalogFragment;
@@ -57,32 +58,46 @@ public class NewsFeedActivity extends AppCompatActivity {
     private int selector;
 
     public class catalogPagerAdapter extends FragmentStatePagerAdapter {
-        final int PAGE_COUNT = 2;
-        private String tabNames[];
 
         public catalogPagerAdapter(FragmentManager fragmentManager) { super(fragmentManager); }
 
 
         @Override
         public Fragment getItem(int position) {
-            if (position == 0) {
-                return new TopTimelineFragment();
-            } else {
-                // to be modified, to handle different categories
-                return new CategoriesTimelineFragment();
+            if (selector == 0) {
+                if (position == 0)
+                    return new TopTimelineFragment();
+                else
+                    return new CategoriesTimelineFragment();
             }
+            else if (selector == 1) {
+                String currentUserObjID = ParseUser.getCurrentUser().getObjectId();
+                if (position == 0)
+                    return UserCatalogFragment.newInstance(currentUserObjID,"Available");
+                else if (position == 1)
+                    return UserCatalogFragment.newInstance(currentUserObjID,"On hold");
+                else
+                    return UserCatalogFragment.newInstance(currentUserObjID,"Sold");
+            }
+            else
+                return null;
         }
 
 
         @Override
         public int getCount() {
-            return PAGE_COUNT;
+            if (selector == 0)
+                return 2;
+            else if (selector == 1)
+                return 3;
+            else
+                return 2;
         }
 
         @Override
         public CharSequence getPageTitle(int position) {
             String tab0Names[] = {"Top", "Categories"};
-            String tab1Names[] = {"Sold", "Onhold"};
+            String tab1Names[] = {"Available", "Onhold", "Sold"};
             if (selector == 0) {
                 Log.d("DEBUG","count how many times 0 reached");
                 return tab0Names[position];
@@ -227,15 +242,17 @@ public class NewsFeedActivity extends AppCompatActivity {
         Fragment fragment = null;
         Class fragmentClass = null;
         switch(item.getItemId()) {
+            case R.id.nav_home_fragment:
+                selector = 0;
+                break;
             case R.id.nav_catalog_fragment:
                 selector = 1;
-                Log.d("DEBUG","reached selector set 1");
-                tabStrip.setViewPager(viewpager);
                 //fragmentStatePagerAdapter.upd
                 fragmentClass = UserCatalogFragment.class;
                 break;
 
         }
+        tabStrip.setViewPager(viewpager);
 
         try {
             //fragment = (Fragment) fragmentClass.newInstance();

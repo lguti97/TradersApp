@@ -54,7 +54,7 @@ public class CatalogAdapter extends RecyclerView.Adapter<CatalogAdapter.ViewHold
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         parseClient = new ParseClient();
-        items = parseClient.queryItemsInDatabaseOnUser(ParseUser.getCurrentUser());
+        items = parseClient.queryAvailableItemsInDatabaseOnUser(ParseUser.getCurrentUser());
         Item item = items.get(position);
         //populate each item by setting its text and media
 
