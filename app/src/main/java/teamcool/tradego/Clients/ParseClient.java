@@ -117,11 +117,11 @@ public class ParseClient {
         return count;
     }
 
-    public int countNumItemsSold(ParseUser user) {
+    public int countNumItemsOnStatus(ParseUser user, String status) {
         int count = -15251;
         ParseQuery<Item> query = ParseQuery.getQuery(Item.class);
         query.whereEqualTo("owner",user);
-        query.whereEqualTo("status","Sold");
+        query.whereEqualTo("status",status);
         try {
             count = query.count();
         }
@@ -131,23 +131,11 @@ public class ParseClient {
         return count;
     }
 
-    public int countNumsItemsOnhold(ParseUser user) {
-        int count = -15251;
-        ParseQuery<Item> query = ParseQuery.getQuery(Item.class);
-        query.whereEqualTo("owner",user);
-        query.whereEqualTo("status","On hold");
-        try {
-            count = query.count();
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return count;
-    }
-
     public int countNumItemsBought(ParseUser user) {
         int count = -15210;
         ParseQuery<Item> query = ParseQuery.getQuery(Item.class);
         query.whereEqualTo("buyer", user);
+        query.whereEqualTo("status","Sold");
         try {
             count = query.count();
         } catch (ParseException e) {

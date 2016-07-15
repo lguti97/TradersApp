@@ -193,8 +193,8 @@ public class NewsFeedActivity extends AppCompatActivity {
         Picasso.with(this).load(currUser.getString("profilePicUrl")).fit().transform(new CropCircleTransformation()).into(ivNavProfilePic);
         tvNavUserName.setText(currUser.getString("username"));
         String numFriends = parseClient.countNumFriendsOfUser(currUser)+" friends";
-        String numItemsSold = parseClient.countNumItemsSold(currUser)+" items sold";
-        String numItemsOnhold = parseClient.countNumsItemsOnhold(currUser)+" items on hold";
+        String numItemsSold = parseClient.countNumItemsOnStatus(currUser,"Sold")+" items sold";
+        String numItemsOnhold = parseClient.countNumItemsOnStatus(currUser,"On hold")+" items on hold";
         tvNavNumFriends.setText(numFriends);
         tvNavItemsSold.setText(numItemsSold);
         tvNavItemsOnhold.setText(numItemsOnhold);
@@ -286,8 +286,11 @@ public class NewsFeedActivity extends AppCompatActivity {
             case R.id.nav_friends_fragment:
                 selector = 2;
                 break;
-            case R.id.nav_transaction_history_fragment:
+            case R.id.nav_transaction_status_fragment:
                 selector = 3;
+                break;
+            case R.id.nav_transaction_history_fragment:
+                selector = 4;
                 break;
 
 

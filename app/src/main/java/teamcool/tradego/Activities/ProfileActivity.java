@@ -40,6 +40,7 @@ public class ProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_profile);
         ButterKnife.bind(this);
 
+
         //Get the viewpager
         //Set the viewpager adapter for the pager
         //find the sliding tabstrip
@@ -79,7 +80,7 @@ public class ProfileActivity extends AppCompatActivity {
                 .transform(new RoundedCornersTransformation(10, 10))
                 .into(ivProfileImage);
 
-        tvItemsSold.setText("Items sold: " + parseClient.countNumItemsSold(user));
+        tvItemsSold.setText("Items sold: " + parseClient.countNumItemsOnStatus(user,"Sold"));
 
     }
 
