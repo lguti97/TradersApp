@@ -46,7 +46,7 @@ public class TopTimelineFragment extends CatalogListFragment {
     }
 
     public void populateTimeLine() {
-        items = parseClient.queryAvailableItemsInDatabaseOnOtherUser(ParseUser.getCurrentUser());
+        items = parseClient.queryItemsOnOtherUserAndStatus(ParseUser.getCurrentUser(),"Available");
         addAll(items);
     }
 

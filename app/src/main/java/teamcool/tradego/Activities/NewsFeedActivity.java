@@ -75,22 +75,23 @@ public class NewsFeedActivity extends AppCompatActivity {
                     return CategoriesTimelineFragment.newInstance(tab0Names[position]);
             }
             else if (selector == 1) {
+                //user's own catalog
                 String currentUserObjID = ParseUser.getCurrentUser().getObjectId();
                 if (position == 0)
-                    return UserCatalogFragment.newInstance(currentUserObjID,"Available", false);
+                    return UserCatalogFragment.newInstance(currentUserObjID,"Available");
                 else if (position == 1)
-                    return UserCatalogFragment.newInstance(currentUserObjID,"On hold", false);
+                    return UserCatalogFragment.newInstance(currentUserObjID,"On hold");
                 else
-                    return UserCatalogFragment.newInstance(currentUserObjID,"Sold", false);
+                    return UserCatalogFragment.newInstance(currentUserObjID,"Sold");
             }
             else if (selector == 3) {
                 String currentUserObjID = ParseUser.getCurrentUser().getObjectId();
                 if (position == 0) //Sold
-                    return UserCatalogFragment.newInstance(currentUserObjID,"Sold", true);
+                    return UserCatalogFragment.newInstance(currentUserObjID,"Sold");
                 else if (position == 1) //Bought
-                    return UserCatalogFragment.newInstance(currentUserObjID,"Bought", true);
+                    return UserCatalogFragment.newInstance(currentUserObjID,"Bought");
                 else //on hold
-                    return UserCatalogFragment.newInstance(currentUserObjID,"On hold", true);
+                    return UserCatalogFragment.newInstance(currentUserObjID,"On hold");
             }
             else
                 return null;
@@ -198,11 +199,12 @@ public class NewsFeedActivity extends AppCompatActivity {
         tvNavItemsSold.setText(numItemsSold);
         tvNavItemsOnhold.setText(numItemsOnhold);
 
-        //Launching profiile activity when profile picture in the navigation drawer is clicked
+        //Launching profile activity when profile picture in the navigation drawer is clicked
         ivNavProfilePic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(NewsFeedActivity.this, ProfileActivity.class);
+                i.putExtra("objectId",ParseUser.getCurrentUser().getObjectId());
                 startActivity(i);
             }
         });

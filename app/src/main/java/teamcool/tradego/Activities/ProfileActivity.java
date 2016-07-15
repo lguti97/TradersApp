@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -18,13 +19,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import jp.wasabeef.picasso.transformations.RoundedCornersTransformation;
 import teamcool.tradego.Clients.ParseClient;
-import teamcool.tradego.Fragments.AvailableCatalogFragment;
-import teamcool.tradego.Fragments.OnHoldCatalogFragment;
-import teamcool.tradego.Fragments.SoldCatalogFragment;
 import teamcool.tradego.Fragments.UserCatalogFragment;
 import teamcool.tradego.R;
-
-//import teamcool.tradego.ParseClient;
 
 public class ProfileActivity extends AppCompatActivity {
 
@@ -32,11 +28,9 @@ public class ProfileActivity extends AppCompatActivity {
     @BindView(R.id.tvUserName) TextView tvUserName;
     @BindView(R.id.tvItemsSold) TextView tvItemsSold;
 
-    SoldCatalogFragment soldCatalogFragment;
-    OnHoldCatalogFragment onHoldCatalogFragment;
-    AvailableCatalogFragment availableCatalogFragment;
     ParseUser user;
     ParseClient parseClient;
+    String userObjId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,10 +43,6 @@ public class ProfileActivity extends AppCompatActivity {
         //find the sliding tabstrip
         //attach the tabstrip to the viewpager
 
-        soldCatalogFragment = new SoldCatalogFragment();
-        onHoldCatalogFragment = new OnHoldCatalogFragment();
-        availableCatalogFragment = new AvailableCatalogFragment();
-
         ViewPager vpPager = (ViewPager) findViewById(R.id.viewpager);
         vpPager.setAdapter(new CatalogPagerAdapter(getSupportFragmentManager()));
 
@@ -63,7 +53,8 @@ public class ProfileActivity extends AppCompatActivity {
         parseClient = new ParseClient();
 
 
-        user = ParseUser.getCurrentUser();
+        userObjId = getIntent().getStringExtra("objectId");
+        user = parseClient.queryUserBasedonObjectID(userObjId);
 
         populateUserHeader(user);
 
@@ -103,15 +94,16 @@ public class ProfileActivity extends AppCompatActivity {
 
         @Override
         public Fragment getItem(int position) {
+            Log.d("DEBUG",userObjId + "<--------");
             if(position==0) {
-                return availableCatalogFragment;
+                return UserCatalogFragment.newInstance(userObjId,"Available");
             }
 
             else if (position == 1) {
-                return onHoldCatalogFragment;
+                return UserCatalogFragment.newInstance(userObjId,"On hold");
             }
             else if (position == 2) {
-                return soldCatalogFragment;
+                return UserCatalogFragment.newInstance(userObjId,"Sold");
             }
             else {
                 return null;
