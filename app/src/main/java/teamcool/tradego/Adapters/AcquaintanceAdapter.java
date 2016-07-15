@@ -2,11 +2,13 @@ package teamcool.tradego.Adapters;
 
 import android.app.Activity;
 import android.content.Context;
+import android.media.Image;
 import android.support.v7.view.menu.MenuView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -28,17 +30,15 @@ public class AcquaintanceAdapter extends RecyclerView.Adapter<AcquaintanceAdapte
     private Context context;
     //ViewHolder gives access to our views
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        ImageView ivProfile;
         TextView tvName;
-        ImageButton btnAdd;
-        View rootView;
+        ImageView ivProfile;
+        Button btnAdd;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            rootView = itemView;
-            ImageView ivProfile = ButterKnife.findById(itemView, R.id.ivProfile);
-            TextView tvName = ButterKnife.findById(itemView, R.id.tvName);
-            ImageButton btnAdd = ButterKnife.findById(itemView, R.id.tvName);
+            tvName = (TextView) itemView.findViewById(R.id.tvName);
+            ivProfile = (ImageView) itemView.findViewById(R.id.ivProfile);
+
         }
 
     }
@@ -72,15 +72,11 @@ public class AcquaintanceAdapter extends RecyclerView.Adapter<AcquaintanceAdapte
     @Override
     public void onBindViewHolder(AcquaintanceAdapter.ViewHolder holder, int position) {
         Acquaintance acquaintance = acquaintances.get(position);
-        holder.rootView.setTag(acquaintance);
-        TextView textView = holder.tvName;
-        textView.setText(acquaintance.getName());
-        ImageView imageView = holder.ivProfile;
-        imageView.setImageResource(0);
+        holder.tvName.setText(acquaintance.getName());
+        holder.ivProfile.setImageResource(0);
         Glide.with(context)
                 .load(acquaintance.getProfile_url())
-                .into(imageView);
-
+                .into(holder.ivProfile);
     }
 
     @Override

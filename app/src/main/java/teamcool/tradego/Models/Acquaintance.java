@@ -35,7 +35,7 @@ public class Acquaintance extends ParseObject {
     }
 
     public String getProfile_url() {
-        return getString("profile_url");
+        return getString("picture");
     }
 
     // To modify field values

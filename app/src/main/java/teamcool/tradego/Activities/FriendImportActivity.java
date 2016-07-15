@@ -4,12 +4,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 
 import com.facebook.AccessToken;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.facebook.HttpMethod;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -33,20 +35,28 @@ public class FriendImportActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_friend_import);
 
-        FBGraphClient fbGraphClient = new FBGraphClient();
-        //Populates the ArrayList
-        acquaintances = fbGraphClient.getFriends();
 
+        final ArrayList<Acquaintance> acquaintances = new ArrayList<>();
+        GraphRequest request =
+                GraphRequest.newMyFriendsRequest(AccessToken.getCurrentAccessToken(),
+                        new GraphRequest.GraphJSONArrayCallback() {
+                            @Override
+                            public void onCompleted(JSONArray jsonArray, GraphResponse response) {
+                                acquaintances.addAll(Acquaintance.fromJSONArray(jsonArray));
+                                RecyclerView rvAcquaintances = (RecyclerView) findViewById(R.id.rvAcquaintances);
+                                AcquaintanceAdapter adapter = new AcquaintanceAdapter(getApplicationContext(), acquaintances);
+                                rvAcquaintances.setAdapter(adapter);
+                                //default manager we wanted.
+                                rvAcquaintances.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+                            }
+                        });
 
-        RecyclerView rvAcquaintances = (RecyclerView) findViewById(R.id.rvAcquaintances);
-        AcquaintanceAdapter adapter = new AcquaintanceAdapter(this, acquaintances);
-        rvAcquaintances.setAdapter(adapter);
-        //default manager we wanted.
-        rvAcquaintances.setLayoutManager(new LinearLayoutManager(this));
-
-
-
+        Bundle params = new Bundle();
+        params.putString("fields", "name, picture.type(large)");
+        request.setParameters(params);
+        request.executeAsync();
 
     }
+
 
 }
