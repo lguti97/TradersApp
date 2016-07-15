@@ -1,6 +1,5 @@
 package teamcool.tradego.Activities;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -19,9 +18,7 @@ import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.parse.ParseException;
 import com.parse.ParseUser;
-import com.parse.SaveCallback;
 
 import java.io.File;
 
@@ -109,43 +106,43 @@ public class AddItemActivity extends AppCompatActivity {
                 status,price);
 
 
-        //User user = parseClient.getCurrentParseUser();
-        //new_item.setOwner(user);
+        ParseUser user = ParseUser.getCurrentUser();
 
+        new_item.setOwner(user);
 
-        new_item.put("author", ParseUser.getCurrentUser());
+        new_item.saveInBackground();
 
+//        // Save the post and return
+//        new_item.saveInBackground(new SaveCallback() {
+//
+//
+//            @Override
+//            public void done(ParseException e) {
+//                if (e == null) {
+//                    setResult(RESULT_OK);
+//                    finish();
+//                } else {
+//                    Toast.makeText(getApplicationContext(),
+//                            "Error saving: " + e.getMessage(),
+//                            Toast.LENGTH_SHORT)
+//                            .show();
+//                }
+//            }
+//
+//        });
 
+//
+//
+//
+//
+//        this.setResult(Activity.RESULT_OK);
+//        this.finish();
 
-        // Save the post and return
-        new_item.saveInBackground(new SaveCallback() {
-
-
-            @Override
-            public void done(ParseException e) {
-                if (e == null) {
-                    setResult(RESULT_OK);
-                    finish();
-                } else {
-                    Toast.makeText(getApplicationContext(),
-                            "Error saving: " + e.getMessage(),
-                            Toast.LENGTH_SHORT)
-                            .show();
-                }
-            }
-
-        });
-
-       // new_item.setOwner(parseClient.getCurrentParseUser());
-
-
-        this.setResult(Activity.RESULT_OK);
-        this.finish();
 
         Toast.makeText(this, "Item Added!", Toast.LENGTH_SHORT).show();
 
-        //Intent i = new Intent(this, NewsFeedActivity.class);
-        //startActivity(i);
+        Intent i = new Intent(this, ProfileActivity.class);
+        startActivity(i);
     }
 
 

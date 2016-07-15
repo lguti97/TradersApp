@@ -35,14 +35,16 @@ public class CatalogListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_catalog_list, container, false);
         ButterKnife.bind(this, v);
+        rvItems.setAdapter(catalogAdapter);
+        rvItems.setLayoutManager(new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL));
+
+        rvItems.setHasFixedSize(true);
         //listViewHere.setAdapter(catalogAdapter);
         //set listView's onItemLongClickListener, onItemClickListener, etc.
 
 
         //set layout to StaggeredGrid
-        rvItems.setLayoutManager(new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL));
-        rvItems.setAdapter(catalogAdapter);
-        rvItems.setHasFixedSize(true);
+
         //rvItems.addOnScrollLisnener for endless scrolling
         //swipeContainer set on refresh listener
         //swipeContainer setColorSchemeResources to configure refreshing colors

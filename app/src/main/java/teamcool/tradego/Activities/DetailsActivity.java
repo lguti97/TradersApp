@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.TextView;
 
 import com.facebook.messenger.MessengerUtils;
 import com.facebook.messenger.ShareToMessengerParams;
@@ -17,13 +18,19 @@ import java.util.Date;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import teamcool.tradego.Clients.ParseClient;
+import teamcool.tradego.Models.Item;
 import teamcool.tradego.R;
 
 public class DetailsActivity extends AppCompatActivity {
 
     @BindView(R.id.btnMessenger) View btnMessenger;
+    Item item;
+    @BindView(R.id.tvItemDescription) TextView tvItemDescription;
+
 
     private static final int REQUEST_CODE_SHARE_TO_MESSENGER = 15251;
+    ParseClient parseClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +52,21 @@ public class DetailsActivity extends AppCompatActivity {
             }
         });
 
+        populateItemDetails();
+
     }
+
+    private void populateItemDetails() {
+
+        String itemId = getIntent().getStringExtra("item_id");
+        parseClient = new ParseClient();
+        item = parseClient.queryItemBasedonObjectID(itemId);
+
+        tvItemDescription.setText(item.getDescription());
+
+    }
+
+
 
 
     public Uri takeScreenshot() {
@@ -79,9 +100,4 @@ public class DetailsActivity extends AppCompatActivity {
     }
 
 
-    public void onVenmoClick(View view) {
-
-        //Launch venmo app
-
-    }
 }

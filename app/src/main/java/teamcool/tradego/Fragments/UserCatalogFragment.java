@@ -6,29 +6,32 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.parse.ParseUser;
+
 import java.util.List;
 
 import butterknife.ButterKnife;
-
-//import teamcool.tradego.Item;
-//import teamcool.tradego.ParseClient;
-
+import teamcool.tradego.Clients.ParseClient;
+import teamcool.tradego.Models.Item;
 import teamcool.tradego.R;
-import teamcool.tradego.Models.User;
+
+
+//import teamcool.tradego.ParseClient;
 
 /**
  * Created by kshah97 on 7/8/16.
  */
 public class UserCatalogFragment extends CatalogListFragment {
-    User user;
-    //List<Item> items;
-    //ParseClient parseClient;
+
+    List<Item> items;
+    ParseClient parseClient;
 
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //parseClient = new ParseClient();
+
+        parseClient = new ParseClient();
         populateCatalog();
     }
 
@@ -36,7 +39,7 @@ public class UserCatalogFragment extends CatalogListFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_catalog_list, container, false);
-        ButterKnife.bind(this,view);
+        ButterKnife.bind(this, view);
         return super.onCreateView(inflater, container, savedInstanceState);
     }
 
@@ -47,7 +50,10 @@ public class UserCatalogFragment extends CatalogListFragment {
     }
 
     public void populateCatalog() {
-        //addAll(user.getItems());
-    }
 
+        //parseClient.queryItemsInDatabaseOnUser(ParseUser.getCurrentUser()).clear();
+        items = parseClient.queryOnholdItemsInDatabaseOnUser(ParseUser.getCurrentUser());
+        addAll(items);
+
+    }
 }

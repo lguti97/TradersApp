@@ -2,6 +2,7 @@
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_height="match_parent"
     android:layout_width="match_parent">
@@ -59,20 +60,30 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/tvItemsBought"
-                    android:text="Items Bought"
-                    />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     android:id="@+id/tvItemsSold"
                     android:text="Items Sold"
-                    android:layout_marginLeft="170dp" />
+                    android:layout_gravity="center"
+                    android:gravity="center" />
 
             </LinearLayout>
 
         </RelativeLayout>
+
+
+        <com.astuetz.PagerSlidingTabStrip
+            android:id="@+id/tabs"
+            android:layout_below="@id/rlUserHeader"
+            app:pstsShouldExpand="true"
+            app:pstsTextAllCaps="true"
+            android:layout_width="match_parent"
+            android:layout_height="48dp" />
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/viewpager"
+            android:layout_below="@id/tabs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/white" />
 
         <FrameLayout
             android:layout_width="fill_parent"
@@ -80,7 +91,7 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:id="@+id/flContainer"
-            android:layout_below="@+id/rlUserHeader"></FrameLayout>
+            android:layout_below="@+id/viewpager"></FrameLayout>
     </RelativeLayout>
 </LinearLayout>
 

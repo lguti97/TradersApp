@@ -1,14 +1,22 @@
 package teamcool.tradego.Adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.parse.ParseUser;
 
 import java.util.List;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
+import teamcool.tradego.Activities.DetailsActivity;
+import teamcool.tradego.Clients.ParseClient;
 import teamcool.tradego.Models.Item;
 import teamcool.tradego.R;
 
@@ -17,10 +25,16 @@ import teamcool.tradego.R;
  */
 public class CatalogAdapter extends RecyclerView.Adapter<CatalogAdapter.ViewHolder> {
 
+
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
         //butterknife binding goes here:
-        //@BindView(R.id.someId) Type someId;
+        @BindView(R.id.tvNewsFeedItemName) TextView itemName;
+        @BindView(R.id.ivNewsFeedDisplayImg) ImageView ivItemImage;
+
+
+
+
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -31,6 +45,9 @@ public class CatalogAdapter extends RecyclerView.Adapter<CatalogAdapter.ViewHold
     }
 
     private List<Item> items;
+    private ParseClient parseClient;
+    private Context context;
+
 
     public CatalogAdapter(List<Item> items) {
         this.items = items;
@@ -38,7 +55,7 @@ public class CatalogAdapter extends RecyclerView.Adapter<CatalogAdapter.ViewHold
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        Context context = parent.getContext();
+        context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
         View catalogView = inflater.inflate(R.layout.item_each, parent, false);
         ViewHolder viewHolder = new ViewHolder(catalogView);
@@ -47,8 +64,24 @@ public class CatalogAdapter extends RecyclerView.Adapter<CatalogAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        Item item = items.get(position);
+        parseClient = new ParseClient();
+        items = parseClient.queryOnholdItemsInDatabaseOnUser(ParseUser.getCurrentUser());
+        final Item item = items.get(position);
         //populate each item by setting its text and media
+        holder.itemName.setText(item.getItem_name());
+
+        //on click listener to launch detail activity
+        holder.ivItemImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent i = new Intent(context, DetailsActivity.class);
+                i.putExtra("item_id", item.getObjectId());
+                context.startActivity(i);
+
+            }
+        });
+
     }
 
     @Override
@@ -70,5 +103,8 @@ public class CatalogAdapter extends RecyclerView.Adapter<CatalogAdapter.ViewHold
         items.add(index,item);
         notifyItemInserted(index);
     }
+
+
+
 
 }
