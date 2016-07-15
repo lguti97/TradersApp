@@ -35,6 +35,8 @@ public class ParseClient {
         List<Item> items = new ArrayList<>();
         ParseQuery<Item> query = ParseQuery.getQuery(Item.class);
         query.whereContains("item_name",name);
+        query.whereEqualTo("status","Available");
+        query.whereNotEqualTo("owner",ParseUser.getCurrentUser());
         try {
             items = query.find();
         } catch (ParseException e) {
@@ -46,7 +48,9 @@ public class ParseClient {
     public List<Item> queryItemsInDatabaseOnCategory(String category) {
         List<Item> items = new ArrayList<>();
         ParseQuery<Item> query = ParseQuery.getQuery(Item.class);
+        query.whereNotEqualTo("owner",ParseUser.getCurrentUser());
         query.whereEqualTo("category",category);
+        query.whereEqualTo("status","Available");
         try {
             items = query.find();
         } catch (ParseException e) {
@@ -58,8 +62,10 @@ public class ParseClient {
     public List<Item> queryAvailableItemsInDatabaseOnUser(ParseUser user) {
         List<Item> items = new ArrayList<>();
         ParseQuery<Item> query = ParseQuery.getQuery(Item.class);
-        query.whereEqualTo("owner",user);
-        query.whereEqualTo("status","available");
+        if (user != null) {
+            query.whereEqualTo("owner", user);
+        }
+        query.whereEqualTo("status","Available");
         try {
             items = query.find();
         } catch (ParseException e) {
@@ -86,6 +92,32 @@ public class ParseClient {
         ParseQuery<Item> query = ParseQuery.getQuery(Item.class);
         query.whereEqualTo("owner",user);
         query.whereEqualTo("status","On hold");
+        try {
+            items = query.find();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return items;
+    }
+
+    public List<Item> queryBoughtItemsInDatabaseOnUser(ParseUser user) {
+        List<Item> items = new ArrayList<>();
+        ParseQuery<Item> query = ParseQuery.getQuery(Item.class);
+        query.whereEqualTo("buyer",user);
+        query.whereEqualTo("status","Sold");
+        try {
+            items = query.find();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return items;
+    }
+
+    public List<Item> queryAvailableItemsInDatabaseOnOtherUser(ParseUser user) {
+        List<Item> items = new ArrayList<>();
+        ParseQuery<Item> query = ParseQuery.getQuery(Item.class);
+        query.whereNotEqualTo("owner",user);
+        query.whereEqualTo("status","Available");
         try {
             items = query.find();
         } catch (ParseException e) {
@@ -134,13 +166,23 @@ public class ParseClient {
         return count;
     }
 
+    public int countNumItemsBought(ParseUser user) {
+        int count = -15210;
+        ParseQuery<Item> query = ParseQuery.getQuery(Item.class);
+        query.whereEqualTo("buyer", user);
+        try {
+            count = query.count();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return count;
+    }
+    
     public Item queryItemBasedonObjectID(String itemId) {
 
         Item item = new Item();
         ParseQuery<Item> query = ParseQuery.getQuery(Item.class);
-// First try to find from the cache and only then go to network
         query.setCachePolicy(ParseQuery.CachePolicy.CACHE_ELSE_NETWORK); // or CACHE_ONLY
-// Execute the query to find the object with ID
 
         query.whereEqualTo("objectId", itemId);
         try {

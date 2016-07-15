@@ -8,16 +8,12 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-
-import butterknife.BindView;
 import butterknife.ButterKnife;
 import teamcool.tradego.Fragments.SearchItemsFragment;
 import teamcool.tradego.R;
 
 public class SearchActivity extends AppCompatActivity {
 
-    @BindView(R.id.searchToolbar)
-    Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,10 +23,12 @@ public class SearchActivity extends AppCompatActivity {
 
         String query = getIntent().getStringExtra("query");
 
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setDisplayShowHomeEnabled(true);
+        actionBar.setTitle(query);
 
         if (savedInstanceState == null) {
             SearchItemsFragment searchItemsFragment = SearchItemsFragment.newInstance(query);
