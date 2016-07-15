@@ -10,11 +10,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.parse.ParseUser;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import jp.wasabeef.picasso.transformations.CropCircleTransformation;
 import teamcool.tradego.Activities.DetailsActivity;
 import teamcool.tradego.Clients.ParseClient;
 import teamcool.tradego.Models.Item;
@@ -65,10 +67,11 @@ public class CatalogAdapter extends RecyclerView.Adapter<CatalogAdapter.ViewHold
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         parseClient = new ParseClient();
-        items = parseClient.queryOnholdItemsInDatabaseOnUser(ParseUser.getCurrentUser());
         final Item item = items.get(position);
         //populate each item by setting its text and media
         holder.itemName.setText(item.getItem_name());
+
+        //Picasso.with(holder.ivItemImage.getContext()).load("").fit().into(holder.ivItemImage);
 
         //on click listener to launch detail activity
         holder.ivItemImage.setOnClickListener(new View.OnClickListener() {

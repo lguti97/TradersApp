@@ -2,12 +2,14 @@ package teamcool.tradego.Fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.parse.ParseUser;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.ButterKnife;
@@ -26,13 +28,25 @@ public class UserCatalogFragment extends CatalogListFragment {
     List<Item> items;
     ParseClient parseClient;
 
+    public UserCatalogFragment() {
+
+    }
+
+
+    public static UserCatalogFragment newInstance(String objId, String status) {
+        UserCatalogFragment frag = new UserCatalogFragment();
+        Bundle args = new Bundle();
+        args.putString("status", status);
+        args.putString("id", objId);
+        frag.setArguments(args);
+        return frag;
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         parseClient = new ParseClient();
-        populateCatalog();
+        populateCatalog(getArguments().getString("id"), getArguments().getString("status"));
     }
 
     @Nullable
@@ -49,10 +63,23 @@ public class UserCatalogFragment extends CatalogListFragment {
         super.onViewCreated(view, savedInstanceState);
     }
 
-    public void populateCatalog() {
 
-        //parseClient.queryItemsInDatabaseOnUser(ParseUser.getCurrentUser()).clear();
-        items = parseClient.queryOnholdItemsInDatabaseOnUser(ParseUser.getCurrentUser());
+    public void populateCatalog(String id, String status) {
+        ParseUser targetedUser = parseClient.queryUserBasedonObjectID(id);
+        if (status.equalsIgnoreCase("Available")) {
+            items = parseClient.queryItemsOnUserAndStatus(targetedUser, "Available");
+            Log.d("DEBUG", items.size() + "<------ size");
+        } else if (status.equalsIgnoreCase("On hold")) {
+            items = parseClient.queryItemsOnUserAndStatus(targetedUser, "on hold");
+        } else if (status.equalsIgnoreCase("Sold")) {
+            items = parseClient.queryItemsOnUserAndStatus(targetedUser, "Sold");
+        } else if (status.equalsIgnoreCase("Bought")) {
+            //what the current user has bought
+            items = parseClient.queryBoughtItemsOnUser(targetedUser);
+        } else {
+            items = new ArrayList<>();
+        }
+
         addAll(items);
 
     }

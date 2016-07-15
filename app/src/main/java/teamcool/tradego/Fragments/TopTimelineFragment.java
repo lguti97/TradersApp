@@ -6,8 +6,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.parse.ParseUser;
+
+import java.util.List;
+
 import butterknife.ButterKnife;
 import teamcool.tradego.Clients.FBGraphClient;
+import teamcool.tradego.Clients.ParseClient;
+import teamcool.tradego.Models.Item;
 import teamcool.tradego.R;
 
 /**
@@ -15,11 +21,13 @@ import teamcool.tradego.R;
  */
 public class TopTimelineFragment extends CatalogListFragment {
 
-    FBGraphClient fbGraphClient;
+    ParseClient parseClient;
+    List<Item> items;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        parseClient = new ParseClient();
         populateTimeLine();
     }
 
@@ -38,7 +46,8 @@ public class TopTimelineFragment extends CatalogListFragment {
     }
 
     public void populateTimeLine() {
-        //fbGraphClient.getFriends();
+        items = parseClient.queryItemsOnOtherUserAndStatus(ParseUser.getCurrentUser(),"Available");
+        addAll(items);
     }
 
 }

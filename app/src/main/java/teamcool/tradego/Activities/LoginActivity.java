@@ -114,12 +114,11 @@ public class LoginActivity extends AppCompatActivity {
                 request.setParameters(params);
                 request.executeAsync();
                 //DEBUG info: if one of the fields turns out to be empty,
-                // it might be because you have no PERMISSION to access it
+                // it might be because you have3 no PERMISSION to access it
                 // look it up in API and add more permissions to the array
 
 
-                Intent i = new Intent (LoginActivity.this, ProfileActivity.class);
-
+                Intent i = new Intent (LoginActivity.this, NewsFeedActivity.class);
 
                 startActivity(i);
             }
