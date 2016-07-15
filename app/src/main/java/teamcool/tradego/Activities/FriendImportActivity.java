@@ -52,7 +52,7 @@ public class FriendImportActivity extends AppCompatActivity {
                         });
 
         Bundle params = new Bundle();
-        params.putString("fields", "name, picture.type(large)");
+        params.putString("fields", "name, picture.type(large), id");
         request.setParameters(params);
         request.executeAsync();
 

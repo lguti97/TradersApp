@@ -58,12 +58,12 @@ public class LoginActivity extends AppCompatActivity {
         ParseObject.registerSubclass(Acquaintance.class);
 
         FacebookSdk.sdkInitialize(this);
-
+        /*
         //Connects to the Parse Server
         Parse.initialize(new Parse.Configuration.Builder(this)
                 .applicationId("tradego")
                 .addNetworkInterceptor(new ParseLogInterceptor())
-                .server("https://tradego.herokuapp.com/parse/").build());
+                .server("https://tradego.herokuapp.com/parse/").build()); */
         //initializes with Facebook
         ParseFacebookUtils.initialize(getApplicationContext());
 
@@ -119,7 +119,7 @@ public class LoginActivity extends AppCompatActivity {
                 // it might be because you have no PERMISSION to access it
                 // look it up in API and add more permissions to the array
 
-                Intent i = new Intent (LoginActivity.this, NewsFeedActivity.class);
+                Intent i = new Intent (LoginActivity.this, LoginActivity.class);
                 startActivity(i);
             }
         });

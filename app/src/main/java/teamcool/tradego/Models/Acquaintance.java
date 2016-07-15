@@ -23,13 +23,14 @@ public class Acquaintance extends ParseObject {
         super();
     }
 
-    public Acquaintance(String name, String profile_url){
+    public Acquaintance(String name, String profile_url, String id){
         super();
         setName(name);
         setProfile_url(profile_url);
+        setUserID(id);
     }
 
-    // Will be used to access fields
+    // Will be used to access fields from Parse Database
     public String getName (){
         return getString("name");
     }
@@ -38,7 +39,11 @@ public class Acquaintance extends ParseObject {
         return getString("picture");
     }
 
-    // To modify field values
+    public String getUserID(){
+        return getString("userID");
+    }
+
+    // To modify field values in Parse Database
 
     public void setName(String name){
         put("name", name);
@@ -46,6 +51,10 @@ public class Acquaintance extends ParseObject {
 
     public void setProfile_url(String profile_url){
         put("picture", profile_url);
+    }
+
+    public void setUserID(String id){
+        put("userID", id);
     }
 
 
@@ -67,7 +76,8 @@ public class Acquaintance extends ParseObject {
     public static Acquaintance fromJSON(JSONObject object){
         Acquaintance acquaintance = null;
         try {
-            acquaintance = new Acquaintance(object.getString("name"), object.getJSONObject("picture").getJSONObject("data").getString("url"));
+            acquaintance = new Acquaintance(object.getString("name"), object.getJSONObject("picture").getJSONObject("data").getString("url"),
+                                            object.getString("id"));
             acquaintance.setOwner(ParseUser.getCurrentUser());
             acquaintance.saveInBackground();
         } catch (JSONException e) {
