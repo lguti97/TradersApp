@@ -6,9 +6,12 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.facebook.messenger.MessengerUtils;
 import com.facebook.messenger.ShareToMessengerParams;
@@ -37,7 +40,7 @@ public class DetailsActivity extends AppCompatActivity {
     TextView tvItemDescription;
     TextView tvItemName;
     TextView tvItemStatus;
-    EditText etPrice;
+    TextView tvItemPrice;
     TextView tvItemNegotiable;
     TextView tvItemCategory;
 
@@ -51,6 +54,11 @@ public class DetailsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_details);
 
         ButterKnife.bind(this);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+
+        setSupportActionBar(toolbar);
+
 
         final Activity activity = this;
 
@@ -78,15 +86,16 @@ public class DetailsActivity extends AppCompatActivity {
         tvItemDescription = (TextView) findViewById(R.id.tvItemDescription);
         tvItemName = (TextView) findViewById(R.id.tvItemName);
         tvItemStatus = (TextView) findViewById(R.id.tvItemStatus);
-        etPrice = (EditText) findViewById(R.id.etPrice);
+        tvItemPrice = (TextView) findViewById(R.id.tvItemPrice);
         tvItemNegotiable = (TextView) findViewById(R.id.tvItemNegotiable);
         tvItemCategory = (TextView) findViewById(R.id.tvItemCategory);
 
 
-        tvItemDescription.setText(item.getDescription());
+        tvItemDescription.setText("Item description: " + item.getDescription());
         tvItemName.setText(item.getItem_name());
         tvItemStatus.setText("Status: " + item.getStatus());
-        etPrice.setText(String.valueOf(item.getPrice()));
+        String price = String.valueOf(item.getPrice());
+        tvItemPrice.setText("Price: "+ price);
         tvItemNegotiable.setText("Negotiable: " + item.getNegotiable());
         tvItemCategory.setText("Category: " + item.getCategory());
 
@@ -126,4 +135,15 @@ public class DetailsActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_detail_activity, menu);
+        return true;
+    }
+
+
+    public void onEditItem(MenuItem item) {
+        Toast.makeText(this, "Hello", Toast.LENGTH_SHORT).show();
+    }
 }

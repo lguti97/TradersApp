@@ -7,7 +7,6 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -59,6 +58,8 @@ public class ProfileActivity extends AppCompatActivity {
         userObjId = getIntent().getStringExtra("objectId");
         user = parseClient.queryUserBasedonObjectID(userObjId);
 
+
+
         populateUserHeader(user);
 
         if(savedInstanceState == null) {
@@ -97,7 +98,7 @@ public class ProfileActivity extends AppCompatActivity {
 
         @Override
         public Fragment getItem(int position) {
-            Log.d("DEBUG",userObjId + "<--------");
+
             if(position==0) {
                 return UserCatalogFragment.newInstance(userObjId,"Available");
             }

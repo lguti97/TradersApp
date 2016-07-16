@@ -31,7 +31,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import jp.wasabeef.picasso.transformations.CropCircleTransformation;
 import teamcool.tradego.Clients.ParseClient;
-import teamcool.tradego.Fragments.CatalogListFragment;
 import teamcool.tradego.Fragments.CategoriesTimelineFragment;
 import teamcool.tradego.Fragments.TopTimelineFragment;
 import teamcool.tradego.Fragments.UserCatalogFragment;
@@ -56,6 +55,13 @@ public class NewsFeedActivity extends AppCompatActivity {
     ActionBarDrawerToggle drawerToggle;
 
     private int selector;
+
+    public void onAddNewItem(MenuItem item) {
+
+        Intent i = new Intent(NewsFeedActivity.this, AddItemActivity.class);
+        startActivity(i);
+    }
+
 
     public class catalogPagerAdapter extends FragmentStatePagerAdapter {
 
@@ -161,6 +167,8 @@ public class NewsFeedActivity extends AppCompatActivity {
         viewpager.setAdapter(fragmentStatePagerAdapter); //may cause problems (?)
         tabStrip.setViewPager(viewpager);
         //set TabBackground and IndicatorColor later
+
+
 
         //setup navigation drawer
         setupNavDrawerTabs(navDrawer);
