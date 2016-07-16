@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
 
 import com.facebook.AccessToken;
 import com.facebook.GraphRequest;
@@ -46,7 +47,6 @@ public class FriendImportActivity extends AppCompatActivity {
                                 RecyclerView rvAcquaintances = (RecyclerView) findViewById(R.id.rvAcquaintances);
                                 AcquaintanceAdapter adapter = new AcquaintanceAdapter(getApplicationContext(), acquaintances);
                                 rvAcquaintances.setAdapter(adapter);
-                                //default manager we wanted.
                                 rvAcquaintances.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
                             }
                         });
@@ -59,4 +59,10 @@ public class FriendImportActivity extends AppCompatActivity {
     }
 
 
+    public void onAdd(View view) {
+        //TODO. Add friends into the Friend Object.
+
+
+
+    }
 }

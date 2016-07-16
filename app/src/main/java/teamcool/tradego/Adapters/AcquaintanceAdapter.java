@@ -2,7 +2,9 @@ package teamcool.tradego.Adapters;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.media.Image;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.view.menu.MenuView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -19,6 +21,7 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import teamcool.tradego.Activities.DetailsActivity;
 import teamcool.tradego.Models.Acquaintance;
 import teamcool.tradego.R;
 
@@ -33,12 +36,13 @@ public class AcquaintanceAdapter extends RecyclerView.Adapter<AcquaintanceAdapte
         TextView tvName;
         ImageView ivProfile;
         Button btnAdd;
+        View rootView;
 
         public ViewHolder(View itemView) {
             super(itemView);
             tvName = (TextView) itemView.findViewById(R.id.tvName);
             ivProfile = (ImageView) itemView.findViewById(R.id.ivProfile);
-
+            rootView = itemView;
         }
 
     }

@@ -94,7 +94,7 @@ public class LoginActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
 
-                //fbGraphClient = new FBGraphClient();
+                fbGraphClient = new FBGraphClient();
                 parseClient = new ParseClient();
                 currentUserFbId = fbGraphClient.getCurrentUserFbId();
                 accessToken = fbGraphClient.getAccessToken();
@@ -119,7 +119,7 @@ public class LoginActivity extends AppCompatActivity {
                 // it might be because you have3 no PERMISSION to access it
                 // look it up in API and add more permissions to the array
 
-                Intent i = new Intent (LoginActivity.this, NewsFeedActivity.class);
+                Intent i = new Intent (LoginActivity.this, FriendImportActivity.class);
 
                 startActivity(i);
             }
