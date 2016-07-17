@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -20,6 +21,7 @@ import android.widget.Toast;
 
 import com.parse.ParseUser;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 
 import butterknife.BindView;
@@ -39,9 +41,14 @@ public class AddItemActivity extends AppCompatActivity {
     @BindView(R.id.etItemDescription) EditText etItemDescription;
 
 
+
+
     String negotiable;
     String category;
     String status;
+    String image_1;
+    String image_2;
+    String image_3;
 
 
     @Override
@@ -143,6 +150,15 @@ public class AddItemActivity extends AppCompatActivity {
 
     }
 
+
+    public String BitMapToString(Bitmap bitmap){
+        ByteArrayOutputStream baos=new  ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG,100, baos);
+        byte [] b=baos.toByteArray();
+        String temp=Base64.encodeToString(b, Base64.DEFAULT);
+        return temp;
+    }
+
     public void onStatusSpinner() {
         Spinner spinner = (Spinner) findViewById(R.id.spStatus);
 // Create an ArrayAdapter using the string array and a default spinner layout
@@ -201,16 +217,20 @@ public class AddItemActivity extends AppCompatActivity {
                 if(index==1) {
 
                     ivItem1.setImageBitmap(takenImage);
+                    image_1 = BitMapToString(takenImage);
+
 
                 }
                 else if(index ==2) {
 
                     ivItem2.setImageBitmap(takenImage);
+                    image_2 = BitMapToString(takenImage);
 
                 }
 
                 else if(index ==3) {
                     ivItem3.setImageBitmap(takenImage);
+                    image_3 = BitMapToString(takenImage);
                 }
             } else { // Result was a failure
                 Toast.makeText(this, "Picture wasn't taken!", Toast.LENGTH_SHORT).show();
@@ -257,7 +277,7 @@ public class AddItemActivity extends AppCompatActivity {
 
         Item new_item = new Item(etItemName.getText().toString(),
                 category, etItemDescription.getText().toString(),
-                status,price, negotiable);
+                status,price, negotiable, image_1, image_2, image_3);
 
 
         ParseUser user = ParseUser.getCurrentUser();
@@ -295,7 +315,7 @@ public class AddItemActivity extends AppCompatActivity {
 
         Toast.makeText(this, "Item Added!", Toast.LENGTH_SHORT).show();
 
-        Intent i = new Intent(this, ProfileActivity.class);
+        Intent i = new Intent(this, NewsFeedActivity.class);
         startActivity(i);
     }
 

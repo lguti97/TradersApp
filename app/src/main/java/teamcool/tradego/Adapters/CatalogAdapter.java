@@ -2,21 +2,20 @@ package teamcool.tradego.Adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.v7.widget.RecyclerView;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.parse.ParseUser;
-import com.squareup.picasso.Picasso;
-
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import jp.wasabeef.picasso.transformations.CropCircleTransformation;
 import teamcool.tradego.Activities.DetailsActivity;
 import teamcool.tradego.Clients.ParseClient;
 import teamcool.tradego.Models.Item;
@@ -71,7 +70,10 @@ public class CatalogAdapter extends RecyclerView.Adapter<CatalogAdapter.ViewHold
         //populate each item by setting its text and media
         holder.itemName.setText(item.getItem_name());
 
-        //Picasso.with(holder.ivItemImage.getContext()).load("").fit().into(holder.ivItemImage);
+        if(item.getImage1() != null) {
+            holder.ivItemImage.setImageBitmap(StringToBitMap(item.getImage1()));
+        }
+
 
         //on click listener to launch detail activity
         holder.ivItemImage.setOnClickListener(new View.OnClickListener() {
@@ -105,6 +107,17 @@ public class CatalogAdapter extends RecyclerView.Adapter<CatalogAdapter.ViewHold
     public void insert(int index, Item item) {
         items.add(index,item);
         notifyItemInserted(index);
+    }
+
+    public Bitmap StringToBitMap(String encodedString){
+        try {
+            byte [] encodeByte= Base64.decode(encodedString,Base64.DEFAULT);
+            Bitmap bitmap= BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
+            return bitmap;
+        } catch(Exception e) {
+            e.getMessage();
+            return null;
+        }
     }
 
 

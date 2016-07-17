@@ -22,7 +22,7 @@ public class Item extends ParseObject {
         super();
     }
 
-    public Item(String item_name, String category, String description, String status, double price, String negotiable) {
+    public Item(String item_name, String category, String description, String status, double price, String negotiable, String image1, String image2, String image3) {
         super();
         setItem_name(item_name);
         setCategory(category);
@@ -30,6 +30,9 @@ public class Item extends ParseObject {
         setStatus(status);
         setDescription(description);
         setNegotiable(negotiable);
+        setImage1(image1);
+        setImage2(image2);
+        setImage3(image3);
     }
 
 
@@ -85,6 +88,18 @@ public class Item extends ParseObject {
 
     public void setTransactionTime(String time) { put("transaction_time",time); }
 
+    public String getImage1() { return getString("image_1"); }
+
+    public void setImage1(String image1) { put("image_1",image1); }
+
+    public String getImage2() { return getString("image_2"); }
+
+    public void setImage2(String image2) { put("image_2",image2); }
+
+    public String getImage3() { return getString("image_3"); }
+
+    public void setImage3(String image3) { put("image_3",image3); }
+
     // Associate each item with a user
     public void setOwner(ParseUser user) {
         put("owner", user);
@@ -100,7 +115,10 @@ public class Item extends ParseObject {
                     object.getString("description"),
                     object.getString("status"),
                     object.getDouble("price"),
-                    object.getString("negotiable"));
+                    object.getString("negotiable"),
+                    object.getString("image_1"),
+                    object.getString("image_2"),
+                    object.getString("image_3"));
         } catch (JSONException e) {
             e.printStackTrace();
         }
