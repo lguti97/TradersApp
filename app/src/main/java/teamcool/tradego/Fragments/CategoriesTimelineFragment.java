@@ -55,7 +55,7 @@ public class CategoriesTimelineFragment extends CatalogListFragment {
     }
 
     public void populate(String category) {
-        items = parseClient.queryItemsInDatabaseOnCategory(category);
+        items = parseClient.queryItemsOnCategory(category);
         addAll(items);
     }
 

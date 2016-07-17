@@ -31,7 +31,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import jp.wasabeef.picasso.transformations.CropCircleTransformation;
 import teamcool.tradego.Clients.ParseClient;
-import teamcool.tradego.Fragments.CatalogListFragment;
 import teamcool.tradego.Fragments.CategoriesTimelineFragment;
 import teamcool.tradego.Fragments.TopTimelineFragment;
 import teamcool.tradego.Fragments.UserCatalogFragment;
@@ -57,6 +56,13 @@ public class NewsFeedActivity extends AppCompatActivity {
 
     private int selector;
 
+    public void onAddNewItem(MenuItem item) {
+
+        Intent i = new Intent(NewsFeedActivity.this, AddItemActivity.class);
+        startActivity(i);
+    }
+
+
     public class catalogPagerAdapter extends FragmentStatePagerAdapter {
 
         public catalogPagerAdapter(FragmentManager fragmentManager) { super(fragmentManager); }
@@ -75,22 +81,23 @@ public class NewsFeedActivity extends AppCompatActivity {
                     return CategoriesTimelineFragment.newInstance(tab0Names[position]);
             }
             else if (selector == 1) {
+                //user's own catalog
                 String currentUserObjID = ParseUser.getCurrentUser().getObjectId();
                 if (position == 0)
-                    return UserCatalogFragment.newInstance(currentUserObjID,"Available", false);
+                    return UserCatalogFragment.newInstance(currentUserObjID,"Available");
                 else if (position == 1)
-                    return UserCatalogFragment.newInstance(currentUserObjID,"On hold", false);
+                    return UserCatalogFragment.newInstance(currentUserObjID,"On hold");
                 else
-                    return UserCatalogFragment.newInstance(currentUserObjID,"Sold", false);
+                    return UserCatalogFragment.newInstance(currentUserObjID,"Sold");
             }
             else if (selector == 3) {
                 String currentUserObjID = ParseUser.getCurrentUser().getObjectId();
                 if (position == 0) //Sold
-                    return UserCatalogFragment.newInstance(currentUserObjID,"Sold", true);
+                    return UserCatalogFragment.newInstance(currentUserObjID,"Sold");
                 else if (position == 1) //Bought
-                    return UserCatalogFragment.newInstance(currentUserObjID,"Bought", true);
+                    return UserCatalogFragment.newInstance(currentUserObjID,"Bought");
                 else //on hold
-                    return UserCatalogFragment.newInstance(currentUserObjID,"On hold", true);
+                    return UserCatalogFragment.newInstance(currentUserObjID,"On hold");
             }
             else
                 return null;
@@ -161,6 +168,8 @@ public class NewsFeedActivity extends AppCompatActivity {
         tabStrip.setViewPager(viewpager);
         //set TabBackground and IndicatorColor later
 
+
+
         //setup navigation drawer
         setupNavDrawerTabs(navDrawer);
         drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.drawer_open, R.string.drawer_close) {
@@ -192,17 +201,18 @@ public class NewsFeedActivity extends AppCompatActivity {
         Picasso.with(this).load(currUser.getString("profilePicUrl")).fit().transform(new CropCircleTransformation()).into(ivNavProfilePic);
         tvNavUserName.setText(currUser.getString("username"));
         String numFriends = parseClient.countNumFriendsOfUser(currUser)+" friends";
-        String numItemsSold = parseClient.countNumItemsSold(currUser)+" items sold";
-        String numItemsOnhold = parseClient.countNumsItemsOnhold(currUser)+" items on hold";
+        String numItemsSold = parseClient.countNumItemsOnStatus(currUser,"Sold")+" items sold";
+        String numItemsOnhold = parseClient.countNumItemsOnStatus(currUser,"On hold")+" items on hold";
         tvNavNumFriends.setText(numFriends);
         tvNavItemsSold.setText(numItemsSold);
         tvNavItemsOnhold.setText(numItemsOnhold);
 
-        //Launching profiile activity when profile picture in the navigation drawer is clicked
+        //Launching profile activity when profile picture in the navigation drawer is clicked
         ivNavProfilePic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(NewsFeedActivity.this, ProfileActivity.class);
+                i.putExtra("objectId",ParseUser.getCurrentUser().getObjectId());
                 startActivity(i);
             }
         });
@@ -284,8 +294,11 @@ public class NewsFeedActivity extends AppCompatActivity {
             case R.id.nav_friends_fragment:
                 selector = 2;
                 break;
-            case R.id.nav_transaction_history_fragment:
+            case R.id.nav_transaction_status_fragment:
                 selector = 3;
+                break;
+            case R.id.nav_transaction_history_fragment:
+                selector = 4;
                 break;
 
 

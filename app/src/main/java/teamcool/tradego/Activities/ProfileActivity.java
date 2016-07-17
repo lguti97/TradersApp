@@ -18,13 +18,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import jp.wasabeef.picasso.transformations.RoundedCornersTransformation;
 import teamcool.tradego.Clients.ParseClient;
-import teamcool.tradego.Fragments.AvailableCatalogFragment;
-import teamcool.tradego.Fragments.OnHoldCatalogFragment;
-import teamcool.tradego.Fragments.SoldCatalogFragment;
 import teamcool.tradego.Fragments.UserCatalogFragment;
 import teamcool.tradego.R;
-
-//import teamcool.tradego.ParseClient;
 
 public class ProfileActivity extends AppCompatActivity {
 
@@ -32,11 +27,11 @@ public class ProfileActivity extends AppCompatActivity {
     @BindView(R.id.tvUserName) TextView tvUserName;
     @BindView(R.id.tvItemsSold) TextView tvItemsSold;
 
-    SoldCatalogFragment soldCatalogFragment;
-    OnHoldCatalogFragment onHoldCatalogFragment;
-    AvailableCatalogFragment availableCatalogFragment;
+
+
     ParseUser user;
     ParseClient parseClient;
+    String userObjId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,14 +39,11 @@ public class ProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_profile);
         ButterKnife.bind(this);
 
+
         //Get the viewpager
         //Set the viewpager adapter for the pager
         //find the sliding tabstrip
         //attach the tabstrip to the viewpager
-
-        soldCatalogFragment = new SoldCatalogFragment();
-        onHoldCatalogFragment = new OnHoldCatalogFragment();
-        availableCatalogFragment = new AvailableCatalogFragment();
 
         ViewPager vpPager = (ViewPager) findViewById(R.id.viewpager);
         vpPager.setAdapter(new CatalogPagerAdapter(getSupportFragmentManager()));
@@ -63,7 +55,10 @@ public class ProfileActivity extends AppCompatActivity {
         parseClient = new ParseClient();
 
 
-        user = ParseUser.getCurrentUser();
+        userObjId = getIntent().getStringExtra("objectId");
+        user = parseClient.queryUserBasedonObjectID(userObjId);
+
+
 
         populateUserHeader(user);
 
@@ -86,7 +81,7 @@ public class ProfileActivity extends AppCompatActivity {
                 .transform(new RoundedCornersTransformation(10, 10))
                 .into(ivProfileImage);
 
-        tvItemsSold.setText("Items sold: " + parseClient.countNumItemsSold(user));
+        tvItemsSold.setText("Items sold: " + parseClient.countNumItemsOnStatus(user,"Sold"));
 
     }
 
@@ -102,15 +97,16 @@ public class ProfileActivity extends AppCompatActivity {
 
         @Override
         public Fragment getItem(int position) {
+
             if(position==0) {
-                return availableCatalogFragment;
+                return UserCatalogFragment.newInstance(userObjId,"Available");
             }
 
             else if (position == 1) {
-                return onHoldCatalogFragment;
+                return UserCatalogFragment.newInstance(userObjId,"On hold");
             }
             else if (position == 2) {
-                return soldCatalogFragment;
+                return UserCatalogFragment.newInstance(userObjId,"Sold");
             }
             else {
                 return null;

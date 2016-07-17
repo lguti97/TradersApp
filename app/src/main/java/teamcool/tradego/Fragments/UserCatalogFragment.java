@@ -32,16 +32,12 @@ public class UserCatalogFragment extends CatalogListFragment {
 
     }
 
-    //boolean self: is the items query against the user itself
-    // or is the query against other users
-    // if self, then it's the user inquiring about its own items
-    // else, it's the user inquiring about other peoples items
-    public static UserCatalogFragment newInstance(String objId, String status, boolean self) {
+
+    public static UserCatalogFragment newInstance(String objId, String status) {
         UserCatalogFragment frag = new UserCatalogFragment();
         Bundle args = new Bundle();
-        args.putString("status",status);
-        args.putString("id",objId);
-        args.putBoolean("self",self);
+        args.putString("status", status);
+        args.putString("id", objId);
         frag.setArguments(args);
         return frag;
     }
@@ -50,7 +46,7 @@ public class UserCatalogFragment extends CatalogListFragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         parseClient = new ParseClient();
-        populateCatalog(getArguments().getString("id"),getArguments().getString("status"),getArguments().getBoolean("self"));
+        populateCatalog(getArguments().getString("id"), getArguments().getString("status"));
     }
 
     @Nullable
@@ -67,33 +63,23 @@ public class UserCatalogFragment extends CatalogListFragment {
         super.onViewCreated(view, savedInstanceState);
     }
 
-    public void populateCatalog(String id, String status, boolean self) {
-        if (!self) {
-            if (status.equalsIgnoreCase("Available")) {
-                items = parseClient.queryAvailableItemsInDatabaseOnUser(ParseUser.getCurrentUser());
-                Log.d("DEBUG", items.size() + "<------ size");
-            } else if (status.equalsIgnoreCase("On hold")) {
-                items = parseClient.queryOnholdItemsInDatabaseOnUser(ParseUser.getCurrentUser());
-            } else if (status.equalsIgnoreCase("Sold")) {
-                items = parseClient.querySoldItemsInDatabaseOnUser(ParseUser.getCurrentUser());
-            } else {
-                items = new ArrayList<>();
-            }
+
+    public void populateCatalog(String id, String status) {
+        ParseUser targetedUser = parseClient.queryUserBasedonObjectID(id);
+        if (status.equalsIgnoreCase("Available")) {
+            items = parseClient.queryItemsOnUserAndStatus(targetedUser, "Available");
+            Log.d("DEBUG", items.size() + "<------ size");
+        } else if (status.equalsIgnoreCase("On hold")) {
+            items = parseClient.queryItemsOnUserAndStatus(targetedUser, "on hold");
+        } else if (status.equalsIgnoreCase("Sold")) {
+            items = parseClient.queryItemsOnUserAndStatus(targetedUser, "Sold");
+        } else if (status.equalsIgnoreCase("Bought")) {
+            //what the current user has bought
+            items = parseClient.queryBoughtItemsOnUser(targetedUser);
         } else {
-            ParseUser currUser = ParseUser.getCurrentUser();
-            if (status.equalsIgnoreCase("Sold")) {
-                //what the current user has sold
-                items = parseClient.querySoldItemsInDatabaseOnUser(currUser);
-            } else if (status.equalsIgnoreCase("Bought")) {
-                //what the current user has bought
-                items = parseClient.queryBoughtItemsInDatabaseOnUser(currUser);
-            } else if (status.equalsIgnoreCase("On hold")) {
-                //what the current user has on hold
-                //items = parseClient.queryOnholdItemsInDatabaseOnUser(currUser);
-            } else {
-                items = new ArrayList<>();
-            }
+            items = new ArrayList<>();
         }
+
         addAll(items);
 
     }

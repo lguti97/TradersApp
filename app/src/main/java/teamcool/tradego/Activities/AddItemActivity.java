@@ -37,6 +37,8 @@ public class AddItemActivity extends AppCompatActivity {
     @BindView(R.id.etPrice) EditText etPrice;
     @BindView(R.id.etItemName) EditText etItemName;
     @BindView(R.id.etItemDescription) EditText etItemDescription;
+
+
     String negotiable;
     String category;
     String status;
@@ -92,58 +94,7 @@ public class AddItemActivity extends AppCompatActivity {
     }
 
 
-    public void onAddItemClick(View view) {
 
-
-        Double price;
-
-        try {price = Double.parseDouble(etPrice.getText().toString());} catch (Exception e) {
-            price = 0.0d;
-        }
-
-        Item new_item = new Item(etItemName.getText().toString(),
-                category, etItemDescription.getText().toString(),
-                status,price);
-
-
-        ParseUser user = ParseUser.getCurrentUser();
-
-        new_item.setOwner(user);
-
-        new_item.saveInBackground();
-
-//        // Save the post and return
-//        new_item.saveInBackground(new SaveCallback() {
-//
-//
-//            @Override
-//            public void done(ParseException e) {
-//                if (e == null) {
-//                    setResult(RESULT_OK);
-//                    finish();
-//                } else {
-//                    Toast.makeText(getApplicationContext(),
-//                            "Error saving: " + e.getMessage(),
-//                            Toast.LENGTH_SHORT)
-//                            .show();
-//                }
-//            }
-//
-//        });
-
-//
-//
-//
-//
-//        this.setResult(Activity.RESULT_OK);
-//        this.finish();
-
-
-        Toast.makeText(this, "Item Added!", Toast.LENGTH_SHORT).show();
-
-        Intent i = new Intent(this, ProfileActivity.class);
-        startActivity(i);
-    }
 
 
     public void onRadioButtonClicked(View view) {
@@ -293,5 +244,60 @@ public class AddItemActivity extends AppCompatActivity {
         String state = Environment.getExternalStorageState();
         return state.equals(Environment.MEDIA_MOUNTED);
     }
+
+
+    public void onAddItemClick(View view) {
+
+
+        Double price;
+
+        try {price = Double.parseDouble(etPrice.getText().toString());} catch (Exception e) {
+            price = 0.0d;
+        }
+
+        Item new_item = new Item(etItemName.getText().toString(),
+                category, etItemDescription.getText().toString(),
+                status,price, negotiable);
+
+
+        ParseUser user = ParseUser.getCurrentUser();
+
+        new_item.setOwner(user);
+
+        new_item.saveInBackground();
+
+//        // Save the post and return
+//        new_item.saveInBackground(new SaveCallback() {
+//
+//
+//            @Override
+//            public void done(ParseException e) {
+//                if (e == null) {
+//                    setResult(RESULT_OK);
+//                    finish();
+//                } else {
+//                    Toast.makeText(getApplicationContext(),
+//                            "Error saving: " + e.getMessage(),
+//                            Toast.LENGTH_SHORT)
+//                            .show();
+//                }
+//            }
+//
+//        });
+
+//
+//
+//
+//
+//        this.setResult(Activity.RESULT_OK);
+//        this.finish();
+
+
+        Toast.makeText(this, "Item Added!", Toast.LENGTH_SHORT).show();
+
+        Intent i = new Intent(this, ProfileActivity.class);
+        startActivity(i);
+    }
+
 
 }

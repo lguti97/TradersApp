@@ -29,7 +29,7 @@ public class SearchItemsFragment extends CatalogListFragment {
 
     private void populate() {
         String query = getArguments().getString("query");
-        items = parseClient.queryItemsInDatabaseOnName(query);
+        items = parseClient.queryItemsOnName(query,false);
         addAll(items);
     }
 

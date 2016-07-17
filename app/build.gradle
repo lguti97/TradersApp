@@ -41,6 +41,8 @@ dependencies {
     compile 'com.parse:parsefacebookutils-v4-android:1.10.3@aar'
 
     compile 'jp.wasabeef:picasso-transformations:2.1.0'
+    compile 'com.github.chenupt.android:springindicator:1.0.2@aar'
+
 
     compile 'com.github.bumptech.glide:glide:3.5.2'
     compile 'com.android.support:support-v4:24.0.0'
