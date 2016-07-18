@@ -2,14 +2,17 @@ package teamcool.tradego.Activities;
 
 import android.app.Activity;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Base64;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,7 +31,8 @@ import teamcool.tradego.R;
 
 public class DetailsActivity extends AppCompatActivity {
 
-    @BindView(R.id.btnMessenger) View btnMessenger;
+    @BindView(R.id.btnMessenger)
+    View btnMessenger;
     Item item;
     /*
     @BindView(R.id.tvItemDescription) TextView tvItemDescription;
@@ -43,6 +47,12 @@ public class DetailsActivity extends AppCompatActivity {
     TextView tvItemPrice;
     TextView tvItemNegotiable;
     TextView tvItemCategory;
+    ImageView ivItem1;
+    ImageView ivItem2;
+    ImageView ivItem3;
+
+
+
 
 
     private static final int REQUEST_CODE_SHARE_TO_MESSENGER = 15251;
@@ -89,19 +99,25 @@ public class DetailsActivity extends AppCompatActivity {
         tvItemPrice = (TextView) findViewById(R.id.tvItemPrice);
         tvItemNegotiable = (TextView) findViewById(R.id.tvItemNegotiable);
         tvItemCategory = (TextView) findViewById(R.id.tvItemCategory);
+        ivItem1 = (ImageView) findViewById(R.id.ivItem1);
+        ivItem2 = (ImageView) findViewById(R.id.ivItem2);
+        ivItem3 = (ImageView) findViewById(R.id.ivItem3);
+
 
 
         tvItemDescription.setText("Item description: " + item.getDescription());
         tvItemName.setText(item.getItem_name());
         tvItemStatus.setText("Status: " + item.getStatus());
         String price = String.valueOf(item.getPrice());
-        tvItemPrice.setText("Price: "+ price);
+        tvItemPrice.setText("Price: " + price);
         tvItemNegotiable.setText("Negotiable: " + item.getNegotiable());
         tvItemCategory.setText("Category: " + item.getCategory());
+        ivItem1.setImageBitmap(StringToBitMap(item.getImage1()));
+        ivItem2.setImageBitmap(StringToBitMap(item.getImage2()));
+        ivItem3.setImageBitmap(StringToBitMap(item.getImage3()));
+
 
     }
-
-
 
 
     public Uri takeScreenshot() {
@@ -146,4 +162,18 @@ public class DetailsActivity extends AppCompatActivity {
     public void onEditItem(MenuItem item) {
         Toast.makeText(this, "Hello", Toast.LENGTH_SHORT).show();
     }
+
+    public Bitmap StringToBitMap(String encodedString){
+        try {
+            byte [] encodeByte= Base64.decode(encodedString,Base64.DEFAULT);
+            Bitmap bitmap= BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
+            return bitmap;
+        } catch(Exception e) {
+            e.getMessage();
+            return null;
+        }
+    }
+
+
+
 }
