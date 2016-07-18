@@ -55,6 +55,7 @@ public class ProfileActivity extends AppCompatActivity {
         parseClient = new ParseClient();
 
 
+
         userObjId = getIntent().getStringExtra("objectId");
         user = parseClient.queryUserBasedonObjectID(userObjId);
 
@@ -63,11 +64,12 @@ public class ProfileActivity extends AppCompatActivity {
         populateUserHeader(user);
 
         if(savedInstanceState == null) {
-
+            /*
             //Display user fragment within this activity
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-            ft.replace(R.id.flContainer, new UserCatalogFragment());
+            ft.replace(R.id.flContainer, UserCatalogFragment.newInstance(getIntent().getStringExtra("objId"),"Available"));
             ft.commit();
+            */
         }
     }
 

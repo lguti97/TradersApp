@@ -3,5 +3,9 @@
     <string name="facebook_app_id">528996547286241</string>
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
-
+    <string name="prompt_sort_order">Sort by...</string>
+    <string name="category_type">Category</string>
+    <string name="sort_by">Sort by</string>
+    <string name="date">Date</string>
+    <string name="back">Back</string>
 </resources>

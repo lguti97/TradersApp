@@ -111,13 +111,13 @@ public class NewsFeedActivity extends AppCompatActivity {
         @Override
         public int getCount() {
             if (selector == 0)
-                return 6;
+                return tab0Names.length;
             else if (selector == 1)
-                return 3;
+                return tab1Names.length;
             else if (selector == 2)
-                return 0;
+                return tab2Names.length;
             else if (selector == 3)
-                return 3;
+                return tab3Names.length;
             else
                 return 0;
         }

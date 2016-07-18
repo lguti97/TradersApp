@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#f3f8f1">
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:text="@string/category_type"
+        android:id="@+id/tvCategoryType"
+        android:layout_marginTop="80dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginBottom="30dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/sort_by"
+        android:id="@+id/tvSortOrder"
+        android:layout_below="@id/tvCategoryType"
+        android:layout_alignLeft="@id/tvCategoryType"
+        android:layout_alignStart="@id/tvCategoryType"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/date"
+        android:id="@+id/tvDate"
+        android:layout_below="@id/tvSortOrder"
+        android:layout_alignLeft="@id/tvSortOrder"
+        android:layout_alignStart="@id/tvSortOrder"
+        android:layout_marginTop="20dp"/>
+
+
+    <Spinner
+        android:id="@+id/spnrSortOrder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:entries="@array/sort_array"
+        android:prompt="@string/prompt_sort_order"
+        android:layout_below="@+id/spnrCategoryType"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"/>
+
+    <Spinner
+        android:id="@id/spnrCategoryType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:entries="@array/categories"
+        android:layout_toRightOf="@id/tvCategoryType"
+        android:layout_toEndOf="@id/tvCategoryType"
+        android:layout_alignBaseline="@id/tvCategoryType">
+    </Spinner>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Submit"
+        android:id="@+id/btnSubmitFilter"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="20dp"
+        android:minHeight="50dp"/>
+
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/back"
+        android:id="@+id/btnFilterBack"
+        android:clickable="true"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginBottom="20dp"
+        android:minWidth="65dp"
+        android:minHeight="50dp"/>
+
+    <DatePicker
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/dpFilterDate"
+        android:layout_below="@id/spnrSortOrder"
+        style="@android:style/Widget.DatePicker"
+        android:onClick="showDatePickerDialog"/>
+
+
+</RelativeLayout>
