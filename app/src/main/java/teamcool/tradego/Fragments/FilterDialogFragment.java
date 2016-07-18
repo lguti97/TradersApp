@@ -3,10 +3,13 @@ package teamcool.tradego.Fragments;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import teamcool.tradego.R;
 
@@ -19,7 +22,8 @@ public class FilterDialogFragment extends DialogFragment implements View.OnClick
         void onFinishDialog();
     }
 
-    //butterknife binding
+    @BindView(R.id.btnFilterBack) Button btnFilterBack;
+    @BindView(R.id.btnSubmitFilter) Button btnSubmitFilter;
 
     public FilterDialogFragment () {
 
@@ -38,7 +42,10 @@ public class FilterDialogFragment extends DialogFragment implements View.OnClick
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.filter_fragment_dialog, container, false);
         ButterKnife.bind(this,view);
-        //set onClickListener(this)
+
+        btnFilterBack.setOnClickListener(this);
+        btnSubmitFilter.setOnClickListener(this);
+
         getDialog().setTitle(getArguments().getString("title"));
         return view;
     }
@@ -54,12 +61,20 @@ public class FilterDialogFragment extends DialogFragment implements View.OnClick
             case R.id.btnFilterBack:
                 backWithoutResults();
                 break;
+            case R.id.btnSubmitFilter:
+                sendBackResults();
         }
     }
 
     public void backWithoutResults(){
         FilterDialogListener listener = (FilterDialogListener) getActivity();
         listener.onFinishDialog(); //null
+        dismiss();
+    }
+
+    public void sendBackResults() {
+        FilterDialogListener listener = (FilterDialogListener) getActivity();
+        listener.onFinishDialog(); //to be changed
         dismiss();
     }
 
