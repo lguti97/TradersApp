@@ -1,11 +1,8 @@
-
-
 package teamcool.tradego.Clients;
 
 //Created by selinabing on 7/11/16.
 
 
-import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
@@ -177,5 +174,4 @@ public class ParseClient {
         return user;
     }
 
- }
-
+}

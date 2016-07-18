@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="color_indicators">
+        <item>#FF0000</item>
+        <item>#00FF00</item>
+        <item>#55ACEE</item>
+        <item>#8A2BE2</item>
+    </array>
+</resources>
