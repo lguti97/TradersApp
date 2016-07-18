@@ -116,7 +116,7 @@ public class LoginActivity extends AppCompatActivity {
                 // look it up in API and add more permissions to the array
 
 
-                Intent i = new Intent (LoginActivity.this, FriendImportActivity.class);
+                Intent i = new Intent (LoginActivity.this, AddItemActivity.class);
 
                 startActivity(i);
             }

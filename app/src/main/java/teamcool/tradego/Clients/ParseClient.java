@@ -3,7 +3,11 @@ package teamcool.tradego.Clients;
 //Created by selinabing on 7/11/16.
 
 
+import android.util.Log;
+
+import com.parse.FindCallback;
 import com.parse.ParseException;
+import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
@@ -174,11 +178,22 @@ public class ParseClient {
         }
         return user;
     }
+
     /*
-    public ArrayList<Acquaintance> queryAcquaintancesofUser(ParseUser user){
+    public List<Acquaintance> queryAcquaintancesofUser(ParseUser user){
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("Acquaintance");
+        query.whereEqualTo("_p_owner", user.getCurrentUser());
+        query.findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(List<ParseObject> acquaintances, ParseException e) {
+                if (e == null){
+                    Log.d("DEBUG", "Retrieved: " + acquaintances);
+                } else {
+                    Log.d("DEBUG", "ERROR");
+                }
+            }
+        });
 
-
-        return ArrayList<Acquaintance>;
     } */
 
 }

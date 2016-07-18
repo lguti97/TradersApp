@@ -73,6 +73,7 @@ public class Acquaintance extends ParseObject {
 
     //Deserializes JSON objects into the Acquaintance model
     //How do we do this though?
+    //TODO. Make a condition to not make the same Acquaintance Object.
     public static Acquaintance fromJSON(JSONObject object){
         Acquaintance acquaintance = null;
         try {
