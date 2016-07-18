@@ -191,7 +191,7 @@ public class ParseClient {
         try {
             acquaintances = query.find();
             for (int i = 0; i < acquaintances.size(); i++){
-                acquaintancesID.add(acquaintances.get(i).getName());
+                acquaintancesID.add(acquaintances.get(i).getUserID());
             }
         } catch (ParseException e) {
             e.printStackTrace();
