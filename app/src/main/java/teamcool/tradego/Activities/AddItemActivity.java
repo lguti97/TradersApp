@@ -371,12 +371,10 @@ public class AddItemActivity extends AppCompatActivity {
 
             new_item.setOwner(user);
 
-            new_item.saveInBackground();
-
 
 
         if(getIntent().getStringExtra("item_id") != null) {
-            item.deleteInBackground();
+            parseClient.updateItem(getIntent().getStringExtra("item_id"), new_item);
             Toast.makeText(this, "Item Edited!", Toast.LENGTH_SHORT).show();
 
         }
