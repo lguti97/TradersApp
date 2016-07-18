@@ -93,7 +93,8 @@ public class AcquaintanceAdapter extends RecyclerView.Adapter<AcquaintanceAdapte
                 //TODO. Query ParseUser by Name for now.
                 //Transfer Data to FriendsObject so we can query from there.
                 Friend friend;
-                friend = Friend.fromAcquaintance(acquaintance.getName());
+                friend = Friend.fromAcquaintance(acquaintance.getName(), acquaintance.getProfile_url(), acquaintance.getUserID());
+
                 Toast.makeText(getContext(), "You added" + friend.getName(), Toast.LENGTH_SHORT).show();
 
 

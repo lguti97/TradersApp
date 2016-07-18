@@ -5,9 +5,7 @@ package teamcool.tradego.Clients;
 
 import android.util.Log;
 
-import com.parse.FindCallback;
 import com.parse.ParseException;
-import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
@@ -39,6 +37,7 @@ public class ParseClient {
         ParseQuery<Item> query = ParseQuery.getQuery(Item.class);
         query.whereContains("item_name",name);
         query.whereEqualTo("status","Available");
+        query.orderByDescending("createdAt");
         if(!self) {
             query.whereNotEqualTo("owner", ParseUser.getCurrentUser());
         } else {
@@ -56,6 +55,7 @@ public class ParseClient {
         List<Item> items = new ArrayList<>();
         ParseQuery<Item> query = ParseQuery.getQuery(Item.class);
         query.whereNotEqualTo("owner",ParseUser.getCurrentUser());
+        query.orderByDescending("createdAt");
         query.whereEqualTo("category",category);
         query.whereEqualTo("status","Available");
         try {
@@ -75,6 +75,7 @@ public class ParseClient {
         if (status != null) {
             query.whereEqualTo("status", status);
         }
+        query.orderByDescending("createdAt");
         try {
             items = query.find();
         } catch (ParseException e) {
@@ -88,6 +89,7 @@ public class ParseClient {
         ParseQuery<Item> query = ParseQuery.getQuery(Item.class);
         query.whereEqualTo("buyer",user);
         query.whereEqualTo("status","Sold");
+        query.orderByDescending("createdAt");
         try {
             items = query.find();
         } catch (ParseException e) {
@@ -101,6 +103,7 @@ public class ParseClient {
         ParseQuery<Item> query = ParseQuery.getQuery(Item.class);
         query.whereNotEqualTo("owner",user);
         query.whereEqualTo("status",status);
+        query.orderByDescending("createdAt");
         try {
             items = query.find();
         } catch (ParseException e) {
@@ -180,20 +183,20 @@ public class ParseClient {
     }
 
 
-    public List<String> queryAcquaintanceNamesofUser(ParseUser user){
+    public List<String> queryAcquaintanceIDofUser(ParseUser user){
         List<Acquaintance> acquaintances;
-        List<String> acqauintancesName = new ArrayList<>();
+        List<String> acquaintancesID = new ArrayList<>();
         ParseQuery<Acquaintance> query = ParseQuery.getQuery(Acquaintance.class);
         query.whereEqualTo("owner", user.getCurrentUser());
         try {
             acquaintances = query.find();
             for (int i = 0; i < acquaintances.size(); i++){
-                acqauintancesName.add(acquaintances.get(i).getName());
+                acquaintancesID.add(acquaintances.get(i).getName());
             }
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        return acqauintancesName;
+        return acquaintancesID;
     }
 
     public List<Acquaintance> queryAcquaintancesofUser(ParseUser user){
@@ -210,5 +213,6 @@ public class ParseClient {
         }
         return acquaintances;
     }
+
 
 }

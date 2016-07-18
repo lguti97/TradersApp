@@ -2,6 +2,7 @@ package teamcool.tradego.Fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +13,7 @@ import com.parse.ParseUser;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import teamcool.tradego.Clients.ParseClient;
 import teamcool.tradego.Models.Item;
@@ -27,6 +29,8 @@ public class UserCatalogFragment extends CatalogListFragment {
 
     List<Item> items;
     ParseClient parseClient;
+
+    @BindView(R.id.swipeContainerCatalog) SwipeRefreshLayout swipeContainer;
 
     public UserCatalogFragment() {
 
@@ -46,7 +50,6 @@ public class UserCatalogFragment extends CatalogListFragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         parseClient = new ParseClient();
-        populateCatalog(getArguments().getString("id"), getArguments().getString("status"));
     }
 
     @Nullable
@@ -59,7 +62,18 @@ public class UserCatalogFragment extends CatalogListFragment {
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        populateCatalog(getArguments().getString("id"), getArguments().getString("status"));
         //if swipe container exists, must setOnRefreshListener here, not onCreateView or onCreate
+        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                populateCatalog(getArguments().getString("id"), getArguments().getString("status"));
+            }
+        });
+        swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light);
         super.onViewCreated(view, savedInstanceState);
     }
 
@@ -70,7 +84,7 @@ public class UserCatalogFragment extends CatalogListFragment {
             items = parseClient.queryItemsOnUserAndStatus(targetedUser, "Available");
             Log.d("DEBUG", items.size() + "<------ size");
         } else if (status.equalsIgnoreCase("On hold")) {
-            items = parseClient.queryItemsOnUserAndStatus(targetedUser, "on hold");
+            items = parseClient.queryItemsOnUserAndStatus(targetedUser, "On hold");
         } else if (status.equalsIgnoreCase("Sold")) {
             items = parseClient.queryItemsOnUserAndStatus(targetedUser, "Sold");
         } else if (status.equalsIgnoreCase("Bought")) {
@@ -81,6 +95,7 @@ public class UserCatalogFragment extends CatalogListFragment {
         }
 
         addAll(items);
+        swipeContainer.setRefreshing(false);
 
     }
 }
