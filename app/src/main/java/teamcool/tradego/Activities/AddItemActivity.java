@@ -7,9 +7,12 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Base64;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -26,6 +29,7 @@ import java.io.File;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import teamcool.tradego.Clients.ParseClient;
 import teamcool.tradego.Models.Item;
 import teamcool.tradego.R;
 
@@ -39,8 +43,7 @@ public class AddItemActivity extends AppCompatActivity {
     @BindView(R.id.etPrice) EditText etPrice;
     @BindView(R.id.etItemName) EditText etItemName;
     @BindView(R.id.etItemDescription) EditText etItemDescription;
-
-
+    ParseClient parseClient;
 
 
     String negotiable;
@@ -49,7 +52,8 @@ public class AddItemActivity extends AppCompatActivity {
     String image_1;
     String image_2;
     String image_3;
-
+    String itemId;
+    Item item;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +61,15 @@ public class AddItemActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_item);
         ButterKnife.bind(this);
         //Take first image of the item to be sold
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+
+        setSupportActionBar(toolbar);
+
+        ActionBar actionbar = getSupportActionBar();
+        actionbar.setDisplayHomeAsUpEnabled(true);
+        actionbar.setDisplayShowHomeEnabled(true);
+
 
         ivItem1.setOnClickListener(new View.OnClickListener() {
 
@@ -98,13 +111,44 @@ public class AddItemActivity extends AppCompatActivity {
         onCategorySpinner();
         onStatusSpinner();
 
+
+        if (getIntent().getStringExtra("item_id") != null) {
+
+            populateEditItem();
+
+        }
+
+    }
+
+    private void populateEditItem() {
+
+        parseClient = new ParseClient();
+        itemId = getIntent().getStringExtra("item_id");
+        item = parseClient.queryItemBasedonObjectID(itemId);
+        etItemName.setText(item.getItem_name());
+        String price = String.valueOf(item.getPrice());
+        etPrice.setText(price);
+        etItemDescription.setText(item.getDescription());
+        ivItem1.setImageBitmap(StringToBitMap(item.getImage1()));
+        ivItem2.setImageBitmap(StringToBitMap(item.getImage2()));
+        ivItem3.setImageBitmap(StringToBitMap(item.getImage3()));
+
+        /*
+            if (item.getNegotiable() == "Yes") {
+                RadioButton yes = (RadioButton) findViewById(R.id.rbYes);
+                yes.setChecked(true);
+            } else if (item.getNegotiable() == "No") {
+                RadioButton no = (RadioButton) findViewById(R.id.rbNo);
+                no.setChecked(true);
+            }
+
+            */
+
     }
 
 
-
-
-
     public void onRadioButtonClicked(View view) {
+
         // Is the button now checked?
         boolean checked = ((RadioButton) view).isChecked();
 
@@ -268,56 +312,74 @@ public class AddItemActivity extends AppCompatActivity {
 
     public void onAddItemClick(View view) {
 
+        if(getIntent().getStringExtra("item_id") != null) {
 
-        Double price;
-
-        try {price = Double.parseDouble(etPrice.getText().toString());} catch (Exception e) {
-            price = 0.0d;
+            image_1 = item.getImage1();
+            image_2 = item.getImage2();
+            image_3 = item.getImage3();
         }
 
-        Item new_item = new Item(etItemName.getText().toString(),
-                category, etItemDescription.getText().toString(),
-                status,price, negotiable, image_1, image_2, image_3);
+            Double price;
+
+            try {
+                price = Double.parseDouble(etPrice.getText().toString());
+            } catch (Exception e) {
+                price = 0.0d;
+            }
+
+        if(etItemDescription.getText().toString() == null || category == null || etItemDescription.getText().toString() == null || status == null || price==0.0d) {
+            Toast.makeText(this, "Please complete all the fields", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+            Item new_item = new Item(etItemName.getText().toString(),
+                    category, etItemDescription.getText().toString(),
+                    status, price, negotiable, image_1, image_2, image_3);
 
 
-        ParseUser user = ParseUser.getCurrentUser();
+            ParseUser user = ParseUser.getCurrentUser();
 
-        new_item.setOwner(user);
+            new_item.setOwner(user);
 
-        new_item.saveInBackground();
-
-//        // Save the post and return
-//        new_item.saveInBackground(new SaveCallback() {
-//
-//
-//            @Override
-//            public void done(ParseException e) {
-//                if (e == null) {
-//                    setResult(RESULT_OK);
-//                    finish();
-//                } else {
-//                    Toast.makeText(getApplicationContext(),
-//                            "Error saving: " + e.getMessage(),
-//                            Toast.LENGTH_SHORT)
-//                            .show();
-//                }
-//            }
-//
-//        });
-
-//
-//
-//
-//
-//        this.setResult(Activity.RESULT_OK);
-//        this.finish();
+            new_item.saveInBackground();
 
 
-        Toast.makeText(this, "Item Added!", Toast.LENGTH_SHORT).show();
+        if(getIntent().getStringExtra("item_id") != null) {
+            item.deleteInBackground();
+            Toast.makeText(this, "Item Edited!", Toast.LENGTH_SHORT).show();
+
+        }
+
+        else {
+            Toast.makeText(this, "Item Added!", Toast.LENGTH_SHORT).show(); }
+
+
+        if (image_1 == null || image_2 == null || image_3 == null) {
+            Toast.makeText(this, "Please add 3 images of the item", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
         Intent i = new Intent(this, NewsFeedActivity.class);
         startActivity(i);
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            finish();
 
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    public Bitmap StringToBitMap(String encodedString){
+        try {
+            byte [] encodeByte= Base64.decode(encodedString,Base64.DEFAULT);
+            Bitmap bitmap= BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
+            return bitmap;
+        } catch(Exception e) {
+            e.getMessage();
+            return null;
+        }
+    }
 }

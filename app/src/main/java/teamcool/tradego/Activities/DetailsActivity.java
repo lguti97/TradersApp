@@ -1,11 +1,13 @@
 package teamcool.tradego.Activities;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Base64;
@@ -14,7 +16,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.facebook.messenger.MessengerUtils;
 import com.facebook.messenger.ShareToMessengerParams;
@@ -34,6 +35,7 @@ public class DetailsActivity extends AppCompatActivity {
     @BindView(R.id.btnMessenger)
     View btnMessenger;
     Item item;
+    String itemId;
     /*
     @BindView(R.id.tvItemDescription) TextView tvItemDescription;
     @BindView(R.id.tvItemName) TextView tvItemName;
@@ -51,10 +53,6 @@ public class DetailsActivity extends AppCompatActivity {
     ImageView ivItem2;
     ImageView ivItem3;
 
-
-
-
-
     private static final int REQUEST_CODE_SHARE_TO_MESSENGER = 15251;
     ParseClient parseClient;
 
@@ -68,6 +66,13 @@ public class DetailsActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 
         setSupportActionBar(toolbar);
+
+        ActionBar actionbar = getSupportActionBar();
+        actionbar.setDisplayHomeAsUpEnabled(true);
+        actionbar.setDisplayShowHomeEnabled(true);
+
+        itemId = getIntent().getStringExtra("item_id");
+
 
 
         final Activity activity = this;
@@ -89,7 +94,6 @@ public class DetailsActivity extends AppCompatActivity {
 
     private void populateItemDetails() {
 
-        String itemId = getIntent().getStringExtra("item_id");
         parseClient = new ParseClient();
         item = parseClient.queryItemBasedonObjectID(itemId);
 
@@ -102,7 +106,6 @@ public class DetailsActivity extends AppCompatActivity {
         ivItem1 = (ImageView) findViewById(R.id.ivItem1);
         ivItem2 = (ImageView) findViewById(R.id.ivItem2);
         ivItem3 = (ImageView) findViewById(R.id.ivItem3);
-
 
 
         tvItemDescription.setText("Item description: " + item.getDescription());
@@ -160,7 +163,10 @@ public class DetailsActivity extends AppCompatActivity {
 
 
     public void onEditItem(MenuItem item) {
-        Toast.makeText(this, "Hello", Toast.LENGTH_SHORT).show();
+
+        Intent i = new Intent(DetailsActivity.this, AddItemActivity.class);
+        i.putExtra("item_id", itemId);
+        startActivity(i);
     }
 
     public Bitmap StringToBitMap(String encodedString){
@@ -174,6 +180,12 @@ public class DetailsActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            finish();
 
-
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }

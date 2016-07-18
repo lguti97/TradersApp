@@ -70,7 +70,7 @@ public class UserCatalogFragment extends CatalogListFragment {
             items = parseClient.queryItemsOnUserAndStatus(targetedUser, "Available");
             Log.d("DEBUG", items.size() + "<------ size");
         } else if (status.equalsIgnoreCase("On hold")) {
-            items = parseClient.queryItemsOnUserAndStatus(targetedUser, "on hold");
+            items = parseClient.queryItemsOnUserAndStatus(targetedUser, "On hold");
         } else if (status.equalsIgnoreCase("Sold")) {
             items = parseClient.queryItemsOnUserAndStatus(targetedUser, "Sold");
         } else if (status.equalsIgnoreCase("Bought")) {

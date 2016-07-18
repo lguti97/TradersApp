@@ -4,9 +4,11 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -40,6 +42,15 @@ public class ProfileActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
 
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+
+        setSupportActionBar(toolbar);
+
+        ActionBar actionbar = getSupportActionBar();
+        actionbar.setDisplayHomeAsUpEnabled(true);
+        actionbar.setDisplayShowHomeEnabled(true);
+
+
         //Get the viewpager
         //Set the viewpager adapter for the pager
         //find the sliding tabstrip
@@ -64,10 +75,14 @@ public class ProfileActivity extends AppCompatActivity {
 
         if(savedInstanceState == null) {
 
+            /*
+
             //Display user fragment within this activity
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             ft.replace(R.id.flContainer, new UserCatalogFragment());
             ft.commit();
+
+            */
         }
     }
 
@@ -123,6 +138,16 @@ public class ProfileActivity extends AppCompatActivity {
         public int getCount() {
             return tabTitles.length;
         }
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 }

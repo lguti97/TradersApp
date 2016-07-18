@@ -34,9 +34,6 @@ public class CatalogAdapter extends RecyclerView.Adapter<CatalogAdapter.ViewHold
         @BindView(R.id.ivNewsFeedDisplayImg) ImageView ivItemImage;
 
 
-
-
-
         public ViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this,itemView);
@@ -119,8 +116,5 @@ public class CatalogAdapter extends RecyclerView.Adapter<CatalogAdapter.ViewHold
             return null;
         }
     }
-
-
-
 
 }
