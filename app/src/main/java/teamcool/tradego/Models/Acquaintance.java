@@ -82,20 +82,20 @@ public class Acquaintance extends ParseObject {
     //How do we do this though?
     //TODO. Make a condition to not make the same Acquaintance Object.
     public static Acquaintance fromJSON(JSONObject object){
-        List<String> acquaintanceNames;
+        List<String> acquaintancesID;
         ParseClient parseClient = new ParseClient();
         //ParseClient retrieves the names of the of AcquaintUser
-        acquaintanceNames = parseClient.queryAcquaintanceNamesofUser(ParseUser.getCurrentUser());
+        acquaintancesID = parseClient.queryAcquaintanceIDofUser(ParseUser.getCurrentUser());
         Acquaintance acquaintance = null;
         try {
-            if (!acquaintanceNames.contains(object.getString("name"))) {
+            if (!acquaintancesID.contains(object.getString("id"))) {
                 acquaintance = new Acquaintance(object.getString("name"), object.getJSONObject("picture").getJSONObject("data").getString("url"),
                         object.getString("id"));
                 acquaintance.setOwner(ParseUser.getCurrentUser());
                 acquaintance.saveInBackground();
             }
             else {
-
+                //Do Nothing
             }
         } catch (JSONException e) {
             e.printStackTrace();

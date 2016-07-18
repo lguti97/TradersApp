@@ -182,20 +182,20 @@ public class ParseClient {
     }
 
 
-    public List<String> queryAcquaintanceNamesofUser(ParseUser user){
+    public List<String> queryAcquaintanceIDofUser(ParseUser user){
         List<Acquaintance> acquaintances;
-        List<String> acqauintancesName = new ArrayList<>();
+        List<String> acquaintancesID = new ArrayList<>();
         ParseQuery<Acquaintance> query = ParseQuery.getQuery(Acquaintance.class);
         query.whereEqualTo("owner", user.getCurrentUser());
         try {
             acquaintances = query.find();
             for (int i = 0; i < acquaintances.size(); i++){
-                acqauintancesName.add(acquaintances.get(i).getName());
+                acquaintancesID.add(acquaintances.get(i).getName());
             }
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        return acqauintancesName;
+        return acquaintancesID;
     }
 
     public List<Acquaintance> queryAcquaintancesofUser(ParseUser user){

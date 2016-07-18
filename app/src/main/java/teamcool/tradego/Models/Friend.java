@@ -21,9 +21,11 @@ public class Friend extends ParseObject {
         super();
     }
 
-    public Friend(String name){
+    public Friend(String name, String Profile, String ID){
         super();
         setName(name);
+        setProfile_url(Profile);
+        setUserID(ID);
     }
 
     // Will be used to access fields from Parse Database
@@ -66,8 +68,8 @@ public class Friend extends ParseObject {
         put("owner", user);
     }
 
-    public static Friend fromAcquaintance (String name) {
-        Friend friend = new Friend(name);
+    public static Friend fromAcquaintance (String name, String profile, String ID) {
+        Friend friend = new Friend(name, profile, ID);
         friend.setOwner(ParseUser.getCurrentUser());
         friend.saveInBackground();
         return friend;
