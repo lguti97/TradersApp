@@ -29,6 +29,7 @@ import butterknife.ButterKnife;
 import teamcool.tradego.Clients.FBGraphClient;
 import teamcool.tradego.Clients.ParseClient;
 import teamcool.tradego.Models.Acquaintance;
+import teamcool.tradego.Models.Friend;
 import teamcool.tradego.Models.Item;
 import teamcool.tradego.Models.User;
 import teamcool.tradego.R;
@@ -57,14 +58,9 @@ public class LoginActivity extends AppCompatActivity {
         ParseObject.registerSubclass(Item.class);
         ParseObject.registerSubclass(Acquaintance.class);
 
-        FacebookSdk.sdkInitialize(this);
+        //Parse Initialization done in the ParseApplication Class.
 
-        //Connects to the Parse Server
-        Parse.initialize(new Parse.Configuration.Builder(this)
-                .applicationId("tradego")
-                .addNetworkInterceptor(new ParseLogInterceptor())
-                .server("https://tradego.herokuapp.com/parse/").build());
-        //initializes with Facebook
+        FacebookSdk.sdkInitialize(this);
         ParseFacebookUtils.initialize(getApplicationContext());
 
     }
@@ -120,7 +116,7 @@ public class LoginActivity extends AppCompatActivity {
                 // look it up in API and add more permissions to the array
 
 
-                Intent i = new Intent (LoginActivity.this, NewsFeedActivity.class);
+                Intent i = new Intent (LoginActivity.this, FriendImportActivity.class);
 
                 startActivity(i);
             }

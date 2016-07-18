@@ -10,6 +10,7 @@ import com.parse.ParseUser;
 import java.util.ArrayList;
 import java.util.List;
 
+import teamcool.tradego.Models.Acquaintance;
 import teamcool.tradego.Models.Item;
 
 public class ParseClient {
@@ -173,5 +174,11 @@ public class ParseClient {
         }
         return user;
     }
+    /*
+    public ArrayList<Acquaintance> queryAcquaintancesofUser(ParseUser user){
+
+
+        return ArrayList<Acquaintance>;
+    } */
 
 }
