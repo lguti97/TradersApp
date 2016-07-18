@@ -2,6 +2,7 @@ package teamcool.tradego.Fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import com.parse.ParseUser;
 
 import java.util.List;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import teamcool.tradego.Clients.FBGraphClient;
 import teamcool.tradego.Clients.ParseClient;
@@ -24,11 +26,12 @@ public class TopTimelineFragment extends CatalogListFragment {
     ParseClient parseClient;
     List<Item> items;
 
+    @BindView(R.id.swipeContainerCatalog) SwipeRefreshLayout swipeContainer;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         parseClient = new ParseClient();
-        populateTimeLine();
     }
 
     @Nullable
@@ -41,13 +44,25 @@ public class TopTimelineFragment extends CatalogListFragment {
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        populateTimeLine();
         //if swipe container exists, must setOnRefreshListener here, not onCreateView or onCreate
+        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                populateTimeLine();
+            }
+        });
+        swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light);
         super.onViewCreated(view, savedInstanceState);
     }
 
     public void populateTimeLine() {
         items = parseClient.queryItemsOnOtherUserAndStatus(ParseUser.getCurrentUser(),"Available");
         addAll(items);
+        swipeContainer.setRefreshing(false);
     }
 
 }

@@ -58,6 +58,6 @@ public class FriendsListFragment extends Fragment {
     }
 
     public void populate() {
-        //
+        //swipeContainer.setRefreshing(false);
     }
 }
