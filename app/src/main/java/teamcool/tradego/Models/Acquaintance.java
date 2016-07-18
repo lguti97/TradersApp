@@ -1,5 +1,7 @@
 package teamcool.tradego.Models;
 
+import android.util.Log;
+
 import com.parse.ParseClassName;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
@@ -9,6 +11,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+
+import teamcool.tradego.Clients.ParseClient;
 
 /**
  * Created by lguti on 7/11/16.
@@ -18,6 +24,7 @@ import java.util.ArrayList;
 public class Acquaintance extends ParseObject {
     //Going to use a One - to - Many Relationship for this
     //Will make a parse object out of this.
+
 
     public Acquaintance () {
         super();
@@ -75,12 +82,21 @@ public class Acquaintance extends ParseObject {
     //How do we do this though?
     //TODO. Make a condition to not make the same Acquaintance Object.
     public static Acquaintance fromJSON(JSONObject object){
+        List<String> acquaintanceNames;
+        ParseClient parseClient = new ParseClient();
+        //ParseClient retrieves the names of the of AcquaintUser
+        acquaintanceNames = parseClient.queryAcquaintanceNamesofUser(ParseUser.getCurrentUser());
         Acquaintance acquaintance = null;
         try {
-            acquaintance = new Acquaintance(object.getString("name"), object.getJSONObject("picture").getJSONObject("data").getString("url"),
-                                            object.getString("id"));
-            acquaintance.setOwner(ParseUser.getCurrentUser());
-            acquaintance.saveInBackground();
+            if (!acquaintanceNames.contains(object.getString("name"))) {
+                acquaintance = new Acquaintance(object.getString("name"), object.getJSONObject("picture").getJSONObject("data").getString("url"),
+                        object.getString("id"));
+                acquaintance.setOwner(ParseUser.getCurrentUser());
+                acquaintance.saveInBackground();
+            }
+            else {
+
+            }
         } catch (JSONException e) {
             e.printStackTrace();
         }

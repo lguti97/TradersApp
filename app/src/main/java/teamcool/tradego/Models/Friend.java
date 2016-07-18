@@ -21,11 +21,9 @@ public class Friend extends ParseObject {
         super();
     }
 
-    public Friend(String name, String profile_url, String id){
+    public Friend(String name){
         super();
         setName(name);
-        setProfile_url(profile_url);
-        setUserID(id);
     }
 
     // Will be used to access fields from Parse Database
@@ -58,7 +56,6 @@ public class Friend extends ParseObject {
 
     //TO CONNECT WITH USER OBJECT
 
-
     //Get User for this acquaintance
     public ParseUser getUser() {
         return getParseUser("owner");
@@ -69,31 +66,11 @@ public class Friend extends ParseObject {
         put("owner", user);
     }
 
-    //Deserializes JSON objects into the Acquaintance model
-    //How do we do this though?
-    public static Friend fromJSON(JSONObject object){
-        Friend friend = null;
-
+    public static Friend fromAcquaintance (String name) {
+        Friend friend = new Friend(name);
+        friend.setOwner(ParseUser.getCurrentUser());
+        friend.saveInBackground();
         return friend;
-    }
-
-    //populates ArrayList of type Acquaintance
-    //Also goes into the JSONArrays to get JSONObjects. Uses previous method
-    public static ArrayList<Friend> fromJSONArray(JSONArray jsonArray){
-        ArrayList<Friend> friends = new ArrayList<>();
-        for (int i = 0; i < jsonArray.length(); i++){
-            try {
-                JSONObject jsonFriend = jsonArray.getJSONObject(i);
-                Friend friend = Friend.fromJSON(jsonFriend);
-                if (friend != null) {
-                    friends.add(friend);
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
-                continue;
-            }
-        }
-        return friends;
     }
 
 }

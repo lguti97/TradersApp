@@ -11,6 +11,7 @@ import com.facebook.AccessToken;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.facebook.HttpMethod;
+import com.parse.ParseUser;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -30,7 +31,7 @@ ACTIVITY USED TO IMPORT FRIENDS VIA FACEBOOK/EMAIL
 public class FriendImportActivity extends AppCompatActivity {
     String currentUserFbId;
     ArrayList<Acquaintance> acquaintances;
-    ParseClient parseClient;
+    ParseUser parseUser;
 
 
     @Override
@@ -45,10 +46,11 @@ public class FriendImportActivity extends AppCompatActivity {
                         new GraphRequest.GraphJSONArrayCallback() {
                             @Override
                             public void onCompleted(JSONArray jsonArray, GraphResponse response) {
-                                makeAcquaintances(jsonArray);
-                                //Should all be in another function
+                                acquaintances.addAll(Acquaintance.fromJSONArray(jsonArray));
                                 RecyclerView rvAcquaintances = (RecyclerView) findViewById(R.id.rvAcquaintances);
+                                Log.d("DEBUG", acquaintances.toString());
                                 AcquaintanceAdapter adapter = new AcquaintanceAdapter(getApplicationContext(), acquaintances);
+                                adapter.notifyDataSetChanged();
                                 rvAcquaintances.setAdapter(adapter);
                                 rvAcquaintances.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
                             }
@@ -61,18 +63,5 @@ public class FriendImportActivity extends AppCompatActivity {
     }
 
     //Creates the ParseObject Acquaintance + makes sure it's not created again for the current ParseUser
-    public void makeAcquaintances (JSONArray jsonArray){
-        parseClient = new ParseClient();
 
-        acquaintances.addAll(Acquaintance.fromJSONArray(jsonArray));
-
-    }
-
-
-    public void onAdd(View view) {
-        //TODO. Add friends into the Friend Object.
-
-
-
-    }
 }
