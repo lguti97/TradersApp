@@ -1,5 +1,6 @@
 package teamcool.tradego.Activities;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -10,7 +11,9 @@ import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -58,19 +61,17 @@ public class AddItemActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         //Take first image of the item to be sold
 
+
         ivItem1.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
-
                 onLaunchCamera(view);
                 index = 1;
-
             }
         });
 
         //Take the second image of the item to be sold
-
         ivItem2.setOnClickListener(new View.OnClickListener() {
 
 
@@ -81,10 +82,7 @@ public class AddItemActivity extends AppCompatActivity {
             }
         });
 
-
         //Take the third image of the item to be sold
-
-
         ivItem3.setOnClickListener(new View.OnClickListener() {
 
 
@@ -95,9 +93,35 @@ public class AddItemActivity extends AppCompatActivity {
             }
         });
 
+
+        //keyboard focus changing:
+        etPrice.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                if(!b) {
+                    hideKeyboard(view);
+                }
+            }
+        });
+        etItemName.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                if(!b) {
+                    hideKeyboard(view);
+                }
+            }
+        });
+        etItemDescription.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                if(!b) {
+                    hideKeyboard(view);
+                }
+            }
+        });
+
         onCategorySpinner();
         onStatusSpinner();
-
     }
 
 
@@ -286,37 +310,15 @@ public class AddItemActivity extends AppCompatActivity {
 
         new_item.saveInBackground();
 
-//        // Save the post and return
-//        new_item.saveInBackground(new SaveCallback() {
-//
-//
-//            @Override
-//            public void done(ParseException e) {
-//                if (e == null) {
-//                    setResult(RESULT_OK);
-//                    finish();
-//                } else {
-//                    Toast.makeText(getApplicationContext(),
-//                            "Error saving: " + e.getMessage(),
-//                            Toast.LENGTH_SHORT)
-//                            .show();
-//                }
-//            }
-//
-//        });
-
-//
-//
-//
-//
-//        this.setResult(Activity.RESULT_OK);
-//        this.finish();
-
-
         Toast.makeText(this, "Item Added!", Toast.LENGTH_SHORT).show();
 
         Intent i = new Intent(this, NewsFeedActivity.class);
         startActivity(i);
+    }
+
+    public void hideKeyboard(View view) {
+        InputMethodManager inputMethodManager =(InputMethodManager)getSystemService(Activity.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
 
