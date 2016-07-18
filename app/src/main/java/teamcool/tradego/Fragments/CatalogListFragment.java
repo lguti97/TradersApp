@@ -1,5 +1,6 @@
 package teamcool.tradego.Fragments;
 
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -36,14 +37,16 @@ public class CatalogListFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_catalog_list, container, false);
         ButterKnife.bind(this, v);
         rvItems.setAdapter(catalogAdapter);
-        rvItems.setLayoutManager(new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL));
+        if(getContext().getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            rvItems.setLayoutManager(new StaggeredGridLayoutManager(3,StaggeredGridLayoutManager.VERTICAL));
+        } else {
+            rvItems.setLayoutManager(new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL));
+        }
+
 
         rvItems.setHasFixedSize(true);
         //listViewHere.setAdapter(catalogAdapter);
         //set listView's onItemLongClickListener, onItemClickListener, etc.
-
-
-        //set layout to StaggeredGrid
 
         //rvItems.addOnScrollLisnener for endless scrolling
         //swipeContainer set on refresh listener
@@ -58,6 +61,16 @@ public class CatalogListFragment extends Fragment {
         items = new ArrayList<>();
         catalogAdapter = new CatalogAdapter(items);
 
+    }
+
+    @Override
+    public void onResume() {
+        if(getContext().getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            rvItems.setLayoutManager(new StaggeredGridLayoutManager(3,StaggeredGridLayoutManager.VERTICAL));
+        } else {
+            rvItems.setLayoutManager(new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL));
+        }
+        super.onResume();
     }
 
     public void addAll(List<Item> items) {

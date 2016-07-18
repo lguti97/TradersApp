@@ -2,12 +2,14 @@ package teamcool.tradego.Fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.List;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import teamcool.tradego.Clients.ParseClient;
 import teamcool.tradego.Models.Item;
@@ -20,6 +22,8 @@ public class CategoriesTimelineFragment extends CatalogListFragment {
 
     List<Item> items;
     ParseClient parseClient;
+
+    @BindView(R.id.swipeContainerCatalog) SwipeRefreshLayout swipeContainer;
 
     public CategoriesTimelineFragment() {
 
@@ -37,7 +41,6 @@ public class CategoriesTimelineFragment extends CatalogListFragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         parseClient = new ParseClient();
-        populate(getArguments().getString("category"));
     }
 
     @Nullable
@@ -51,12 +54,25 @@ public class CategoriesTimelineFragment extends CatalogListFragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         //if swipe container exists, must setOnRefreshListener here, not onCreateView or onCreate
+        populate(getArguments().getString("category"));
+        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                populate(getArguments().getString("category"));
+            }
+        });
+        swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light);
+        super.onViewCreated(view, savedInstanceState);
         super.onViewCreated(view, savedInstanceState);
     }
 
     public void populate(String category) {
         items = parseClient.queryItemsOnCategory(category);
         addAll(items);
+        swipeContainer.setRefreshing(false);
     }
 
 }
