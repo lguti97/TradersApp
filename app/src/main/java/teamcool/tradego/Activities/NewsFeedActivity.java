@@ -32,6 +32,7 @@ import butterknife.ButterKnife;
 import jp.wasabeef.picasso.transformations.CropCircleTransformation;
 import teamcool.tradego.Clients.ParseClient;
 import teamcool.tradego.Fragments.CategoriesTimelineFragment;
+import teamcool.tradego.Fragments.FriendsListFragment;
 import teamcool.tradego.Fragments.TopTimelineFragment;
 import teamcool.tradego.Fragments.UserCatalogFragment;
 import teamcool.tradego.R;
@@ -69,7 +70,7 @@ public class NewsFeedActivity extends AppCompatActivity {
 
         final String tab0Names[] = {"Top", "Sports", "Clothes", "Accessories", "Stationary", "Other"};
         final String tab1Names[] = {"Available", "Onhold", "Sold"};
-        final String tab2Names[] = {""};
+        final String tab2Names[] = {"Friends"};
         final String tab3Names[] = {"Sold", "Bought", "Onhold"};
 
         @Override
@@ -89,6 +90,9 @@ public class NewsFeedActivity extends AppCompatActivity {
                     return UserCatalogFragment.newInstance(currentUserObjID,"On hold");
                 else
                     return UserCatalogFragment.newInstance(currentUserObjID,"Sold");
+            }
+            else if (selector == 2) {
+                return new FriendsListFragment();
             }
             else if (selector == 3) {
                 String currentUserObjID = ParseUser.getCurrentUser().getObjectId();
@@ -125,11 +129,9 @@ public class NewsFeedActivity extends AppCompatActivity {
         @Override
         public CharSequence getPageTitle(int position) {
             if (selector == 0) {
-                Log.d("DEBUG","count how many times 0 reached");
                 return tab0Names[position];
             }
             else if (selector == 1) {
-                Log.d("DEBUG","count how many times 1 reached");
                 return tab1Names[position];
             }
             else if (selector == 2) {

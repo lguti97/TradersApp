@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -70,6 +71,9 @@ public class FriendsListFragment extends Fragment {
     public void populate() {
         //swipeContainer.setRefreshing(false);
         friends = parseClient.queryFriendsOnName(null);
+        for(int i=0;i<friends.size();i++) {
+            Log.d("DEBUG",friends.get(i).getName()+"<-------");
+        }
         friendsAdapter.clearAndAddAll(friends);
 
     }
