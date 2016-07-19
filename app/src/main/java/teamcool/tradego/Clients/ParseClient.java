@@ -28,6 +28,7 @@ public class ParseClient {
     public List<Friend> queryFriendsOnName(String name) {
         List<Friend> friends = new ArrayList<>();
         ParseQuery<Friend> query = ParseQuery.getQuery(Friend.class);
+        query.whereEqualTo("owner",ParseUser.getCurrentUser());
         if (name != null)
             query.whereContains("username",name);
         try {
