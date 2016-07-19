@@ -77,7 +77,6 @@ public class AcquaintanceAdapter extends RecyclerView.Adapter<AcquaintanceAdapte
         return viewHolder;
     }
 
-
     // Populates data into acquaintance through this holder
     // Best to set the onAdd Here because position is already available
     @Override
@@ -85,6 +84,7 @@ public class AcquaintanceAdapter extends RecyclerView.Adapter<AcquaintanceAdapte
         //Let's see it can populate only based on DataBase Acquaintance
         parseclient = new ParseClient();
         //final Acquaintance acquaintance = parseclient.queryAcquaintancesofUser(ParseUser.getCurrentUser()).get(position);
+        //Looks at each acquaintance in the ArrayList
         final Acquaintance acquaintance = acquaintances.get(position);
         holder.tvName.setText(acquaintance.getName());
         holder.ivProfile.setImageResource(0);
@@ -92,6 +92,7 @@ public class AcquaintanceAdapter extends RecyclerView.Adapter<AcquaintanceAdapte
                 .load(acquaintance.getProfile_url())
                 .centerCrop()
                 .into(holder.ivProfile);
+        /*
         holder.btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -104,6 +105,17 @@ public class AcquaintanceAdapter extends RecyclerView.Adapter<AcquaintanceAdapte
                 acquaintance.deleteInBackground();
                 notifyDataSetChanged();
 
+            }
+        }); */
+        holder.rootView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Friend friend;
+                friend = Friend.fromAcquaintance(acquaintance.getName(), acquaintance.getProfile_url(), acquaintance.getUserID());
+                Toast.makeText(getContext(), "You added " + friend.getName(), Toast.LENGTH_SHORT).show();
+                acquaintances.remove(position);
+                acquaintance.deleteInBackground();
+                notifyDataSetChanged();
             }
         });
 
