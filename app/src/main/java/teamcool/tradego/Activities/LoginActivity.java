@@ -1,11 +1,13 @@
 package teamcool.tradego.Activities;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.facebook.AccessToken;
 import com.facebook.FacebookSdk;
@@ -36,8 +38,7 @@ import teamcool.tradego.R;
 
 public class LoginActivity extends AppCompatActivity {
 
-    @BindView(R.id.etUserName) EditText etUserName;
-    @BindView(R.id.etPassword) EditText etPassword;
+    @BindView(R.id.tvLogo) TextView tvLogo;
 
 
     final List<String> permissions = Arrays.asList("public_profile", "email", "user_friends", "user_location", "user_photos");
@@ -63,6 +64,11 @@ public class LoginActivity extends AppCompatActivity {
 
         FacebookSdk.sdkInitialize(this);
         ParseFacebookUtils.initialize(getApplicationContext());
+
+        //Customizing Font
+        Typeface font0 = Typeface.createFromAsset(getApplicationContext().getAssets(), "Oranienbaum.ttf");
+        tvLogo.setTypeface(font0);
+
 
     }
 

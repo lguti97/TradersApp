@@ -36,7 +36,6 @@ import teamcool.tradego.R;
 public class AcquaintanceAdapter extends RecyclerView.Adapter<AcquaintanceAdapter.ViewHolder> {
     private ArrayList<Acquaintance> acquaintances;
     private Context context;
-    private ParseUser parseuser;
     private ParseClient parseclient;
     //ViewHolder gives access to our views
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -82,14 +81,16 @@ public class AcquaintanceAdapter extends RecyclerView.Adapter<AcquaintanceAdapte
     // Populates data into acquaintance through this holder
     // Best to set the onAdd Here because position is already available
     @Override
-    public void onBindViewHolder(AcquaintanceAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(AcquaintanceAdapter.ViewHolder holder, final int position) {
         //Let's see it can populate only based on DataBase Acquaintance
-
+        parseclient = new ParseClient();
+        //final Acquaintance acquaintance = parseclient.queryAcquaintancesofUser(ParseUser.getCurrentUser()).get(position);
         final Acquaintance acquaintance = acquaintances.get(position);
         holder.tvName.setText(acquaintance.getName());
         holder.ivProfile.setImageResource(0);
         Glide.with(context)
                 .load(acquaintance.getProfile_url())
+                .centerCrop()
                 .into(holder.ivProfile);
         holder.btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -98,14 +99,13 @@ public class AcquaintanceAdapter extends RecyclerView.Adapter<AcquaintanceAdapte
                 //Transfer Data to FriendsObject so we can query from there.
                 Friend friend;
                 friend = Friend.fromAcquaintance(acquaintance.getName(), acquaintance.getProfile_url(), acquaintance.getUserID());
-                Toast.makeText(getContext(), "You added" + friend.getName(), Toast.LENGTH_SHORT).show();
-
+                Toast.makeText(getContext(), "You added " + friend.getName(), Toast.LENGTH_SHORT).show();
+                acquaintances.remove(position);
+                acquaintance.deleteInBackground();
+                notifyDataSetChanged();
 
             }
         });
-
-
-
 
     }
 
