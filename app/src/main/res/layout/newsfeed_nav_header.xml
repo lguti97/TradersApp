@@ -48,4 +48,14 @@
         android:text="251 items on hold"
         android:id="@+id/tvNavItemsOnhold" />
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/ivNavProfilePic"
+        android:layout_below="@id/tvNavItemsOnhold"
+        android:text="251 items available"
+        android:id="@+id/tvNavItemsAvailable" />
+
+
+
 </RelativeLayout>
