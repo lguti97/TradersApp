@@ -368,8 +368,8 @@ public class AddItemActivity extends AppCompatActivity {
             return;
         }
 
-        if (image_1 == null && image_2 == null && image_3 == null) {
-            Toast.makeText(this, "Please add at least one image of this item", Toast.LENGTH_SHORT).show();
+        if (image_1 == null && image_2 == null) {
+            Toast.makeText(this, "Please add two images of this item", Toast.LENGTH_SHORT).show();
             return;
         }
 

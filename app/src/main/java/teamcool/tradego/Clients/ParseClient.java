@@ -232,7 +232,7 @@ public class ParseClient {
         point.put("description",newItem.getDescription());
         point.put("image_1",newItem.getImage1());
         point.put("image_2",newItem.getImage2());
-        point.put("image_3",newItem.getImage3());
+        //point.put("image_3",newItem.getImage3());
         if (newItem.getStatus().equalsIgnoreCase("sold"))
             point.put("transaction_time", DateFormat.format("dd-MM-yyyy hh:mm:ss", new java.util.Date()).toString());
         point.saveInBackground();
