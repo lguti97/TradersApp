@@ -197,15 +197,20 @@ public class NewsFeedActivity extends AppCompatActivity {
         TextView tvNavNumFriends = (TextView) headerView.findViewById(R.id.tvNavNumFriends);
         TextView tvNavItemsSold = (TextView) headerView.findViewById(R.id.tvNavItemsSold);
         TextView tvNavItemsOnhold = (TextView) headerView.findViewById(R.id.tvNavItemsOnhold);
+        TextView tvNavItemsAvailable = (TextView) headerView.findViewById(R.id.tvNavItemsAvailable);
+
+
         ParseUser currUser = ParseUser.getCurrentUser();
         Picasso.with(this).load(currUser.getString("profilePicUrl")).fit().transform(new CropCircleTransformation()).into(ivNavProfilePic);
         tvNavUserName.setText(currUser.getString("username"));
         String numFriends = parseClient.countNumFriendsOfUser(currUser)+" friends";
         String numItemsSold = parseClient.countNumItemsOnStatus(currUser,"Sold")+" items sold";
         String numItemsOnhold = parseClient.countNumItemsOnStatus(currUser,"On hold")+" items on hold";
+        String numItemsAvailable = parseClient.countNumItemsOnStatus(currUser, "Available") + " items available";
         tvNavNumFriends.setText(numFriends);
         tvNavItemsSold.setText(numItemsSold);
         tvNavItemsOnhold.setText(numItemsOnhold);
+        tvNavItemsAvailable.setText(numItemsAvailable);
 
         //Launching profile activity when profile picture in the navigation drawer is clicked
         ivNavProfilePic.setOnClickListener(new View.OnClickListener() {

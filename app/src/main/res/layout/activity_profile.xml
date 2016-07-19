@@ -65,6 +65,26 @@
                     android:layout_gravity="center"
                     android:gravity="center" />
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tvItemsOnHold"
+                    android:text="Items on Hold"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:layout_marginLeft="12dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tvItemsAvailable"
+                    android:text="Items Available"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:layout_marginLeft="12dp" />
+
+
+
             </LinearLayout>
 
         </RelativeLayout>

@@ -3,9 +3,6 @@ package teamcool.tradego.Clients;
 //Created by selinabing on 7/11/16.
 
 
-import android.util.Log;
-
-import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
@@ -179,21 +176,49 @@ public class ParseClient {
         return user;
     }
 
-    /*
-    public List<Acquaintance> queryAcquaintancesofUser(ParseUser user){
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("Acquaintance");
-        query.whereEqualTo("_p_owner", user.getCurrentUser());
-        query.findInBackground(new FindCallback<ParseObject>() {
-            @Override
-            public void done(List<ParseObject> acquaintances, ParseException e) {
-                if (e == null){
-                    Log.d("DEBUG", "Retrieved: " + acquaintances);
-                } else {
-                    Log.d("DEBUG", "ERROR");
-                }
+    public List<String> queryAcquaintanceNamesofUser(ParseUser user){
+        List<Acquaintance> acquaintances;
+        List<String> acqauintancesName = new ArrayList<>();
+        ParseQuery<Acquaintance> query = ParseQuery.getQuery(Acquaintance.class);
+        query.whereEqualTo("owner", user.getCurrentUser());
+        try {
+            acquaintances = query.find();
+            for (int i = 0; i < acquaintances.size(); i++){
+                acqauintancesName.add(acquaintances.get(i).getName());
             }
-        });
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return acqauintancesName;
+    }
 
-    } */
+    public List<Acquaintance> queryAcquaintancesofUser(ParseUser user){
+        List<Acquaintance> acquaintances = new ArrayList<>();
+        ParseQuery<Acquaintance> query = ParseQuery.getQuery(Acquaintance.class);
+        query.whereEqualTo("owner", user.getCurrentUser());
+        try {
+            acquaintances = query.find();
+            for (int i = 0; i < acquaintances.size(); i++){
+                acquaintances.add(acquaintances.get(i));
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return acquaintances;
+    }
 
+    public void updateItem(String objectId, Item newItem) {
+        ParseObject point = ParseObject.createWithoutData("Point",objectId);
+        point.put("item_name",newItem.getItem_name());
+        point.put("category",newItem.getCategory());
+        point.put("price",newItem.getPrice());
+        point.put("status",newItem.getStatus());
+        point.put("negotiable",newItem.getNegotiable());
+        point.put("description",newItem.getDescription());
+        //point.put("transaction_time",newItem.getTransactionTime());
+        point.put("image_1",newItem.getImage1());
+        point.put("image_2",newItem.getImage2());
+        point.put("image_3",newItem.getImage3());
+        point.saveInBackground();
+    }
 }
