@@ -376,7 +376,7 @@ public class AddItemActivity extends AppCompatActivity {
 
 
         if(getIntent().getStringExtra("item_id") != null) {
-            item.deleteInBackground();
+            parseClient.updateItem(getIntent().getStringExtra("item_id"), new_item);
             Toast.makeText(this, "Item Edited!", Toast.LENGTH_SHORT).show();
         }
 

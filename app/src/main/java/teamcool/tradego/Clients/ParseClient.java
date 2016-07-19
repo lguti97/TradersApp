@@ -217,7 +217,7 @@ public class ParseClient {
 
 
     public void updateItem(String objectId, Item newItem) {
-        ParseObject point = ParseObject.createWithoutData("Point",objectId);
+        ParseObject point = ParseObject.createWithoutData(Item.class,objectId);
         point.put("item_name",newItem.getItem_name());
         point.put("category",newItem.getCategory());
         point.put("price",newItem.getPrice());
