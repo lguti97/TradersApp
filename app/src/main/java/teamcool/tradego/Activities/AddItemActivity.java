@@ -159,6 +159,9 @@ public class AddItemActivity extends AppCompatActivity {
         ivItem2.setImageBitmap(StringToBitMap(item.getImage2()));
         ivItem3.setImageBitmap(StringToBitMap(item.getImage3()));
 
+
+
+
         /*
             if (item.getNegotiable() == "Yes") {
                 RadioButton yes = (RadioButton) findViewById(R.id.rbYes);
@@ -282,6 +285,7 @@ public class AddItemActivity extends AppCompatActivity {
                 Uri takenPhotoUri = getPhotoFileUri(photoFileName);
                 // by this point we have the camera photo on disk
                 Bitmap takenImage = BitmapFactory.decodeFile(takenPhotoUri.getPath());
+
                 // Load the taken image into a preview
 
                 if(index==1) {
@@ -290,18 +294,23 @@ public class AddItemActivity extends AppCompatActivity {
                     image_1 = BitMapToString(takenImage);
 
 
+
                 }
                 else if(index ==2) {
 
                     ivItem2.setImageBitmap(takenImage);
                     image_2 = BitMapToString(takenImage);
 
+
                 }
 
                 else if(index ==3) {
+
                     ivItem3.setImageBitmap(takenImage);
                     image_3 = BitMapToString(takenImage);
                 }
+
+
             } else { // Result was a failure
                 Toast.makeText(this, "Picture wasn't taken!", Toast.LENGTH_SHORT).show();
             }
@@ -343,6 +352,7 @@ public class AddItemActivity extends AppCompatActivity {
             image_1 = item.getImage1();
             image_2 = item.getImage2();
             image_3 = item.getImage3();
+
         }
 
         Double price;
@@ -358,14 +368,14 @@ public class AddItemActivity extends AppCompatActivity {
             return;
         }
 
-        if (image_1 == null || image_2 == null || image_3 == null) {
-            Toast.makeText(this, "Please add 3 images of the item", Toast.LENGTH_SHORT).show();
+        if (image_1 == null && image_2 == null && image_3 == null) {
+            Toast.makeText(this, "Please add at least one image of this item", Toast.LENGTH_SHORT).show();
             return;
         }
 
         Item new_item = new Item(etItemName.getText().toString(),
                 category, etItemDescription.getText().toString(),
-                status, price, negotiable, image_1, image_2, image_3);
+                status, price, negotiable, image_1, image_2);
 
 
         ParseUser user = ParseUser.getCurrentUser();

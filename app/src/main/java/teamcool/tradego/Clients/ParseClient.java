@@ -4,8 +4,7 @@ package teamcool.tradego.Clients;
 
 
 import android.text.format.DateFormat;
-import android.util.Log;
-import com.parse.FindCallback;
+
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
