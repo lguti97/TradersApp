@@ -8,4 +8,9 @@
     <string name="sort_by">Sort by</string>
     <string name="date">Date</string>
     <string name="back">Back</string>
+    <string name="Logo">Tradégo</string>
+    <string name="Description">It\'ll make you very very rich</string>
+    <string name="login">Login</string>
+    <string name="email">Sign Up With Email</string>
+    <string name="terms">By continuing you indicate that you have read and agreed to the Terms of Service and Privacy Policy</string>
 </resources>

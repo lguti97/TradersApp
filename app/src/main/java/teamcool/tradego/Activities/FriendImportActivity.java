@@ -53,6 +53,7 @@ public class FriendImportActivity extends AppCompatActivity {
                                 adapter.notifyDataSetChanged();
                                 rvAcquaintances.setAdapter(adapter);
                                 rvAcquaintances.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+
                             }
                         });
 

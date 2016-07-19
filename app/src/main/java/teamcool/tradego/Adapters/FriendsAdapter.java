@@ -8,12 +8,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.parse.ParseUser;
-
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import teamcool.tradego.Models.Friend;
 import teamcool.tradego.R;
 
 /**
@@ -36,9 +35,9 @@ public class FriendsAdapter extends RecyclerView.Adapter<FriendsAdapter.ViewHold
         }
     }
 
-    private List<ParseUser> friends;
+    private List<Friend> friends;
 
-    public FriendsAdapter(List<ParseUser> friends) {
+    public FriendsAdapter(List<Friend> friends) {
         this.friends = friends;
     }
 
@@ -53,7 +52,7 @@ public class FriendsAdapter extends RecyclerView.Adapter<FriendsAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        ParseUser friend = friends.get(position);
+        Friend friend = friends.get(position);
         //populate each item by setting its text and media
         holder.tvUsername.setText(friend.getString("username"));
         holder.ivProfileImage.setImageResource(0);
@@ -73,7 +72,7 @@ public class FriendsAdapter extends RecyclerView.Adapter<FriendsAdapter.ViewHold
         notifyDataSetChanged();
     }
 
-    public void clearAndAddAll(List<ParseUser> newFriends) {
+    public void clearAndAddAll(List<Friend> newFriends) {
         friends.addAll(newFriends);
         notifyDataSetChanged();
     }

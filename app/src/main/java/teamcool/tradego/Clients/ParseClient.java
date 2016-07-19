@@ -3,8 +3,8 @@ package teamcool.tradego.Clients;
 //Created by selinabing on 7/11/16.
 
 
+import android.text.format.DateFormat;
 import android.util.Log;
-
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
@@ -15,17 +15,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 import teamcool.tradego.Models.Acquaintance;
+import teamcool.tradego.Models.Friend;
 import teamcool.tradego.Models.Item;
+
+
 
 public class ParseClient {
 
     public ParseClient () {
 
     }
-    public List<ParseUser> queryFriendsOnName(String name) {
-        List<ParseUser> friends = new ArrayList<>();
-        ParseQuery<ParseUser> query = ParseQuery.getQuery(ParseUser.class);
-        query.whereContains("username",name);
+    public List<Friend> queryFriendsOnName(String name) {
+        List<Friend> friends = new ArrayList<>();
+        ParseQuery<Friend> query = ParseQuery.getQuery(Friend.class);
+        if (name != null)
+            query.whereContains("username",name);
         try {
             friends = query.find();
         } catch (ParseException e) {
@@ -184,22 +188,22 @@ public class ParseClient {
         return user;
     }
 
-
-    public List<String> queryAcquaintanceNamesofUser(ParseUser user){
+    public List<String> queryAcquaintanceIDofUser(ParseUser user){
         List<Acquaintance> acquaintances;
-        List<String> acqauintancesName = new ArrayList<>();
+        List<String> acquaintancesID = new ArrayList<>();
         ParseQuery<Acquaintance> query = ParseQuery.getQuery(Acquaintance.class);
         query.whereEqualTo("owner", user.getCurrentUser());
         try {
             acquaintances = query.find();
             for (int i = 0; i < acquaintances.size(); i++){
-                acqauintancesName.add(acquaintances.get(i).getName());
+                acquaintancesID.add(acquaintances.get(i).getUserID());
             }
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        return acqauintancesName;
+        return acquaintancesID;
     }
+
 
     public List<Acquaintance> queryAcquaintancesofUser(ParseUser user){
         List<Acquaintance> acquaintances = new ArrayList<>();
@@ -216,6 +220,8 @@ public class ParseClient {
         return acquaintances;
     }
 
+
+
     public void updateItem(String objectId, Item newItem) {
         ParseObject point = ParseObject.createWithoutData("Point",objectId);
         point.put("item_name",newItem.getItem_name());
@@ -224,12 +230,11 @@ public class ParseClient {
         point.put("status",newItem.getStatus());
         point.put("negotiable",newItem.getNegotiable());
         point.put("description",newItem.getDescription());
-        point.put("transaction_time",newItem.getTransactionTime());
         point.put("image_1",newItem.getImage1());
         point.put("image_2",newItem.getImage2());
         point.put("image_3",newItem.getImage3());
+        if (newItem.getStatus().equalsIgnoreCase("sold"))
+            point.put("transaction_time", DateFormat.format("dd-MM-yyyy hh:mm:ss", new java.util.Date()).toString());
         point.saveInBackground();
     }
-
-
 }

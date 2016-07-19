@@ -13,11 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Base64;
 import android.util.Log;
-
-import android.view.LayoutInflater;
-
 import android.view.MenuItem;
-
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
@@ -349,45 +345,43 @@ public class AddItemActivity extends AppCompatActivity {
             image_3 = item.getImage3();
         }
 
-            Double price;
+        Double price;
 
-            try {
-                price = Double.parseDouble(etPrice.getText().toString());
-            } catch (Exception e) {
-                price = 0.0d;
-            }
+        try {
+            price = Double.parseDouble(etPrice.getText().toString());
+        } catch (Exception e) {
+            price = 0.0d;
+        }
 
         if(etItemDescription.getText().toString() == null || category == null || etItemDescription.getText().toString() == null || status == null || price==0.0d) {
             Toast.makeText(this, "Please complete all the fields", Toast.LENGTH_SHORT).show();
             return;
         }
 
-            Item new_item = new Item(etItemName.getText().toString(),
-                    category, etItemDescription.getText().toString(),
-                    status, price, negotiable, image_1, image_2, image_3);
-
-
-            ParseUser user = ParseUser.getCurrentUser();
-
-            new_item.setOwner(user);
-
-
-
-        if(getIntent().getStringExtra("item_id") != null) {
-            parseClient.updateItem(getIntent().getStringExtra("item_id"), new_item);
-            Toast.makeText(this, "Item Edited!", Toast.LENGTH_SHORT).show();
-
-        }
-
-        else {
-            Toast.makeText(this, "Item Added!", Toast.LENGTH_SHORT).show(); }
-
-
         if (image_1 == null || image_2 == null || image_3 == null) {
             Toast.makeText(this, "Please add 3 images of the item", Toast.LENGTH_SHORT).show();
             return;
         }
 
+        Item new_item = new Item(etItemName.getText().toString(),
+                category, etItemDescription.getText().toString(),
+                status, price, negotiable, image_1, image_2, image_3);
+
+
+        ParseUser user = ParseUser.getCurrentUser();
+
+        new_item.setOwner(user);
+
+        new_item.saveInBackground();
+
+
+        if(getIntent().getStringExtra("item_id") != null) {
+            parseClient.updateItem(getIntent().getStringExtra("item_id"), new_item);
+            Toast.makeText(this, "Item Edited!", Toast.LENGTH_SHORT).show();
+        }
+
+        else {
+            Toast.makeText(this, "Item Added!", Toast.LENGTH_SHORT).show(); }
 
         Intent i = new Intent(this, NewsFeedActivity.class);
         startActivity(i);
