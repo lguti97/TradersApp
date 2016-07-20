@@ -350,12 +350,9 @@ public class AddItemActivity extends AppCompatActivity {
                 category, etItemDescription.getText().toString(),
                 status, price, negotiable, image_1, image_2);
 
-
         ParseUser user = ParseUser.getCurrentUser();
-
         new_item.setOwner(user);
 
-        new_item.saveInBackground();
 
 
         if(getIntent().getStringExtra("item_id") != null) {
@@ -364,7 +361,8 @@ public class AddItemActivity extends AppCompatActivity {
         }
 
         else {
-            Toast.makeText(this, "Item Added!", Toast.LENGTH_SHORT).show(); }
+            Toast.makeText(this, "Item Added!", Toast.LENGTH_SHORT).show();
+            new_item.saveInBackground();}
 
         Intent i = new Intent(this, NewsFeedActivity.class);
         startActivity(i);

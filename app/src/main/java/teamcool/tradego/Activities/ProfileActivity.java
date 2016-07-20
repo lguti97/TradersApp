@@ -32,9 +32,6 @@ public class ProfileActivity extends AppCompatActivity {
     @BindView(R.id.tvItemsAvailable) TextView tvItemsAvailable;
 
 
-
-
-
     ParseUser user;
     ParseClient parseClient;
     String userObjId;
@@ -79,6 +76,30 @@ public class ProfileActivity extends AppCompatActivity {
             populateUserHeader(user);
 
         }
+
+        else {
+
+            CharSequence name = savedInstanceState.getCharSequence("Name");
+            CharSequence available = savedInstanceState.getCharSequence("Available");
+            CharSequence sold = savedInstanceState.getCharSequence("Sold");
+            CharSequence on_hold = savedInstanceState.getCharSequence("On Hold");
+            tvUserName.setText(name);
+            tvItemsAvailable.setText(available);
+            tvItemsSold.setText(sold);
+            tvItemsonHold.setText(on_hold);
+
+            String image = savedInstanceState.getString("image");
+
+            Picasso.with(this).load(image)
+                    .resize(100, 0)
+                    .transform(new RoundedCornersTransformation(10, 10))
+                    .into(ivProfileImage);
+
+
+        }
+
+
+
     }
 
 
@@ -95,6 +116,16 @@ public class ProfileActivity extends AppCompatActivity {
         tvItemsonHold.setText("Items on Hold: " + parseClient.countNumItemsOnStatus(user,"On hold"));
         tvItemsAvailable.setText("Items Available: " + parseClient.countNumItemsOnStatus(user,"Available"));
 
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putCharSequence("Name", tvUserName.getText());
+        outState.putCharSequence("Sold", tvItemsSold.getText());
+        outState.putCharSequence("Available", tvItemsAvailable.getText());
+        outState.putCharSequence("On Hold", tvItemsonHold.getText());
+        outState.putString("image", user.getString("profilePicUrl"));
     }
 
     //return the order of the fragments in the viewpager

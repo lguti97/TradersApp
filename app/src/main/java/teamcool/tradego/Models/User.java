@@ -22,6 +22,7 @@ public class User {
     private String timezone;
     private String profilePicUrl;
 
+
     public User () {
 
     }
