@@ -13,4 +13,5 @@
     <string name="login">Login</string>
     <string name="email">Sign Up With Email</string>
     <string name="terms">By continuing you indicate that you have read and agreed to the Terms of Service and Privacy Policy</string>
+    <string name="skip">Skip</string>
 </resources>

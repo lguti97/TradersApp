@@ -211,9 +211,6 @@ public class ParseClient {
         query.whereEqualTo("owner", user.getCurrentUser());
         try {
             acquaintances = query.find();
-            for (int i = 0; i < acquaintances.size(); i++){
-                acquaintances.add(acquaintances.get(i));
-            }
         } catch (ParseException e) {
             e.printStackTrace();
         }
