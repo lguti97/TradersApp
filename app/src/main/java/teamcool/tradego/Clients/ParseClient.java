@@ -217,6 +217,19 @@ public class ParseClient {
         return acquaintances;
     }
 
+    public Acquaintance queryAcquaintanceOfUser(ParseUser user, String ID){
+        Acquaintance acquaintance = new Acquaintance();
+        ParseQuery<Acquaintance> query = ParseQuery.getQuery(Acquaintance.class);
+        query.whereEqualTo("owner", user.getCurrentUser());
+        query.whereEqualTo("userID", ID);
+        try {
+            acquaintance = query.find().get(0);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return acquaintance;
+    }
+
 
 
     public void updateItem(String objectId, Item newItem) {

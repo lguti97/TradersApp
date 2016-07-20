@@ -82,12 +82,10 @@ public class Acquaintance extends ParseObject {
     public static Acquaintance fromJSON(JSONObject object){
 
         List<String> acquaintancesID;
-        List<Acquaintance> acquaintances1;
+        Acquaintance acquaintanceFromData;
         ParseClient parseClient = new ParseClient();
         //ParseClient retrieves the names of the of AcquaintUser
         acquaintancesID = parseClient.queryAcquaintanceIDofUser(ParseUser.getCurrentUser());
-        //ParseClient retrieves the Acquaintances of the User.
-        acquaintances1 = parseClient.queryAcquaintancesofUser(ParseUser.getCurrentUser());
 
         Acquaintance acquaintance = null;
         try {
@@ -100,9 +98,11 @@ public class Acquaintance extends ParseObject {
             else {
                 //At this point going to delete the ParseObjects associated with the user so I can instantiate again without doing any harm
                 // Should delete every acquaintance inside the database
-                for (int i = 0; i < acquaintances1.size(); i ++){
-                    acquaintances1.get(i).deleteInBackground();
-                }
+                // delete the acquaintance in the database. But how do I get the position?
+                // This an goes by point by point basis.
+                acquaintanceFromData = parseClient.queryAcquaintanceOfUser(ParseUser.getCurrentUser(), object.getString("id"));
+                acquaintanceFromData.deleteInBackground();
+
                 acquaintance = new Acquaintance(object.getString("name"), object.getJSONObject("picture").getJSONObject("data").getString("url"),
                         object.getString("id"));
                 acquaintance.setOwner(ParseUser.getCurrentUser());

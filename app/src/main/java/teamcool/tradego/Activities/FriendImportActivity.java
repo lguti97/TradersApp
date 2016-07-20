@@ -53,13 +53,14 @@ public class FriendImportActivity extends AppCompatActivity {
                                 RecyclerView rvAcquaintances = (RecyclerView) findViewById(R.id.rvAcquaintances);
                                 Log.d("DEBUG", acquaintances.toString());
                                 AcquaintanceAdapter adapter = new AcquaintanceAdapter(getApplicationContext(), acquaintances);
-                                adapter.notifyDataSetChanged();
-                                rvAcquaintances.setAdapter(adapter);
-                                rvAcquaintances.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
                                 ItemTouchHelper.Callback callback =
                                         new SimpleItemTouchHelperCallback(adapter);
                                 ItemTouchHelper touchHelper = new ItemTouchHelper(callback);
                                 touchHelper.attachToRecyclerView(rvAcquaintances);
+                                adapter.notifyDataSetChanged();
+                                rvAcquaintances.setAdapter(adapter);
+                                rvAcquaintances.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+
 
                             }
                         });

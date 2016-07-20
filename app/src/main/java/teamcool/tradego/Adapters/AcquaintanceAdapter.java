@@ -8,6 +8,7 @@ import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.view.menu.MenuView;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,6 +43,7 @@ public class AcquaintanceAdapter extends RecyclerView.Adapter<AcquaintanceAdapte
     private ArrayList<Acquaintance> acquaintances;
     private Context context;
     private ParseClient parseclient;
+    private Acquaintance acquaintance;
     //ViewHolder gives access to our views
     public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView tvName;
@@ -91,7 +93,7 @@ public class AcquaintanceAdapter extends RecyclerView.Adapter<AcquaintanceAdapte
         parseclient = new ParseClient();
         //final Acquaintance acquaintance = parseclient.queryAcquaintancesofUser(ParseUser.getCurrentUser()).get(position);
         //Looks at each acquaintance in the ArrayList
-        final Acquaintance acquaintance = acquaintances.get(position);
+        acquaintance = acquaintances.get(position);
         holder.tvName.setText(acquaintance.getName());
         holder.ivProfile.setImageResource(0);
         Glide.with(context)
@@ -111,17 +113,6 @@ public class AcquaintanceAdapter extends RecyclerView.Adapter<AcquaintanceAdapte
                 acquaintance.deleteInBackground();
                 notifyDataSetChanged();
 
-            }
-        }); */
-        holder.rootView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Friend friend;
-                friend = Friend.fromAcquaintance(acquaintance.getName(), acquaintance.getProfile_url(), acquaintance.getUserID());
-                Toast.makeText(getContext(), "You added " + friend.getName(), Toast.LENGTH_SHORT).show();
-                acquaintances.remove(position);
-                acquaintance.deleteInBackground();
-                notifyDataSetChanged();
             }
         });
         holder.rootView.setOnClickListener(new View.OnClickListener() {
@@ -148,8 +139,15 @@ public class AcquaintanceAdapter extends RecyclerView.Adapter<AcquaintanceAdapte
 
     //For the swiping and moving
     public void onItemDismiss(int position) {
+        Log.d("DEBUG", "You swiped on position:" + position);
+        acquaintance = acquaintances.get(position);
+        Friend friend;
+        friend = Friend.fromAcquaintance(acquaintance.getName(), acquaintance.getProfile_url(), acquaintance.getUserID());
+        Toast.makeText(getContext(), "You added " + friend.getName(), Toast.LENGTH_SHORT).show();
         acquaintances.remove(position);
+        acquaintance.deleteInBackground();
         notifyItemRemoved(position);
+        notifyDataSetChanged();
     }
 
 
