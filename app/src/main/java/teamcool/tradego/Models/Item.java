@@ -95,9 +95,6 @@ public class Item extends ParseObject {
 
     public void setImage2(String image2) { put("image_2",image2); }
 
-    public String getImage3() { return getString("image_3"); }
-
-    public void setImage3(String image3) { put("image_3",image3); }
 
     // Associate each item with a user
     public void setOwner(ParseUser user) {

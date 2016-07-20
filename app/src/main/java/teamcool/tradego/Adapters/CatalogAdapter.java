@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.io.ByteArrayOutputStream;
 import java.util.List;
 
 import butterknife.BindView;
@@ -65,10 +66,12 @@ public class CatalogAdapter extends RecyclerView.Adapter<CatalogAdapter.ViewHold
         parseClient = new ParseClient();
         final Item item = items.get(position);
         //populate each item by setting its text and media
+
+
         holder.itemName.setText(item.getItem_name());
 
         if(item.getImage1() != null) {
-            holder.ivItemImage.setImageBitmap(StringToBitMap(item.getImage1()));
+            holder.ivItemImage.setImageBitmap(decodeBase64(item.getImage1()));
         }
 
 
@@ -106,15 +109,16 @@ public class CatalogAdapter extends RecyclerView.Adapter<CatalogAdapter.ViewHold
         notifyItemInserted(index);
     }
 
-    public Bitmap StringToBitMap(String encodedString){
-        try {
-            byte [] encodeByte= Base64.decode(encodedString,Base64.DEFAULT);
-            Bitmap bitmap= BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
-            return bitmap;
-        } catch(Exception e) {
-            e.getMessage();
-            return null;
-        }
+    public static String encodeToBase64(Bitmap image, Bitmap.CompressFormat compressFormat, int quality)
+    {
+        ByteArrayOutputStream byteArrayOS = new ByteArrayOutputStream();
+        image.compress(compressFormat, quality, byteArrayOS);
+        return Base64.encodeToString(byteArrayOS.toByteArray(), Base64.DEFAULT);
     }
 
+    public static Bitmap decodeBase64(String input)
+    {
+        byte[] decodedBytes = Base64.decode(input, 0);
+        return BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.length);
+    }
 }

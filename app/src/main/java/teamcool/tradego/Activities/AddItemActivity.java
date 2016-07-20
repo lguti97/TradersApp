@@ -41,7 +41,6 @@ public class AddItemActivity extends AppCompatActivity {
 
     @BindView(R.id.ivItem1) ImageView ivItem1;
     @BindView(R.id.ivItem2) ImageView ivItem2;
-    @BindView(R.id.ivItem3) ImageView ivItem3;
     @BindView(R.id.etPrice) EditText etPrice;
     @BindView(R.id.etItemName) EditText etItemName;
     @BindView(R.id.etItemDescription) EditText etItemDescription;
@@ -53,7 +52,6 @@ public class AddItemActivity extends AppCompatActivity {
     String status;
     String image_1;
     String image_2;
-    String image_3;
     String itemId;
     Item item;
 
@@ -95,16 +93,7 @@ public class AddItemActivity extends AppCompatActivity {
             }
         });
 
-        //Take the third image of the item to be sold
-        ivItem3.setOnClickListener(new View.OnClickListener() {
 
-
-            @Override
-            public void onClick(View view) {
-                onLaunchCamera(view);
-                index = 3;
-            }
-        });
 
 
         //keyboard focus changing:
@@ -155,11 +144,13 @@ public class AddItemActivity extends AppCompatActivity {
         String price = String.valueOf(item.getPrice());
         etPrice.setText(price);
         etItemDescription.setText(item.getDescription());
-        ivItem1.setImageBitmap(StringToBitMap(item.getImage1()));
-        ivItem2.setImageBitmap(StringToBitMap(item.getImage2()));
-        ivItem3.setImageBitmap(StringToBitMap(item.getImage3()));
+        ivItem1.setImageBitmap(decodeBase64(item.getImage1()));
+        ivItem2.setImageBitmap(decodeBase64(item.getImage2()));
 
-
+        //Bitmap takenImage_unscaled = BitmapFactory.decodeFile(item.getImage1());
+        //Bitmap takenImage_unscaled2 = BitmapFactory.decodeFile(item.getImage2());
+        //Bitmap takenImage = Bitmap.createScaledBitmap(takenImage_unscaled, 150, 150, true);
+        //Bitmap takenImage2 = Bitmap.createScaledBitmap(takenImage_unscaled2, 150, 150, true);
 
 
         /*
@@ -224,14 +215,6 @@ public class AddItemActivity extends AppCompatActivity {
     }
 
 
-    public String BitMapToString(Bitmap bitmap){
-        ByteArrayOutputStream baos=new  ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG,100, baos);
-        byte [] b=baos.toByteArray();
-        String temp=Base64.encodeToString(b, Base64.DEFAULT);
-        return temp;
-    }
-
     public void onStatusSpinner() {
         Spinner spinner = (Spinner) findViewById(R.id.spStatus);
 // Create an ArrayAdapter using the string array and a default spinner layout
@@ -260,12 +243,12 @@ public class AddItemActivity extends AppCompatActivity {
 
     //Code below is all for Launching Camera
 
-
     public final String APP_TAG = "MyCustomApp";
     public final static int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 1034;
-    public String photoFileName = "photo.jpg";
+    String photoFileName = "PHOTO.jpg";
 
     public void onLaunchCamera(View view) {
+
         // create Intent to take a picture and return control to the calling application
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         intent.putExtra(MediaStore.EXTRA_OUTPUT, getPhotoFileUri(photoFileName)); // set the image file name
@@ -284,31 +267,22 @@ public class AddItemActivity extends AppCompatActivity {
             if (resultCode == RESULT_OK) {
                 Uri takenPhotoUri = getPhotoFileUri(photoFileName);
                 // by this point we have the camera photo on disk
-                Bitmap takenImage = BitmapFactory.decodeFile(takenPhotoUri.getPath());
+                Bitmap takenImage_unscaled = BitmapFactory.decodeFile(takenPhotoUri.getPath());
+                Bitmap takenImage = Bitmap.createScaledBitmap(takenImage_unscaled, 100, 100, true);
 
                 // Load the taken image into a preview
 
                 if(index==1) {
 
                     ivItem1.setImageBitmap(takenImage);
-                    image_1 = BitMapToString(takenImage);
-
-
-
+                    image_1 = encodeToBase64(takenImage, Bitmap.CompressFormat.JPEG, 100);
                 }
                 else if(index ==2) {
 
                     ivItem2.setImageBitmap(takenImage);
-                    image_2 = BitMapToString(takenImage);
-
-
+                    image_2 = encodeToBase64(takenImage, Bitmap.CompressFormat.JPEG, 100);
                 }
 
-                else if(index ==3) {
-
-                    ivItem3.setImageBitmap(takenImage);
-                    image_3 = BitMapToString(takenImage);
-                }
 
 
             } else { // Result was a failure
@@ -351,7 +325,6 @@ public class AddItemActivity extends AppCompatActivity {
 
             image_1 = item.getImage1();
             image_2 = item.getImage2();
-            image_3 = item.getImage3();
 
         }
 
@@ -413,14 +386,17 @@ public class AddItemActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public Bitmap StringToBitMap(String encodedString){
-        try {
-            byte [] encodeByte= Base64.decode(encodedString,Base64.DEFAULT);
-            Bitmap bitmap= BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
-            return bitmap;
-        } catch(Exception e) {
-            e.getMessage();
-            return null;
-        }
+    public static String encodeToBase64(Bitmap image, Bitmap.CompressFormat compressFormat, int quality)
+    {
+        ByteArrayOutputStream byteArrayOS = new ByteArrayOutputStream();
+        image.compress(compressFormat, quality, byteArrayOS);
+        return Base64.encodeToString(byteArrayOS.toByteArray(), Base64.DEFAULT);
     }
+
+    public static Bitmap decodeBase64(String input)
+    {
+        byte[] decodedBytes = Base64.decode(input, 0);
+        return BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.length);
+    }
+
 }
