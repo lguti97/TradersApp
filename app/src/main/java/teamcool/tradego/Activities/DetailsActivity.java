@@ -20,6 +20,7 @@ import android.widget.TextView;
 import com.facebook.messenger.MessengerUtils;
 import com.facebook.messenger.ShareToMessengerParams;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.util.Date;
@@ -51,7 +52,6 @@ public class DetailsActivity extends AppCompatActivity {
     TextView tvItemCategory;
     ImageView ivItem1;
     ImageView ivItem2;
-    ImageView ivItem3;
 
     private static final int REQUEST_CODE_SHARE_TO_MESSENGER = 15251;
     ParseClient parseClient;
@@ -105,7 +105,7 @@ public class DetailsActivity extends AppCompatActivity {
         tvItemCategory = (TextView) findViewById(R.id.tvItemCategory);
         ivItem1 = (ImageView) findViewById(R.id.ivItem1);
         ivItem2 = (ImageView) findViewById(R.id.ivItem2);
-        ivItem3 = (ImageView) findViewById(R.id.ivItem3);
+
 
 
         tvItemDescription.setText("Item description: " + item.getDescription());
@@ -115,11 +115,23 @@ public class DetailsActivity extends AppCompatActivity {
         tvItemPrice.setText("Price: " + price);
         tvItemNegotiable.setText("Negotiable: " + item.getNegotiable());
         tvItemCategory.setText("Category: " + item.getCategory());
-        ivItem1.setImageBitmap(StringToBitMap(item.getImage1()));
-        ivItem2.setImageBitmap(StringToBitMap(item.getImage2()));
 
+        ivItem1.setImageBitmap(decodeBase64(item.getImage1()));
+        ivItem2.setImageBitmap(decodeBase64(item.getImage2()));
 
+    }
 
+    public static String encodeToBase64(Bitmap image, Bitmap.CompressFormat compressFormat, int quality)
+    {
+        ByteArrayOutputStream byteArrayOS = new ByteArrayOutputStream();
+        image.compress(compressFormat, quality, byteArrayOS);
+        return Base64.encodeToString(byteArrayOS.toByteArray(), Base64.DEFAULT);
+    }
+
+    public static Bitmap decodeBase64(String input)
+    {
+        byte[] decodedBytes = Base64.decode(input, 0);
+        return BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.length);
     }
 
 
