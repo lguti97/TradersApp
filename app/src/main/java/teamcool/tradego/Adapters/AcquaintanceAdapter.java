@@ -27,6 +27,7 @@ import java.util.Collections;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import jp.wasabeef.glide.transformations.CropCircleTransformation;
 import teamcool.tradego.Activities.DetailsActivity;
 import teamcool.tradego.Clients.ParseClient;
 import teamcool.tradego.ItemTouchHelperAdapter;
@@ -48,14 +49,12 @@ public class AcquaintanceAdapter extends RecyclerView.Adapter<AcquaintanceAdapte
     public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView tvName;
         ImageView ivProfile;
-        ImageButton btnAdd;
         View rootView;
 
         public ViewHolder(View itemView) {
             super(itemView);
             tvName = (TextView) itemView.findViewById(R.id.tvName);
             ivProfile = (ImageView) itemView.findViewById(R.id.ivProfile);
-            btnAdd = (ImageButton) itemView.findViewById(R.id.btnAdd);
             rootView = itemView;
         }
 
@@ -98,34 +97,8 @@ public class AcquaintanceAdapter extends RecyclerView.Adapter<AcquaintanceAdapte
         holder.ivProfile.setImageResource(0);
         Glide.with(context)
                 .load(acquaintance.getProfile_url())
-                .centerCrop()
+                .bitmapTransform(new CropCircleTransformation(context))
                 .into(holder.ivProfile);
-        /*
-        holder.btnAdd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //TODO. Query ParseUser by Name for now.
-                //Transfer Data to FriendsObject so we can query from there.
-                Friend friend;
-                friend = Friend.fromAcquaintance(acquaintance.getName(), acquaintance.getProfile_url(), acquaintance.getUserID());
-                Toast.makeText(getContext(), "You added " + friend.getName(), Toast.LENGTH_SHORT).show();
-                acquaintances.remove(position);
-                acquaintance.deleteInBackground();
-                notifyDataSetChanged();
-
-            }
-        });
-        holder.rootView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Friend friend;
-                friend = Friend.fromAcquaintance(acquaintance.getName(), acquaintance.getProfile_url(), acquaintance.getUserID());
-                Toast.makeText(getContext(), "You added " + friend.getName(), Toast.LENGTH_SHORT).show();
-                acquaintances.remove(position);
-                acquaintance.deleteInBackground();
-                notifyDataSetChanged();
-            }
-        }); */
 
     }
 
