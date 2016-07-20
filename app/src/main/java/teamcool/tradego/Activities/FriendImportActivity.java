@@ -1,9 +1,11 @@
 package teamcool.tradego.Activities;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 import android.view.View;
 
@@ -23,6 +25,7 @@ import teamcool.tradego.Clients.FBGraphClient;
 import teamcool.tradego.Clients.ParseClient;
 import teamcool.tradego.Models.Acquaintance;
 import teamcool.tradego.R;
+import teamcool.tradego.SimpleItemTouchHelperCallback;
 
 /*
 ACTIVITY USED TO IMPORT FRIENDS VIA FACEBOOK/EMAIL
@@ -53,6 +56,10 @@ public class FriendImportActivity extends AppCompatActivity {
                                 adapter.notifyDataSetChanged();
                                 rvAcquaintances.setAdapter(adapter);
                                 rvAcquaintances.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+                                ItemTouchHelper.Callback callback =
+                                        new SimpleItemTouchHelperCallback(adapter);
+                                ItemTouchHelper touchHelper = new ItemTouchHelper(callback);
+                                touchHelper.attachToRecyclerView(rvAcquaintances);
 
                             }
                         });
@@ -61,6 +68,13 @@ public class FriendImportActivity extends AppCompatActivity {
         params.putString("fields", "name, picture.type(large), id");
         request.setParameters(params);
         request.executeAsync();
+    }
+
+    //To skip the import activity part if you choose to do so.
+    public void skipActivity(View view) {
+        Intent i = new Intent(FriendImportActivity.this, AddItemActivity.class);
+        startActivity(i);
+
     }
 
     //Creates the ParseObject Acquaintance + makes sure it's not created again for the current ParseUser

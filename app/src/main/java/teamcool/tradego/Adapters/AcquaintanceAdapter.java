@@ -7,6 +7,7 @@ import android.media.Image;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.view.menu.MenuView;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,19 +22,23 @@ import com.parse.ParseObject;
 import com.parse.ParseUser;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import teamcool.tradego.Activities.DetailsActivity;
 import teamcool.tradego.Clients.ParseClient;
+import teamcool.tradego.ItemTouchHelperAdapter;
 import teamcool.tradego.Models.Acquaintance;
 import teamcool.tradego.Models.Friend;
 import teamcool.tradego.R;
+import teamcool.tradego.SimpleItemTouchHelperCallback;
+
 
 /**
  * Created by lguti on 7/12/16.
  */
-public class AcquaintanceAdapter extends RecyclerView.Adapter<AcquaintanceAdapter.ViewHolder> {
+public class AcquaintanceAdapter extends RecyclerView.Adapter<AcquaintanceAdapter.ViewHolder> implements ItemTouchHelperAdapter {
     private ArrayList<Acquaintance> acquaintances;
     private Context context;
     private ParseClient parseclient;
@@ -53,6 +58,7 @@ public class AcquaintanceAdapter extends RecyclerView.Adapter<AcquaintanceAdapte
         }
 
     }
+
 
     //Pass in acquaintance array into the adapter
     public AcquaintanceAdapter(Context context, ArrayList<Acquaintance> acquaintances){
@@ -118,6 +124,17 @@ public class AcquaintanceAdapter extends RecyclerView.Adapter<AcquaintanceAdapte
                 notifyDataSetChanged();
             }
         });
+        holder.rootView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Friend friend;
+                friend = Friend.fromAcquaintance(acquaintance.getName(), acquaintance.getProfile_url(), acquaintance.getUserID());
+                Toast.makeText(getContext(), "You added " + friend.getName(), Toast.LENGTH_SHORT).show();
+                acquaintances.remove(position);
+                acquaintance.deleteInBackground();
+                notifyDataSetChanged();
+            }
+        }); */
 
     }
 
@@ -126,4 +143,31 @@ public class AcquaintanceAdapter extends RecyclerView.Adapter<AcquaintanceAdapte
     public int getItemCount() {
         return acquaintances.size();
     }
+
+
+
+    //For the swiping and moving
+    public void onItemDismiss(int position) {
+        acquaintances.remove(position);
+        notifyItemRemoved(position);
+    }
+
+
+    @Override
+    public boolean onItemMove(int fromPosition, int toPosition) {
+        if (fromPosition < toPosition) {
+            for (int i = fromPosition; i < toPosition; i++) {
+                Collections.swap(acquaintances, i, i + 1);
+            }
+        } else {
+            for (int i = fromPosition; i > toPosition; i--) {
+                Collections.swap(acquaintances, i, i - 1);
+            }
+        }
+        notifyItemMoved(fromPosition, toPosition);
+        return true;
+    }
+
+
+
 }

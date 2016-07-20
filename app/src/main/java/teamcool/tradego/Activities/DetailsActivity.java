@@ -117,7 +117,7 @@ public class DetailsActivity extends AppCompatActivity {
         tvItemCategory.setText("Category: " + item.getCategory());
         ivItem1.setImageBitmap(StringToBitMap(item.getImage1()));
         ivItem2.setImageBitmap(StringToBitMap(item.getImage2()));
-        ivItem3.setImageBitmap(StringToBitMap(item.getImage3()));
+
 
 
     }

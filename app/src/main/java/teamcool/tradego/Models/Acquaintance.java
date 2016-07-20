@@ -82,9 +82,13 @@ public class Acquaintance extends ParseObject {
     public static Acquaintance fromJSON(JSONObject object){
 
         List<String> acquaintancesID;
+        List<Acquaintance> acquaintances1;
         ParseClient parseClient = new ParseClient();
         //ParseClient retrieves the names of the of AcquaintUser
         acquaintancesID = parseClient.queryAcquaintanceIDofUser(ParseUser.getCurrentUser());
+        //ParseClient retrieves the Acquaintances of the User.
+        acquaintances1 = parseClient.queryAcquaintancesofUser(ParseUser.getCurrentUser());
+
         Acquaintance acquaintance = null;
         try {
             if (!acquaintancesID.contains(object.getString("id"))) {
@@ -94,8 +98,15 @@ public class Acquaintance extends ParseObject {
                 acquaintance.saveInBackground();
             }
             else {
-                //Take the acqauintance from the database
-
+                //At this point going to delete the ParseObjects associated with the user so I can instantiate again without doing any harm
+                // Should delete every acquaintance inside the database
+                for (int i = 0; i < acquaintances1.size(); i ++){
+                    acquaintances1.get(i).deleteInBackground();
+                }
+                acquaintance = new Acquaintance(object.getString("name"), object.getJSONObject("picture").getJSONObject("data").getString("url"),
+                        object.getString("id"));
+                acquaintance.setOwner(ParseUser.getCurrentUser());
+                acquaintance.saveInBackground();
             }
         } catch (JSONException e) {
             e.printStackTrace();

@@ -4,8 +4,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimaryDark"
-    android:padding="10dp">
+    android:background="#FFFFFF" >
 
     <android.support.v4.widget.SwipeRefreshLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
@@ -17,7 +16,7 @@
             android:id="@+id/rvItems"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorPrimary"
+            android:background="@color/colorBackground"
             android:clipToPadding="false" />
 
     </android.support.v4.widget.SwipeRefreshLayout>

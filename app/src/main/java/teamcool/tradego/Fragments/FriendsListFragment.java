@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,10 +13,14 @@ import android.view.ViewGroup;
 import com.parse.ParseUser;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import teamcool.tradego.Adapters.FriendsAdapter;
+import teamcool.tradego.Clients.ParseClient;
+import teamcool.tradego.Models.Friend;
+import teamcool.tradego.Models.Item;
 import teamcool.tradego.R;
 
 /**
@@ -28,7 +33,8 @@ public class FriendsListFragment extends Fragment {
     //BindView to swipContainer SwipeRefreshLayout, toolbar
 
     private FriendsAdapter friendsAdapter;
-    private ArrayList<ParseUser> friends;
+    List<Friend> friends;
+    ParseClient parseClient;
 
     @Nullable
     @Override
@@ -47,17 +53,28 @@ public class FriendsListFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         friends = new ArrayList();
+        parseClient = new ParseClient();
         friendsAdapter = new FriendsAdapter(friends);
 
 
         //rvFriends.addOnScrollLisnener for endless scrolling
         //swipeContainer set on refresh listener
         //swipeContainer setColorSchemeResources to configure refreshing colors
+    }
 
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         populate();
+        super.onViewCreated(view, savedInstanceState);
     }
 
     public void populate() {
         //swipeContainer.setRefreshing(false);
+        friends = parseClient.queryFriendsOnName(null);
+        for(int i=0;i<friends.size();i++) {
+            Log.d("DEBUG",friends.get(i).getName()+"<-------");
+        }
+        friendsAdapter.clearAndAddAll(friends);
+
     }
 }

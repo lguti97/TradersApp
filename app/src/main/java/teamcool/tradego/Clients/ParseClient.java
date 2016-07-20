@@ -3,6 +3,8 @@ package teamcool.tradego.Clients;
 //Created by selinabing on 7/11/16.
 
 
+import android.text.format.DateFormat;
+
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
@@ -12,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import teamcool.tradego.Models.Acquaintance;
+import teamcool.tradego.Models.Friend;
 import teamcool.tradego.Models.Item;
 
 
@@ -21,10 +24,12 @@ public class ParseClient {
     public ParseClient () {
 
     }
-    public List<ParseUser> queryFriendsOnName(String name) {
-        List<ParseUser> friends = new ArrayList<>();
-        ParseQuery<ParseUser> query = ParseQuery.getQuery(ParseUser.class);
-        query.whereContains("username",name);
+    public List<Friend> queryFriendsOnName(String name) {
+        List<Friend> friends = new ArrayList<>();
+        ParseQuery<Friend> query = ParseQuery.getQuery(Friend.class);
+        query.whereEqualTo("owner",ParseUser.getCurrentUser());
+        if (name != null)
+            query.whereContains("username",name);
         try {
             friends = query.find();
         } catch (ParseException e) {
@@ -206,9 +211,6 @@ public class ParseClient {
         query.whereEqualTo("owner", user.getCurrentUser());
         try {
             acquaintances = query.find();
-            for (int i = 0; i < acquaintances.size(); i++){
-                acquaintances.add(acquaintances.get(i));
-            }
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -216,18 +218,20 @@ public class ParseClient {
     }
 
 
+
     public void updateItem(String objectId, Item newItem) {
-        ParseObject point = ParseObject.createWithoutData("Point",objectId);
+        ParseObject point = ParseObject.createWithoutData(Item.class,objectId);
         point.put("item_name",newItem.getItem_name());
         point.put("category",newItem.getCategory());
         point.put("price",newItem.getPrice());
         point.put("status",newItem.getStatus());
         point.put("negotiable",newItem.getNegotiable());
         point.put("description",newItem.getDescription());
-        //point.put("transaction_time",newItem.getTransactionTime());
         point.put("image_1",newItem.getImage1());
         point.put("image_2",newItem.getImage2());
-        point.put("image_3",newItem.getImage3());
+        //point.put("image_3",newItem.getImage3());
+        if (newItem.getStatus().equalsIgnoreCase("sold"))
+            point.put("transaction_time", DateFormat.format("dd-MM-yyyy hh:mm:ss", new java.util.Date()).toString());
         point.saveInBackground();
     }
 }
