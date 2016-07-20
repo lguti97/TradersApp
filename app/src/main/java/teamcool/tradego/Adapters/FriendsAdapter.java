@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.List;
 
 import butterknife.BindView;
@@ -41,9 +43,11 @@ public class FriendsAdapter extends RecyclerView.Adapter<FriendsAdapter.ViewHold
         this.friends = friends;
     }
 
+    Context context;
+
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        Context context = parent.getContext();
+        context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
         View friendsView = inflater.inflate(R.layout.friend_each, parent, false);
         ViewHolder viewHolder = new ViewHolder(friendsView);
@@ -52,14 +56,17 @@ public class FriendsAdapter extends RecyclerView.Adapter<FriendsAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        Friend friend = friends.get(position);
+        final Friend friend = friends.get(position);
         //populate each item by setting its text and media
-        holder.tvUsername.setText(friend.getString("username"));
+        holder.tvUsername.setText(friend.getString("name"));
         holder.ivProfileImage.setImageResource(0);
-//        Picasso.with(getContext()).load(friend.getString("profilePicUrl"))
-//                .fit().centerInside()
-//                .transform(new RoundedCornersTransformation(10, 10))
-//                .into(holder.ivProfileImage);
+        Picasso.with(context)
+                .load(friend.getProfile_url())
+                .resize(100,0)
+                .into(holder.ivProfileImage);
+
+
+
     }
 
     @Override
