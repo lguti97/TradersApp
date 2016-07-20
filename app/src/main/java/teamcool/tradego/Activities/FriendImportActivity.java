@@ -52,7 +52,7 @@ public class FriendImportActivity extends AppCompatActivity {
                                 acquaintances.addAll(Acquaintance.fromJSONArray(jsonArray));
                                 RecyclerView rvAcquaintances = (RecyclerView) findViewById(R.id.rvAcquaintances);
                                 Log.d("DEBUG", acquaintances.toString());
-                                AcquaintanceAdapter adapter = new AcquaintanceAdapter(getApplicationContext(), acquaintances);
+                                AcquaintanceAdapter adapter = new AcquaintanceAdapter(getApplicationContext(), acquaintances, rvAcquaintances);
                                 ItemTouchHelper.Callback callback =
                                         new SimpleItemTouchHelperCallback(adapter);
                                 ItemTouchHelper touchHelper = new ItemTouchHelper(callback);

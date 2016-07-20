@@ -230,6 +230,19 @@ public class ParseClient {
         return acquaintance;
     }
 
+    public Friend queryFriendOfUser(ParseUser user, String ID){
+        Friend friend = new Friend();
+        ParseQuery<Friend> query = ParseQuery.getQuery(Friend.class);
+        query.whereEqualTo("owner", user.getCurrentUser());
+        query.whereEqualTo("userID", ID);
+        try {
+            friend = query.find().get(0);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return friend;
+    }
+
 
 
     public void updateItem(String objectId, Item newItem) {

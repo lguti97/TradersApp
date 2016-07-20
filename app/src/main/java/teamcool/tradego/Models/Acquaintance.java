@@ -133,4 +133,11 @@ public class Acquaintance extends ParseObject {
         return acquaintances;
     }
 
+    public static Acquaintance fromFriend (String name, String profile, String ID) {
+        Acquaintance acquaintance = new Acquaintance(name, profile, ID);
+        acquaintance.setOwner(ParseUser.getCurrentUser());
+        acquaintance.saveInBackground();
+        return acquaintance;
+    }
+
 }
