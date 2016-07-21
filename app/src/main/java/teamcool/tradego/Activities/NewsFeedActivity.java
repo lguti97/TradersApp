@@ -175,8 +175,6 @@ public class NewsFeedActivity extends AppCompatActivity {
 
         tabStrip.setViewPager(viewpager);
         //set background and indicator color of tabstrip
-        //tabStrip.setBackgroundColor(Color.parseColor("#000000"));
-        //tabStrip.setIndicatorColor(Color.parseColor("#000000"));
         //tabStrip.setTabBackground(getResources().getColor(R.color.colorPrimary));
         tabStrip.setIndicatorColor(getResources().getColor(R.color.colorPrimary));
         //tabStrip.setDividerColor(getResources().getColor(R.color.colorPrimary));
