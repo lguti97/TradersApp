@@ -9,13 +9,21 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.WindowManager;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+
 import butterknife.ButterKnife;
 import teamcool.tradego.Fragments.FilterDialogFragment;
+import teamcool.tradego.Fragments.FriendsListFragment;
 import teamcool.tradego.Fragments.SearchItemsFragment;
 import teamcool.tradego.R;
 
 public class SearchActivity extends AppCompatActivity implements FilterDialogFragment.FilterDialogListener{
 
+    int selector = 0;
+    String query = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,7 +31,8 @@ public class SearchActivity extends AppCompatActivity implements FilterDialogFra
         setContentView(R.layout.activity_search);
         ButterKnife.bind(this);
 
-        String query = getIntent().getStringExtra("query");
+        query = getIntent().getStringExtra("query");
+        selector = getIntent().getIntExtra("selector",0);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -33,9 +42,12 @@ public class SearchActivity extends AppCompatActivity implements FilterDialogFra
         actionBar.setTitle(query);
 
         if (savedInstanceState == null) {
-            SearchItemsFragment searchItemsFragment = SearchItemsFragment.newInstance(query);
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-            ft.replace(R.id.flContainerSearch, searchItemsFragment);
+            if (selector != 2) {
+                ft.replace(R.id.flContainerSearch, SearchItemsFragment.newInstance(query,null));
+            } else {
+                ft.replace(R.id.flContainerSearch, FriendsListFragment.newInstance(query,null));
+            }
             ft.commit();
         }
 
@@ -72,7 +84,13 @@ public class SearchActivity extends AppCompatActivity implements FilterDialogFra
     }
 
     @Override
-    public void onFinishDialog() {
-
+    public void onFinishDialog(ArrayList<String> res) {
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        if (selector != 2) {
+            ft.replace(R.id.flContainerSearch, SearchItemsFragment.newInstance(query,res));
+        } else {
+            ft.replace(R.id.flContainerSearch, FriendsListFragment.newInstance(query,res));
+        }
+        ft.commit();
     }
 }

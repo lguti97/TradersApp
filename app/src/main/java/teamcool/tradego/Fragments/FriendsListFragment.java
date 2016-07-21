@@ -68,9 +68,24 @@ public class FriendsListFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
     }
 
+    public static FriendsListFragment newInstance(String query, ArrayList<String> filters) {
+        FriendsListFragment friendsListFragment = new FriendsListFragment();
+        Bundle args = new Bundle();
+        args.putString("query",query);
+        if (filters != null) {
+            //put more
+        }
+        friendsListFragment.setArguments(args);
+        return friendsListFragment;
+    }
+
     public void populate() {
         //swipeContainer.setRefreshing(false);
-        friends = parseClient.queryFriendsOnName(null);
+        if (getArguments() == null) {
+            friends = parseClient.queryFriendsOnName(null);
+        } else {
+            friends = parseClient.queryFriendsOnName(getArguments().getString("query"));
+        }
         for(int i=0;i<friends.size();i++) {
             Log.d("DEBUG",friends.get(i).getName()+"<-------");
         }

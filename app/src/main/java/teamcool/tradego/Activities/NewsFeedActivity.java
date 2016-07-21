@@ -2,6 +2,7 @@ package teamcool.tradego.Activities;
 
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
@@ -20,6 +21,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -27,11 +29,14 @@ import com.astuetz.PagerSlidingTabStrip;
 import com.parse.ParseUser;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import jp.wasabeef.picasso.transformations.CropCircleTransformation;
 import teamcool.tradego.Clients.ParseClient;
 import teamcool.tradego.Fragments.CategoriesTimelineFragment;
+import teamcool.tradego.Fragments.FilterDialogFragment;
 import teamcool.tradego.Fragments.FriendsListFragment;
 import teamcool.tradego.Fragments.TopTimelineFragment;
 import teamcool.tradego.Fragments.UserCatalogFragment;
@@ -167,10 +172,14 @@ public class NewsFeedActivity extends AppCompatActivity {
         //viewpager setup
         fragmentStatePagerAdapter = new catalogPagerAdapter(getSupportFragmentManager());
         viewpager.setAdapter(fragmentStatePagerAdapter); //may cause problems (?)
+
         tabStrip.setViewPager(viewpager);
-        //set TabBackground and IndicatorColor later
-
-
+        //set background and indicator color of tabstrip
+        //tabStrip.setBackgroundColor(Color.parseColor("#000000"));
+        //tabStrip.setIndicatorColor(Color.parseColor("#000000"));
+        //tabStrip.setTabBackground(getResources().getColor(R.color.colorPrimary));
+        tabStrip.setIndicatorColor(getResources().getColor(R.color.colorPrimary));
+        //tabStrip.setDividerColor(getResources().getColor(R.color.colorPrimary));
 
         //setup navigation drawer
         setupNavDrawerTabs(navDrawer);
@@ -234,14 +243,19 @@ public class NewsFeedActivity extends AppCompatActivity {
 
         //make search box always show by default
         // user dont have to tap on the icon to make a search
-        //searchView.setIconifiedByDefault(false);
+        searchView.setIconifiedByDefault(true);
 
         //expand the SearchView
         searchItem.expandActionView();
         searchView.requestFocus();
 
+        //TODO. Use of selector to be changed for better style
         //set hint text
-        searchView.setQueryHint("Search for an item...");
+        if (selector != 2) {
+            searchView.setQueryHint("Search for an item...");
+        } else {
+            searchView.setQueryHint("Search for a friend...");
+        }
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
 
@@ -249,6 +263,7 @@ public class NewsFeedActivity extends AppCompatActivity {
             public boolean onQueryTextSubmit(String query) {
                 Intent i = new Intent(getApplicationContext(),SearchActivity.class);
                 i.putExtra("query",query);
+                i.putExtra("selector",selector);
                 startActivity(i);
                 return true;
             }
@@ -285,12 +300,13 @@ public class NewsFeedActivity extends AppCompatActivity {
                     @Override
                     public boolean onNavigationItemSelected(MenuItem item) {
                         selectDrawerItem(item);
-                        return false;
+                        return true;
                     }
                 });
     }
 
     public void selectDrawerItem(MenuItem item) {
+        //TODO. Use of selector to be changed for better style
         switch(item.getItemId()) {
             case R.id.nav_home_fragment:
                 selector = 0;
@@ -307,8 +323,6 @@ public class NewsFeedActivity extends AppCompatActivity {
             case R.id.nav_transaction_history_fragment:
                 selector = 4;
                 break;
-
-
         }
         tabStrip.setViewPager(viewpager);
         fragmentStatePagerAdapter.notifyDataSetChanged();
@@ -324,4 +338,6 @@ public class NewsFeedActivity extends AppCompatActivity {
         super.onConfigurationChanged(newConfig);
         drawerToggle.onConfigurationChanged(newConfig);
     }
+
+
 }
