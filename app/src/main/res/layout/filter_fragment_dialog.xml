@@ -13,7 +13,7 @@
         android:text="@string/category_type"
         android:id="@+id/tvCategoryType"
         android:layout_marginTop="80dp"
-        android:layout_marginLeft="15dp"
+        android:layout_marginLeft="25dp"
         android:layout_marginBottom="30dp"/>
 
     <TextView
@@ -30,8 +30,8 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/date"
-        android:id="@+id/tvDate"
+        android:text="@string/owner"
+        android:id="@+id/tvOwner"
         android:layout_below="@id/tvSortOrder"
         android:layout_alignLeft="@id/tvSortOrder"
         android:layout_alignStart="@id/tvSortOrder"
@@ -44,12 +44,14 @@
         android:layout_height="wrap_content"
         android:entries="@array/sort_array"
         android:prompt="@string/prompt_sort_order"
-        android:layout_below="@+id/spnrCategoryType"
+        android:layout_toRightOf="@id/tvCategoryType"
+        android:layout_toEndOf="@id/tvCategoryType"
+        android:layout_alignBaseline="@id/tvSortOrder"
         android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"/>
+        android:layout_marginBottom="10dp" />
 
     <Spinner
-        android:id="@id/spnrCategoryType"
+        android:id="@+id/spnrCategoryType"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:entries="@array/categories"
@@ -58,11 +60,36 @@
         android:layout_alignBaseline="@id/tvCategoryType">
     </Spinner>
 
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/etOwner"
+        android:hint="@string/owner_hint"
+        android:layout_below="@id/spnrSortOrder"
+        android:layout_toRightOf="@id/tvCategoryType"
+        android:layout_toEndOf="@id/tvCategoryType"
+        android:layout_alignBaseline="@id/tvOwner"
+        android:layout_alignEnd="@+id/btnSubmitFilter"
+        android:layout_alignRight="@id/btnSubmitFilter"
+        android:focusableInTouchMode="true"
+        android:focusable="true"/>
+
+
+    <!--EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/etOwner"
+        android:layout_alignTop="@+id/tvOwner"
+        android:layout_toRightOf="@id/tvCategoryType"
+        android:layout_alignRight="@+id/btnSubmitFilter"
+        android:layout_alignEnd="@+id/btnSubmitFilter" /-->
+
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Submit"
-        android:id="@+id/btnSubmitFilter"
+        android:id="@id/btnSubmitFilter"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
@@ -85,13 +112,7 @@
         android:minWidth="65dp"
         android:minHeight="50dp"/>
 
-    <DatePicker
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/dpFilterDate"
-        android:layout_below="@id/spnrSortOrder"
-        style="@android:style/Widget.DatePicker"
-        android:onClick="showDatePickerDialog"/>
+
 
 
 </RelativeLayout>

@@ -3,10 +3,12 @@ package teamcool.tradego.Fragments;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -53,17 +55,33 @@ public class SearchItemsFragment extends CatalogListFragment {
         super.onViewCreated(view, savedInstanceState);
     }
 
-    public static SearchItemsFragment newInstance(String query) {
+    public static SearchItemsFragment newInstance(String query, ArrayList<String> filters) {
         SearchItemsFragment searchItemsFragment = new SearchItemsFragment();
         Bundle args = new Bundle();
         args.putString("query",query);
+        args.putBoolean("hasFilter", filters!=null);
+        if (filters != null) {
+            args.putString("category",filters.get(0));
+            args.putString("sort",filters.get(1));
+            args.putString("owner",filters.get(2));
+        }
         searchItemsFragment.setArguments(args);
         return searchItemsFragment;
     }
 
     private void populate() {
         String query = getArguments().getString("query");
-        items = parseClient.queryItemsOnName(query,false);
+        if(getArguments().getBoolean("hasFilter")) {
+            String category = getArguments().getString("category");
+            String sort = getArguments().getString("sort");
+            String owner = getArguments().getString("owner");
+            items = parseClient.queryItemsOnFilteredQuery(query,category,sort,owner);
+            for(int i = 0; i < items.size(); i++) {
+                Log.d("DEBUG","-->>"+items.get(i).getItem_name());
+            }
+        } else {
+            items = parseClient.queryItemsOnName(query, false);
+        }
         addAll(items);
         swipeContainer.setRefreshing(false);
     }

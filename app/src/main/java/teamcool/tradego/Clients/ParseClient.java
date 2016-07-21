@@ -117,6 +117,28 @@ public class ParseClient {
         return items;
     }
 
+    public List<Item> queryItemsOnFilteredQuery(String name, String category, String sort, String owner) {
+        List<Item> items = new ArrayList<>();
+        ParseQuery<Item> query = ParseQuery.getQuery(Item.class);
+        query.whereNotEqualTo("owner",ParseUser.getCurrentUser());
+        query.whereContains("item_name",name);
+        query.whereEqualTo("status","Available");
+        query.whereEqualTo("category",category);
+        if (!owner.equalsIgnoreCase("")) {
+            query.whereContains("owner",owner);
+        }
+        if (!sort.equalsIgnoreCase("Oldest")) {
+            query.orderByAscending("createdAt");
+        }
+        query.orderByDescending("createdAt");
+        try {
+            items = query.find();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return items;
+    }
+
     public int countNumFriendsOfUser(ParseUser user) {
         int count = -15251;
         /*
