@@ -11,17 +11,21 @@
 
 
     <ImageView
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
         android:src="@drawable/ic_camera"
         android:id="@+id/ivNavProfilePic"
-        android:layout_marginLeft="40dp"/>
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="16dp"/>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_toRightOf="@id/ivNavProfilePic"
         android:text="John Doe"
+        android:textSize="20sp"
+        android:textStyle="bold"
         android:id="@+id/tvNavUserName" />
 
     <TextView
