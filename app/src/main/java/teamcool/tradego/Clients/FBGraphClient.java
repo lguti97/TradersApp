@@ -38,45 +38,4 @@ public class FBGraphClient {
         return currentUserFbId;
     }
 
-    public ArrayList<Acquaintance> getFriends() {
-        final ArrayList<Acquaintance> acquaintances = new ArrayList<>();
-        GraphRequest request =
-                GraphRequest.newMyFriendsRequest(accessToken,
-                        new GraphRequest.GraphJSONArrayCallback() {
-                            @Override
-                            public void onCompleted(JSONArray jsonArray, GraphResponse response) {
-                                acquaintances.addAll(Acquaintance.fromJSONArray(jsonArray));
-                            }
-                        });
-
-        Bundle params = new Bundle();
-        params.putString("fields", "name, picture");
-        request.setParameters(params);
-        request.executeAsync();
-
-
-        return acquaintances;
-    }
-
-
-    // REQUIRES: user's unique FacebookID
-    // type: enum{small, normal, album, large, square}
-    public String getUserProfilePicURL(String fbid, String type) {
-        final StringBuilder pictureUrl = new StringBuilder();
-        Bundle params = new Bundle();
-        params.putBoolean("redirect",false);
-        params.putString("type",type);
-        new GraphRequest(accessToken, fbid+"/picture", params, HttpMethod.GET, new GraphRequest.Callback() {
-            @Override
-            public void onCompleted(GraphResponse response) {
-                try {
-                    pictureUrl.append((String) response.getJSONObject().getJSONObject("data").get("url"));
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }).executeAsync();
-        return pictureUrl.toString();
-    }
-
 }

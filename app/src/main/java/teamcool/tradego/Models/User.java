@@ -21,6 +21,7 @@ public class User {
     private String location;
     private String timezone;
     private String profilePicUrl;
+    private String fb_id;
 
 
     public User () {
@@ -28,12 +29,13 @@ public class User {
     }
 
     //Updates member variables + aliasing
-    public User(String username, String user_id, String location, String timezone, String profilePicUrl, ParseUser obj) {
+    public User(String username, String user_id, String location, String timezone, String profilePicUrl, String fb_id, ParseUser obj) {
         this.username = username;
         this.user_id = user_id;
         this.location = location;
         this.timezone = timezone;
         this.profilePicUrl = profilePicUrl;
+        this.fb_id = fb_id;
         extended_user = obj;
         setSomeField(username, user_id, location, timezone, profilePicUrl);
 
@@ -51,6 +53,8 @@ public class User {
             extended_user.put("timezone", timezone);
         if (profilePicUrl != null)
             extended_user.put("profilePicUrl", profilePicUrl);
+        if (fb_id != null)
+            extended_user.put("fb_id", fb_id);
         try {
             extended_user.save();
         } catch (ParseException e) {
@@ -59,8 +63,7 @@ public class User {
     }
 
     //Deserializes JSONObjects
-
-    public static User fromJSON(JSONObject object, ParseUser obj) {
+    public static User fromJSON(JSONObject object, ParseUser obj, String fb_id) {
         User user = null;
         try {
 
@@ -69,45 +72,12 @@ public class User {
                     object.getJSONObject("location").getString("name"),
                     object.getString("timezone"),
                     object.getJSONObject("picture").getJSONObject("data").getString("url"),
+                    fb_id,
                     obj);
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
         return user;
-    }
-
-
-    public static User fromJSON(JSONObject object) {
-        User user = new User();
-        try {
-            user.username = object.getString("name");
-            user.user_id = object.getString("id");
-            user.location = object.getJSONObject("location").getString("name");
-            user.timezone = object.getString("timezone");
-            user.profilePicUrl = object.getJSONObject("picture").getJSONObject("data").getString("url");
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return user;
-    }
-
-
-    public static ArrayList<User> fromJSONArray(JSONArray jsonArray){
-        ArrayList<User> users = new ArrayList<>();
-        for (int i = 0; i < jsonArray.length(); i++) {
-            try {
-                JSONObject userJson = jsonArray.getJSONObject(i);
-                User user = User.fromJSON(userJson);
-                if (user != null) {
-                    users.add(user);
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
-                continue;
-            }
-        }
-        return users;
     }
 }

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
     android:background="#f3f8f1">
 
 
@@ -75,16 +75,6 @@
         android:focusableInTouchMode="true"
         android:focusable="true"/>
 
-
-    <!--EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/etOwner"
-        android:layout_alignTop="@+id/tvOwner"
-        android:layout_toRightOf="@id/tvCategoryType"
-        android:layout_alignRight="@+id/btnSubmitFilter"
-        android:layout_alignEnd="@+id/btnSubmitFilter" /-->
-
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -111,8 +101,5 @@
         android:layout_marginBottom="20dp"
         android:minWidth="65dp"
         android:minHeight="50dp"/>
-
-
-
 
 </RelativeLayout>

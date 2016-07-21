@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -87,6 +88,7 @@ public class SearchActivity extends AppCompatActivity implements FilterDialogFra
     public void onFinishDialog(ArrayList<String> res) {
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         if (selector != 2) {
+            Log.d("DEBUG","item - filter");
             ft.replace(R.id.flContainerSearch, SearchItemsFragment.newInstance(query,res));
         } else {
             ft.replace(R.id.flContainerSearch, FriendsListFragment.newInstance(query,res));
