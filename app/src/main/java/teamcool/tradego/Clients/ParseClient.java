@@ -4,6 +4,7 @@ package teamcool.tradego.Clients;
 
 
 import android.text.format.DateFormat;
+import android.util.Log;
 
 import com.parse.ParseException;
 import com.parse.ParseObject;
@@ -125,9 +126,10 @@ public class ParseClient {
         query.whereEqualTo("status","Available");
         query.whereEqualTo("category",category);
         if (!owner.equalsIgnoreCase("")) {
-            query.whereContains("owner",owner);
+            query.whereContainedIn("owner",queryFriendsOnName(owner));
         }
         if (!sort.equalsIgnoreCase("Oldest")) {
+            Log.d("DEBUG","reached - oldest");
             query.orderByAscending("createdAt");
         }
         query.orderByDescending("createdAt");
@@ -201,6 +203,21 @@ public class ParseClient {
         query.setCachePolicy(ParseQuery.CachePolicy.CACHE_ELSE_NETWORK); // or CACHE_ONLY
 
         query.whereEqualTo("objectId", userId);
+        try {
+            user = query.find().get(0);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return user;
+    }
+
+    public ParseUser queryUserBasedonFBid(String userId) {
+
+        ParseUser user = new ParseUser();
+        ParseQuery<ParseUser> query = ParseQuery.getQuery(ParseUser.class);
+        query.setCachePolicy(ParseQuery.CachePolicy.CACHE_ELSE_NETWORK); // or CACHE_ONLY
+
+        query.whereEqualTo("fb_id", userId);
         try {
             user = query.find().get(0);
         } catch (ParseException e) {

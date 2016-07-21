@@ -104,7 +104,7 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onCompleted(JSONObject object, GraphResponse response) {
                         if (object != null) {
-                            another_user = User.fromJSON(object, user);
+                            another_user = User.fromJSON(object, user, accessToken.getUserId());
                         } else {
                             Log.d("DEBUG","Login - object null, response: "+response.toString());
                         }
