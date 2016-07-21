@@ -143,14 +143,13 @@ public class ParseClient {
 
     public int countNumFriendsOfUser(ParseUser user) {
         int count = -15251;
-        /*
-        ParseQuery<ParseUser> query = ParseQuery.getQuery(ParseUser.class);
+        ParseQuery<Friend> query = ParseQuery.getQuery(Friend.class);
+        query.whereEqualTo("owner", user);
         try {
             count = query.count();
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        */
         return count;
     }
 

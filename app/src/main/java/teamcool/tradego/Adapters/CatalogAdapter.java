@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.io.ByteArrayOutputStream;
@@ -33,7 +34,7 @@ public class CatalogAdapter extends RecyclerView.Adapter<CatalogAdapter.ViewHold
         //butterknife binding goes here:
         @BindView(R.id.tvNewsFeedItemName) TextView itemName;
         @BindView(R.id.ivNewsFeedDisplayImg) ImageView ivItemImage;
-
+        @BindView(R.id.rlItemEach) RelativeLayout rlItemEach;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -76,7 +77,7 @@ public class CatalogAdapter extends RecyclerView.Adapter<CatalogAdapter.ViewHold
 
 
         //on click listener to launch detail activity
-        holder.ivItemImage.setOnClickListener(new View.OnClickListener() {
+        holder.rlItemEach.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
