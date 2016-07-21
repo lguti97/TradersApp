@@ -13,12 +13,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.astuetz.PagerSlidingTabStrip;
+import com.bumptech.glide.Glide;
 import com.parse.ParseUser;
-import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import jp.wasabeef.picasso.transformations.RoundedCornersTransformation;
+import jp.wasabeef.glide.transformations.CropCircleTransformation;
 import teamcool.tradego.Clients.ParseClient;
 import teamcool.tradego.Fragments.UserCatalogFragment;
 import teamcool.tradego.R;
@@ -90,12 +90,9 @@ public class ProfileActivity extends AppCompatActivity {
 
             String image = savedInstanceState.getString("image");
 
-            Picasso.with(this).load(image)
-                    .resize(100, 0)
-                    .transform(new RoundedCornersTransformation(10, 10))
+            Glide.with(this).load(image)
+                    .bitmapTransform(new CropCircleTransformation(this))
                     .into(ivProfileImage);
-
-
         }
 
 
@@ -107,9 +104,9 @@ public class ProfileActivity extends AppCompatActivity {
     private void populateUserHeader(ParseUser user) {
 
         tvUserName.setText(user.getString("username"));
-        Picasso.with(this).load(user.getString("profilePicUrl"))
-                .fit().centerInside()
-                .transform(new RoundedCornersTransformation(10, 10))
+
+        Glide.with(this).load(user.getString("profilePicUrl"))
+                .bitmapTransform(new CropCircleTransformation(this))
                 .into(ivProfileImage);
 
         tvItemsSold.setText("Items Sold: " + parseClient.countNumItemsOnStatus(user,"Sold"));
