@@ -3,11 +3,14 @@ package teamcool.tradego.Fragments;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.parse.ParseUser;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -27,6 +30,7 @@ public class TopTimelineFragment extends CatalogListFragment {
     List<Item> items;
 
     @BindView(R.id.swipeContainerCatalog) SwipeRefreshLayout swipeContainer;
+    @BindView(R.id.ivNoItems) ImageView ivNoItems;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -60,9 +64,14 @@ public class TopTimelineFragment extends CatalogListFragment {
     }
 
     public void populateTimeLine() {
+        Log.d("DEBUG","how an this never be reached are you kidding");
         items = parseClient.queryItemsOnOtherUserAndStatus(ParseUser.getCurrentUser(),"Available");
         addAll(items);
         swipeContainer.setRefreshing(false);
+        if (items.size()==0) {
+            Picasso.with(getContext()).load(R.drawable.ic_no_items).into(ivNoItems);
+            Log.d("DEBUG","reached top timeline frag  - TBDELETED");
+        }
     }
 
 }

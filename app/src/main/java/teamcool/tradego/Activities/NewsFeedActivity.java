@@ -60,8 +60,7 @@ public class NewsFeedActivity extends AppCompatActivity {
 
     private int selector;
 
-    public void onAddNewItem(MenuItem item) {
-
+    public void onCompose(View view) {
         Intent i = new Intent(NewsFeedActivity.this, AddItemActivity.class);
         startActivity(i);
     }

@@ -12,6 +12,4 @@
         app:showAsAction="always"
         android:onClick="onEditItem"/>
 
-
-
 </menu>
