@@ -24,8 +24,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:name=".ParseApplication"
-        android:largeHeap="true"
-        >
+        android:largeHeap="true" >
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
@@ -35,7 +34,8 @@
             android:name="com.parse.push.gcm_sender_id"
             android:value="id:732747127956"/>
 
-        <activity android:name=".Activities.LoginActivity">
+        <activity android:name=".Activities.LoginActivity"
+            android:theme="@style/splashScreenTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

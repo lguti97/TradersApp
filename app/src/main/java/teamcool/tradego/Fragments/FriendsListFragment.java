@@ -3,6 +3,7 @@ package teamcool.tradego.Fragments;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
@@ -41,10 +42,15 @@ public class FriendsListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_friends, container, false);
         ButterKnife.bind(this, v);
-        rvFriends.setLayoutManager(new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL));
+        rvFriends.setLayoutManager(new GridLayoutManager(getContext(),2));
         rvFriends.setAdapter(friendsAdapter);
         rvFriends.setHasFixedSize(true);
-        //listViewHere.setAdapter(friendsAdapter);
+        rvFriends.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //Launch ProfileActivity
+            }
+        });
         //set listView's onItemLongClickListener, onItemClickListener, etc.
         return v;
     }

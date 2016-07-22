@@ -3,9 +3,13 @@ package teamcool.tradego.Fragments;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -24,6 +28,7 @@ public class CategoriesTimelineFragment extends CatalogListFragment {
     ParseClient parseClient;
 
     @BindView(R.id.swipeContainerCatalog) SwipeRefreshLayout swipeContainer;
+    @BindView(R.id.ivNoItems) ImageView ivNoItems;
 
     public CategoriesTimelineFragment() {
 
@@ -73,6 +78,11 @@ public class CategoriesTimelineFragment extends CatalogListFragment {
         items = parseClient.queryItemsOnCategory(category);
         addAll(items);
         swipeContainer.setRefreshing(false);
+        Log.d("DEBUG","reached for debugging - CATEGORY : "+items.size());
+        if (items.size() == 0) {
+            Picasso.with(getContext()).load(R.drawable.ic_home).into(ivNoItems);
+            Log.d("DEBUG","reached category frag - TBDELETED");
+        }
     }
 
 }

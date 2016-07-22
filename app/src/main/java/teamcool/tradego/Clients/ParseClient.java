@@ -142,7 +142,7 @@ public class ParseClient {
     }
 
     public int countNumFriendsOfUser(ParseUser user) {
-        int count = -15251;
+        int count = -15251; //placeholder value
         ParseQuery<Friend> query = ParseQuery.getQuery(Friend.class);
         query.whereEqualTo("owner", user);
         try {
@@ -154,7 +154,7 @@ public class ParseClient {
     }
 
     public int countNumItemsOnStatus(ParseUser user, String status) {
-        int count = -15251;
+        int count = -15251; //placeholder value
         ParseQuery<Item> query = ParseQuery.getQuery(Item.class);
         query.whereEqualTo("owner",user);
         query.whereEqualTo("status",status);
@@ -168,7 +168,7 @@ public class ParseClient {
     }
 
     public int countNumItemsBought(ParseUser user) {
-        int count = -15210;
+        int count = -15210; //placeholder value
         ParseQuery<Item> query = ParseQuery.getQuery(Item.class);
         query.whereEqualTo("buyer", user);
         query.whereEqualTo("status","Sold");
