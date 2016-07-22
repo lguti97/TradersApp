@@ -22,6 +22,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.parse.ParseUser;
@@ -44,6 +45,7 @@ public class AddItemActivity extends AppCompatActivity {
     @BindView(R.id.etPrice) EditText etPrice;
     @BindView(R.id.etItemName) EditText etItemName;
     @BindView(R.id.etItemDescription) EditText etItemDescription;
+    @BindView(R.id.Add_New_Item) TextView header;
     ParseClient parseClient;
 
 
@@ -138,6 +140,7 @@ public class AddItemActivity extends AppCompatActivity {
     private void populateEditItem() {
 
         parseClient = new ParseClient();
+        header.setText("Edit Item!");
         itemId = getIntent().getStringExtra("item_id");
         item = parseClient.queryItemBasedonObjectID(itemId);
         etItemName.setText(item.getItem_name());
@@ -218,8 +221,16 @@ public class AddItemActivity extends AppCompatActivity {
     public void onStatusSpinner() {
         Spinner spinner = (Spinner) findViewById(R.id.spStatus);
 // Create an ArrayAdapter using the string array and a default spinner layout
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-                R.array.status, android.R.layout.simple_spinner_item);
+
+        int array = R.array.status_add;
+
+        if (getIntent().getStringExtra("item_id")!= null){
+            array = R.array.status;
+        }
+
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,array, android.R.layout.simple_spinner_item);
+
+
 // Specify the layout to use when the list of choices appears
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 // Apply the adapter to the spinner
@@ -268,7 +279,7 @@ public class AddItemActivity extends AppCompatActivity {
                 Uri takenPhotoUri = getPhotoFileUri(photoFileName);
                 // by this point we have the camera photo on disk
                 Bitmap takenImage_unscaled = BitmapFactory.decodeFile(takenPhotoUri.getPath());
-                Bitmap takenImage = Bitmap.createScaledBitmap(takenImage_unscaled, 100, 100, true);
+                Bitmap takenImage = Bitmap.createScaledBitmap(takenImage_unscaled, 70, 70, true);
 
                 // Load the taken image into a preview
 
