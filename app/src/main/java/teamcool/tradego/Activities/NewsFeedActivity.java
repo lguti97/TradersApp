@@ -29,14 +29,12 @@ import com.astuetz.PagerSlidingTabStrip;
 import com.parse.ParseUser;
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import jp.wasabeef.picasso.transformations.CropCircleTransformation;
 import teamcool.tradego.Clients.ParseClient;
 import teamcool.tradego.Fragments.CategoriesTimelineFragment;
-import teamcool.tradego.Fragments.FilterDialogFragment;
 import teamcool.tradego.Fragments.FriendsListFragment;
 import teamcool.tradego.Fragments.TopTimelineFragment;
 import teamcool.tradego.Fragments.UserCatalogFragment;

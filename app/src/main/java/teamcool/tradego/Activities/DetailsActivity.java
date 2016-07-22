@@ -77,13 +77,11 @@ public class DetailsActivity extends AppCompatActivity {
 
         final Activity activity = this;
 
-        //when clicked, share a screenshot to messenger
         btnMessenger.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                Uri contentUri = takeScreenshot();
-                ShareToMessengerParams shareToMessengerParams = ShareToMessengerParams.newBuilder(contentUri, "image/jpeg").build();
+                ShareToMessengerParams shareToMessengerParams = ShareToMessengerParams.newBuilder(Uri.EMPTY, "" +
+                        "").build();
                 MessengerUtils.shareToMessenger(activity, REQUEST_CODE_SHARE_TO_MESSENGER, shareToMessengerParams);
             }
         });
@@ -135,35 +133,6 @@ public class DetailsActivity extends AppCompatActivity {
     }
 
 
-    public Uri takeScreenshot() {
-        Date now = new Date();
-        android.text.format.DateFormat.format("yyyy-MM-dd_hh:mm:ss", now);
-
-        File imageFile = null;
-
-        try {
-            String mPath = Environment.getExternalStorageDirectory().toString() + "/" + now + ".jpg";
-
-            // create bitmap screen capture
-            View v1 = getWindow().getDecorView().getRootView();
-            v1.setDrawingCacheEnabled(true);
-            Bitmap bitmap = Bitmap.createBitmap(v1.getDrawingCache());
-            v1.setDrawingCacheEnabled(false);
-
-            imageFile = new File(mPath);
-
-            FileOutputStream outputStream = new FileOutputStream(imageFile);
-            int quality = 100;
-            bitmap.compress(Bitmap.CompressFormat.JPEG, quality, outputStream);
-            outputStream.flush();
-            outputStream.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return Uri.fromFile(imageFile);
-
-    }
 
 
     @Override

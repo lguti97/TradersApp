@@ -50,6 +50,7 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTheme(R.style.splashScreenTheme);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
 
@@ -65,7 +66,6 @@ public class LoginActivity extends AppCompatActivity {
         //Customizing Font
         Typeface font0 = Typeface.createFromAsset(getApplicationContext().getAssets(), "Oranienbaum.ttf");
         tvLogo.setTypeface(font0);
-
 
     }
 
