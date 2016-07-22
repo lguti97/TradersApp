@@ -15,7 +15,7 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <permission android:protectionLevel="signature"
         android:name="teamcool.tradego.permission.C2D_MESSAGE" />
-    <uses-permission android:name="com.codepath.parseportpush.permission.C2D_MESSAGE" />
+    <uses-permission android:name="teamcool.tradego.permission.C2D_MESSAGE" />
 
     <application
         android:allowBackup="true"

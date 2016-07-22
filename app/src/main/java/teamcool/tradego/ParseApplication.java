@@ -1,7 +1,10 @@
 package teamcool.tradego;
 
 import com.parse.Parse;
+import com.parse.ParseCloud;
 import com.parse.interceptors.ParseLogInterceptor;
+
+import java.util.HashMap;
 
 /**
  * Created by lguti on 7/15/16.
