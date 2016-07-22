@@ -318,9 +318,6 @@ public class NewsFeedActivity extends AppCompatActivity {
             case R.id.nav_transaction_status_fragment:
                 selector = 3;
                 break;
-            case R.id.nav_transaction_history_fragment:
-                selector = 4;
-                break;
         }
         tabStrip.setViewPager(viewpager);
         fragmentStatePagerAdapter.notifyDataSetChanged();

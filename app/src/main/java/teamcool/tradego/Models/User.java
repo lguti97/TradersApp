@@ -23,7 +23,6 @@ public class User {
     private String profilePicUrl;
     private String fb_id;
 
-
     public User () {
 
     }
