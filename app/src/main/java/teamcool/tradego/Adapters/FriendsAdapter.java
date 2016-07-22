@@ -28,6 +28,7 @@ public class FriendsAdapter extends RecyclerView.Adapter<FriendsAdapter.ViewHold
         //@BindView(R.id.someId) Type someId;
         @BindView(R.id.ivProfileImage) ImageView ivProfileImage;
         @BindView(R.id.tvUserName) TextView tvUsername;
+        @BindView(R.id.tvItemsCatalog) TextView tvItemsCatalog;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -64,6 +65,10 @@ public class FriendsAdapter extends RecyclerView.Adapter<FriendsAdapter.ViewHold
                 .load(friend.getProfile_url())
                 .resize(100,0)
                 .into(holder.ivProfileImage);
+
+        String number;
+
+        holder.tvItemsCatalog.setText("Items in Catalog: ");
 
 
 

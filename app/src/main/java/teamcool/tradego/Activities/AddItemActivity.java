@@ -222,8 +222,13 @@ public class AddItemActivity extends AppCompatActivity {
         Spinner spinner = (Spinner) findViewById(R.id.spStatus);
 // Create an ArrayAdapter using the string array and a default spinner layout
 
+        int array = R.array.status_add;
 
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.status, android.R.layout.simple_spinner_item);
+        if (getIntent().getStringExtra("item_id")!= null){
+            array = R.array.status;
+        }
+
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,array, android.R.layout.simple_spinner_item);
 
 
 // Specify the layout to use when the list of choices appears
