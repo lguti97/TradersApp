@@ -1,19 +1,24 @@
 package teamcool.tradego.Adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.parse.ParseUser;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import teamcool.tradego.Activities.ProfileActivity;
+import teamcool.tradego.Clients.ParseClient;
 import teamcool.tradego.Models.Friend;
 import teamcool.tradego.R;
 
@@ -29,6 +34,8 @@ public class FriendsAdapter extends RecyclerView.Adapter<FriendsAdapter.ViewHold
         @BindView(R.id.ivProfileImage) ImageView ivProfileImage;
         @BindView(R.id.tvUserName) TextView tvUsername;
         @BindView(R.id.tvItemsCatalog) TextView tvItemsCatalog;
+        @BindView(R.id.rlFriendEach) RelativeLayout rlFriendEach;
+
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -39,6 +46,7 @@ public class FriendsAdapter extends RecyclerView.Adapter<FriendsAdapter.ViewHold
     }
 
     private List<Friend> friends;
+    ParseClient parseClient;
 
     public FriendsAdapter(List<Friend> friends) {
         this.friends = friends;
@@ -66,12 +74,24 @@ public class FriendsAdapter extends RecyclerView.Adapter<FriendsAdapter.ViewHold
                 .resize(100,0)
                 .into(holder.ivProfileImage);
 
-        String number;
+        parseClient = new ParseClient();
 
-        holder.tvItemsCatalog.setText("Items in Catalog: ");
+        final ParseUser friend_to_user = parseClient.queryUserBasedonFBid(friend.getUserID());
 
 
+        int number = parseClient.countNumItemsOnUser(friend_to_user);
 
+        holder.tvItemsCatalog.setText("Items in Catalog: " + number);
+
+
+        holder.rlFriendEach.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(context, ProfileActivity.class);
+                i.putExtra("objectId", friend_to_user.getObjectId());
+                context.startActivity(i);
+            }
+        });
     }
 
     @Override

@@ -19,11 +19,13 @@ import android.widget.TextView;
 
 import com.facebook.messenger.MessengerUtils;
 import com.facebook.messenger.ShareToMessengerParams;
+import com.parse.ParseUser;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.util.Date;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -169,7 +171,17 @@ public class DetailsActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_detail_activity, menu);
+
+        Item item_2 = parseClient.queryItemBasedonObjectID(itemId);
+        List<Item> items = parseClient.queryItemsOnUser(ParseUser.getCurrentUser());
+
+        for(Item item: items) {
+            String obj = item.getObjectId();
+            if (obj.equals(itemId)) {
+                getMenuInflater().inflate(R.menu.menu_detail_activity, menu);
+                return true;
+            }
+        }
         return true;
     }
 
@@ -196,7 +208,6 @@ public class DetailsActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
             finish();
-
         }
         return super.onOptionsItemSelected(item);
     }

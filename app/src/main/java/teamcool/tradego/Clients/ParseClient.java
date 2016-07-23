@@ -90,6 +90,22 @@ public class ParseClient {
         return items;
     }
 
+
+    public List<Item> queryItemsOnUser(ParseUser user) {
+        List<Item> items = new ArrayList<>();
+        ParseQuery<Item> query = ParseQuery.getQuery(Item.class);
+        if (user != null) {
+            query.whereEqualTo("owner", user);
+        }
+        query.orderByDescending("createdAt");
+        try {
+            items = query.find();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return items;
+    }
+
     public List<Item> queryBoughtItemsOnUser(ParseUser user) {
         List<Item> items = new ArrayList<>();
         ParseQuery<Item> query = ParseQuery.getQuery(Item.class);
@@ -158,6 +174,19 @@ public class ParseClient {
         ParseQuery<Item> query = ParseQuery.getQuery(Item.class);
         query.whereEqualTo("owner",user);
         query.whereEqualTo("status",status);
+        try {
+            count = query.count();
+        }
+        catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return count;
+    }
+
+    public int countNumItemsOnUser(ParseUser user) {
+        int count = -15251;
+        ParseQuery<Item> query = ParseQuery.getQuery(Item.class);
+        query.whereEqualTo("owner",user);
         try {
             count = query.count();
         }
@@ -281,7 +310,6 @@ public class ParseClient {
     }
 
 
-
     public void updateItem(String objectId, Item newItem) {
         ParseObject point = ParseObject.createWithoutData(Item.class,objectId);
         point.put("item_name",newItem.getItem_name());
@@ -296,4 +324,5 @@ public class ParseClient {
             point.put("transaction_time", DateFormat.format("dd-MM-yyyy hh:mm:ss", new java.util.Date()).toString());
         point.saveInBackground();
     }
+
 }
