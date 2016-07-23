@@ -2,7 +2,6 @@ package teamcool.tradego.Activities;
 
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
@@ -17,18 +16,15 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.astuetz.PagerSlidingTabStrip;
 import com.parse.ParseUser;
 import com.squareup.picasso.Picasso;
-
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -222,6 +218,7 @@ public class NewsFeedActivity extends AppCompatActivity {
         ivNavProfilePic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 Intent i = new Intent(NewsFeedActivity.this, ProfileActivity.class);
                 i.putExtra("objectId",ParseUser.getCurrentUser().getObjectId());
                 startActivity(i);
