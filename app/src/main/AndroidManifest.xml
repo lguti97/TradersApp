@@ -6,25 +6,38 @@
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
+    <permission
+        android:name="teamcool.tradego.permission.C2D_MESSAGE"
+        android:protectionLevel="signature" />
+
+    <uses-permission android:name="teamcool.tradego.permission.C2D_MESSAGE" />
+
     <application
+        android:name=".ParseApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:largeHeap="true"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
-        android:name=".ParseApplication"
-        android:largeHeap="true" >
-
+        android:theme="@style/AppTheme">
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
+        <meta-data
+            android:name="com.parse.push.gcm_sender_id"
+            android:value="id:732747127956" />
 
-        <activity android:name=".Activities.LoginActivity"
-            android:theme="@style/splashScreenTheme">
+        <activity
+            android:name=".Activities.SplashActivity"
+            android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -41,10 +54,33 @@
         <activity android:name=".Activities.MainActivity" />
         <activity android:name=".Activities.FriendImportActivity" />
         <activity android:name=".Activities.ProfileActivity" />
-        <activity android:name=".Activities.FriendListActivity"></activity>
+        <activity android:name=".Activities.FriendListActivity" />
         <activity android:name=".Activities.SearchActivity" />
-        <activity android:name=".Activities.NewsFeedActivity"></activity>
+        <activity android:name=".Activities.NewsFeedActivity" />
 
+        <service android:name="com.parse.PushService" />
+
+        <receiver
+            android:name="com.parse.ParsePushBroadcastReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.parse.push.intent.RECEIVE" />
+                <action android:name="com.parse.push.intent.DELETE" />
+                <action android:name="com.parse.push.intent.OPEN" />
+            </intent-filter>
+        </receiver>
+        <receiver
+            android:name="com.parse.GcmBroadcastReceiver"
+            android:permission="com.google.android.c2dm.permission.SEND">
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
+
+                <category android:name="teamcool.tradego" />
+            </intent-filter>
+        </receiver>
+
+        <activity android:name=".Activities.LoginActivity"></activity>
     </application>
 
 </manifest>

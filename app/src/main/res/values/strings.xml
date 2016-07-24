@@ -16,5 +16,6 @@
     <string name="terms">By continuing you indicate that you have read and agreed to the Terms of Service and Privacy Policy</string>
     <string name="skip">Skip</string>
     <string name="friendImport">People you may know!</string>
-    <string name="MoreInfo">Swip right if you wish to add as a friend</string>
+    <string name="MoreInfo">Swipe right if you wish to add as a friend</string>
+    <string name="skipAddItem">Skip</string>
 </resources>

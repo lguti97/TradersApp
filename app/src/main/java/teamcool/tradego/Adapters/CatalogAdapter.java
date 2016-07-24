@@ -1,5 +1,6 @@
 package teamcool.tradego.Adapters;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -84,6 +85,8 @@ public class CatalogAdapter extends RecyclerView.Adapter<CatalogAdapter.ViewHold
                 Intent i = new Intent(context, DetailsActivity.class);
                 i.putExtra("item_id", item.getObjectId());
                 context.startActivity(i);
+
+
 
             }
         });

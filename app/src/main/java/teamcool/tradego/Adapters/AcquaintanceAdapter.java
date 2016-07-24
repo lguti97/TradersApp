@@ -48,6 +48,7 @@ public class AcquaintanceAdapter extends RecyclerView.Adapter<AcquaintanceAdapte
     private Acquaintance acquaintance;
     private RecyclerView rvAcquaintances;
     private Friend friend;
+    private Friend friendData;
     //ViewHolder gives access to our views
     public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView tvName;
@@ -121,7 +122,18 @@ public class AcquaintanceAdapter extends RecyclerView.Adapter<AcquaintanceAdapte
         Log.d("DEBUG", "You swiped on position:" + position);
         acquaintance = acquaintances.get(position);
         final String idAcquaintance = acquaintance.getUserID();
-        friend = Friend.fromAcquaintance(acquaintance.getName(), acquaintance.getProfile_url(), idAcquaintance);
+
+        //Check if friend object is already in there
+        friendData = parseclient.queryFriendOfUser(ParseUser.getCurrentUser(), idAcquaintance);
+        if (friendData.getUserID().equals(idAcquaintance)) {
+            //delete friend in database and instantiate the friend object again
+            friendData.deleteInBackground();
+            notifyDataSetChanged();
+            friend = Friend.fromAcquaintance(acquaintance.getName(), acquaintance.getProfile_url(), idAcquaintance);
+        }
+        else {
+            friend = Friend.fromAcquaintance(acquaintance.getName(), acquaintance.getProfile_url(), idAcquaintance);
+        }
         Toast.makeText(getContext(), "You added " + friend.getName(), Toast.LENGTH_SHORT).show();
         acquaintances.remove(position);
         acquaintance.deleteInBackground();

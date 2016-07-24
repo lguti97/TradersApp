@@ -63,6 +63,9 @@ public class LoginActivity extends AppCompatActivity {
         FacebookSdk.sdkInitialize(this);
         ParseFacebookUtils.initialize(getApplicationContext());
 
+        //Testing purposes
+
+
         //Customizing Font
         Typeface font0 = Typeface.createFromAsset(getApplicationContext().getAssets(), "Oranienbaum.ttf");
         tvLogo.setTypeface(font0);
