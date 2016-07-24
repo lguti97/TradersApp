@@ -101,7 +101,7 @@ public class UserCatalogFragment extends CatalogListFragment {
         swipeContainer.setRefreshing(false);
 
         if(items.size() == 0) {
-            Picasso.with(getContext()).load(R.drawable.ic_no_items).into(ivNoItems);
+            Picasso.with(getContext()).load(R.drawable.placeholder_transparent).into(ivNoItems);
             Log.d("DEBUG","reached user catalog frag  - TBDELETED");
         }
 

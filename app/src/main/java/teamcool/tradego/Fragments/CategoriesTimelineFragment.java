@@ -80,7 +80,7 @@ public class CategoriesTimelineFragment extends CatalogListFragment {
         swipeContainer.setRefreshing(false);
         Log.d("DEBUG","reached for debugging - CATEGORY : "+items.size());
         if (items.size() == 0) {
-            Picasso.with(getContext()).load(R.drawable.ic_home).into(ivNoItems);
+            Picasso.with(getContext()).load(R.drawable.placeholder_transparent).into(ivNoItems);
             Log.d("DEBUG","reached category frag - TBDELETED");
         }
     }
