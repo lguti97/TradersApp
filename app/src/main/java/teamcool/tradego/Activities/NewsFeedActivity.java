@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -44,6 +45,7 @@ public class NewsFeedActivity extends AppCompatActivity {
     @BindView(R.id.tabs) PagerSlidingTabStrip tabStrip;
     @BindView(R.id.newsfeed_drawer_layout) DrawerLayout drawerLayout;
     @BindView(R.id.nvNewsFeedNavDrawer) NavigationView navDrawer;
+    @BindView(R.id.collapsing_toolbar) CollapsingToolbarLayout collapsingToolbar;
     //NOTE: if getting reference to navDrawer's header is required
     // delete the header setting from xml
     // and add the header programmatically using "navDrawer.inflateHeaderView(R.layout.headers_xml_file)"
@@ -165,6 +167,8 @@ public class NewsFeedActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setHomeButtonEnabled(true);
+
+        collapsingToolbar.setTitle("Tradégo");
 
         selector = 0;
 
