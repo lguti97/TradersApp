@@ -408,4 +408,8 @@ public class AddItemActivity extends AppCompatActivity {
         return BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.length);
     }
 
+    public void skipAddItemActivity(View view) {
+        Intent i = new Intent(AddItemActivity.this, NewsFeedActivity.class);
+        startActivity(i);
+    }
 }

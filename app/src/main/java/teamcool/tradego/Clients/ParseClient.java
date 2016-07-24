@@ -273,7 +273,12 @@ public class ParseClient {
         query.whereEqualTo("owner", user.getCurrentUser());
         query.whereEqualTo("userID", ID);
         try {
-            friend = query.find().get(0);
+            if (query.find().size() == 0){
+                friend.setUserID("");
+            }
+            else{
+                friend = query.find().get(0);
+            }
         } catch (ParseException e) {
             e.printStackTrace();
         }

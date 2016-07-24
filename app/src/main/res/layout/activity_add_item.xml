@@ -239,6 +239,16 @@
             android:layout_alignLeft="@+id/etItemName"
             android:layout_alignStart="@+id/etItemName" />
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/skipAddItem"
+            android:id="@+id/textView7"
+            android:onClick="skipAddItemActivity"
+            android:layout_alignBottom="@+id/btnAddItem"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
+
     </RelativeLayout>
 
 
