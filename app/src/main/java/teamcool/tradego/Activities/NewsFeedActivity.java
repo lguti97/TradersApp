@@ -60,8 +60,13 @@ public class NewsFeedActivity extends AppCompatActivity {
     private int selector;
 
     public void onCompose(View view) {
-        Intent i = new Intent(NewsFeedActivity.this, AddItemActivity.class);
-        startActivity(i);
+        if (selector == 2) {
+            Intent i = new Intent(NewsFeedActivity.this, FriendImportActivity.class);
+            startActivity(i);
+        } else {
+            Intent i = new Intent(NewsFeedActivity.this, AddItemActivity.class);
+            startActivity(i);
+        }
     }
 
 
@@ -142,8 +147,6 @@ public class NewsFeedActivity extends AppCompatActivity {
                 return tab3Names[position];
             }
 
-
-            //return tabNames[position];
         }
     }
 
