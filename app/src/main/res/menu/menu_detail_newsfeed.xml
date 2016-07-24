@@ -4,12 +4,4 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".Activities.DetailsActivity">
 
-
-    <item
-        android:id="@+id/edit_item"
-        android:icon="@drawable/ic_edit_item"
-        android:title="Edit Item"
-        app:showAsAction="always"
-        android:onClick="onEditItem"/>
-
 </menu>

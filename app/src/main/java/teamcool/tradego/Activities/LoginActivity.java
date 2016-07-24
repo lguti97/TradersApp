@@ -52,6 +52,7 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTheme(R.style.splashScreenTheme);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
 
@@ -70,7 +71,6 @@ public class LoginActivity extends AppCompatActivity {
         //Customizing Font
         Typeface font0 = Typeface.createFromAsset(getApplicationContext().getAssets(), "Oranienbaum.ttf");
         tvLogo.setTypeface(font0);
-
 
     }
 
@@ -124,7 +124,7 @@ public class LoginActivity extends AppCompatActivity {
                 // it might be because you have3 no PERMISSION to access it
                 // look it up in API and add more permissions to the array
 
-                Intent i = new Intent (LoginActivity.this, FriendImportActivity.class);
+                Intent i = new Intent (LoginActivity.this, NewsFeedActivity.class);
 
                 startActivity(i);
             }

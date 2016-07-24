@@ -90,6 +90,22 @@ public class ParseClient {
         return items;
     }
 
+
+    public List<Item> queryItemsOnUser(ParseUser user) {
+        List<Item> items = new ArrayList<>();
+        ParseQuery<Item> query = ParseQuery.getQuery(Item.class);
+        if (user != null) {
+            query.whereEqualTo("owner", user);
+        }
+        query.orderByDescending("createdAt");
+        try {
+            items = query.find();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return items;
+    }
+
     public List<Item> queryBoughtItemsOnUser(ParseUser user) {
         List<Item> items = new ArrayList<>();
         ParseQuery<Item> query = ParseQuery.getQuery(Item.class);
@@ -142,7 +158,7 @@ public class ParseClient {
     }
 
     public int countNumFriendsOfUser(ParseUser user) {
-        int count = -15251;
+        int count = -15251; //placeholder value
         ParseQuery<Friend> query = ParseQuery.getQuery(Friend.class);
         query.whereEqualTo("owner", user);
         try {
@@ -154,7 +170,7 @@ public class ParseClient {
     }
 
     public int countNumItemsOnStatus(ParseUser user, String status) {
-        int count = -15251;
+        int count = -15251; //placeholder value
         ParseQuery<Item> query = ParseQuery.getQuery(Item.class);
         query.whereEqualTo("owner",user);
         query.whereEqualTo("status",status);
@@ -167,8 +183,21 @@ public class ParseClient {
         return count;
     }
 
+    public int countNumItemsOnUser(ParseUser user) {
+        int count = -15251;
+        ParseQuery<Item> query = ParseQuery.getQuery(Item.class);
+        query.whereEqualTo("owner",user);
+        try {
+            count = query.count();
+        }
+        catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return count;
+    }
+
     public int countNumItemsBought(ParseUser user) {
-        int count = -15210;
+        int count = -15210; //placeholder value
         ParseQuery<Item> query = ParseQuery.getQuery(Item.class);
         query.whereEqualTo("buyer", user);
         query.whereEqualTo("status","Sold");
@@ -286,7 +315,6 @@ public class ParseClient {
     }
 
 
-
     public void updateItem(String objectId, Item newItem) {
         ParseObject point = ParseObject.createWithoutData(Item.class,objectId);
         point.put("item_name",newItem.getItem_name());
@@ -301,4 +329,5 @@ public class ParseClient {
             point.put("transaction_time", DateFormat.format("dd-MM-yyyy hh:mm:ss", new java.util.Date()).toString());
         point.saveInBackground();
     }
+
 }

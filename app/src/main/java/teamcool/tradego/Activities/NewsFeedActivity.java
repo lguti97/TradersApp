@@ -2,7 +2,6 @@ package teamcool.tradego.Activities;
 
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
@@ -17,11 +16,9 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -29,14 +26,11 @@ import com.astuetz.PagerSlidingTabStrip;
 import com.parse.ParseUser;
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import jp.wasabeef.picasso.transformations.CropCircleTransformation;
 import teamcool.tradego.Clients.ParseClient;
 import teamcool.tradego.Fragments.CategoriesTimelineFragment;
-import teamcool.tradego.Fragments.FilterDialogFragment;
 import teamcool.tradego.Fragments.FriendsListFragment;
 import teamcool.tradego.Fragments.TopTimelineFragment;
 import teamcool.tradego.Fragments.UserCatalogFragment;
@@ -62,8 +56,7 @@ public class NewsFeedActivity extends AppCompatActivity {
 
     private int selector;
 
-    public void onAddNewItem(MenuItem item) {
-
+    public void onCompose(View view) {
         Intent i = new Intent(NewsFeedActivity.this, AddItemActivity.class);
         startActivity(i);
     }
@@ -225,6 +218,7 @@ public class NewsFeedActivity extends AppCompatActivity {
         ivNavProfilePic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 Intent i = new Intent(NewsFeedActivity.this, ProfileActivity.class);
                 i.putExtra("objectId",ParseUser.getCurrentUser().getObjectId());
                 startActivity(i);

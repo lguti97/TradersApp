@@ -43,15 +43,7 @@ public class CatalogListFragment extends Fragment {
             rvItems.setLayoutManager(new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL));
         }
 
-
         rvItems.setHasFixedSize(true);
-        //listViewHere.setAdapter(catalogAdapter);
-        //set listView's onItemLongClickListener, onItemClickListener, etc.
-
-        //rvItems.addOnScrollLisnener for endless scrolling
-        //swipeContainer set on refresh listener
-        //swipeContainer setColorSchemeResources to configure refreshing colors
-
         return v;
     }
 
