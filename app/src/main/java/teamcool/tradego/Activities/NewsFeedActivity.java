@@ -1,5 +1,6 @@
 package teamcool.tradego.Activities;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -49,6 +50,8 @@ public class NewsFeedActivity extends AppCompatActivity {
     // otherwise it would cause null pointer exceptions when used with recycler vieww!!!
 
     ParseClient parseClient;
+
+
 
     FragmentStatePagerAdapter fragmentStatePagerAdapter;
 
@@ -296,6 +299,8 @@ public class NewsFeedActivity extends AppCompatActivity {
                     }
                 });
     }
+
+
 
     public void selectDrawerItem(MenuItem item) {
         //TODO. Use of selector to be changed for better style
