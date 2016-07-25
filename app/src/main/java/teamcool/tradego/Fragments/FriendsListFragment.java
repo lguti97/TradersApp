@@ -35,7 +35,7 @@ public class FriendsListFragment extends Fragment {
     @BindView(R.id.rvFriends) RecyclerView rvFriends;
     @BindView(R.id.ivNoFriends) ImageView ivNoFriends;
 
-    List<Friend> friends;
+    List<Friend> friends = new ArrayList<>();
     private FriendsAdapter friendsAdapter;
 
     private class AsyncDataLoading extends AsyncTask<Void,Void,List<Friend>> {

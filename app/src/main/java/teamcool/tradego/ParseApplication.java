@@ -20,6 +20,6 @@ public class ParseApplication extends android.app.Application {
                 .addNetworkInterceptor(new ParseLogInterceptor())
                 .server("https://tradego.herokuapp.com/parse/").build());
 
-        ParseInstallation.getCurrentInstallation().saveInBackground();
+        //ParseInstallation.getCurrentInstallation().saveInBackground();
     }
 }
