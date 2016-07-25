@@ -6,6 +6,7 @@ package teamcool.tradego.Clients;
 import android.text.format.DateFormat;
 import android.util.Log;
 
+import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
@@ -30,8 +31,8 @@ public class ParseClient {
 
     public ArrayList<ParseUser> convertFriendsToParseUsers(List<Friend> friends) {
         ArrayList<ParseUser> userFriends = new ArrayList<>();
-        for (Friend f : friends) {
-            userFriends.add(queryUserBasedonFBid(f.getUserID()));
+        for (ParseObject f : friends) {
+            userFriends.add(queryUserBasedonFBid(((Friend)f).getUserID()));
         }
         return userFriends;
     }
@@ -168,7 +169,6 @@ public class ParseClient {
             query.whereContainedIn("owner",queryFriendsOnName(owner));
         }
         if (sort.equalsIgnoreCase("Oldest")) {
-            Log.d("DEBUG","reached - oldest");
             query.orderByAscending("createdAt");
         }
         query.orderByDescending("createdAt");
@@ -352,6 +352,25 @@ public class ParseClient {
         if (newItem.getStatus().equalsIgnoreCase("sold"))
             point.put("transaction_time", DateFormat.format("dd-MM-yyyy hh:mm:ss", new java.util.Date()).toString());
         point.saveInBackground();
+    }
+
+    public void deleteItem(String itemId) {
+        ParseQuery<Item> query = ParseQuery.getQuery(Item.class);
+        query.whereEqualTo("objectId",itemId);
+        try {
+            Item i = query.find().get(0);
+            i.delete();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        /*
+        query.findInBackground(new FindCallback<Item>() {
+            @Override
+            public void done(List<Item> objects, ParseException e) {
+                objects.get(0).delete();
+            }
+        });
+        */
     }
 
 }

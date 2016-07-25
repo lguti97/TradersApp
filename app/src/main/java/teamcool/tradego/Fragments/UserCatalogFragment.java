@@ -85,7 +85,6 @@ public class UserCatalogFragment extends CatalogListFragment {
         ParseUser targetedUser = parseClient.queryUserBasedonObjectID(id);
         if (status.equalsIgnoreCase("Available")) {
             items = parseClient.queryItemsOnUserAndStatus(targetedUser, "Available");
-            Log.d("DEBUG", items.size() + "<------ size");
         } else if (status.equalsIgnoreCase("On hold")) {
             items = parseClient.queryItemsOnUserAndStatus(targetedUser, "On hold");
         } else if (status.equalsIgnoreCase("Sold")) {
@@ -102,8 +101,13 @@ public class UserCatalogFragment extends CatalogListFragment {
 
         if(items.size() == 0) {
             Picasso.with(getContext()).load(R.drawable.placeholder_transparent).into(ivNoItems);
-            Log.d("DEBUG","reached user catalog frag  - TBDELETED");
         }
 
+    }
+
+    @Override
+    public void onResume() {
+        populateCatalog(getArguments().getString("id"), getArguments().getString("status"));
+        super.onResume();
     }
 }

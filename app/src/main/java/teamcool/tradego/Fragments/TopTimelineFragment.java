@@ -64,13 +64,11 @@ public class TopTimelineFragment extends CatalogListFragment {
     }
 
     public void populateTimeLine() {
-        Log.d("DEBUG","how an this never be reached are you kidding");
         items = parseClient.queryItemsOnOtherUserAndStatus(ParseUser.getCurrentUser(),"Available");
         addAll(items);
         swipeContainer.setRefreshing(false);
         if (items.size()==0) {
             Picasso.with(getContext()).load(R.drawable.placeholder_transparent).into(ivNoItems);
-            Log.d("DEBUG","reached top timeline frag  - TBDELETED");
         }
     }
 

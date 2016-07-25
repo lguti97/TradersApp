@@ -45,7 +45,6 @@ public class NewsFeedActivity extends AppCompatActivity {
     @BindView(R.id.tabs) PagerSlidingTabStrip tabStrip;
     @BindView(R.id.newsfeed_drawer_layout) DrawerLayout drawerLayout;
     @BindView(R.id.nvNewsFeedNavDrawer) NavigationView navDrawer;
-    @BindView(R.id.collapsing_toolbar) CollapsingToolbarLayout collapsingToolbar;
     //NOTE: if getting reference to navDrawer's header is required
     // delete the header setting from xml
     // and add the header programmatically using "navDrawer.inflateHeaderView(R.layout.headers_xml_file)"
@@ -65,9 +64,11 @@ public class NewsFeedActivity extends AppCompatActivity {
         if (selector == 2) {
             Intent i = new Intent(NewsFeedActivity.this, FriendImportActivity.class);
             startActivity(i);
+            overridePendingTransition(R.anim.right_in, R.anim.left_out);
         } else {
             Intent i = new Intent(NewsFeedActivity.this, AddItemActivity.class);
             startActivity(i);
+            overridePendingTransition(R.anim.right_in, R.anim.left_out);
         }
     }
 
@@ -168,8 +169,6 @@ public class NewsFeedActivity extends AppCompatActivity {
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setHomeButtonEnabled(true);
 
-        collapsingToolbar.setTitle("Tradégo");
-
         selector = 0;
 
         //viewpager setup
@@ -232,6 +231,7 @@ public class NewsFeedActivity extends AppCompatActivity {
                 Intent i = new Intent(NewsFeedActivity.this, ProfileActivity.class);
                 i.putExtra("objectId",ParseUser.getCurrentUser().getObjectId());
                 startActivity(i);
+                overridePendingTransition(R.anim.right_in, R.anim.left_out);
             }
         });
 
@@ -267,6 +267,7 @@ public class NewsFeedActivity extends AppCompatActivity {
                 i.putExtra("query",query);
                 i.putExtra("selector",selector);
                 startActivity(i);
+                overridePendingTransition(R.anim.right_in, R.anim.left_out);
                 return true;
             }
 
@@ -308,7 +309,6 @@ public class NewsFeedActivity extends AppCompatActivity {
     }
 
 
-
     public void selectDrawerItem(MenuItem item) {
         //TODO. Use of selector to be changed for better style
         switch(item.getItemId()) {
@@ -339,6 +339,5 @@ public class NewsFeedActivity extends AppCompatActivity {
         super.onConfigurationChanged(newConfig);
         drawerToggle.onConfigurationChanged(newConfig);
     }
-
 
 }

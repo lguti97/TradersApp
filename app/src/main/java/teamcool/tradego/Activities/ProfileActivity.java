@@ -63,10 +63,7 @@ public class ProfileActivity extends AppCompatActivity {
         PagerSlidingTabStrip tabStrip = (PagerSlidingTabStrip) findViewById(R.id.tabs);
         tabStrip.setViewPager(vpPager);
 
-
         parseClient = new ParseClient();
-
-
 
         userObjId = getIntent().getStringExtra("objectId");
         user = parseClient.queryUserBasedonObjectID(userObjId);
@@ -74,7 +71,6 @@ public class ProfileActivity extends AppCompatActivity {
 
         if(savedInstanceState == null) {
             populateUserHeader(user);
-
         }
 
         else {
@@ -169,7 +165,7 @@ public class ProfileActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
             finish();
-
+            overridePendingTransition(R.anim.left_in, R.anim.right_out);
         }
         return super.onOptionsItemSelected(item);
     }
