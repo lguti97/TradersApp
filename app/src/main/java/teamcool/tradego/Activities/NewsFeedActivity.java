@@ -3,6 +3,8 @@ package teamcool.tradego.Activities;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.database.Cursor;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -10,6 +12,8 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.Loader;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
@@ -52,26 +56,11 @@ public class NewsFeedActivity extends AppCompatActivity {
 
     ParseClient parseClient;
 
-
-
     FragmentStatePagerAdapter fragmentStatePagerAdapter;
 
     ActionBarDrawerToggle drawerToggle;
 
     private int selector;
-
-    public void onCompose(View view) {
-        if (selector == 2) {
-            Intent i = new Intent(NewsFeedActivity.this, FriendImportActivity.class);
-            startActivity(i);
-            overridePendingTransition(R.anim.right_in, R.anim.left_out);
-        } else {
-            Intent i = new Intent(NewsFeedActivity.this, AddItemActivity.class);
-            startActivity(i);
-            overridePendingTransition(R.anim.right_in, R.anim.left_out);
-        }
-    }
-
 
     public class catalogPagerAdapter extends FragmentStatePagerAdapter {
 
@@ -152,7 +141,6 @@ public class NewsFeedActivity extends AppCompatActivity {
 
         }
     }
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -333,6 +321,19 @@ public class NewsFeedActivity extends AppCompatActivity {
         setTitle(item.getTitle());
         drawerLayout.closeDrawers();
     }
+
+    public void onCompose(View view) {
+        if (selector == 2) {
+            Intent i = new Intent(NewsFeedActivity.this, FriendImportActivity.class);
+            startActivity(i);
+            overridePendingTransition(R.anim.right_in, R.anim.left_out);
+        } else {
+            Intent i = new Intent(NewsFeedActivity.this, AddItemActivity.class);
+            startActivity(i);
+            overridePendingTransition(R.anim.right_in, R.anim.left_out);
+        }
+    }
+
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {

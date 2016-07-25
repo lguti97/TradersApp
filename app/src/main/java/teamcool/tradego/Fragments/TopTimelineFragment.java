@@ -1,5 +1,6 @@
 package teamcool.tradego.Fragments;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -12,6 +13,7 @@ import android.widget.ImageView;
 import com.parse.ParseUser;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -26,16 +28,34 @@ import teamcool.tradego.R;
  */
 public class TopTimelineFragment extends CatalogListFragment {
 
-    ParseClient parseClient;
-    List<Item> items;
+    //ParseClient parseClient;
+    //List<Item> items;
 
     @BindView(R.id.swipeContainerCatalog) SwipeRefreshLayout swipeContainer;
     @BindView(R.id.ivNoItems) ImageView ivNoItems;
 
+    private class AsyncDataLoading extends AsyncTask<Void,Void,List<Item>> {
+        @Override
+        protected List<Item> doInBackground(Void... voids) {
+            ParseClient parseClient = new ParseClient();
+            List<Item> items = parseClient.queryItemsOnOtherUserAndStatus(ParseUser.getCurrentUser(),"Available");
+            return items;
+        }
+
+        @Override
+        protected void onPostExecute(List<Item> items) {
+            addAll(items);
+            swipeContainer.setRefreshing(false);
+            if (items.size()==0) {
+                Picasso.with(getContext()).load(R.drawable.placeholder_transparent).into(ivNoItems);
+            }
+            super.onPostExecute(items);
+        }
+    }
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        parseClient = new ParseClient();
     }
 
     @Nullable
@@ -64,12 +84,6 @@ public class TopTimelineFragment extends CatalogListFragment {
     }
 
     public void populateTimeLine() {
-        items = parseClient.queryItemsOnOtherUserAndStatus(ParseUser.getCurrentUser(),"Available");
-        addAll(items);
-        swipeContainer.setRefreshing(false);
-        if (items.size()==0) {
-            Picasso.with(getContext()).load(R.drawable.placeholder_transparent).into(ivNoItems);
-        }
+        new AsyncDataLoading().execute();
     }
-
 }

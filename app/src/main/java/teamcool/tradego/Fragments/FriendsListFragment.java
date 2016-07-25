@@ -1,5 +1,6 @@
 package teamcool.tradego.Fragments;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -34,9 +35,32 @@ public class FriendsListFragment extends Fragment {
     @BindView(R.id.rvFriends) RecyclerView rvFriends;
     @BindView(R.id.ivNoFriends) ImageView ivNoFriends;
 
-    private FriendsAdapter friendsAdapter;
     List<Friend> friends;
-    ParseClient parseClient;
+    private FriendsAdapter friendsAdapter;
+
+    private class AsyncDataLoading extends AsyncTask<Void,Void,List<Friend>> {
+        @Override
+        protected List<Friend> doInBackground(Void... voids) {
+            ParseClient parseClient = new ParseClient();
+            if (getArguments() == null) {
+                friends = parseClient.queryFriendsOnName(null);
+            } else {
+                friends = parseClient.queryFriendsOnName(getArguments().getString("query"));
+            }
+            return friends;
+        }
+
+        @Override
+        protected void onPostExecute(List<Friend> friends) {
+            if (friends.size() == 0) {
+                Log.d("DEBUG","reached - friends empty");
+                Picasso.with(getContext()).load(R.drawable.placeholder_transparent).into(ivNoFriends);
+            }
+            friendsAdapter.clearAndAddAll(friends);
+            super.onPostExecute(friends);
+        }
+    }
+
 
     @Nullable
     @Override
@@ -59,8 +83,6 @@ public class FriendsListFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        friends = new ArrayList();
-        parseClient = new ParseClient();
         friendsAdapter = new FriendsAdapter(friends);
 
 
@@ -87,17 +109,6 @@ public class FriendsListFragment extends Fragment {
     }
 
     public void populate() {
-        //swipeContainer.setRefreshing(false);
-        if (getArguments() == null) {
-            friends = parseClient.queryFriendsOnName(null);
-        } else {
-            friends = parseClient.queryFriendsOnName(getArguments().getString("query"));
-        }
-        if (friends.size() == 0) {
-            Log.d("DEBUG","reached - friends empty");
-            Picasso.with(getContext()).load(R.drawable.placeholder_transparent).into(ivNoFriends);
-        }
-        friendsAdapter.clearAndAddAll(friends);
-
+        new AsyncDataLoading().execute();
     }
 }
