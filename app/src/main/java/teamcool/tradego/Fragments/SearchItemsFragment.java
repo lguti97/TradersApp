@@ -63,7 +63,6 @@ public class SearchItemsFragment extends CatalogListFragment {
         if (filters != null) {
             args.putString("category",filters.get(0));
             args.putString("sort",filters.get(1));
-            args.putString("owner",filters.get(2));
         }
         searchItemsFragment.setArguments(args);
         return searchItemsFragment;
@@ -74,8 +73,7 @@ public class SearchItemsFragment extends CatalogListFragment {
         if(getArguments().getBoolean("hasFilter")) {
             String category = getArguments().getString("category");
             String sort = getArguments().getString("sort");
-            String owner = getArguments().getString("owner");
-            items = parseClient.queryItemsOnFilteredQuery(query,category,sort,owner);
+            items = parseClient.queryItemsOnFilteredQuery(query,category,sort,null);
             for(int i = 0; i < items.size(); i++) {
                 Log.d("DEBUG","-->>"+items.get(i).getItem_name());
             }

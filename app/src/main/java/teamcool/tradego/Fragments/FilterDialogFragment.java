@@ -31,7 +31,6 @@ public class FilterDialogFragment extends DialogFragment implements View.OnClick
 
     @BindView(R.id.spnrCategoryType) Spinner spnrCategoryType;
     @BindView(R.id.spnrSortOrder) Spinner spnrSortOrder;
-    @BindView(R.id.etOwner) EditText etOwner;
     @BindView(R.id.btnFilterBack) Button btnFilterBack;
     @BindView(R.id.btnSubmitFilter) Button btnSubmitFilter;
 
@@ -83,9 +82,8 @@ public class FilterDialogFragment extends DialogFragment implements View.OnClick
         ArrayList<String> res = new ArrayList<>();
         res.add(spnrCategoryType.getSelectedItem().toString());
         res.add(spnrSortOrder.getSelectedItem().toString());
-        res.add(etOwner.getText().toString());
         for(int i = 0; i < res.size(); i++) {
-            Log.d("DEBUG",res.get(i).toString()+"===1===2===3===");
+            Log.d("DEBUG",res.get(i).toString()+"===1===2===");
         }
         listener.onFinishDialog(res);
         dismiss();
