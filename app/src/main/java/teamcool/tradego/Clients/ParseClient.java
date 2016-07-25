@@ -6,11 +6,13 @@ package teamcool.tradego.Clients;
 import android.text.format.DateFormat;
 import android.util.Log;
 
+import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,9 +23,20 @@ import teamcool.tradego.Models.Item;
 
 public class ParseClient {
 
-    public ParseClient () {
+    ArrayList<ParseUser> friends;
 
+    public ParseClient () {
+        friends = convertFriendsToParseUsers(queryFriendsOnName(null));
     }
+
+    public ArrayList<ParseUser> convertFriendsToParseUsers(List<Friend> friends) {
+        ArrayList<ParseUser> userFriends = new ArrayList<>();
+        for (ParseObject f : friends) {
+            userFriends.add(queryUserBasedonFBid(((Friend)f).getUserID()));
+        }
+        return userFriends;
+    }
+
     public List<Friend> queryFriendsOnName(String name) {
         List<Friend> friends = new ArrayList<>();
         ParseQuery<Friend> query = ParseQuery.getQuery(Friend.class);
@@ -46,6 +59,7 @@ public class ParseClient {
         query.orderByDescending("createdAt");
         if(!self) {
             query.whereNotEqualTo("owner", ParseUser.getCurrentUser());
+            query.whereContainedIn("owner", friends); //only query current user's friends
         } else {
             query.whereEqualTo("owner", ParseUser.getCurrentUser());
         }
@@ -61,6 +75,7 @@ public class ParseClient {
         List<Item> items = new ArrayList<>();
         ParseQuery<Item> query = ParseQuery.getQuery(Item.class);
         query.whereNotEqualTo("owner",ParseUser.getCurrentUser());
+        query.whereContainedIn("owner", friends);
         query.orderByDescending("createdAt");
         query.whereEqualTo("category",category);
         query.whereEqualTo("status","Available");
@@ -72,6 +87,10 @@ public class ParseClient {
         return items;
     }
 
+    //REQUIRES: user must be a friend of currentUser or is currentUser itself
+    // this method is only called in UserCatalogFragment,
+    // where targetedUser is queried based on userID
+    // depends on queryUserOnObjId method
     public List<Item> queryItemsOnUserAndStatus(ParseUser user, String status) {
         List<Item> items = new ArrayList<>();
         ParseQuery<Item> query = ParseQuery.getQuery(Item.class);
@@ -90,7 +109,10 @@ public class ParseClient {
         return items;
     }
 
-
+    //REQUIRES: user must be a friend of currentUser or is currentUser itself
+    // this method is only called in UserCatalogFragment,
+    // where targetedUser is queried based on userID
+    // depends on queryUserOnObjId method
     public List<Item> queryItemsOnUser(ParseUser user) {
         List<Item> items = new ArrayList<>();
         ParseQuery<Item> query = ParseQuery.getQuery(Item.class);
@@ -124,6 +146,7 @@ public class ParseClient {
         List<Item> items = new ArrayList<>();
         ParseQuery<Item> query = ParseQuery.getQuery(Item.class);
         query.whereNotEqualTo("owner",user);
+        query.whereContainedIn("owner",friends);
         query.whereEqualTo("status",status);
         query.orderByDescending("createdAt");
         try {
@@ -138,14 +161,14 @@ public class ParseClient {
         List<Item> items = new ArrayList<>();
         ParseQuery<Item> query = ParseQuery.getQuery(Item.class);
         query.whereNotEqualTo("owner",ParseUser.getCurrentUser());
+        query.whereContainedIn("owner",friends);
         query.whereContains("item_name",name);
         query.whereEqualTo("status","Available");
         query.whereEqualTo("category",category);
         if (!owner.equalsIgnoreCase("")) {
             query.whereContainedIn("owner",queryFriendsOnName(owner));
         }
-        if (!sort.equalsIgnoreCase("Oldest")) {
-            Log.d("DEBUG","reached - oldest");
+        if (sort.equalsIgnoreCase("Oldest")) {
             query.orderByAscending("createdAt");
         }
         query.orderByDescending("createdAt");
@@ -169,6 +192,7 @@ public class ParseClient {
         return count;
     }
 
+    //REQUIRES: user must be a friend of currentUser
     public int countNumItemsOnStatus(ParseUser user, String status) {
         int count = -15251; //placeholder value
         ParseQuery<Item> query = ParseQuery.getQuery(Item.class);
@@ -328,6 +352,25 @@ public class ParseClient {
         if (newItem.getStatus().equalsIgnoreCase("sold"))
             point.put("transaction_time", DateFormat.format("dd-MM-yyyy hh:mm:ss", new java.util.Date()).toString());
         point.saveInBackground();
+    }
+
+    public void deleteItem(String itemId) {
+        ParseQuery<Item> query = ParseQuery.getQuery(Item.class);
+        query.whereEqualTo("objectId",itemId);
+        try {
+            Item i = query.find().get(0);
+            i.delete();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        /*
+        query.findInBackground(new FindCallback<Item>() {
+            @Override
+            public void done(List<Item> objects, ParseException e) {
+                objects.get(0).delete();
+            }
+        });
+        */
     }
 
 }

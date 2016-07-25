@@ -1,5 +1,6 @@
 package teamcool.tradego.Fragments;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -30,7 +31,6 @@ import teamcool.tradego.R;
 public class UserCatalogFragment extends CatalogListFragment {
 
     List<Item> items;
-    ParseClient parseClient;
 
     @BindView(R.id.swipeContainerCatalog) SwipeRefreshLayout swipeContainer;
     @BindView(R.id.ivNoItems) ImageView ivNoItems;
@@ -49,10 +49,43 @@ public class UserCatalogFragment extends CatalogListFragment {
         return frag;
     }
 
+
+    private class AsyncDataLoading extends AsyncTask<String,Void,List<Item>> {
+        @Override
+        protected List<Item> doInBackground(String... strings) {
+            ParseClient parseClient = new ParseClient();
+            String id = strings[0];
+            String status = strings[1];
+            ParseUser targetedUser = parseClient.queryUserBasedonObjectID(id);
+            if (status.equalsIgnoreCase("Available")) {
+                items = parseClient.queryItemsOnUserAndStatus(targetedUser, "Available");
+            } else if (status.equalsIgnoreCase("On hold")) {
+                items = parseClient.queryItemsOnUserAndStatus(targetedUser, "On hold");
+            } else if (status.equalsIgnoreCase("Sold")) {
+                items = parseClient.queryItemsOnUserAndStatus(targetedUser, "Sold");
+            } else if (status.equalsIgnoreCase("Bought")) {
+                //what the current user has bought
+                items = parseClient.queryBoughtItemsOnUser(targetedUser);
+            } else {
+                items = new ArrayList<>();
+            }
+            return items;
+        }
+
+        @Override
+        protected void onPostExecute(List<Item> items) {
+            addAll(items);
+            swipeContainer.setRefreshing(false);
+            if(items.size() == 0) {
+                Picasso.with(getContext()).load(R.drawable.placeholder_transparent).into(ivNoItems);
+            }
+            super.onPostExecute(items);
+        }
+    }
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        parseClient = new ParseClient();
     }
 
     @Nullable
@@ -81,29 +114,15 @@ public class UserCatalogFragment extends CatalogListFragment {
     }
 
 
+
     public void populateCatalog(String id, String status) {
-        ParseUser targetedUser = parseClient.queryUserBasedonObjectID(id);
-        if (status.equalsIgnoreCase("Available")) {
-            items = parseClient.queryItemsOnUserAndStatus(targetedUser, "Available");
-            Log.d("DEBUG", items.size() + "<------ size");
-        } else if (status.equalsIgnoreCase("On hold")) {
-            items = parseClient.queryItemsOnUserAndStatus(targetedUser, "On hold");
-        } else if (status.equalsIgnoreCase("Sold")) {
-            items = parseClient.queryItemsOnUserAndStatus(targetedUser, "Sold");
-        } else if (status.equalsIgnoreCase("Bought")) {
-            //what the current user has bought
-            items = parseClient.queryBoughtItemsOnUser(targetedUser);
-        } else {
-            items = new ArrayList<>();
-        }
+        String args[] = {id,status};
+        new AsyncDataLoading().execute(args);
+    }
 
-        addAll(items);
-        swipeContainer.setRefreshing(false);
-
-        if(items.size() == 0) {
-            Picasso.with(getContext()).load(R.drawable.ic_no_items).into(ivNoItems);
-            Log.d("DEBUG","reached user catalog frag  - TBDELETED");
-        }
-
+    @Override
+    public void onResume() {
+        populateCatalog(getArguments().getString("id"), getArguments().getString("status"));
+        super.onResume();
     }
 }

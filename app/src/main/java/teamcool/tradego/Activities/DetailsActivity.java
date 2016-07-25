@@ -30,13 +30,20 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import teamcool.tradego.Clients.ParseClient;
+import teamcool.tradego.Fragments.AlertDeleteFragment;
 import teamcool.tradego.Models.Item;
 import teamcool.tradego.R;
 
 public class DetailsActivity extends AppCompatActivity {
 
-    @BindView(R.id.btnMessenger)
-    View btnMessenger;
+    private static final String EXTRA_PROTOCOL_VERSION = "com.facebook.orca.extra.PROTOCOL_VERSION";
+    private static final String EXTRA_APP_ID = "com.facebook.orca.extra.APPLICATION_ID";
+    private static final int PROTOCOL_VERSION = 20150314;
+    private static final String YOUR_APP_ID = "528996547286241";
+    private static final int SHARE_TO_MESSENGER_REQUEST_CODE = 1;
+    String ownerId = "";
+
+    @BindView(R.id.btnMessenger) View btnMessenger;
     Item item;
     String itemId;
     /*
@@ -82,9 +89,9 @@ public class DetailsActivity extends AppCompatActivity {
         btnMessenger.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ShareToMessengerParams shareToMessengerParams = ShareToMessengerParams.newBuilder(Uri.EMPTY, "" +
-                        "").build();
-                MessengerUtils.shareToMessenger(activity, REQUEST_CODE_SHARE_TO_MESSENGER, shareToMessengerParams);
+                Uri messenger = Uri.parse((new StringBuilder("fb-messenger://user/")).append(Uri.encode(ownerId)).toString());
+                Intent i = new Intent(Intent.ACTION_VIEW, messenger);
+                startActivity(i);
             }
         });
 
@@ -115,6 +122,9 @@ public class DetailsActivity extends AppCompatActivity {
         tvItemPrice.setText("Price: " + price);
         tvItemNegotiable.setText("Negotiable: " + item.getNegotiable());
         tvItemCategory.setText("Category: " + item.getCategory());
+        ParseUser owner = item.getParseUser("owner");
+
+        ownerId = "546811442193809"; //hardcoded luis' fb-id for debugging purpose
 
         ivItem1.setImageBitmap(decodeBase64(item.getImage1()));
         ivItem2.setImageBitmap(decodeBase64(item.getImage2()));
@@ -162,6 +172,15 @@ public class DetailsActivity extends AppCompatActivity {
         startActivity(i);
     }
 
+    public void onDeleteItem(MenuItem item) {
+        showAlertDialog();
+    }
+
+    public void showAlertDialog() {
+        AlertDeleteFragment frag = AlertDeleteFragment.newInstance(itemId);
+        frag.show(getSupportFragmentManager(), "fragment_alert");
+    }
+
     public Bitmap StringToBitMap(String encodedString){
         try {
             byte [] encodeByte= Base64.decode(encodedString,Base64.DEFAULT);
@@ -177,6 +196,7 @@ public class DetailsActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
             finish();
+            overridePendingTransition(R.anim.left_in, R.anim.right_out);
         }
         return super.onOptionsItemSelected(item);
     }

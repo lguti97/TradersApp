@@ -73,8 +73,10 @@ public class SearchActivity extends AppCompatActivity implements FilterDialogFra
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home)
+        if (item.getItemId() == android.R.id.home) {
             finish();
+            overridePendingTransition(R.anim.left_in, R.anim.right_out);
+        }
         return super.onOptionsItemSelected(item);
     }
 
@@ -88,7 +90,6 @@ public class SearchActivity extends AppCompatActivity implements FilterDialogFra
     public void onFinishDialog(ArrayList<String> res) {
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         if (selector != 2) {
-            Log.d("DEBUG","item - filter");
             ft.replace(R.id.flContainerSearch, SearchItemsFragment.newInstance(query,res));
         } else {
             ft.replace(R.id.flContainerSearch, FriendsListFragment.newInstance(query,res));

@@ -38,8 +38,8 @@ import teamcool.tradego.R;
 
 public class LoginActivity extends AppCompatActivity {
 
+    boolean initialized = false;
     @BindView(R.id.tvLogo) TextView tvLogo;
-
 
     final List<String> permissions = Arrays.asList("public_profile", "email", "user_friends", "user_location", "user_photos");
     static String currentUserFbId;
@@ -64,8 +64,11 @@ public class LoginActivity extends AppCompatActivity {
 
         //Parse Initialization done in the ParseApplication Class.
 
-        FacebookSdk.sdkInitialize(this);
-        ParseFacebookUtils.initialize(getApplicationContext());
+        if (!initialized) {
+            FacebookSdk.sdkInitialize(this);
+            ParseFacebookUtils.initialize(getApplicationContext());
+            initialized = true;
+        }
 
         //Testing purposes
 
@@ -127,9 +130,14 @@ public class LoginActivity extends AppCompatActivity {
                 // look it up in API and add more permissions to the array
 
                 Intent i = new Intent (LoginActivity.this, NewsFeedActivity.class);
-
                 startActivity(i);
+                overridePendingTransition(R.anim.right_in, R.anim.left_out);
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
     }
 }

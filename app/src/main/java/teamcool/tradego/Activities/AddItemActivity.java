@@ -286,15 +286,13 @@ public class AddItemActivity extends AppCompatActivity {
                 if(index==1) {
 
                     ivItem1.setImageBitmap(takenImage);
-                    image_1 = encodeToBase64(takenImage, Bitmap.CompressFormat.JPEG, 100);
+                    image_1 = encodeToBase64(takenImage, Bitmap.CompressFormat.JPEG, 150);
                 }
                 else if(index ==2) {
 
                     ivItem2.setImageBitmap(takenImage);
-                    image_2 = encodeToBase64(takenImage, Bitmap.CompressFormat.JPEG, 100);
+                    image_2 = encodeToBase64(takenImage, Bitmap.CompressFormat.JPEG, 150);
                 }
-
-
 
             } else { // Result was a failure
                 Toast.makeText(this, "Picture wasn't taken!", Toast.LENGTH_SHORT).show();
@@ -390,7 +388,7 @@ public class AddItemActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
             finish();
-
+            overridePendingTransition(R.anim.left_in, R.anim.right_out);
         }
         return super.onOptionsItemSelected(item);
     }
@@ -411,5 +409,6 @@ public class AddItemActivity extends AppCompatActivity {
     public void skipAddItemActivity(View view) {
         Intent i = new Intent(AddItemActivity.this, NewsFeedActivity.class);
         startActivity(i);
+        overridePendingTransition(R.anim.right_in, R.anim.left_out);
     }
 }

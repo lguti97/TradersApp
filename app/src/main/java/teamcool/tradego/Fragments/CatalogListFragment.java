@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,7 +53,6 @@ public class CatalogListFragment extends Fragment {
         super.onCreate(savedInstanceState);
         items = new ArrayList<>();
         catalogAdapter = new CatalogAdapter(items);
-
     }
 
     @Override
@@ -62,6 +62,7 @@ public class CatalogListFragment extends Fragment {
         } else {
             rvItems.setLayoutManager(new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL));
         }
+        catalogAdapter.notifyDataSetChanged();
         super.onResume();
     }
 

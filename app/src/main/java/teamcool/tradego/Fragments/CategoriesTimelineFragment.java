@@ -1,5 +1,6 @@
 package teamcool.tradego.Fragments;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -9,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.parse.ParseUser;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -42,10 +44,28 @@ public class CategoriesTimelineFragment extends CatalogListFragment {
         return frag;
     }
 
+    private class AsyncDataLoading extends AsyncTask<String,Void,List<Item>> {
+        @Override
+        protected List<Item> doInBackground(String... category) {
+            ParseClient parseClient = new ParseClient();
+            List<Item> items = parseClient.queryItemsOnCategory(category[0]);
+            return items;
+        }
+
+        @Override
+        protected void onPostExecute(List<Item> items) {
+            addAll(items);
+            swipeContainer.setRefreshing(false);
+            if (items.size() == 0) {
+                Picasso.with(getContext()).load(R.drawable.placeholder_transparent).into(ivNoItems);
+            }
+            super.onPostExecute(items);
+        }
+    }
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        parseClient = new ParseClient();
     }
 
     @Nullable
@@ -75,14 +95,6 @@ public class CategoriesTimelineFragment extends CatalogListFragment {
     }
 
     public void populate(String category) {
-        items = parseClient.queryItemsOnCategory(category);
-        addAll(items);
-        swipeContainer.setRefreshing(false);
-        Log.d("DEBUG","reached for debugging - CATEGORY : "+items.size());
-        if (items.size() == 0) {
-            Picasso.with(getContext()).load(R.drawable.ic_home).into(ivNoItems);
-            Log.d("DEBUG","reached category frag - TBDELETED");
-        }
+        new AsyncDataLoading().execute(category);
     }
-
 }

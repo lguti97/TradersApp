@@ -57,7 +57,6 @@ public class FriendImportActivity extends AppCompatActivity {
                             public void onCompleted(JSONArray jsonArray, GraphResponse response) {
                                 acquaintances.addAll(Acquaintance.fromJSONArray(jsonArray));
                                 RecyclerView rvAcquaintances = (RecyclerView) findViewById(R.id.rvAcquaintances);
-                                Log.d("DEBUG", acquaintances.toString());
                                 AcquaintanceAdapter adapter = new AcquaintanceAdapter(getApplicationContext(), acquaintances, rvAcquaintances);
                                 ItemTouchHelper.Callback callback =
                                         new SimpleItemTouchHelperCallback(adapter);
@@ -70,7 +69,7 @@ public class FriendImportActivity extends AppCompatActivity {
                         });
 
         Bundle params = new Bundle();
-        params.putString("fields", "name, picture.type(large), id");
+        params.putString("fields", "name, picture.type(square).width(400).height(400), id");
         request.setParameters(params);
         request.executeAsync();
     }
@@ -79,7 +78,7 @@ public class FriendImportActivity extends AppCompatActivity {
     public void skipActivity(View view) {
         Intent i = new Intent(FriendImportActivity.this, AddItemActivity.class);
         startActivity(i);
-
+        overridePendingTransition(R.anim.right_in, R.anim.left_out);
     }
 
     //Creates the ParseObject Acquaintance + makes sure it's not created again for the current ParseUser
