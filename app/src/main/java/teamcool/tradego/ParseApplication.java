@@ -2,6 +2,7 @@ package teamcool.tradego;
 
 import com.parse.Parse;
 import com.parse.ParseCloud;
+import com.parse.ParseInstallation;
 import com.parse.interceptors.ParseLogInterceptor;
 
 import java.util.HashMap;
@@ -18,5 +19,7 @@ public class ParseApplication extends android.app.Application {
                 .applicationId("tradego")
                 .addNetworkInterceptor(new ParseLogInterceptor())
                 .server("https://tradego.herokuapp.com/parse/").build());
+
+        ParseInstallation.getCurrentInstallation().saveInBackground();
     }
 }

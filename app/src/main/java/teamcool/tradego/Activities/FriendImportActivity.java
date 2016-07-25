@@ -13,12 +13,14 @@ import com.facebook.AccessToken;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.facebook.HttpMethod;
+import com.parse.ParseCloud;
 import com.parse.ParseUser;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import teamcool.tradego.Adapters.AcquaintanceAdapter;
 import teamcool.tradego.Clients.FBGraphClient;
@@ -41,6 +43,10 @@ public class FriendImportActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_friend_import);
+        //Doing some channel testing here. Why is this not working?
+        HashMap<String, String> test = new HashMap<>();
+        test.put("channel", "testing");
+        ParseCloud.callFunctionInBackground("pushChannelTest", test);
 
         //This is where I make the acquaintance objects.
         final ArrayList<Acquaintance> acquaintances = new ArrayList<>();
