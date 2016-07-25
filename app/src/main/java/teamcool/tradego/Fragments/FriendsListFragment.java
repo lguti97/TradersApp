@@ -41,6 +41,7 @@ public class FriendsListFragment extends Fragment {
     private class AsyncDataLoading extends AsyncTask<Void,Void,List<Friend>> {
         @Override
         protected List<Friend> doInBackground(Void... voids) {
+            friends = new ArrayList<>();
             ParseClient parseClient = new ParseClient();
             if (getArguments() == null) {
                 friends = parseClient.queryFriendsOnName(null);

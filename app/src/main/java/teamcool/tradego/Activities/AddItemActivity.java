@@ -290,12 +290,12 @@ public class AddItemActivity extends AppCompatActivity {
                 if(index==1) {
 
                     ivItem1.setImageBitmap(takenImage);
-                    image_1 = encodeToBase64(takenImage, Bitmap.CompressFormat.JPEG, 150);
+                    image_1 = encodeToBase64(takenImage, Bitmap.CompressFormat.JPEG, 100);
                 }
                 else if(index ==2) {
 
                     ivItem2.setImageBitmap(takenImage);
-                    image_2 = encodeToBase64(takenImage, Bitmap.CompressFormat.JPEG, 150);
+                    image_2 = encodeToBase64(takenImage, Bitmap.CompressFormat.JPEG, 100);
                 }
 
             } else { // Result was a failure
