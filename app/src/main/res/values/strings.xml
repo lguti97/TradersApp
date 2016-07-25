@@ -18,4 +18,5 @@
     <string name="friendImport">People you may know!</string>
     <string name="MoreInfo">Swipe right if you wish to add as a friend</string>
     <string name="skipAddItem">Skip</string>
+    <string name="price">Price</string>
 </resources>

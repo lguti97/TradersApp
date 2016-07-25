@@ -22,5 +22,10 @@
             android:icon="@drawable/ic_transaction_status"
             android:title="Transaction Status" />
 
+        <item
+            android:id="@+id/nav_wishlist_fragment"
+            android:icon="@drawable/ic_wish_list"
+            android:title="Wishlist" />
+
     </group>
 </menu>

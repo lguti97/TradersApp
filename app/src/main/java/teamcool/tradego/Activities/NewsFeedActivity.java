@@ -35,6 +35,7 @@ import teamcool.tradego.Fragments.CategoriesTimelineFragment;
 import teamcool.tradego.Fragments.FriendsListFragment;
 import teamcool.tradego.Fragments.TopTimelineFragment;
 import teamcool.tradego.Fragments.UserCatalogFragment;
+import teamcool.tradego.Fragments.WishListFragment;
 import teamcool.tradego.R;
 
 public class NewsFeedActivity extends AppCompatActivity {
@@ -73,6 +74,7 @@ public class NewsFeedActivity extends AppCompatActivity {
         final String tab1Names[] = {"Available", "Onhold", "Sold"};
         final String tab2Names[] = {"Friends"};
         final String tab3Names[] = {"Sold", "Bought", "Onhold"};
+        final String tab4Names[] = {"Wishlist"};
 
         @Override
         public Fragment getItem(int position) {
@@ -104,6 +106,9 @@ public class NewsFeedActivity extends AppCompatActivity {
                 else //on hold
                     return UserCatalogFragment.newInstance(currentUserObjID,"On hold");
             }
+            else if (selector == 4) {
+                return new WishListFragment();
+            }
             else
                 return null;
         }
@@ -123,6 +128,8 @@ public class NewsFeedActivity extends AppCompatActivity {
                 return tab2Names.length;
             else if (selector == 3)
                 return tab3Names.length;
+            else if (selector == 4)
+                return tab4Names.length;
             else
                 return 0;
         }
@@ -138,8 +145,11 @@ public class NewsFeedActivity extends AppCompatActivity {
             else if (selector == 2) {
                 return tab2Names[position];
             }
-            else {
+            else if (selector == 3) {
                 return tab3Names[position];
+            }
+            else {
+                return tab4Names[position];
             }
 
 
@@ -316,6 +326,9 @@ public class NewsFeedActivity extends AppCompatActivity {
                 break;
             case R.id.nav_transaction_status_fragment:
                 selector = 3;
+                break;
+            case R.id.nav_wishlist_fragment:
+                selector = 4;
                 break;
         }
         tabStrip.setViewPager(viewpager);

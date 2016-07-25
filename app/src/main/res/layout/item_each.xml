@@ -41,5 +41,14 @@
             android:layout_centerHorizontal="true"
             android:gravity="center"/>
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/price"
+            android:id="@+id/tvPrice"
+            android:textColor="#359714"
+            android:layout_below="@+id/tvNewsFeedItemName"
+            android:layout_centerHorizontal="true" />
+
     </RelativeLayout>
 </LinearLayout>

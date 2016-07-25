@@ -33,6 +33,7 @@ import teamcool.tradego.Models.Acquaintance;
 import teamcool.tradego.Models.Friend;
 import teamcool.tradego.Models.Item;
 import teamcool.tradego.Models.User;
+import teamcool.tradego.Models.WishItem;
 import teamcool.tradego.R;
 
 public class LoginActivity extends AppCompatActivity {
@@ -59,6 +60,7 @@ public class LoginActivity extends AppCompatActivity {
         ParseObject.registerSubclass(Item.class);
         ParseObject.registerSubclass(Acquaintance.class);
         ParseObject.registerSubclass(Friend.class);
+        ParseObject.registerSubclass(WishItem.class);
 
         //Parse Initialization done in the ParseApplication Class.
 
@@ -124,7 +126,7 @@ public class LoginActivity extends AppCompatActivity {
                 // it might be because you have3 no PERMISSION to access it
                 // look it up in API and add more permissions to the array
 
-                Intent i = new Intent (LoginActivity.this, FriendImportActivity.class);
+                Intent i = new Intent (LoginActivity.this, NewsFeedActivity.class);
 
                 startActivity(i);
             }

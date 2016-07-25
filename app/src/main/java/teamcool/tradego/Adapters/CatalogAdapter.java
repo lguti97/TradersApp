@@ -36,6 +36,7 @@ public class CatalogAdapter extends RecyclerView.Adapter<CatalogAdapter.ViewHold
         @BindView(R.id.tvNewsFeedItemName) TextView itemName;
         @BindView(R.id.ivNewsFeedDisplayImg) ImageView ivItemImage;
         @BindView(R.id.rlItemEach) RelativeLayout rlItemEach;
+        @BindView(R.id.tvPrice) TextView tvPrice; 
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -71,6 +72,7 @@ public class CatalogAdapter extends RecyclerView.Adapter<CatalogAdapter.ViewHold
 
 
         holder.itemName.setText(item.getItem_name());
+        holder.tvPrice.setText("$" + String.valueOf(item.getPrice()));
 
         if(item.getImage1() != null) {
             holder.ivItemImage.setImageBitmap(decodeBase64(item.getImage1()));
