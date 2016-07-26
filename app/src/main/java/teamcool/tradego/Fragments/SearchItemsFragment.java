@@ -1,5 +1,6 @@
 package teamcool.tradego.Fragments;
 
+import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -8,8 +9,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
-import com.parse.ParseUser;
+
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -24,11 +26,29 @@ import teamcool.tradego.R;
 public class SearchItemsFragment extends CatalogListFragment {
 
     List<Item> items;
-    ParseClient parseClient;
+    boolean isRefresh = false;
 
     @BindView(R.id.swipeContainerCatalog) SwipeRefreshLayout swipeContainer;
+    @BindView(R.id.ivNoItems) ImageView ivNoItems;
 
     private class AsyncDataLoading extends AsyncTask<Void,Void,List<Item>> {
+
+        ProgressDialog progressDialog;
+
+        @Override
+        protected void onPreExecute() {
+            if (!isRefresh) {
+                progressDialog = new ProgressDialog(getActivity());
+                progressDialog.setTitle("Loading");
+                progressDialog.setMessage("Please wait...");
+                progressDialog.setCancelable(false);
+                progressDialog.setIndeterminate(true);
+                progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                progressDialog.show();
+            }
+            super.onPreExecute();
+        }
+
         @Override
         protected List<Item> doInBackground(Void... voids) {
             ParseClient parseClient = new ParseClient();
@@ -47,6 +67,13 @@ public class SearchItemsFragment extends CatalogListFragment {
         protected void onPostExecute(List<Item> items) {
             addAll(items);
             swipeContainer.setRefreshing(false);
+            isRefresh = false;
+            if (progressDialog != null) {
+                progressDialog.dismiss();
+            }
+            if (items.size() == 0) {
+                Picasso.with(getContext()).load(R.drawable.placeholder_transparent).into(ivNoItems);
+            }
             super.onPostExecute(items);
         }
     }
@@ -54,7 +81,6 @@ public class SearchItemsFragment extends CatalogListFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        parseClient = new ParseClient();
     }
 
     @Nullable
@@ -71,6 +97,7 @@ public class SearchItemsFragment extends CatalogListFragment {
         swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
+                isRefresh = true;
                 populate();
             }
         });
@@ -96,6 +123,7 @@ public class SearchItemsFragment extends CatalogListFragment {
     }
 
     private void populate() {
+        Log.d("DEBUG","-----------");
         new AsyncDataLoading().execute();
     }
 

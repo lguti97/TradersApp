@@ -105,9 +105,9 @@ public class ProfileActivity extends AppCompatActivity {
                 .bitmapTransform(new CropCircleTransformation(this))
                 .into(ivProfileImage);
 
-        tvItemsSold.setText("Items Sold: " + parseClient.countNumItemsOnStatus(user,"Sold"));
-        tvItemsonHold.setText("Items on Hold: " + parseClient.countNumItemsOnStatus(user,"On hold"));
-        tvItemsAvailable.setText("Items Available: " + parseClient.countNumItemsOnStatus(user,"Available"));
+        parseClient.countNumItemsOnStatus(user,"Sold",tvItemsSold," items sold");
+        parseClient.countNumItemsOnStatus(user,"On hold",tvItemsonHold," items on hold");
+        parseClient.countNumItemsOnStatus(user,"Available",tvItemsAvailable," items available");
 
     }
 

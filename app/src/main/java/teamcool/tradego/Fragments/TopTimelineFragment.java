@@ -46,7 +46,6 @@ public class TopTimelineFragment extends CatalogListFragment {
 
         @Override
         protected void onPreExecute() {
-            Log.d("DEBUG","refresh: "+isRefresh);
             if (!isRefresh) {
                 progressDialog = new ProgressDialog(getActivity());
                 progressDialog.setTitle("Loading");

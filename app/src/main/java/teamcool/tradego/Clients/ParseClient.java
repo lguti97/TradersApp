@@ -5,14 +5,16 @@ package teamcool.tradego.Clients;
 
 import android.text.format.DateFormat;
 import android.util.Log;
+import android.widget.TextView;
 
-import com.parse.FindCallback;
+import com.parse.CountCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
-import java.lang.reflect.Array;
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -180,44 +182,47 @@ public class ParseClient {
         return items;
     }
 
-    public int countNumFriendsOfUser(ParseUser user) {
+    public void countNumFriendsOfUser(ParseUser user, final TextView textView, final String strAppend) {
         int count = -15251; //placeholder value
         ParseQuery<Friend> query = ParseQuery.getQuery(Friend.class);
         query.whereEqualTo("owner", user);
-        try {
-            count = query.count();
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return count;
+        query.countInBackground(new CountCallback() {
+            @Override
+            public void done(int count, ParseException e) {
+                String txt = count + strAppend;
+                textView.setText(txt);
+            }
+        });
     }
 
     //REQUIRES: user must be a friend of currentUser
-    public int countNumItemsOnStatus(ParseUser user, String status) {
+    public void countNumItemsOnStatus(ParseUser user, String status, final TextView textView, final String strAppend) {
         int count = -15251; //placeholder value
+        Log.d("DEBUGQ","start query");
         ParseQuery<Item> query = ParseQuery.getQuery(Item.class);
         query.whereEqualTo("owner",user);
         query.whereEqualTo("status",status);
-        try {
-            count = query.count();
-        }
-        catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return count;
+        query.countInBackground(new CountCallback() {
+            @Override
+            public void done(int count, ParseException e) {
+                String txt = count + strAppend;
+                Log.d("DEBUGQ","end query");
+                textView.setText(txt);
+            }
+        });
     }
 
-    public int countNumItemsOnUser(ParseUser user) {
+    public void countNumItemsOnUser(ParseUser user, final TextView textView, final String strPre, final String strEnd) {
         int count = -15251;
         ParseQuery<Item> query = ParseQuery.getQuery(Item.class);
         query.whereEqualTo("owner",user);
-        try {
-            count = query.count();
-        }
-        catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return count;
+        query.countInBackground(new CountCallback() {
+            @Override
+            public void done(int count, ParseException e) {
+                String txt = strPre + count + strEnd;
+                textView.setText(txt);
+            }
+        });
     }
 
     public int countNumItemsBought(ParseUser user) {

@@ -68,7 +68,6 @@ public class FriendsListFragment extends Fragment {
         protected void onPostExecute(List<Friend> friends) {
             progressDialog.dismiss();
             if (friends.size() == 0) {
-                Log.d("DEBUG","reached - friends empty");
                 Picasso.with(getContext()).load(R.drawable.placeholder_transparent).into(ivNoFriends);
             }
             friendsAdapter.clearAndAddAll(friends);
