@@ -185,9 +185,9 @@ public class AddItemActivity extends AppCompatActivity {
         Spinner spinner = (Spinner) findViewById(R.id.spCategory);
 // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-                R.array.categories, android.R.layout.simple_spinner_item);
+                R.array.categories, R.layout.custom_spinner_category);
 // Specify the layout to use when the list of choices appears
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        adapter.setDropDownViewResource(R.layout.spinner_dropdown);
 // Apply the adapter to the spinner
         spinner.setAdapter(adapter);
 
@@ -218,11 +218,11 @@ public class AddItemActivity extends AppCompatActivity {
             array = R.array.status;
         }
 
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,array, android.R.layout.simple_spinner_item);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,array, R.layout.custom_spinner_category);
 
 
 // Specify the layout to use when the list of choices appears
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        adapter.setDropDownViewResource(R.layout.spinner_dropdown);
 // Apply the adapter to the spinner
         spinner.setAdapter(adapter);
 
@@ -414,17 +414,17 @@ public class AddItemActivity extends AppCompatActivity {
                 }
                 // Load the selected image into a preview
 
-                Bitmap takenImage = Bitmap.createScaledBitmap(selectedImage, 250, 250, true);
+                //Bitmap takenImage = Bitmap.createScaledBitmap(selectedImage, 250, 250, true);
 
                 if(index==1) {
 
-                    ivItem1.setImageBitmap(takenImage);
-                    image_1 = encodeToBase64(takenImage, Bitmap.CompressFormat.JPEG, 100);
+                    ivItem1.setImageBitmap(selectedImage);
+                    image_1 = encodeToBase64(selectedImage, Bitmap.CompressFormat.JPEG, 100);
                 }
                 else if(index ==2) {
 
-                    ivItem2.setImageBitmap(takenImage);
-                    image_2 = encodeToBase64(takenImage, Bitmap.CompressFormat.JPEG, 100);
+                    ivItem2.setImageBitmap(selectedImage);
+                    image_2 = encodeToBase64(selectedImage, Bitmap.CompressFormat.JPEG, 100);
                 }
 
             }

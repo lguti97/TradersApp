@@ -2,257 +2,267 @@
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
-    android:layout_height="match_parent"
-    android:layout_width="match_parent">
-
-
-    <include layout="@layout/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        xmlns:android="http://schemas.android.com/apk/res/android" />
-
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:clickable="true"
-    android:focusableInTouchMode="true"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_horizontal_margin"
-    android:paddingBottom="@dimen/activity_horizontal_margin"
-    tools:context="teamcool.tradego.Activities.AddItemActivity">
+    android:background="#f2f2f2"
+    android:orientation="vertical">
 
 
-
-
-    
-    <RelativeLayout
+    <include xmlns:android="http://schemas.android.com/apk/res/android"
+        layout="@layout/toolbar"
         android:layout_width="match_parent"
-        android:id="@+id/rlHorizontalScroll"
-        android:layout_height="200dp">
+        android:layout_height="wrap_content" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/Add_New_Item"
-            android:layout_centerHorizontal="true"
-            android:text="Add New Item!"
-            android:textSize="17sp"
-            android:textStyle="bold" />
-
-    <HorizontalScrollView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/horizontalScrollView"
-        android:layout_below="@id/Add_New_Item"
-        android:layout_marginTop="10dp">
-        
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:orientation="horizontal"
-            android:layout_height="wrap_content">
-
-            <ImageView
-                android:layout_width="180dp"
-                android:layout_height="170dp"
-                android:id="@+id/ivItem1"
-                tools:src="@mipmap/ic_launcher"
-                android:src="@drawable/placeholder"/>
-
-            <ImageView
-                android:layout_width="180dp"
-                android:layout_height="170dp"
-                android:id="@+id/ivItem2"
-                tools:src="@mipmap/ic_launcher"
-                android:src="@drawable/placeholder"/>
-
-
-        </LinearLayout>
-
-    </HorizontalScrollView>
-
-    </RelativeLayout>
-
-    <RelativeLayout
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/rlHorizontalScroll">
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Item Name"
-        android:id="@+id/tvItemName"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="15dp"
-        android:textSize="17sp"
-        android:textStyle="bold" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Price"
-        android:id="@+id/tvItemPrice"
-        android:layout_below="@+id/tvItemName"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="10dp"
-        android:textIsSelectable="false"
-        android:textSize="17sp"
-        android:textStyle="bold" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Negotiable"
-        android:id="@+id/tvItemNegotiable"
-        android:layout_below="@+id/tvItemPrice"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="20dp"
-        android:textSize="17sp"
-        android:textStyle="bold" />
-
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:hint="Description"
-        android:id="@+id/etItemDescription"
-        android:layout_below="@+id/tvItemNegotiable"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="10dp"
-        android:textSize="17sp" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Category"
-        android:id="@+id/tvItemCategory"
-        android:layout_below="@+id/etItemDescription"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="11dp"
-        android:textSize="17sp"
-        android:textStyle="bold" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Status"
-        android:id="@+id/tvItemStatus"
-        android:layout_below="@+id/tvItemCategory"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="11dp"
-        android:textSize="17sp"
-        android:textStyle="bold" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Submit"
-        android:id="@+id/btnAddItem"
-        android:onClick="onAddItemClick"
-        android:layout_below="@+id/spStatus"
-        android:layout_centerHorizontal="true" />
-
-    <Spinner
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/spCategory"
-        android:layout_toRightOf="@id/tvItemCategory"
-        android:spinnerMode="dropdown"
-        android:layout_below="@+id/etItemDescription"
-        android:layout_alignBottom="@+id/tvItemCategory"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
-
-    <Spinner
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/spStatus"
-        android:spinnerMode="dropdown"
-        android:layout_below="@+id/spCategory"
-        android:layout_alignLeft="@+id/spCategory"
-        android:layout_alignStart="@+id/spCategory"
-        android:layout_alignBottom="@+id/tvItemStatus" />
+        android:clickable="true"
+        android:focusableInTouchMode="true"
+        android:paddingBottom="@dimen/activity_horizontal_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_horizontal_margin"
+        tools:context="teamcool.tradego.Activities.AddItemActivity">
 
 
-        <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_toRightOf="@id/tvItemNegotiable"
-            android:layout_above="@id/etItemDescription"
-            >
+        <RelativeLayout
+            android:id="@+id/rlHorizontalScroll"
+            android:layout_width="match_parent"
+            android:layout_height="200dp">
+
+            <TextView
+                android:id="@+id/Add_New_Item"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:text="Add New Item!"
+                android:textSize="17sp"
+                android:textStyle="bold" />
 
 
-    <RadioButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Yes"
-        android:id="@+id/rbYes"
-        android:layout_alignBottom="@+id/tvItemNegotiable"
-        android:checked="false"
-        android:layout_alignTop="@+id/rbNo"
-        android:layout_marginLeft="50dp"
-        android:onClick="onRadioButtonClicked"/>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/Add_New_Item"
+                android:layout_marginTop="7dp"
+                android:orientation="horizontal">
 
-    <RadioButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="No"
-        android:id="@+id/rbNo"
-        android:layout_alignRight="@id/rbYes"
-        android:layout_alignBottom="@+id/tvItemNegotiable"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:checked="false"
-        android:onClick="onRadioButtonClicked"/>
+                <ImageView
+                    android:id="@+id/ivItem1"
+                    android:layout_width="150dp"
+                    android:layout_height="170dp"
+                    android:layout_marginRight="5dp"
+                    android:src="@drawable/placeholder"
+                    tools:src="@mipmap/ic_launcher" />
 
-        </RadioGroup>
+                <ImageView
+                    android:id="@+id/ivItem2"
+                    android:layout_width="150dp"
+                    android:layout_height="170dp"
+                    android:layout_marginLeft="10dp"
+                    android:src="@drawable/placeholder"
+                    tools:src="@mipmap/ic_launcher" />
 
 
-        <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/etItemName"
-            android:hint="Enter Item Name"
-            android:textSize="16sp"
-            android:layout_alignParentTop="true"
-            android:layout_alignLeft="@+id/btnAddItem"
-            android:layout_alignStart="@+id/btnAddItem" />
+            </LinearLayout>
 
-        <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:inputType="numberDecimal"
-            android:ems="10"
-            android:id="@+id/etPrice"
-            android:hint="Enter a Price"
-            android:textSize="16sp"
-            android:layout_below="@+id/tvItemName"
-            android:layout_alignLeft="@+id/etItemName"
-            android:layout_alignStart="@+id/etItemName" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/skipAddItem"
-            android:id="@+id/textView7"
-            android:onClick="skipAddItemActivity"
-            android:layout_alignBottom="@+id/btnAddItem"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/rlHorizontalScroll">
+
+            <TextView
+                android:id="@+id/tvItemName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="8dp"
+                android:text="Item Name"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
+
+            <EditText
+                android:id="@+id/etItemName"
+                android:layout_width="fill_parent"
+                android:layout_height="30dp"
+                android:layout_alignLeft="@+id/btnAddItem"
+                android:layout_alignParentTop="true"
+                android:layout_alignStart="@+id/btnAddItem"
+                android:background="@drawable/view_box"
+                android:hint="Enter Item Name"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/tvItemCategory"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/tvItemName"
+                android:layout_marginTop="11dp"
+                android:text="Category"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
+            <Spinner
+                android:id="@+id/spCategory"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/etItemName"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignStart="@+id/etItemName"
+                android:layout_below="@+id/etItemName"
+                android:spinnerMode="dialog" />
+
+
+            <EditText
+                android:id="@+id/etItemDescription"
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/tvItemCategory"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/view_box"
+                android:gravity="top|left"
+                android:hint="Description"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/tvItemNegotiable"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/etItemDescription"
+                android:layout_marginTop="13dp"
+                android:text="Negotiable"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
+
+            <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:layout_alignTop="@+id/tvItemNegotiable"
+                android:layout_toRightOf="@+id/tvItemNegotiable"
+                android:layout_toEndOf="@+id/tvItemNegotiable">
+
+
+                <RadioButton
+                    android:id="@+id/rbYes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignLeft="@+id/tvItemNegotiable"
+                    android:layout_alignStart="@+id/tvItemNegotiable"
+                    android:checked="false"
+                    android:onClick="onRadioButtonClicked"
+                    android:scaleX="0.5"
+                    android:scaleY="0.5"
+                    android:text="Yes"
+                    android:textSize="24sp" />
+
+                <RadioButton
+                    android:id="@+id/rbNo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@+id/rbYes"
+                    android:layout_toRightOf="@+id/rbYes"
+                    android:checked="false"
+                    android:onClick="onRadioButtonClicked"
+                    android:scaleX="0.5"
+                    android:scaleY="0.5"
+                    android:text="No"
+                    android:textSize="24sp" />
+
+
+            </RadioGroup>
+
+
+            <TextView
+                android:id="@+id/tvItemStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/tvItemNegotiable"
+                android:layout_marginTop="6dp"
+                android:text="Status"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
+            <Spinner
+                android:id="@+id/spStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_below="@id/tvItemNegotiable"
+                android:spinnerMode="dropdown"
+                android:layout_alignLeft="@+id/btnAddItem"
+                android:layout_alignStart="@+id/btnAddItem"
+                android:layout_alignBottom="@+id/tvItemPrice" />
+
+
+            <TextView
+                android:id="@+id/tvItemPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/tvItemStatus"
+                android:layout_marginTop="10dp"
+                android:text="Price"
+                android:textIsSelectable="false"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/etPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_below="@id/spStatus"
+                android:background="@drawable/view_box"
+                android:hint="Enter a Price"
+                android:inputType="numberDecimal"
+                android:textSize="12sp" />
+
+
+            <Button
+                android:id="@+id/btnAddItem"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="onAddItemClick"
+                android:text="Submit"
+                android:layout_below="@+id/etPrice"
+                android:layout_centerHorizontal="true" />
+
+
+            <TextView
+                android:id="@+id/textView7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/btnAddItem"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:onClick="skipAddItemActivity"
+                android:text="@string/skipAddItem" />
+
+
+        </RelativeLayout>
+
 
     </RelativeLayout>
 
-
-
-</RelativeLayout>
-
-    </LinearLayout>
+</LinearLayout>
