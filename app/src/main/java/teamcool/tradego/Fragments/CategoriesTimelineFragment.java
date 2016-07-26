@@ -30,6 +30,7 @@ public class CategoriesTimelineFragment extends CatalogListFragment {
     boolean isViewCreated = false;
     boolean isSeen = false;
     boolean isLoaded = false;
+    boolean isRefresh = false;
 
     @BindView(R.id.swipeContainerCatalog) SwipeRefreshLayout swipeContainer;
     @BindView(R.id.ivNoItems) ImageView ivNoItems;
@@ -52,13 +53,15 @@ public class CategoriesTimelineFragment extends CatalogListFragment {
 
         @Override
         protected void onPreExecute() {
-            progressDialog = new ProgressDialog(getActivity());
-            progressDialog.setTitle("Loading");
-            progressDialog.setMessage("Please wait...");
-            progressDialog.setCancelable(false);
-            progressDialog.setIndeterminate(true);
-            progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-            progressDialog.show();
+            if (!isRefresh) {
+                progressDialog = new ProgressDialog(getActivity());
+                progressDialog.setTitle("Loading");
+                progressDialog.setMessage("Please wait...");
+                progressDialog.setCancelable(false);
+                progressDialog.setIndeterminate(true);
+                progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                progressDialog.show();
+            }
             super.onPreExecute();
         }
 
@@ -71,11 +74,14 @@ public class CategoriesTimelineFragment extends CatalogListFragment {
 
         @Override
         protected void onPostExecute(List<Item> items) {
-            progressDialog.dismiss();
             addAll(items);
             swipeContainer.setRefreshing(false);
+            isRefresh = false;
             if (items.size() == 0) {
                 Picasso.with(getContext()).load(R.drawable.placeholder_transparent).into(ivNoItems);
+            }
+            if (progressDialog != null) {
+                progressDialog.dismiss();
             }
             super.onPostExecute(items);
         }
@@ -103,6 +109,7 @@ public class CategoriesTimelineFragment extends CatalogListFragment {
         swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
+                isRefresh = true;
                 populate(getArguments().getString("category"));
             }
         });
