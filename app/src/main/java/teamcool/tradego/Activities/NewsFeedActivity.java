@@ -1,19 +1,13 @@
 package teamcool.tradego.Activities;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.database.Cursor;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
-import android.support.v4.app.LoaderManager;
-import android.support.v4.content.Loader;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
@@ -22,6 +16,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -76,10 +71,14 @@ public class NewsFeedActivity extends AppCompatActivity {
         @Override
         public Fragment getItem(int position) {
             if (selector == R.id.nav_home_fragment) {
-                if (position == 0)
+                if (position == 0) {
+                    Log.d("DEBUG","TOP TIME LINE ");
                     return new TopTimelineFragment();
-                else
+                }
+                else {
+                    Log.d("DEBUG","CATEGORY TIME LINE - " + tab0Names[position]);
                     return CategoriesTimelineFragment.newInstance(tab0Names[position]);
+                }
             }
             else if (selector == R.id.nav_catalog_fragment) {
                 //user's own catalog
@@ -172,6 +171,7 @@ public class NewsFeedActivity extends AppCompatActivity {
         //viewpager setup
         fragmentStatePagerAdapter = new catalogPagerAdapter(getSupportFragmentManager());
         viewpager.setAdapter(fragmentStatePagerAdapter); //may cause problems (?)
+        viewpager.setOffscreenPageLimit(1);
 
         tabStrip.setViewPager(viewpager);
         //set background and indicator color of tabstrip
