@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.parse.ParseUser;
 import com.squareup.picasso.Picasso;
 
@@ -17,6 +18,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import jp.wasabeef.glide.transformations.CropCircleTransformation;
 import teamcool.tradego.Activities.ProfileActivity;
 import teamcool.tradego.Clients.ParseClient;
 import teamcool.tradego.Models.Friend;
@@ -31,10 +33,9 @@ public class FriendsAdapter extends RecyclerView.Adapter<FriendsAdapter.ViewHold
 
         //butterknife binding goes here:
         //@BindView(R.id.someId) Type someId;
-        @BindView(R.id.ivProfileImage) ImageView ivProfileImage;
-        @BindView(R.id.tvUserName) TextView tvUsername;
-        @BindView(R.id.tvItemsCatalog) TextView tvItemsCatalog;
-        @BindView(R.id.rlFriendEach) RelativeLayout rlFriendEach;
+        @BindView(R.id.ivProfile) ImageView ivProfile;
+        @BindView(R.id.tvName) TextView tvName;
+        @BindView(R.id.tvItems) TextView tvItems;
 
 
         public ViewHolder(View itemView) {
@@ -58,7 +59,7 @@ public class FriendsAdapter extends RecyclerView.Adapter<FriendsAdapter.ViewHold
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
-        View friendsView = inflater.inflate(R.layout.friend_each, parent, false);
+        View friendsView = inflater.inflate(R.layout.acquaintance_contact, parent, false);
         ViewHolder viewHolder = new ViewHolder(friendsView);
         return viewHolder;
     }
@@ -67,12 +68,12 @@ public class FriendsAdapter extends RecyclerView.Adapter<FriendsAdapter.ViewHold
     public void onBindViewHolder(ViewHolder holder, int position) {
         final Friend friend = friends.get(position);
         //populate each item by setting its text and media
-        holder.tvUsername.setText(friend.getString("name"));
-        holder.ivProfileImage.setImageResource(0);
-        Picasso.with(context)
+        holder.tvName.setText(friend.getString("name"));
+        holder.ivProfile.setImageResource(0);
+        Glide.with(context)
                 .load(friend.getProfile_url())
-                .resize(100,0)
-                .into(holder.ivProfileImage);
+                .bitmapTransform(new CropCircleTransformation(context))
+                .into(holder.ivProfile);
 
         parseClient = new ParseClient();
 
@@ -81,8 +82,8 @@ public class FriendsAdapter extends RecyclerView.Adapter<FriendsAdapter.ViewHold
 
         int number = parseClient.countNumItemsOnUser(friend_to_user);
 
-        holder.tvItemsCatalog.setText("Items in Catalog: " + number);
-
+        holder.tvItems.setText("Items in Catalog: " + number);
+        /*
 
         holder.rlFriendEach.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -91,7 +92,7 @@ public class FriendsAdapter extends RecyclerView.Adapter<FriendsAdapter.ViewHold
                 i.putExtra("objectId", friend_to_user.getObjectId());
                 context.startActivity(i);
             }
-        });
+        }); */
     }
 
     @Override

@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -82,7 +83,7 @@ public class FriendsListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_friends, container, false);
         ButterKnife.bind(this, v);
-        rvFriends.setLayoutManager(new GridLayoutManager(getContext(),2));
+        rvFriends.setLayoutManager(new LinearLayoutManager(getContext()));
         rvFriends.setAdapter(friendsAdapter);
         rvFriends.setHasFixedSize(true);
         rvFriends.setOnClickListener(new View.OnClickListener() {
