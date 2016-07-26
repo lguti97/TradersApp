@@ -27,6 +27,10 @@ import teamcool.tradego.R;
  */
 public class CategoriesTimelineFragment extends CatalogListFragment {
 
+    boolean isViewCreated = false;
+    boolean isSeen = false;
+    boolean isLoaded = false;
+
     @BindView(R.id.swipeContainerCatalog) SwipeRefreshLayout swipeContainer;
     @BindView(R.id.ivNoItems) ImageView ivNoItems;
 
@@ -92,8 +96,10 @@ public class CategoriesTimelineFragment extends CatalogListFragment {
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        isViewCreated = true;
+        if (isSeen && !isLoaded)
+            populate(getArguments().getString("category"));
         //if swipe container exists, must setOnRefreshListener here, not onCreateView or onCreate
-        populate(getArguments().getString("category"));
         swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -105,10 +111,20 @@ public class CategoriesTimelineFragment extends CatalogListFragment {
                 android.R.color.holo_orange_light,
                 android.R.color.holo_red_light);
         super.onViewCreated(view, savedInstanceState);
-        super.onViewCreated(view, savedInstanceState);
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser)
+            isSeen = true;
+        if (isViewCreated && !isLoaded)
+            populate(getArguments().getString("category"));
     }
 
     public void populate(String category) {
+        isLoaded = true;
         new AsyncDataLoading().execute(category);
     }
+
 }
