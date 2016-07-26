@@ -117,15 +117,15 @@ public class NewsFeedActivity extends AppCompatActivity {
 
         @Override
         public int getCount() {
-            if (selector == 0)
+            if (selector == R.id.nav_home_fragment)
                 return tab0Names.length;
-            else if (selector == 1)
+            else if (selector == R.id.nav_catalog_fragment)
                 return tab1Names.length;
-            else if (selector == 2)
+            else if (selector == R.id.nav_friends_fragment)
                 return tab2Names.length;
-            else if (selector == 3)
+            else if (selector == R.id.nav_transaction_status_fragment)
                 return tab3Names.length;
-            else if (selector == 4)
+            else if (selector == R.id.nav_wishlist_fragment)
                 return tab4Names.length;
             else
                 return 0;
@@ -167,7 +167,7 @@ public class NewsFeedActivity extends AppCompatActivity {
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setHomeButtonEnabled(true);
 
-        selector = 0;
+        selector = R.id.nav_home_fragment;
 
         //viewpager setup
         fragmentStatePagerAdapter = new catalogPagerAdapter(getSupportFragmentManager());

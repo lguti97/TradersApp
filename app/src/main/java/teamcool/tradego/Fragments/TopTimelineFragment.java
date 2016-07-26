@@ -60,7 +60,7 @@ public class TopTimelineFragment extends CatalogListFragment {
 
         @Override
         protected void onPostExecute(List<Item> items) {
-            progressDialog.dismiss();
+            //progressDialog.dismiss();
             addAll(items);
             swipeContainer.setRefreshing(false);
             if (items.size()==0) {
