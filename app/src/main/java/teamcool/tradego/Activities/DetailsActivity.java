@@ -81,17 +81,14 @@ public class DetailsActivity extends AppCompatActivity {
         actionbar.setDisplayShowHomeEnabled(true);
 
         itemId = getIntent().getStringExtra("item_id");
-
-
-
-        final Activity activity = this;
-
+        
         btnMessenger.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Uri messenger = Uri.parse((new StringBuilder("fb-messenger://user/")).append(Uri.encode(ownerId)).toString());
+                Uri messenger = Uri.parse((new StringBuilder("http://m.me/")).append(Uri.encode("kinjal.shah.7505")).toString());
                 Intent i = new Intent(Intent.ACTION_VIEW, messenger);
                 startActivity(i);
+
             }
         });
 

@@ -128,7 +128,7 @@ public class LoginActivity extends AppCompatActivity {
                 //DEBUG info: if one of the fields turns out to be empty,
                 // it might be because you have3 no PERMISSION to access it
                 // look it up in API and add more permissions to the array
-                Intent i = new Intent (LoginActivity.this, FriendImportActivity.class);
+                Intent i = new Intent (LoginActivity.this, NewsFeedActivity.class);
                 startActivity(i);
                 overridePendingTransition(R.anim.right_in, R.anim.left_out);
             }

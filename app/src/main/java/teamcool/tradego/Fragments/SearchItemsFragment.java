@@ -1,5 +1,6 @@
 package teamcool.tradego.Fragments;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -7,6 +8,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.parse.ParseUser;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +27,29 @@ public class SearchItemsFragment extends CatalogListFragment {
     ParseClient parseClient;
 
     @BindView(R.id.swipeContainerCatalog) SwipeRefreshLayout swipeContainer;
+
+    private class AsyncDataLoading extends AsyncTask<Void,Void,List<Item>> {
+        @Override
+        protected List<Item> doInBackground(Void... voids) {
+            ParseClient parseClient = new ParseClient();
+            String query = getArguments().getString("query");
+            if(getArguments().getBoolean("hasFilter")) {
+                String category = getArguments().getString("category");
+                String sort = getArguments().getString("sort");
+                items = parseClient.queryItemsOnFilteredQuery(query,category,sort,null);
+            } else {
+                items = parseClient.queryItemsOnName(query, false);
+            }
+            return items;
+        }
+
+        @Override
+        protected void onPostExecute(List<Item> items) {
+            addAll(items);
+            swipeContainer.setRefreshing(false);
+            super.onPostExecute(items);
+        }
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -69,19 +96,7 @@ public class SearchItemsFragment extends CatalogListFragment {
     }
 
     private void populate() {
-        String query = getArguments().getString("query");
-        if(getArguments().getBoolean("hasFilter")) {
-            String category = getArguments().getString("category");
-            String sort = getArguments().getString("sort");
-            items = parseClient.queryItemsOnFilteredQuery(query,category,sort,null);
-            for(int i = 0; i < items.size(); i++) {
-                Log.d("DEBUG","-->>"+items.get(i).getItem_name());
-            }
-        } else {
-            items = parseClient.queryItemsOnName(query, false);
-        }
-        addAll(items);
-        swipeContainer.setRefreshing(false);
+        new AsyncDataLoading().execute();
     }
 
 }
