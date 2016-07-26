@@ -23,7 +23,7 @@ import teamcool.tradego.R;
 
 public class SearchActivity extends AppCompatActivity implements FilterDialogFragment.FilterDialogListener{
 
-    int selector = 0;
+    int selector = R.id.nav_home_fragment;
     String query = "";
 
     @Override
@@ -44,7 +44,7 @@ public class SearchActivity extends AppCompatActivity implements FilterDialogFra
 
         if (savedInstanceState == null) {
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-            if (selector != 2) {
+            if (selector != R.id.nav_friends_fragment) {
                 ft.replace(R.id.flContainerSearch, SearchItemsFragment.newInstance(query,null));
             } else {
                 ft.replace(R.id.flContainerSearch, FriendsListFragment.newInstance(query,null));
@@ -89,7 +89,7 @@ public class SearchActivity extends AppCompatActivity implements FilterDialogFra
     @Override
     public void onFinishDialog(ArrayList<String> res) {
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        if (selector != 2) {
+        if (selector != R.id.nav_friends_fragment) {
             ft.replace(R.id.flContainerSearch, SearchItemsFragment.newInstance(query,res));
         } else {
             ft.replace(R.id.flContainerSearch, FriendsListFragment.newInstance(query,res));

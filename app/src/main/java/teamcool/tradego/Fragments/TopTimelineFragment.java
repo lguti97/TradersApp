@@ -66,7 +66,7 @@ public class TopTimelineFragment extends CatalogListFragment {
             if (items.size()==0) {
                 Picasso.with(getContext()).load(R.drawable.placeholder_transparent).into(ivNoItems);
             }
-            super.onPostExecute(items);
+
         }
     }
 
