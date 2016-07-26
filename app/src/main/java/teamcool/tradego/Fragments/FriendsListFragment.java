@@ -6,14 +6,12 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.parse.ParseUser;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -24,7 +22,6 @@ import butterknife.ButterKnife;
 import teamcool.tradego.Adapters.FriendsAdapter;
 import teamcool.tradego.Clients.ParseClient;
 import teamcool.tradego.Models.Friend;
-import teamcool.tradego.Models.Item;
 import teamcool.tradego.R;
 
 /**
@@ -41,6 +38,7 @@ public class FriendsListFragment extends Fragment {
     private class AsyncDataLoading extends AsyncTask<Void,Void,List<Friend>> {
         @Override
         protected List<Friend> doInBackground(Void... voids) {
+            friends = new ArrayList<>();
             ParseClient parseClient = new ParseClient();
             if (getArguments() == null) {
                 friends = parseClient.queryFriendsOnName(null);
