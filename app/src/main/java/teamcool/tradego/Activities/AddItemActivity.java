@@ -1,6 +1,7 @@
 package teamcool.tradego.Activities;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -9,6 +10,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Base64;
@@ -29,6 +31,7 @@ import com.parse.ParseUser;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.IOException;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -79,7 +82,9 @@ public class AddItemActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View view) {
-                onLaunchCamera(view);
+                //onLaunchCamera(view);
+                //onPickPhoto(view);
+                startDialog(view);
                 index = 1;
             }
         });
@@ -90,7 +95,9 @@ public class AddItemActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View view) {
-                onLaunchCamera(view);
+                //onLaunchCamera(view);
+                //onPickPhoto(view);
+                startDialog(view);
                 index = 2;
             }
         });
@@ -150,23 +157,6 @@ public class AddItemActivity extends AppCompatActivity {
         ivItem1.setImageBitmap(decodeBase64(item.getImage1()));
         ivItem2.setImageBitmap(decodeBase64(item.getImage2()));
 
-        //Bitmap takenImage_unscaled = BitmapFactory.decodeFile(item.getImage1());
-        //Bitmap takenImage_unscaled2 = BitmapFactory.decodeFile(item.getImage2());
-        //Bitmap takenImage = Bitmap.createScaledBitmap(takenImage_unscaled, 150, 150, true);
-        //Bitmap takenImage2 = Bitmap.createScaledBitmap(takenImage_unscaled2, 150, 150, true);
-
-
-        /*
-            if (item.getNegotiable() == "Yes") {
-                RadioButton yes = (RadioButton) findViewById(R.id.rbYes);
-                yes.setChecked(true);
-            } else if (item.getNegotiable() == "No") {
-                RadioButton no = (RadioButton) findViewById(R.id.rbNo);
-                no.setChecked(true);
-            }
-
-            */
-
     }
 
 
@@ -195,9 +185,9 @@ public class AddItemActivity extends AppCompatActivity {
         Spinner spinner = (Spinner) findViewById(R.id.spCategory);
 // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-                R.array.categories, android.R.layout.simple_spinner_item);
+                R.array.categories, R.layout.custom_spinner_category);
 // Specify the layout to use when the list of choices appears
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        adapter.setDropDownViewResource(R.layout.spinner_dropdown);
 // Apply the adapter to the spinner
         spinner.setAdapter(adapter);
 
@@ -228,11 +218,11 @@ public class AddItemActivity extends AppCompatActivity {
             array = R.array.status;
         }
 
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,array, android.R.layout.simple_spinner_item);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,array, R.layout.custom_spinner_category);
 
 
 // Specify the layout to use when the list of choices appears
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        adapter.setDropDownViewResource(R.layout.spinner_dropdown);
 // Apply the adapter to the spinner
         spinner.setAdapter(adapter);
 
@@ -252,82 +242,6 @@ public class AddItemActivity extends AppCompatActivity {
 
     }
 
-    //Code below is all for Launching Camera
-
-    public final String APP_TAG = "MyCustomApp";
-    public final static int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 1034;
-    String photoFileName = "PHOTO.jpg";
-
-    public void onLaunchCamera(View view) {
-
-        // create Intent to take a picture and return control to the calling application
-        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, getPhotoFileUri(photoFileName)); // set the image file name
-
-        // If you call startActivityForResult() using an intent that no app can handle, your app will crash.
-        // So as long as the result is not null, it's safe to use the intent.
-        if (intent.resolveActivity(getPackageManager()) != null) {
-            // Start the image capture intent to take photo
-            startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
-        }
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        int desiredWidth = 70;
-        if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
-            if (resultCode == RESULT_OK) {
-                Uri takenPhotoUri = getPhotoFileUri(photoFileName);
-                // by this point we have the camera photo on disk
-                Bitmap takenImage_unscaled = BitmapFactory.decodeFile(takenPhotoUri.getPath());
-
-                Bitmap takenImage = Bitmap.createScaledBitmap(takenImage_unscaled, 250, 250, true);
-                // Load the taken image into a preview
-
-
-                if(index==1) {
-
-                    ivItem1.setImageBitmap(takenImage);
-                    image_1 = encodeToBase64(takenImage, Bitmap.CompressFormat.JPEG, 100);
-                }
-                else if(index ==2) {
-
-                    ivItem2.setImageBitmap(takenImage);
-                    image_2 = encodeToBase64(takenImage, Bitmap.CompressFormat.JPEG, 100);
-                }
-
-            } else { // Result was a failure
-                Toast.makeText(this, "Picture wasn't taken!", Toast.LENGTH_SHORT).show();
-            }
-        }
-    }
-
-    // Returns the Uri for a photo stored on disk given the fileName
-    public Uri getPhotoFileUri(String fileName) {
-        // Only continue if the SD Card is mounted
-        if (isExternalStorageAvailable()) {
-            // Get safe storage directory for photos
-            // Use `getExternalFilesDir` on Context to access package-specific directories.
-            // This way, we don't need to request external read/write runtime permissions.
-            File mediaStorageDir = new File(
-                    getExternalFilesDir(Environment.DIRECTORY_PICTURES), APP_TAG);
-
-            // Create the storage directory if it does not exist
-            if (!mediaStorageDir.exists() && !mediaStorageDir.mkdirs()){
-                Log.d(APP_TAG, "failed to create directory");
-            }
-
-            // Return the file target for the photo based on filename
-            return Uri.fromFile(new File(mediaStorageDir.getPath() + File.separator + fileName));
-        }
-        return null;
-    }
-
-    // Returns true if external storage for photos is available
-    private boolean isExternalStorageAvailable() {
-        String state = Environment.getExternalStorageState();
-        return state.equals(Environment.MEDIA_MOUNTED);
-    }
 
 
     public void onAddItemClick(View view) {
@@ -412,6 +326,155 @@ public class AddItemActivity extends AppCompatActivity {
         Intent i = new Intent(AddItemActivity.this, NewsFeedActivity.class);
         startActivity(i);
         overridePendingTransition(R.anim.right_in, R.anim.left_out);
+    }
+
+
+
+    private void startDialog(final View view) {
+        AlertDialog.Builder myAlertDialog = new AlertDialog.Builder(
+                this);
+        myAlertDialog.setTitle("Upload Pictures Option");
+        myAlertDialog.setMessage("How do you want to set your picture?");
+
+        myAlertDialog.setPositiveButton("Gallery",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface arg0, int arg1) {
+                       onPickPhoto(view);
+                    }
+                });
+
+        myAlertDialog.setNegativeButton("Camera",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface arg0, int arg1) {
+                        onLaunchCamera(view);
+                    }
+                });
+        myAlertDialog.show();
+
+    }
+
+
+
+    public final String APP_TAG = "MyCustomApp";
+    public final static int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 1034;
+    String photoFileName = "PHOTO.jpg";
+
+    public void onLaunchCamera(View view) {
+
+        // create Intent to take a picture and return control to the calling application
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, getPhotoFileUri(photoFileName)); // set the image file name
+
+        // If you call startActivityForResult() using an intent that no app can handle, your app will crash.
+        // So as long as the result is not null, it's safe to use the intent.
+        if (intent.resolveActivity(getPackageManager()) != null) {
+            // Start the image capture intent to take photo
+            startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        int desiredWidth = 70;
+        if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
+            if (resultCode == RESULT_OK) {
+                Uri takenPhotoUri = getPhotoFileUri(photoFileName);
+                // by this point we have the camera photo on disk
+                Bitmap takenImage_unscaled = BitmapFactory.decodeFile(takenPhotoUri.getPath());
+
+                Bitmap takenImage = Bitmap.createScaledBitmap(takenImage_unscaled, 250, 250, true);
+                // Load the taken image into a preview
+
+
+                if(index==1) {
+
+                    ivItem1.setImageBitmap(takenImage);
+                    image_1 = encodeToBase64(takenImage, Bitmap.CompressFormat.JPEG, 100);
+                }
+                else if(index ==2) {
+
+                    ivItem2.setImageBitmap(takenImage);
+                    image_2 = encodeToBase64(takenImage, Bitmap.CompressFormat.JPEG, 100);
+                }
+
+            } else { // Result was a failure
+                Toast.makeText(this, "Picture wasn't taken!", Toast.LENGTH_SHORT).show();
+            }
+        }
+
+        else if(requestCode == PICK_PHOTO_CODE && resultCode == RESULT_OK) {
+            if (data != null) {
+                Uri photoUri = data.getData();
+                // Do something with the photo based on Uri
+                Bitmap selectedImage = null;
+                try {
+                    selectedImage = MediaStore.Images.Media.getBitmap(this.getContentResolver(), photoUri);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                // Load the selected image into a preview
+
+                //Bitmap takenImage = Bitmap.createScaledBitmap(selectedImage, 250, 250, true);
+
+                if(index==1) {
+
+                    ivItem1.setImageBitmap(selectedImage);
+                    image_1 = encodeToBase64(selectedImage, Bitmap.CompressFormat.JPEG, 100);
+                }
+                else if(index ==2) {
+
+                    ivItem2.setImageBitmap(selectedImage);
+                    image_2 = encodeToBase64(selectedImage, Bitmap.CompressFormat.JPEG, 100);
+                }
+
+            }
+
+        }
+    }
+
+    // Returns the Uri for a photo stored on disk given the fileName
+    public Uri getPhotoFileUri(String fileName) {
+        // Only continue if the SD Card is mounted
+        if (isExternalStorageAvailable()) {
+            // Get safe storage directory for photos
+            // Use `getExternalFilesDir` on Context to access package-specific directories.
+            // This way, we don't need to request external read/write runtime permissions.
+            File mediaStorageDir = new File(
+                    getExternalFilesDir(Environment.DIRECTORY_PICTURES), APP_TAG);
+
+            // Create the storage directory if it does not exist
+            if (!mediaStorageDir.exists() && !mediaStorageDir.mkdirs()){
+                Log.d(APP_TAG, "failed to create directory");
+            }
+
+            // Return the file target for the photo based on filename
+            return Uri.fromFile(new File(mediaStorageDir.getPath() + File.separator + fileName));
+        }
+        return null;
+    }
+
+    // Returns true if external storage for photos is available
+    private boolean isExternalStorageAvailable() {
+        String state = Environment.getExternalStorageState();
+        return state.equals(Environment.MEDIA_MOUNTED);
+    }
+
+    // PICK_PHOTO_CODE is a constant integer
+    public final static int PICK_PHOTO_CODE = 1046;
+
+
+    // Trigger gallery selection for a photo
+    public void onPickPhoto(View view) {
+        // Create intent for picking a photo from the gallery
+        Intent intent = new Intent(Intent.ACTION_PICK,
+                MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+
+        // If you call startActivityForResult() using an intent that no app can handle, your app will crash.
+        // So as long as the result is not null, it's safe to use the intent.
+        if (intent.resolveActivity(getPackageManager()) != null) {
+            // Bring up gallery to select a photo
+            startActivityForResult(intent, PICK_PHOTO_CODE);
+        }
     }
 
 
