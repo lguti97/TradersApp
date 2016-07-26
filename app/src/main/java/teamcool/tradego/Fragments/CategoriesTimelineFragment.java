@@ -27,6 +27,10 @@ import teamcool.tradego.R;
  */
 public class CategoriesTimelineFragment extends CatalogListFragment {
 
+    boolean isViewCreated = false;
+    boolean isSeen = false;
+    boolean isLoaded = false;
+
     @BindView(R.id.swipeContainerCatalog) SwipeRefreshLayout swipeContainer;
     @BindView(R.id.ivNoItems) ImageView ivNoItems;
 
@@ -50,7 +54,7 @@ public class CategoriesTimelineFragment extends CatalogListFragment {
         protected void onPreExecute() {
             progressDialog = new ProgressDialog(getActivity());
             progressDialog.setTitle("Loading");
-            progressDialog.setMessage("Please wait...------");
+            progressDialog.setMessage("Please wait...");
             progressDialog.setCancelable(false);
             progressDialog.setIndeterminate(true);
             progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
@@ -92,8 +96,10 @@ public class CategoriesTimelineFragment extends CatalogListFragment {
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        isViewCreated = true;
+        if (isSeen && !isLoaded)
+            populate(getArguments().getString("category"));
         //if swipe container exists, must setOnRefreshListener here, not onCreateView or onCreate
-        Log.d("DEBUG","1111"+getArguments().getString("category"));
         swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -110,13 +116,14 @@ public class CategoriesTimelineFragment extends CatalogListFragment {
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
-        if (isVisibleToUser) {
-            Log.d("DEBUG","111122222");
+        if (isVisibleToUser)
+            isSeen = true;
+        if (isViewCreated && !isLoaded)
             populate(getArguments().getString("category"));
-        }
     }
 
     public void populate(String category) {
+        isLoaded = true;
         new AsyncDataLoading().execute(category);
     }
 

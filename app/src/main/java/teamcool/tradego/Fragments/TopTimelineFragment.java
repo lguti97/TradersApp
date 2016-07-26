@@ -29,7 +29,10 @@ import teamcool.tradego.R;
  */
 public class TopTimelineFragment extends CatalogListFragment {
 
+    boolean isViewCreated = false;
+    boolean isSeen = false;
     boolean isLoaded = false;
+
 
     @BindView(R.id.swipeContainerCatalog) SwipeRefreshLayout swipeContainer;
     @BindView(R.id.ivNoItems) ImageView ivNoItems;
@@ -84,6 +87,10 @@ public class TopTimelineFragment extends CatalogListFragment {
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        isViewCreated = true;
+        if (isSeen && !isLoaded) {
+            populateTimeLine();
+        }
         //if swipe container exists, must setOnRefreshListener here, not onCreateView or onCreate
         swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -101,13 +108,15 @@ public class TopTimelineFragment extends CatalogListFragment {
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
-        if (isVisibleToUser) {
-            Log.d("DEBUG","111122222");
+        if (isVisibleToUser)
+            isSeen = true;
+        if (isViewCreated && !isLoaded)
             populateTimeLine();
-        }
+
     }
 
     public void populateTimeLine() {
+        isLoaded = true;
         new AsyncDataLoading().execute();
     }
 }
