@@ -5,28 +5,34 @@
 
         <item
             android:id="@+id/nav_home_fragment"
+            android:checked="true"
             android:icon="@drawable/ic_home"
-            android:title="Home"
-            android:checked="true"/>
-        <item
-            android:id="@+id/nav_catalog_fragment"
-            android:icon="@drawable/ic_catalog"
-            android:title="Catalog" />
+            android:title="Home" />
 
         <item
             android:id="@+id/nav_friends_fragment"
             android:icon="@drawable/ic_friends"
             android:title="Friends" />
 
-        <item
-            android:id="@+id/nav_transaction_status_fragment"
-            android:icon="@drawable/ic_transaction_status"
-            android:title="Transaction Status" />
+        <item android:title="My info">
+            <menu>
+                <group android:checkableBehavior="single">
+                    <item
+                        android:id="@+id/nav_catalog_fragment"
+                        android:icon="@drawable/ic_catalog"
+                        android:title="Catalog" />
 
-        <item
-            android:id="@+id/nav_wishlist_fragment"
-            android:icon="@drawable/ic_wish_list"
-            android:title="Wishlist" />
+                    <item
+                        android:id="@+id/nav_transaction_status_fragment"
+                        android:icon="@drawable/ic_transaction_status"
+                        android:title="Transaction Status" />
 
+                    <item
+                        android:id="@+id/nav_wishlist_fragment"
+                        android:icon="@drawable/ic_wish_list"
+                        android:title="Wishlist" />
+                </group>
+            </menu>
+        </item>
     </group>
 </menu>

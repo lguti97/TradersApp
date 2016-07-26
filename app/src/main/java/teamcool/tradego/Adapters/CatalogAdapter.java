@@ -33,7 +33,7 @@ public class CatalogAdapter extends RecyclerView.Adapter<CatalogAdapter.ViewHold
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
         //butterknife binding goes here:
-        @BindView(R.id.tvNewsFeedItemName) TextView itemName;
+        //@BindView(R.id.tvNewsFeedItemName) TextView itemName;
         @BindView(R.id.ivNewsFeedDisplayImg) ImageView ivItemImage;
         @BindView(R.id.rlItemEach) RelativeLayout rlItemEach;
         @BindView(R.id.tvPrice) TextView tvPrice; 
@@ -71,7 +71,7 @@ public class CatalogAdapter extends RecyclerView.Adapter<CatalogAdapter.ViewHold
         //populate each item by setting its text and media
 
 
-        holder.itemName.setText(item.getItem_name());
+        //holder.itemName.setText(item.getItem_name());
         holder.tvPrice.setText("$" + String.valueOf(item.getPrice()));
 
         if(item.getImage1() != null) {
