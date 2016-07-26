@@ -10,8 +10,8 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.parse.ParseUser;
-import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -29,8 +29,6 @@ public class FriendsAdapter extends RecyclerView.Adapter<FriendsAdapter.ViewHold
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        //butterknife binding goes here:
-        //@BindView(R.id.someId) Type someId;
         @BindView(R.id.ivProfileImage) ImageView ivProfileImage;
         @BindView(R.id.tvUserName) TextView tvUsername;
         @BindView(R.id.tvItemsCatalog) TextView tvItemsCatalog;
@@ -69,9 +67,9 @@ public class FriendsAdapter extends RecyclerView.Adapter<FriendsAdapter.ViewHold
         //populate each item by setting its text and media
         holder.tvUsername.setText(friend.getString("name"));
         holder.ivProfileImage.setImageResource(0);
-        Picasso.with(context)
+        Glide.with(context)
                 .load(friend.getProfile_url())
-                .resize(100,0)
+                .override(100,0)
                 .into(holder.ivProfileImage);
 
         parseClient = new ParseClient();

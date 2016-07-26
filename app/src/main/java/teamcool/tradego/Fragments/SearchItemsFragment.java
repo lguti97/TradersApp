@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 
-import com.squareup.picasso.Picasso;
+import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -72,7 +72,7 @@ public class SearchItemsFragment extends CatalogListFragment {
                 progressDialog.dismiss();
             }
             if (items.size() == 0) {
-                Picasso.with(getContext()).load(R.drawable.placeholder_transparent).into(ivNoItems);
+                Glide.with(getContext()).load(R.drawable.placeholder_transparent).into(ivNoItems);
             }
             super.onPostExecute(items);
         }

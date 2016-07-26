@@ -23,12 +23,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.astuetz.PagerSlidingTabStrip;
+import com.bumptech.glide.Glide;
 import com.parse.ParseUser;
-import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import jp.wasabeef.picasso.transformations.CropCircleTransformation;
 import teamcool.tradego.Clients.ParseClient;
 import teamcool.tradego.Fragments.CategoriesTimelineFragment;
 import teamcool.tradego.Fragments.FriendsListFragment;
@@ -206,7 +205,7 @@ public class NewsFeedActivity extends AppCompatActivity {
 
 
         ParseUser currUser = ParseUser.getCurrentUser();
-        Picasso.with(this).load(currUser.getString("profilePicUrl")).fit().transform(new CropCircleTransformation()).into(ivNavProfilePic);
+        Glide.with(this).load(currUser.getString("profilePicUrl")).fitCenter().bitmapTransform(new jp.wasabeef.glide.transformations.CropCircleTransformation(getApplicationContext())).into(ivNavProfilePic);
         tvNavUserName.setText(currUser.getString("username"));
         parseClient.countNumFriendsOfUser(currUser,tvNavNumFriends," friends");
         parseClient.countNumItemsOnStatus(currUser,"Sold",tvNavItemsSold," items sold");

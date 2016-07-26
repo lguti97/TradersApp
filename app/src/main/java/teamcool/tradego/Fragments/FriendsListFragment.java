@@ -13,7 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.squareup.picasso.Picasso;
+import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -68,7 +68,7 @@ public class FriendsListFragment extends Fragment {
         protected void onPostExecute(List<Friend> friends) {
             progressDialog.dismiss();
             if (friends.size() == 0) {
-                Picasso.with(getContext()).load(R.drawable.placeholder_transparent).into(ivNoFriends);
+                Glide.with(getContext()).load(R.drawable.placeholder_transparent).into(ivNoFriends);
             }
             friendsAdapter.clearAndAddAll(friends);
             super.onPostExecute(friends);

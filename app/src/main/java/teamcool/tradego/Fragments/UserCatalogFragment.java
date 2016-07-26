@@ -10,8 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.parse.ParseUser;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -77,7 +77,7 @@ public class UserCatalogFragment extends CatalogListFragment {
             addAll(items);
             swipeContainer.setRefreshing(false);
             if(items.size() == 0) {
-                Picasso.with(getContext()).load(R.drawable.placeholder_transparent).into(ivNoItems);
+                Glide.with(getContext()).load(R.drawable.placeholder_transparent).into(ivNoItems);
             }
             super.onPostExecute(items);
         }
