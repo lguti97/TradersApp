@@ -6,13 +6,11 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Base64;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -28,7 +26,7 @@ import android.widget.Toast;
 import com.parse.ParseUser;
 
 import java.io.ByteArrayOutputStream;
-import java.io.File;
+import java.io.IOException;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -79,7 +77,8 @@ public class AddItemActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View view) {
-                onLaunchCamera(view);
+                //onLaunchCamera(view);
+                onPickPhoto(view);
                 index = 1;
             }
         });
@@ -90,7 +89,8 @@ public class AddItemActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View view) {
-                onLaunchCamera(view);
+                //onLaunchCamera(view);
+                onPickPhoto(view);
                 index = 2;
             }
         });
@@ -251,6 +251,7 @@ public class AddItemActivity extends AppCompatActivity {
         });
 
     }
+/*
 
     //Code below is all for Launching Camera
 
@@ -328,6 +329,7 @@ public class AddItemActivity extends AppCompatActivity {
         String state = Environment.getExternalStorageState();
         return state.equals(Environment.MEDIA_MOUNTED);
     }
+*/
 
 
     public void onAddItemClick(View view) {
@@ -412,6 +414,41 @@ public class AddItemActivity extends AppCompatActivity {
         Intent i = new Intent(AddItemActivity.this, NewsFeedActivity.class);
         startActivity(i);
         overridePendingTransition(R.anim.right_in, R.anim.left_out);
+    }
+
+    // PICK_PHOTO_CODE is a constant integer
+    public final static int PICK_PHOTO_CODE = 1046;
+
+
+    // Trigger gallery selection for a photo
+    public void onPickPhoto(View view) {
+        // Create intent for picking a photo from the gallery
+        Intent intent = new Intent(Intent.ACTION_PICK,
+                MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+
+        // If you call startActivityForResult() using an intent that no app can handle, your app will crash.
+        // So as long as the result is not null, it's safe to use the intent.
+        if (intent.resolveActivity(getPackageManager()) != null) {
+            // Bring up gallery to select a photo
+            startActivityForResult(intent, PICK_PHOTO_CODE);
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (data != null) {
+            Uri photoUri = data.getData();
+            // Do something with the photo based on Uri
+            Bitmap selectedImage = null;
+            try {
+                selectedImage = MediaStore.Images.Media.getBitmap(this.getContentResolver(), photoUri);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            // Load the selected image into a preview
+            ImageView ivImage1 = (ImageView) findViewById(R.id.ivItem1);
+            ivItem1.setImageBitmap(selectedImage);
+        }
     }
 
 
