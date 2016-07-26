@@ -1,5 +1,6 @@
 package teamcool.tradego.Fragments;
 
+import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -39,6 +40,21 @@ public class FriendsListFragment extends Fragment {
     private FriendsAdapter friendsAdapter;
 
     private class AsyncDataLoading extends AsyncTask<Void,Void,List<Friend>> {
+
+        ProgressDialog progressDialog;
+
+        @Override
+        protected void onPreExecute() {
+            progressDialog = new ProgressDialog(getActivity());
+            progressDialog.setTitle("Loading");
+            progressDialog.setMessage("Please wait...");
+            progressDialog.setCancelable(false);
+            progressDialog.setIndeterminate(true);
+            progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            progressDialog.show();
+            super.onPreExecute();
+        }
+
         @Override
         protected List<Friend> doInBackground(Void... voids) {
             friends = new ArrayList<>();
@@ -53,6 +69,7 @@ public class FriendsListFragment extends Fragment {
 
         @Override
         protected void onPostExecute(List<Friend> friends) {
+            progressDialog.dismiss();
             if (friends.size() == 0) {
                 Log.d("DEBUG","reached - friends empty");
                 Picasso.with(getContext()).load(R.drawable.placeholder_transparent).into(ivNoFriends);

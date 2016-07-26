@@ -1,5 +1,6 @@
 package teamcool.tradego.Fragments;
 
+import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -35,6 +36,21 @@ public class TopTimelineFragment extends CatalogListFragment {
     @BindView(R.id.ivNoItems) ImageView ivNoItems;
 
     private class AsyncDataLoading extends AsyncTask<Void,Void,List<Item>> {
+
+        ProgressDialog progressDialog;
+
+        @Override
+        protected void onPreExecute() {
+            progressDialog = new ProgressDialog(getActivity());
+            progressDialog.setTitle("Loading");
+            progressDialog.setMessage("Please wait...");
+            progressDialog.setCancelable(false);
+            progressDialog.setIndeterminate(true);
+            progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            progressDialog.show();
+            super.onPreExecute();
+        }
+
         @Override
         protected List<Item> doInBackground(Void... voids) {
             ParseClient parseClient = new ParseClient();
@@ -44,6 +60,7 @@ public class TopTimelineFragment extends CatalogListFragment {
 
         @Override
         protected void onPostExecute(List<Item> items) {
+            progressDialog.dismiss();
             addAll(items);
             swipeContainer.setRefreshing(false);
             if (items.size()==0) {
