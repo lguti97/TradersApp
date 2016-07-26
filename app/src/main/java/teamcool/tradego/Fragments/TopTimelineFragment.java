@@ -60,13 +60,13 @@ public class TopTimelineFragment extends CatalogListFragment {
 
         @Override
         protected void onPostExecute(List<Item> items) {
-            //progressDialog.dismiss();
+            progressDialog.dismiss();
             addAll(items);
             swipeContainer.setRefreshing(false);
             if (items.size()==0) {
                 Picasso.with(getContext()).load(R.drawable.placeholder_transparent).into(ivNoItems);
             }
-            super.onPostExecute(items);
+
         }
     }
 
