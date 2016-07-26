@@ -29,8 +29,10 @@ import teamcool.tradego.R;
  */
 public class TopTimelineFragment extends CatalogListFragment {
 
-    //ParseClient parseClient;
-    //List<Item> items;
+    boolean isViewCreated = false;
+    boolean isSeen = false;
+    boolean isLoaded = false;
+
 
     @BindView(R.id.swipeContainerCatalog) SwipeRefreshLayout swipeContainer;
     @BindView(R.id.ivNoItems) ImageView ivNoItems;
@@ -66,7 +68,7 @@ public class TopTimelineFragment extends CatalogListFragment {
             if (items.size()==0) {
                 Picasso.with(getContext()).load(R.drawable.placeholder_transparent).into(ivNoItems);
             }
-            super.onPostExecute(items);
+
         }
     }
 
@@ -85,7 +87,10 @@ public class TopTimelineFragment extends CatalogListFragment {
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        populateTimeLine();
+        isViewCreated = true;
+        if (isSeen && !isLoaded) {
+            populateTimeLine();
+        }
         //if swipe container exists, must setOnRefreshListener here, not onCreateView or onCreate
         swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -100,7 +105,18 @@ public class TopTimelineFragment extends CatalogListFragment {
         super.onViewCreated(view, savedInstanceState);
     }
 
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser)
+            isSeen = true;
+        if (isViewCreated && !isLoaded)
+            populateTimeLine();
+
+    }
+
     public void populateTimeLine() {
+        isLoaded = true;
         new AsyncDataLoading().execute();
     }
 }

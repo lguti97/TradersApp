@@ -1,19 +1,13 @@
 package teamcool.tradego.Activities;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.database.Cursor;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
-import android.support.v4.app.LoaderManager;
-import android.support.v4.content.Loader;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
@@ -22,6 +16,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -75,13 +70,17 @@ public class NewsFeedActivity extends AppCompatActivity {
 
         @Override
         public Fragment getItem(int position) {
-            if (selector == 0) {
-                if (position == 0)
+            if (selector == R.id.nav_home_fragment) {
+                if (position == 0) {
+                    Log.d("DEBUG","TOP TIME LINE ");
                     return new TopTimelineFragment();
-                else
+                }
+                else {
+                    Log.d("DEBUG","CATEGORY TIME LINE - " + tab0Names[position]);
                     return CategoriesTimelineFragment.newInstance(tab0Names[position]);
+                }
             }
-            else if (selector == 1) {
+            else if (selector == R.id.nav_catalog_fragment) {
                 //user's own catalog
                 String currentUserObjID = ParseUser.getCurrentUser().getObjectId();
                 if (position == 0)
@@ -91,10 +90,10 @@ public class NewsFeedActivity extends AppCompatActivity {
                 else
                     return UserCatalogFragment.newInstance(currentUserObjID,"Sold");
             }
-            else if (selector == 2) {
+            else if (selector == R.id.nav_friends_fragment) {
                 return new FriendsListFragment();
             }
-            else if (selector == 3) {
+            else if (selector == R.id.nav_transaction_status_fragment) {
                 String currentUserObjID = ParseUser.getCurrentUser().getObjectId();
                 if (position == 0) //Sold
                     return UserCatalogFragment.newInstance(currentUserObjID,"Sold");
@@ -103,7 +102,7 @@ public class NewsFeedActivity extends AppCompatActivity {
                 else //on hold
                     return UserCatalogFragment.newInstance(currentUserObjID,"On hold");
             }
-            else if (selector == 4) {
+            else if (selector == R.id.nav_wishlist_fragment) {
                 return new WishListFragment();
             }
             else
@@ -117,15 +116,15 @@ public class NewsFeedActivity extends AppCompatActivity {
 
         @Override
         public int getCount() {
-            if (selector == 0)
+            if (selector == R.id.nav_home_fragment)
                 return tab0Names.length;
-            else if (selector == 1)
+            else if (selector == R.id.nav_catalog_fragment)
                 return tab1Names.length;
-            else if (selector == 2)
+            else if (selector == R.id.nav_friends_fragment)
                 return tab2Names.length;
-            else if (selector == 3)
+            else if (selector == R.id.nav_transaction_status_fragment)
                 return tab3Names.length;
-            else if (selector == 4)
+            else if (selector == R.id.nav_wishlist_fragment)
                 return tab4Names.length;
             else
                 return 0;
@@ -133,16 +132,16 @@ public class NewsFeedActivity extends AppCompatActivity {
 
         @Override
         public CharSequence getPageTitle(int position) {
-            if (selector == 0) {
+            if (selector == R.id.nav_home_fragment) {
                 return tab0Names[position];
             }
-            else if (selector == 1) {
+            else if (selector == R.id.nav_catalog_fragment) {
                 return tab1Names[position];
             }
-            else if (selector == 2) {
+            else if (selector == R.id.nav_friends_fragment) {
                 return tab2Names[position];
             }
-            else if (selector == 3) {
+            else if (selector == R.id.nav_transaction_status_fragment) {
                 return tab3Names[position];
             }
             else {
@@ -167,7 +166,7 @@ public class NewsFeedActivity extends AppCompatActivity {
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setHomeButtonEnabled(true);
 
-        selector = 0;
+        selector = R.id.nav_home_fragment;
 
         //viewpager setup
         fragmentStatePagerAdapter = new catalogPagerAdapter(getSupportFragmentManager());
@@ -251,7 +250,7 @@ public class NewsFeedActivity extends AppCompatActivity {
 
         //TODO. Use of selector to be changed for better style
         //set hint text
-        if (selector != 2) {
+        if (selector != R.id.nav_friends_fragment) {
             searchView.setQueryHint("Search for an item...");
         } else {
             searchView.setQueryHint("Search for a friend...");
@@ -311,19 +310,19 @@ public class NewsFeedActivity extends AppCompatActivity {
         //TODO. Use of selector to be changed for better style
         switch(item.getItemId()) {
             case R.id.nav_home_fragment:
-                selector = 0;
+                selector = R.id.nav_home_fragment;
                 break;
             case R.id.nav_catalog_fragment:
-                selector = 1;
+                selector = R.id.nav_catalog_fragment;
                 break;
             case R.id.nav_friends_fragment:
-                selector = 2;
+                selector = R.id.nav_friends_fragment;
                 break;
             case R.id.nav_transaction_status_fragment:
-                selector = 3;
+                selector = R.id.nav_transaction_status_fragment;
                 break;
             case R.id.nav_wishlist_fragment:
-                selector = 4;
+                selector = R.id.nav_wishlist_fragment;
                 break;
         }
         tabStrip.setViewPager(viewpager);
@@ -336,7 +335,7 @@ public class NewsFeedActivity extends AppCompatActivity {
     }
 
     public void onCompose(View view) {
-        if (selector == 2) {
+        if (selector == R.id.nav_friends_fragment) {
             Intent i = new Intent(NewsFeedActivity.this, FriendImportActivity.class);
             startActivity(i);
             overridePendingTransition(R.anim.right_in, R.anim.left_out);
