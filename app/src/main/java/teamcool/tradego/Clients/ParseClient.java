@@ -226,7 +226,6 @@ public class ParseClient {
                 textView.setText(txt);
             }
         });
-
     }
 
     public int countNumItemsBought(ParseUser user) {

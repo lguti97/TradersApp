@@ -27,7 +27,7 @@ import teamcool.tradego.R;
 
 public class FriendsAdapter extends RecyclerView.Adapter<FriendsAdapter.ViewHolder> {
 
-    ViewHolder holder1;
+
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
 
@@ -36,13 +36,13 @@ public class FriendsAdapter extends RecyclerView.Adapter<FriendsAdapter.ViewHold
         @BindView(R.id.ivProfile) ImageView ivProfile;
         @BindView(R.id.tvName) TextView tvName;
         @BindView(R.id.tvItems) TextView tvItems;
+        View rootView;
 
 
         public ViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this,itemView);
-
-            //set item's onClickListener to (this);
+            rootView = itemView;
         }
     }
 
@@ -76,26 +76,19 @@ public class FriendsAdapter extends RecyclerView.Adapter<FriendsAdapter.ViewHold
                 .bitmapTransform(new CropCircleTransformation(context))
                 .into(holder.ivProfile);
 
-
         parseClient = new ParseClient();
-
         final ParseUser friend_to_user = parseClient.queryUserBasedonFBid(friend.getUserID());
+        parseClient.countNumItemsOnUser(friend_to_user, holder.tvItems ,"Items in Catalog: ", "");
 
-        //holder1.tvItems.setText("Items in Catalog: " + count);
-
-        parseClient.countNumItemsOnUser(friend_to_user, holder.tvItems ,"Items in Catalog: ","");
-
-
-        
-        /*
-        holder.rlFriendEach.setOnClickListener(new View.OnClickListener() {
+        //Goes into detail mode for each friend.
+        holder.rootView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(context, ProfileActivity.class);
                 i.putExtra("objectId", friend_to_user.getObjectId());
                 context.startActivity(i);
             }
-        }); */
+        });
     }
 
     @Override
