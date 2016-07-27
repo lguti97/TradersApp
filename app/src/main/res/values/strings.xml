@@ -17,7 +17,7 @@
     <string name="skip">Skip</string>
     <string name="friendImport">People you may know!</string>
     <string name="MoreInfo">Swipe right if you wish to add as a friend</string>
-    <string name="skipAddItem">Skip</string>
+    <string name="skip_add_item">Skip</string>
     <string name="price">Price</string>
 
     <!-- TODO: Remove or change this placeholder text -->

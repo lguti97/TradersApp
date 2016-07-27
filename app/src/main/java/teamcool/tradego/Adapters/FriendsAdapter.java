@@ -69,7 +69,6 @@ public class FriendsAdapter extends RecyclerView.Adapter<FriendsAdapter.ViewHold
         holder.ivProfileImage.setImageResource(0);
         Glide.with(context)
                 .load(friend.getProfile_url())
-                .override(100,0)
                 .into(holder.ivProfileImage);
 
         parseClient = new ParseClient();

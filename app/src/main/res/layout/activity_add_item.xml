@@ -153,17 +153,17 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:orientation="horizontal"
-                android:layout_alignTop="@+id/tvItemNegotiable"
-                android:layout_toRightOf="@+id/tvItemNegotiable"
-                android:layout_toEndOf="@+id/tvItemNegotiable">
+                android:layout_toRightOf="@+id/tvItemPrice"
+                android:paddingLeft="-15dp"
+                android:layout_below="@id/etItemDescription"
+                android:paddingTop="5dp"
+                android:layout_toEndOf="@id/tvItemPrice">
 
 
                 <RadioButton
                     android:id="@+id/rbYes"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/tvItemNegotiable"
-                    android:layout_alignStart="@+id/tvItemNegotiable"
                     android:checked="false"
                     android:onClick="onRadioButtonClicked"
                     android:scaleX="0.5"
@@ -175,8 +175,6 @@
                     android:id="@+id/rbNo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_toEndOf="@+id/rbYes"
-                    android:layout_toRightOf="@+id/rbYes"
                     android:checked="false"
                     android:onClick="onRadioButtonClicked"
                     android:scaleX="0.5"
@@ -195,7 +193,7 @@
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
                 android:layout_below="@+id/tvItemNegotiable"
-                android:layout_marginTop="6dp"
+                android:layout_marginTop="11dp"
                 android:text="Status"
                 android:textSize="12sp"
                 android:textStyle="bold" />
@@ -208,19 +206,20 @@
                 android:layout_alignParentRight="true"
                 android:layout_below="@id/tvItemNegotiable"
                 android:spinnerMode="dropdown"
+                android:layout_alignBaseline="@id/tvItemStatus"
                 android:layout_alignLeft="@+id/btnAddItem"
                 android:layout_alignStart="@+id/btnAddItem"
                 android:layout_alignBottom="@+id/tvItemPrice" />
 
 
             <TextView
-                android:id="@+id/tvItemPrice"
+                android:id="@id/tvItemPrice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
                 android:layout_below="@+id/tvItemStatus"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="13dp"
                 android:text="Price"
                 android:textIsSelectable="false"
                 android:textSize="12sp"
@@ -229,15 +228,28 @@
             <EditText
                 android:id="@+id/etPrice"
                 android:layout_width="wrap_content"
-                android:layout_height="25dp"
+                android:layout_height="30dp"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
                 android:layout_below="@id/spStatus"
                 android:background="@drawable/view_box"
+                android:layout_alignBaseline="@id/tvItemPrice"
                 android:hint="Enter a Price"
+                android:layout_alignLeft="@id/etItemName"
                 android:inputType="numberDecimal"
                 android:textSize="12sp" />
 
+            <TextView
+                android:id="@+id/tvDollarSign"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toLeftOf="@id/etPrice"
+                android:layout_toStartOf="@id/etPrice"
+                android:layout_alignBaseline="@id/etPrice"
+                android:text="$"
+                android:textIsSelectable="false"
+                android:layout_marginRight="3dp"
+                android:textSize="15sp" />
 
             <Button
                 android:id="@+id/btnAddItem"
@@ -245,19 +257,24 @@
                 android:layout_height="wrap_content"
                 android:onClick="onAddItemClick"
                 android:text="Submit"
+                android:textColor="@color/textPrimary"
                 android:layout_below="@+id/etPrice"
+                android:background="?android:attr/selectableItemBackground"
+                android:layout_alignBaseline="@+id/skipAddItem"
                 android:layout_centerHorizontal="true" />
 
 
-            <TextView
-                android:id="@+id/textView7"
+            <Button
+                android:id="@id/skipAddItem"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/btnAddItem"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
                 android:onClick="skipAddItemActivity"
-                android:text="@string/skipAddItem" />
+                android:textColor="@color/textSecondary"
+                android:background="?android:attr/selectableItemBackground"
+                android:text="@string/skip_add_item" />
 
 
         </RelativeLayout>

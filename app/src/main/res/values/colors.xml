@@ -6,4 +6,7 @@
     <color name="colorAccent">#00BCD4</color>
     <color name="colorLightPrimary">#FFE0B2</color>
     <color name="colorBackground">#D3D3D3</color>
+    <color name="textSecondary">#727272</color>
+    <color name="textPrimary">#212121</color>
+    <color name="colorDivider">#B6B6B6</color>
 </resources>
