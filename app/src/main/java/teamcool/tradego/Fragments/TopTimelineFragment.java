@@ -11,15 +11,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.parse.ParseUser;
-import com.squareup.picasso.Picasso;
-
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import teamcool.tradego.Clients.FBGraphClient;
 import teamcool.tradego.Clients.ParseClient;
 import teamcool.tradego.Models.Item;
 import teamcool.tradego.R;
@@ -32,41 +29,49 @@ public class TopTimelineFragment extends CatalogListFragment {
     boolean isViewCreated = false;
     boolean isSeen = false;
     boolean isLoaded = false;
+    boolean isRefresh = false;
 
 
-    @BindView(R.id.swipeContainerCatalog) SwipeRefreshLayout swipeContainer;
-    @BindView(R.id.ivNoItems) ImageView ivNoItems;
+    @BindView(R.id.swipeContainerCatalog)
+    SwipeRefreshLayout swipeContainer;
+    @BindView(R.id.ivNoItems)
+    ImageView ivNoItems;
 
-    private class AsyncDataLoading extends AsyncTask<Void,Void,List<Item>> {
+    private class AsyncDataLoading extends AsyncTask<Void, Void, List<Item>> {
 
         ProgressDialog progressDialog;
 
         @Override
         protected void onPreExecute() {
-            progressDialog = new ProgressDialog(getActivity());
-            progressDialog.setTitle("Loading");
-            progressDialog.setMessage("Please wait...");
-            progressDialog.setCancelable(false);
-            progressDialog.setIndeterminate(true);
-            progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-            progressDialog.show();
+            if (!isRefresh) {
+                progressDialog = new ProgressDialog(getActivity());
+                progressDialog.setTitle("Loading");
+                progressDialog.setMessage("Please wait...");
+                progressDialog.setCancelable(false);
+                progressDialog.setIndeterminate(true);
+                progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                progressDialog.show();
+            }
             super.onPreExecute();
         }
 
         @Override
         protected List<Item> doInBackground(Void... voids) {
             ParseClient parseClient = new ParseClient();
-            List<Item> items = parseClient.queryItemsOnOtherUserAndStatus(ParseUser.getCurrentUser(),"Available");
+            List<Item> items = parseClient.queryItemsOnOtherUserAndStatus(ParseUser.getCurrentUser(), "Available");
             return items;
         }
 
         @Override
         protected void onPostExecute(List<Item> items) {
-            progressDialog.dismiss();
             addAll(items);
+            if (progressDialog != null) {
+                progressDialog.dismiss();
+            }
             swipeContainer.setRefreshing(false);
-            if (items.size()==0) {
-                Picasso.with(getContext()).load(R.drawable.placeholder_transparent).into(ivNoItems);
+            isRefresh = false;
+            if (items.size() == 0) {
+                Glide.with(getContext()).load(R.drawable.placeholder_transparent).into(ivNoItems);
             }
 
         }
@@ -81,7 +86,7 @@ public class TopTimelineFragment extends CatalogListFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_catalog_list, container, false);
-        ButterKnife.bind(this,view);
+        ButterKnife.bind(this, view);
         return super.onCreateView(inflater, container, savedInstanceState);
     }
 
@@ -95,6 +100,7 @@ public class TopTimelineFragment extends CatalogListFragment {
         swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
+                isRefresh = true;
                 populateTimeLine();
             }
         });

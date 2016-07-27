@@ -14,14 +14,10 @@
         android:clipToPadding="false"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:background="@android:drawable/dialog_holo_light_frame"
-        android:elevation="0dp"
-        android:paddingTop="20dp"
-        android:paddingBottom="20dp"
-        android:layout_margin="-10dp">
+        android:background="@color/colorBackground">
 
         <ImageView
-            android:layout_width="300dp"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:id="@+id/ivNewsFeedDisplayImg"
             android:scaleType="fitStart"
@@ -29,27 +25,42 @@
             android:src="@mipmap/ic_launcher"
             android:layout_alignParentTop="true"
             android:layout_marginTop="5dp"
+            android:paddingLeft="5dp"
             android:layout_centerHorizontal="true"/>
 
-        <TextView
+        <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/tvNewsFeedItemName"
-            android:text="Item name here"
-            android:layout_below="@id/ivNewsFeedDisplayImg"
-            android:layout_marginTop="10dp"
-            android:padding="2dp"
-            android:layout_centerHorizontal="true"
-            android:gravity="center"/>
+            android:id="@+id/rlPriceTag"
+            android:layout_alignParentBottom="true">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/price"
-            android:id="@+id/tvPrice"
-            android:textColor="#359714"
-            android:layout_below="@+id/tvNewsFeedItemName"
-            android:layout_centerHorizontal="true" />
+            <ImageView
+                android:layout_width="80dp"
+                android:layout_height="60dp"
+                android:id="@+id/ivPriceTag"
+                android:src="@drawable/price_tag"/>
+
+            <!--TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tvNewsFeedItemName"
+                android:text="Item name here"
+                android:layout_marginTop="20dp"
+                android:layout_centerHorizontal="true"
+                android:gravity="center"/-->
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/price"
+                android:id="@+id/tvPrice"
+                android:textColor="#359714"
+                android:layout_marginTop="20dp"
+                android:paddingLeft="5dp" />
+
+        </RelativeLayout>
+
+
 
     </RelativeLayout>
 </LinearLayout>

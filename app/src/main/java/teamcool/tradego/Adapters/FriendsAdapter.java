@@ -11,11 +11,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.parse.CountCallback;
-import com.parse.ParseException;
-import com.parse.ParseQuery;
+
 import com.parse.ParseUser;
-import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -28,13 +25,11 @@ import teamcool.tradego.Models.Friend;
 import teamcool.tradego.Models.Item;
 import teamcool.tradego.R;
 
-/**
- * Created by kshah97 on 7/8/16.
- */
 public class FriendsAdapter extends RecyclerView.Adapter<FriendsAdapter.ViewHolder> {
 
     ViewHolder holder1;
     public static class ViewHolder extends RecyclerView.ViewHolder {
+
 
         //butterknife binding goes here:
         //@BindView(R.id.someId) Type someId;
@@ -73,6 +68,7 @@ public class FriendsAdapter extends RecyclerView.Adapter<FriendsAdapter.ViewHold
     public void onBindViewHolder(ViewHolder holder, int position) {
         final Friend friend = friends.get(position);
         //populate each item by setting its text and media
+
         holder.tvName.setText(friend.getString("name"));
         holder.ivProfile.setImageResource(0);
         Glide.with(context)
@@ -80,16 +76,14 @@ public class FriendsAdapter extends RecyclerView.Adapter<FriendsAdapter.ViewHold
                 .bitmapTransform(new CropCircleTransformation(context))
                 .into(holder.ivProfile);
 
+
         parseClient = new ParseClient();
 
         final ParseUser friend_to_user = parseClient.queryUserBasedonFBid(friend.getUserID());
 
-        //Try callback here
-        int number = parseClient.countNumItemsOnUser(friend_to_user);
         //holder1.tvItems.setText("Items in Catalog: " + count);
 
-
-
+        parseClient.countNumItemsOnUser(friend_to_user, holder.tvItems ,"Items in Catalog: ","");
 
 
         

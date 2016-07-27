@@ -16,7 +16,6 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,12 +23,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.astuetz.PagerSlidingTabStrip;
+import com.bumptech.glide.Glide;
 import com.parse.ParseUser;
-import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import jp.wasabeef.picasso.transformations.CropCircleTransformation;
 import teamcool.tradego.Clients.ParseClient;
 import teamcool.tradego.Fragments.CategoriesTimelineFragment;
 import teamcool.tradego.Fragments.FriendsListFragment;
@@ -72,11 +70,9 @@ public class NewsFeedActivity extends AppCompatActivity {
         public Fragment getItem(int position) {
             if (selector == R.id.nav_home_fragment) {
                 if (position == 0) {
-                    Log.d("DEBUG","TOP TIME LINE ");
                     return new TopTimelineFragment();
                 }
                 else {
-                    Log.d("DEBUG","CATEGORY TIME LINE - " + tab0Names[position]);
                     return CategoriesTimelineFragment.newInstance(tab0Names[position]);
                 }
             }
@@ -210,16 +206,12 @@ public class NewsFeedActivity extends AppCompatActivity {
 
 
         ParseUser currUser = ParseUser.getCurrentUser();
-        Picasso.with(this).load(currUser.getString("profilePicUrl")).fit().transform(new CropCircleTransformation()).into(ivNavProfilePic);
+        Glide.with(this).load(currUser.getString("profilePicUrl")).fitCenter().bitmapTransform(new jp.wasabeef.glide.transformations.CropCircleTransformation(getApplicationContext())).into(ivNavProfilePic);
         tvNavUserName.setText(currUser.getString("username"));
-        String numFriends = parseClient.countNumFriendsOfUser(currUser)+" friends";
-        String numItemsSold = parseClient.countNumItemsOnStatus(currUser,"Sold")+" items sold";
-        String numItemsOnhold = parseClient.countNumItemsOnStatus(currUser,"On hold")+" items on hold";
-        String numItemsAvailable = parseClient.countNumItemsOnStatus(currUser, "Available") + " items available";
-        tvNavNumFriends.setText(numFriends);
-        tvNavItemsSold.setText(numItemsSold);
-        tvNavItemsOnhold.setText(numItemsOnhold);
-        tvNavItemsAvailable.setText(numItemsAvailable);
+        parseClient.countNumFriendsOfUser(currUser,tvNavNumFriends," friends");
+        parseClient.countNumItemsOnStatus(currUser,"Sold",tvNavItemsSold," items sold");
+        parseClient.countNumItemsOnStatus(currUser,"On hold",tvNavItemsOnhold," items on hold");
+        parseClient.countNumItemsOnStatus(currUser,"Available",tvNavItemsAvailable," items available");
 
         //Launching profile activity when profile picture in the navigation drawer is clicked
         ivNavProfilePic.setOnClickListener(new View.OnClickListener() {
