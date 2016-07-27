@@ -87,7 +87,6 @@ public class FriendsAdapter extends RecyclerView.Adapter<FriendsAdapter.ViewHold
             }
         });
     }
-
     @Override
     public int getItemCount() {
         return friends.size();
@@ -97,7 +96,6 @@ public class FriendsAdapter extends RecyclerView.Adapter<FriendsAdapter.ViewHold
         friends.clear();
         notifyDataSetChanged();
     }
-
     public void clearAndAddAll(List<Friend> newFriends) {
         friends.addAll(newFriends);
         notifyDataSetChanged();
