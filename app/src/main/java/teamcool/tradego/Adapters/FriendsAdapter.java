@@ -11,6 +11,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.parse.CountCallback;
+import com.parse.ParseException;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.squareup.picasso.Picasso;
 
@@ -22,6 +25,7 @@ import jp.wasabeef.glide.transformations.CropCircleTransformation;
 import teamcool.tradego.Activities.ProfileActivity;
 import teamcool.tradego.Clients.ParseClient;
 import teamcool.tradego.Models.Friend;
+import teamcool.tradego.Models.Item;
 import teamcool.tradego.R;
 
 /**
@@ -29,6 +33,7 @@ import teamcool.tradego.R;
  */
 public class FriendsAdapter extends RecyclerView.Adapter<FriendsAdapter.ViewHolder> {
 
+    ViewHolder holder1;
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
         //butterknife binding goes here:
@@ -79,12 +84,16 @@ public class FriendsAdapter extends RecyclerView.Adapter<FriendsAdapter.ViewHold
 
         final ParseUser friend_to_user = parseClient.queryUserBasedonFBid(friend.getUserID());
 
-
+        //Try callback here
         int number = parseClient.countNumItemsOnUser(friend_to_user);
+        //holder1.tvItems.setText("Items in Catalog: " + count);
 
-        holder.tvItems.setText("Items in Catalog: " + number);
+
+
+
+
+        
         /*
-
         holder.rlFriendEach.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

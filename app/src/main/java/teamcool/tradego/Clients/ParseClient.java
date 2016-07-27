@@ -6,6 +6,7 @@ package teamcool.tradego.Clients;
 import android.text.format.DateFormat;
 import android.util.Log;
 
+import com.parse.CountCallback;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
@@ -24,6 +25,7 @@ import teamcool.tradego.Models.Item;
 public class ParseClient {
 
     ArrayList<ParseUser> friends;
+    int countItems = 0;
 
     public ParseClient () {
         friends = convertFriendsToParseUsers(queryFriendsOnName(null));
@@ -207,17 +209,23 @@ public class ParseClient {
         return count;
     }
 
+    //Inefficient because it's literally querying for every item.
     public int countNumItemsOnUser(ParseUser user) {
-        int count = -15251;
         ParseQuery<Item> query = ParseQuery.getQuery(Item.class);
         query.whereEqualTo("owner",user);
-        try {
-            count = query.count();
-        }
-        catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return count;
+        //query.whereEqualTo("status", "Available");
+        query.countInBackground(new CountCallback() {
+            @Override
+            public void done(int count, ParseException e) {
+                if (e == null){
+                    countItems = count;
+                }
+                else {
+                    countItems = count;
+                }
+            }
+        });
+        return countItems;
     }
 
     public int countNumItemsBought(ParseUser user) {

@@ -91,6 +91,7 @@ public class NewsFeedActivity extends AppCompatActivity {
                     return UserCatalogFragment.newInstance(currentUserObjID,"Sold");
             }
             else if (selector == R.id.nav_friends_fragment) {
+                //Search for itemCount before returning fragment?
                 return new FriendsListFragment();
             }
             else if (selector == R.id.nav_transaction_status_fragment) {
