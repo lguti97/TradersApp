@@ -9,11 +9,15 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Base64;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -29,6 +33,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import teamcool.tradego.Adapters.DetailAdapter;
 import teamcool.tradego.Clients.ParseClient;
 import teamcool.tradego.Fragments.AlertDeleteFragment;
 import teamcool.tradego.Models.Item;
@@ -36,98 +41,62 @@ import teamcool.tradego.R;
 
 public class DetailsActivity extends AppCompatActivity {
 
-    private static final String EXTRA_PROTOCOL_VERSION = "com.facebook.orca.extra.PROTOCOL_VERSION";
-    private static final String EXTRA_APP_ID = "com.facebook.orca.extra.APPLICATION_ID";
-    private static final int PROTOCOL_VERSION = 20150314;
-    private static final String YOUR_APP_ID = "528996547286241";
-    private static final int SHARE_TO_MESSENGER_REQUEST_CODE = 1;
+    ParseClient parseClient;
     String ownerId = "";
-
-    @BindView(R.id.btnMessenger) View btnMessenger;
     Item item;
-    String itemId;
+    String itemId = "";
+
     /*
+    @BindView(R.id.btnMessenger) View btnMessenger;
     @BindView(R.id.tvItemDescription) TextView tvItemDescription;
     @BindView(R.id.tvItemName) TextView tvItemName;
     @BindView(R.id.tvItemStatus) TextView tvItemStatus;
     @BindView(R.id.etPrice) EditText etPrice;
-    @BindView(R.id.tvItemNegotiable) EditText tvItemNegotiable;*/
+    @BindView(R.id.tvItemNegotiable) EditText tvItemNegotiable; */
 
-    TextView tvItemDescription;
-    TextView tvItemName;
-    TextView tvItemStatus;
-    TextView tvItemPrice;
-    TextView tvItemNegotiable;
-    TextView tvItemCategory;
-    ImageView ivItem1;
-    ImageView ivItem2;
 
-    private static final int REQUEST_CODE_SHARE_TO_MESSENGER = 15251;
-    ParseClient parseClient;
+    public static final int ITEMDETAIL = 0;
+    public static final int PRICE = 1;
+    public static final int PROFILE = 2;
+
+    private RecyclerView rvDetails;
+    private DetailAdapter mAdapter;
+    private RecyclerView.LayoutManager mLayoutManager;
+    private String[] mDataset = {"foo", "bar", "lol"};
+    private int mDatasetTypes[] = {ITEMDETAIL, PRICE, PROFILE};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details);
-
         ButterKnife.bind(this);
-
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-
         setSupportActionBar(toolbar);
-
         ActionBar actionbar = getSupportActionBar();
         actionbar.setDisplayHomeAsUpEnabled(true);
         actionbar.setDisplayShowHomeEnabled(true);
-
+        //Retrieves the Item that will be displayed in detail
+        item = new Item();
         itemId = getIntent().getStringExtra("item_id");
-        
-        btnMessenger.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Uri messenger = Uri.parse((new StringBuilder("http://m.me/")).append(Uri.encode("kinjal.shah.7505")).toString());
-                Intent i = new Intent(Intent.ACTION_VIEW, messenger);
-                startActivity(i);
-
-            }
-        });
-
-        populateItemDetails();
-
-    }
-
-    private void populateItemDetails() {
-
+        Log.d("DEBUG", itemId);
         parseClient = new ParseClient();
         item = parseClient.queryItemBasedonObjectID(itemId);
 
-        tvItemDescription = (TextView) findViewById(R.id.tvItemDescription);
-        tvItemName = (TextView) findViewById(R.id.tvItemName);
-        tvItemStatus = (TextView) findViewById(R.id.tvItemStatus);
-        tvItemPrice = (TextView) findViewById(R.id.tvItemPrice);
-        tvItemNegotiable = (TextView) findViewById(R.id.tvItemNegotiable);
-        tvItemCategory = (TextView) findViewById(R.id.tvItemCategory);
-        ivItem1 = (ImageView) findViewById(R.id.ivItem1);
-        ivItem2 = (ImageView) findViewById(R.id.ivItem2);
+        //Setuping up Adapter
+        rvDetails = (RecyclerView) findViewById(R.id.rvDetails);
+        mLayoutManager = new LinearLayoutManager(DetailsActivity.this);
+        rvDetails.setLayoutManager(mLayoutManager);
+        mAdapter = new DetailAdapter(mDataset, mDatasetTypes, item);
+        rvDetails.setAdapter(mAdapter);
 
 
-
-        tvItemDescription.setText("Item description: " + item.getDescription());
-        tvItemName.setText(item.getItem_name());
-        tvItemStatus.setText("Status: " + item.getStatus());
-        String price = String.valueOf(item.getPrice());
-        tvItemPrice.setText("Price: " + price);
-        tvItemNegotiable.setText("Negotiable: " + item.getNegotiable());
-        tvItemCategory.setText("Category: " + item.getCategory());
-        ParseUser owner = item.getParseUser("owner");
-
-        ownerId = "546811442193809"; //hardcoded luis' fb-id for debugging purpose
-
-        ivItem1.setImageBitmap(decodeBase64(item.getImage1()));
-        ivItem2.setImageBitmap(decodeBase64(item.getImage2()));
+        //For the images of the person.
+        //ivItem1.setImageBitmap(decodeBase64(item.getImage1()));
+        //ivItem2.setImageBitmap(decodeBase64(item.getImage2()));
 
     }
 
+    //For Image Compression
     public static String encodeToBase64(Bitmap image, Bitmap.CompressFormat compressFormat, int quality)
     {
         ByteArrayOutputStream byteArrayOS = new ByteArrayOutputStream();
@@ -143,7 +112,7 @@ public class DetailsActivity extends AppCompatActivity {
 
 
 
-
+    //Editing purposes.
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -163,7 +132,6 @@ public class DetailsActivity extends AppCompatActivity {
 
 
     public void onEditItem(MenuItem item) {
-
         Intent i = new Intent(DetailsActivity.this, AddItemActivity.class);
         i.putExtra("item_id", itemId);
         startActivity(i);
