@@ -39,7 +39,7 @@
                 android:layout_height="60dp"
                 android:id="@+id/ivPriceTag"
                 android:src="@drawable/price_tag"
-                />
+                android:src="@drawable/price_tag"/>
 
             <TextView
                 android:layout_width="wrap_content"
