@@ -103,8 +103,6 @@ public class AddItemActivity extends AppCompatActivity {
         });
 
 
-
-
         //keyboard focus changing:
         etPrice.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
@@ -136,9 +134,7 @@ public class AddItemActivity extends AppCompatActivity {
 
 
         if (getIntent().getStringExtra("item_id") != null) {
-
             populateEditItem();
-
         }
 
 
@@ -258,11 +254,11 @@ public class AddItemActivity extends AppCompatActivity {
         try {
             price = Double.parseDouble(etPrice.getText().toString());
         } catch (Exception e) {
-            price = 0.0d;
+            price = -15251.0;
         }
 
-        if(etItemDescription.getText().toString() == null || category == null || etItemDescription.getText().toString() == null || status == null || price==0.0d) {
-            Toast.makeText(this, "Please complete all the fields", Toast.LENGTH_SHORT).show();
+        if(etItemDescription.getText() == null || category == null || etItemDescription.getText().toString() == null || status == null || price < 0) {
+            Toast.makeText(this, "Please complete all the fields with correct values", Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -287,10 +283,10 @@ public class AddItemActivity extends AppCompatActivity {
 
         else {
             Toast.makeText(this, "Item Added!", Toast.LENGTH_SHORT).show();
-            new_item.saveInBackground();}
+            new_item.saveInBackground();
+        }
 
-        Intent i = new Intent(this, NewsFeedActivity.class);
-        startActivity(i);
+        finish();
     }
 
 
