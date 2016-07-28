@@ -414,7 +414,6 @@ public class AddItemActivity extends AppCompatActivity {
                 }
                 // Load the selected image into a preview
 
-                //Bitmap takenImage = Bitmap.createScaledBitmap(selectedImage, 250, 250, true);
 
                 if(index==1) {
 
