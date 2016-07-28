@@ -127,15 +127,12 @@ public class LoginActivity extends AppCompatActivity {
                 // it might be because you have3 no PERMISSION to access it
                 // look it up in API and add more permissions to the array
 
-                Intent i = new Intent (LoginActivity.this, NewsFeedActivity.class);
+                Intent i = new Intent (LoginActivity.this, FriendImportActivity.class);
+                i.putExtra("initial",true);
                 startActivity(i);
                 overridePendingTransition(R.anim.right_in, R.anim.left_out);
             }
         });
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-    }
 }

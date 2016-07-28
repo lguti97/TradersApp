@@ -20,6 +20,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
@@ -49,6 +50,7 @@ public class AddItemActivity extends AppCompatActivity {
     @BindView(R.id.etItemName) EditText etItemName;
     @BindView(R.id.etItemDescription) EditText etItemDescription;
     @BindView(R.id.Add_New_Item) TextView header;
+    @BindView(R.id.skipAddItem) Button skipAddItem;
     ParseClient parseClient;
 
 
@@ -59,6 +61,7 @@ public class AddItemActivity extends AppCompatActivity {
     String image_2;
     String itemId;
     Item item;
+    boolean initial;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,15 +70,19 @@ public class AddItemActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         //Take first image of the item to be sold
 
-
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-
         setSupportActionBar(toolbar);
-
         ActionBar actionbar = getSupportActionBar();
         actionbar.setDisplayHomeAsUpEnabled(true);
         actionbar.setDisplayShowHomeEnabled(true);
 
+        if (getIntent() != null) {
+            initial = getIntent().getBooleanExtra("initial",false);
+        }
+
+        if (initial) {
+            skipAddItem.setText(getResources().getString(R.string.skip_add_item));
+        }
 
 
         ivItem1.setOnClickListener(new View.OnClickListener() {
@@ -101,7 +108,6 @@ public class AddItemActivity extends AppCompatActivity {
                 index = 2;
             }
         });
-
 
         //keyboard focus changing:
         etPrice.setOnFocusChangeListener(new View.OnFocusChangeListener() {

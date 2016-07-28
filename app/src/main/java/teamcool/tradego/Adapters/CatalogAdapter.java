@@ -1,6 +1,5 @@
 package teamcool.tradego.Adapters;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -20,7 +19,6 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import teamcool.tradego.Activities.DetailsActivity;
-import teamcool.tradego.Clients.ParseClient;
 import teamcool.tradego.Models.Item;
 import teamcool.tradego.R;
 
