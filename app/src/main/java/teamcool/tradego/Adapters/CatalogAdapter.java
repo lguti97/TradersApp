@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.v7.widget.RecyclerView;
 import android.util.Base64;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,7 +48,6 @@ public class CatalogAdapter extends RecyclerView.Adapter<CatalogAdapter.ViewHold
     }
 
     private List<Item> items;
-    private ParseClient parseClient;
     private Context context;
 
 
@@ -66,13 +66,23 @@ public class CatalogAdapter extends RecyclerView.Adapter<CatalogAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        parseClient = new ParseClient();
         final Item item = items.get(position);
         //populate each item by setting its text and media
 
-
-        //holder.itemName.setText(item.getItem_name());
-        holder.tvPrice.setText("$" + String.valueOf(item.getPrice()));
+        //set price to FREE, int, or double depending on raw value.
+        String price;
+        Double rawDoublePrice = item.getPrice();
+        int truncatedPrice = rawDoublePrice.intValue();
+        if (rawDoublePrice.equals((double)truncatedPrice)) {
+            if (truncatedPrice == 0) {
+                price = "Free";
+            } else {
+                price = "$" + truncatedPrice;
+            }
+        } else {
+            price = "$" + rawDoublePrice;
+        }
+        holder.tvPrice.setText(price);
 
         if(item.getImage1() != null) {
             holder.ivItemImage.setImageBitmap(decodeBase64(item.getImage1()));
