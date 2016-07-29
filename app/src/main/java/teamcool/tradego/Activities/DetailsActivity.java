@@ -173,7 +173,7 @@ public class DetailsActivity extends AppCompatActivity {
     public void populateSlider() {
         for (int i = 1; i < 3; i++) {
             TextSliderView textSliderView = new TextSliderView(this);
-            // initialize a SliderLayout
+            // initialize a SliderLayout.
             textSliderView
                     .description("Item")
                     .image(item.getImage1())

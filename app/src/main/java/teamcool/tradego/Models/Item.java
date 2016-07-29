@@ -97,7 +97,7 @@ public class Item extends ParseObject {
 
     public void setImage2(String image2) { put("image_2",image2); }
 
-    //This is me setting up fbID for the user.
+    //Not the correct Facebook ID yet.
 
     public String getfbID() { return getString("fbID"); }
 
