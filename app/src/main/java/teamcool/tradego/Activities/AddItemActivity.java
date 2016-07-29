@@ -5,6 +5,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -76,6 +78,10 @@ public class AddItemActivity extends AppCompatActivity {
         actionbar.setDisplayHomeAsUpEnabled(true);
         actionbar.setDisplayShowHomeEnabled(true);
 
+        if(ParseUser.getCurrentUser().isNew()) {
+            actionbar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#d3d3d3")));
+            actionbar.setTitle("Getting Started");
+        }
 
 
         ivItem1.setOnClickListener(new View.OnClickListener() {
@@ -346,6 +352,7 @@ public class AddItemActivity extends AppCompatActivity {
                     }
                 });
         myAlertDialog.show();
+
 
     }
 
