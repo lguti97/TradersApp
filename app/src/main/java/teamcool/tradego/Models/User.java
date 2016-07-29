@@ -27,6 +27,11 @@ public class User {
 
     }
 
+
+    public String getProfilePicUrl() {
+        return profilePicUrl;
+    }
+
     //Updates member variables + aliasing
     public User(String username, String user_id, String location, String timezone, String profilePicUrl, String fb_id, ParseUser obj) {
         this.username = username;

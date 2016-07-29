@@ -10,20 +10,22 @@
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="75dp">
+        android:layout_height="120dp"
+        android:padding="16dp">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="20sp"
+            android:textSize="25sp"
             android:id="@+id/tvItemName"
             android:text="NAME OF OBJECT"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/tvItemDescription"
+            android:layout_marginTop="10dp"
             android:layout_below="@+id/tvItemName"
-            android:textSize="10sp"
+            android:textSize="15sp"
             android:text="This will be allocated for a description of the object. It will contain as many details as it needs"/>
 
 

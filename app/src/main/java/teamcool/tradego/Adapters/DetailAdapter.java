@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,14 +12,19 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.parse.Parse;
 import com.parse.ParseClassName;
+import com.parse.ParseUser;
 
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
+import teamcool.tradego.Activities.DetailsActivity;
+import teamcool.tradego.Clients.ParseClient;
 import teamcool.tradego.Models.Item;
+import teamcool.tradego.Models.User;
 import teamcool.tradego.R;
 
 /**
@@ -33,6 +39,9 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
     private String[] mDataSet;
     private int[] mDataSetTypes;
     private Item item;
+    private ParseUser user;
+    private Context context;
+    private ParseClient parseClient;
 
     private static final String EXTRA_PROTOCOL_VERSION = "com.facebook.orca.extra.PROTOCOL_VERSION";
     private static final String EXTRA_APP_ID = "com.facebook.orca.extra.APPLICATION_ID";
@@ -77,10 +86,11 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
         }
     }
     //This is gonna retrieve the item clas and then the 3 psuedoViewTypes.
-    public DetailAdapter(String[] dataSet, int[] dataSetTypes, Item item) {
+    public DetailAdapter(String[] dataSet, int[] dataSetTypes, Item item, Context context) {
         this.mDataSet = dataSet;
         this.mDataSetTypes = dataSetTypes;
         this.item = item;
+        this.context = context;
     }
 
     @Override
@@ -106,14 +116,29 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
     public void onBindViewHolder(ViewHolder holder, int position) {
         if (holder.getItemViewType() == ITEMDETAIL) {
             ItemDetailViewHolder holder1 = (ItemDetailViewHolder) holder;
-            holder1.tvItemName.setText(item.getItem_name());
-            holder1.tvItemDescription.setText(item.getDescription());
+            String itemName = item.getItem_name();
+            String itemName1 = itemName.substring(0, 1).toUpperCase() + itemName.substring(1);
+            holder1.tvItemName.setText(itemName1);
+            String itemDescription = item.getDescription();
+            String itemDescription1 = itemDescription.substring(0, 1).toUpperCase() + itemDescription.substring(1);
+            holder1.tvItemDescription.setText(itemDescription1);
         } else if (holder.getItemViewType() == PRICE) {
             ItemPriceViewHolder holder1 = (ItemPriceViewHolder) holder;
-            holder1.tvPrice.setText(String.valueOf(item.getPrice()));
-            holder1.tvItemNegotiable.setText(item.getNegotiable());
+            holder1.tvPrice.setText("$" + String.valueOf(item.getPrice()));
+            holder1.tvItemNegotiable.setText("Negotiable: " + item.getNegotiable());
         } else {
             SellerViewHolder holder1 = (SellerViewHolder) holder;
+            parseClient = new ParseClient();
+            //TODO. Get picURl from the user.
+            /*
+            holder1.ivProfileImage.setImageResource(0);
+            Log.d("DEBUG", user.getString("profilePicUrl"));
+            Glide.with(context)
+                    .load(user.getString("profilePicUrl"))
+                    .bitmapTransform(new CropCircleTransformation(context))
+                    .into(holder1.ivProfileImage);
+            holder1.tvName.setText(user.getString("username")); */
+
             //Hardcoded messaging but all we need to is gather userName of person we want to message.
             /*
             holder1.btnMessenger.setOnClickListener(new View.OnClickListener() {

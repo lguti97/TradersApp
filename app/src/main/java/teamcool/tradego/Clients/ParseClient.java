@@ -22,6 +22,7 @@ import java.util.List;
 import teamcool.tradego.Models.Acquaintance;
 import teamcool.tradego.Models.Friend;
 import teamcool.tradego.Models.Item;
+import teamcool.tradego.Models.User;
 
 
 public class ParseClient {

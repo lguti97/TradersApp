@@ -20,7 +20,11 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.daimajia.slider.library.SliderLayout;
+import com.daimajia.slider.library.SliderTypes.BaseSliderView;
+import com.daimajia.slider.library.SliderTypes.TextSliderView;
 import com.facebook.messenger.MessengerUtils;
 import com.facebook.messenger.ShareToMessengerParams;
 import com.parse.ParseUser;
@@ -46,13 +50,6 @@ public class DetailsActivity extends AppCompatActivity {
     Item item;
     String itemId = "";
 
-    /*
-    @BindView(R.id.btnMessenger) View btnMessenger;
-    @BindView(R.id.tvItemDescription) TextView tvItemDescription;
-    @BindView(R.id.tvItemName) TextView tvItemName;
-    @BindView(R.id.tvItemStatus) TextView tvItemStatus;
-    @BindView(R.id.etPrice) EditText etPrice;
-    @BindView(R.id.tvItemNegotiable) EditText tvItemNegotiable; */
 
 
     public static final int ITEMDETAIL = 0;
@@ -62,6 +59,7 @@ public class DetailsActivity extends AppCompatActivity {
     private RecyclerView rvDetails;
     private DetailAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
+    private SliderLayout mSlider;
     private String[] mDataset = {"foo", "bar", "lol"};
     private int mDatasetTypes[] = {ITEMDETAIL, PRICE, PROFILE};
 
@@ -71,6 +69,7 @@ public class DetailsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_details);
         ButterKnife.bind(this);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        mSlider = (SliderLayout) findViewById(R.id.slider);
         setSupportActionBar(toolbar);
         ActionBar actionbar = getSupportActionBar();
         actionbar.setDisplayHomeAsUpEnabled(true);
@@ -82,11 +81,15 @@ public class DetailsActivity extends AppCompatActivity {
         parseClient = new ParseClient();
         item = parseClient.queryItemBasedonObjectID(itemId);
 
+        //populates the slider
+        populateSlider();
+
         //Setuping up Adapter
         rvDetails = (RecyclerView) findViewById(R.id.rvDetails);
         mLayoutManager = new LinearLayoutManager(DetailsActivity.this);
         rvDetails.setLayoutManager(mLayoutManager);
-        mAdapter = new DetailAdapter(mDataset, mDatasetTypes, item);
+        //Pass in context here as well?
+        mAdapter = new DetailAdapter(mDataset, mDatasetTypes, item, this);
         rvDetails.setAdapter(mAdapter);
 
 
@@ -164,5 +167,30 @@ public class DetailsActivity extends AppCompatActivity {
             overridePendingTransition(R.anim.left_in, R.anim.right_out);
         }
         return super.onOptionsItemSelected(item);
+    }
+
+
+    public void populateSlider() {
+        for (int i = 1; i < 3; i++) {
+            TextSliderView textSliderView = new TextSliderView(this);
+            // initialize a SliderLayout
+            textSliderView
+                    .description("Item")
+                    .image(item.getImage1())
+                    .setScaleType(BaseSliderView.ScaleType.Fit)
+                    .setOnSliderClickListener(new BaseSliderView.OnSliderClickListener() {
+                        @Override
+                        public void onSliderClick(BaseSliderView slider) {
+                            //
+                        }
+                    });
+
+            //add your extra information
+            textSliderView.bundle(new Bundle());
+            textSliderView.getBundle()
+                    .putString("extra", "Item");
+
+            mSlider.addSlider(textSliderView);
+        }
     }
 }

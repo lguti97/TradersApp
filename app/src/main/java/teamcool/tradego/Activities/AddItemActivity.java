@@ -50,6 +50,7 @@ public class AddItemActivity extends AppCompatActivity {
     @BindView(R.id.etItemDescription) EditText etItemDescription;
     @BindView(R.id.Add_New_Item) TextView header;
     ParseClient parseClient;
+    ParseUser user;
 
 
     String negotiable;
@@ -271,11 +272,15 @@ public class AddItemActivity extends AppCompatActivity {
             return;
         }
 
+        //Retrieve fbID from the currentUser
+        user = ParseUser.getCurrentUser();
+        //Not sure of the syntax that must be used to retrieve the FB id but this is a start.
+        String fbID = user.getObjectId();
+
         Item new_item = new Item(etItemName.getText().toString(),
                 category, etItemDescription.getText().toString(),
-                status, price, negotiable, image_1, image_2);
+                status, price, negotiable, image_1, image_2, fbID);
 
-        ParseUser user = ParseUser.getCurrentUser();
         new_item.setOwner(user);
 
 
