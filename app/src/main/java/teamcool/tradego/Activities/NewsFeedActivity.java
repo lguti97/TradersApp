@@ -200,17 +200,16 @@ public class NewsFeedActivity extends AppCompatActivity {
         ImageView ivNavProfilePic = (ImageView) headerView.findViewById(R.id.ivNavProfilePic);
         TextView tvNavUserName = (TextView) headerView.findViewById(R.id.tvNavUserName);
         TextView tvNavNumFriends = (TextView) headerView.findViewById(R.id.tvNavNumFriends);
-        TextView tvNavItemsSold = (TextView) headerView.findViewById(R.id.tvNavItemsSold);
-        TextView tvNavItemsOnhold = (TextView) headerView.findViewById(R.id.tvNavItemsOnhold);
         TextView tvNavItemsAvailable = (TextView) headerView.findViewById(R.id.tvNavItemsAvailable);
 
 
         ParseUser currUser = ParseUser.getCurrentUser();
-        Glide.with(this).load(currUser.getString("profilePicUrl")).fitCenter().bitmapTransform(new jp.wasabeef.glide.transformations.CropCircleTransformation(getApplicationContext())).into(ivNavProfilePic);
+        Glide.with(this).load(currUser.getString("profilePicUrl"))
+                        .centerCrop()
+                        .bitmapTransform(new jp.wasabeef.glide.transformations.CropCircleTransformation(getApplicationContext()))
+                        .into(ivNavProfilePic);
         tvNavUserName.setText(currUser.getString("username"));
         parseClient.countNumFriendsOfUser(currUser,tvNavNumFriends," friends");
-        parseClient.countNumItemsOnStatus(currUser,"Sold",tvNavItemsSold," items sold");
-        parseClient.countNumItemsOnStatus(currUser,"On hold",tvNavItemsOnhold," items on hold");
         parseClient.countNumItemsOnStatus(currUser,"Available",tvNavItemsAvailable," items available");
 
         //Launching profile activity when profile picture in the navigation drawer is clicked

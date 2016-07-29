@@ -4,7 +4,6 @@ package teamcool.tradego.Clients;
 
 
 import android.text.format.DateFormat;
-import android.util.Log;
 import android.widget.TextView;
 
 import com.parse.CountCallback;
@@ -201,7 +200,6 @@ public class ParseClient {
     //REQUIRES: user must be a friend of currentUser
     public void countNumItemsOnStatus(ParseUser user, String status, final TextView textView, final String strAppend) {
         int count = -15251; //placeholder value
-        Log.d("DEBUGQ","start query");
         ParseQuery<Item> query = ParseQuery.getQuery(Item.class);
         query.whereEqualTo("owner",user);
         query.whereEqualTo("status",status);
@@ -209,7 +207,6 @@ public class ParseClient {
             @Override
             public void done(int count, ParseException e) {
                 String txt = count + strAppend;
-                Log.d("DEBUGQ","end query");
                 textView.setText(txt);
             }
         });

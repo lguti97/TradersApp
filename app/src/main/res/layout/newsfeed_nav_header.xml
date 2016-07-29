@@ -1,8 +1,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="192dp"
+    android:layout_height="140dp"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="?attr/colorPrimaryDark"
+    android:background="@drawable/unnamed"
     android:padding="16dp"
     android:theme="@style/ThemeOverlay.AppCompat.Dark"
     android:orientation="vertical"
@@ -15,9 +15,13 @@
         android:layout_height="70dp"
         android:src="@drawable/ic_camera"
         android:id="@+id/ivNavProfilePic"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
         android:layout_marginTop="20dp"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="16dp"/>
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="20dp" />
 
     <TextView
         android:layout_width="match_parent"
@@ -26,7 +30,8 @@
         android:text="John Doe"
         android:textSize="20sp"
         android:textStyle="bold"
-        android:id="@+id/tvNavUserName" />
+        android:id="@+id/tvNavUserName"
+        android:layout_marginTop="15dp" />
 
     <TextView
         android:layout_width="match_parent"
@@ -36,27 +41,12 @@
         android:layout_below="@id/tvNavUserName"
         android:id="@+id/tvNavNumFriends" />
 
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_toRightOf="@id/ivNavProfilePic"
-        android:text="150 items sold"
         android:layout_below="@id/tvNavNumFriends"
-        android:id="@+id/tvNavItemsSold" />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/ivNavProfilePic"
-        android:layout_below="@id/tvNavItemsSold"
-        android:text="251 items on hold"
-        android:id="@+id/tvNavItemsOnhold" />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/ivNavProfilePic"
-        android:layout_below="@id/tvNavItemsOnhold"
         android:text="251 items available"
         android:id="@+id/tvNavItemsAvailable" />
 

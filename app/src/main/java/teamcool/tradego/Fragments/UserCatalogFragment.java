@@ -1,10 +1,10 @@
 package teamcool.tradego.Fragments;
 
+import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,6 +31,10 @@ import teamcool.tradego.R;
 public class UserCatalogFragment extends CatalogListFragment {
 
     List<Item> items;
+    boolean isViewCreated = false;
+    boolean isSeen = false;
+    boolean isLoaded = false;
+    boolean isRefresh = false;
 
     @BindView(R.id.swipeContainerCatalog) SwipeRefreshLayout swipeContainer;
     @BindView(R.id.ivNoItems) ImageView ivNoItems;
@@ -51,6 +55,23 @@ public class UserCatalogFragment extends CatalogListFragment {
 
 
     private class AsyncDataLoading extends AsyncTask<String,Void,List<Item>> {
+
+        ProgressDialog progressDialog;
+
+        @Override
+        protected void onPreExecute() {
+            if (!isRefresh) {
+                progressDialog = new ProgressDialog(getActivity());
+                progressDialog.setTitle("Loading");
+                progressDialog.setMessage("Please wait...");
+                progressDialog.setCancelable(false);
+                progressDialog.setIndeterminate(true);
+                progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                progressDialog.show();
+            }
+            super.onPreExecute();
+        }
+
         @Override
         protected List<Item> doInBackground(String... strings) {
             ParseClient parseClient = new ParseClient();
@@ -76,10 +97,13 @@ public class UserCatalogFragment extends CatalogListFragment {
         protected void onPostExecute(List<Item> items) {
             addAll(items);
             swipeContainer.setRefreshing(false);
+            if (progressDialog != null) {
+                progressDialog.dismiss();
+            }
+            isRefresh = false;
             if(items.size() == 0) {
                 Glide.with(getContext()).load(R.drawable.placeholder_transparent).into(ivNoItems);
             }
-            super.onPostExecute(items);
         }
     }
 
@@ -98,11 +122,15 @@ public class UserCatalogFragment extends CatalogListFragment {
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        populateCatalog(getArguments().getString("id"), getArguments().getString("status"));
+        isViewCreated = true;
+        if (isSeen && !isLoaded) {
+            populateCatalog(getArguments().getString("id"), getArguments().getString("status"));
+        }
         //if swipe container exists, must setOnRefreshListener here, not onCreateView or onCreate
         swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
+                isRefresh = true;
                 populateCatalog(getArguments().getString("id"), getArguments().getString("status"));
             }
         });
@@ -114,15 +142,19 @@ public class UserCatalogFragment extends CatalogListFragment {
     }
 
 
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser)
+            isSeen = true;
+        if (isViewCreated && !isLoaded)
+            populateCatalog(getArguments().getString("id"), getArguments().getString("status"));
+    }
 
     public void populateCatalog(String id, String status) {
+        isLoaded = true;
         String args[] = {id,status};
         new AsyncDataLoading().execute(args);
     }
 
-    @Override
-    public void onResume() {
-        populateCatalog(getArguments().getString("id"), getArguments().getString("status"));
-        super.onResume();
-    }
 }

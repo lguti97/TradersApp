@@ -174,9 +174,10 @@ public class DetailsActivity extends AppCompatActivity {
         for (int i = 1; i < 3; i++) {
             TextSliderView textSliderView = new TextSliderView(this);
             // initialize a SliderLayout.
+            String image = item.getImage1();
             textSliderView
                     .description("Item")
-                    .image(item.getImage1())
+                    .image("image")
                     .setScaleType(BaseSliderView.ScaleType.Fit)
                     .setOnSliderClickListener(new BaseSliderView.OnSliderClickListener() {
                         @Override

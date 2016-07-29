@@ -40,15 +40,6 @@
                 android:id="@+id/ivPriceTag"
                 android:src="@drawable/price_tag"/>
 
-            <!--TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/tvNewsFeedItemName"
-                android:text="Item name here"
-                android:layout_marginTop="20dp"
-                android:layout_centerHorizontal="true"
-                android:gravity="center"/-->
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -56,7 +47,8 @@
                 android:id="@+id/tvPrice"
                 android:textColor="#359714"
                 android:layout_marginTop="20dp"
-                android:paddingLeft="5dp" />
+                android:paddingLeft="5dp"
+                />
 
         </RelativeLayout>
 
