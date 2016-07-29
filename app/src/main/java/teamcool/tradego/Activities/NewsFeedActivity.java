@@ -32,6 +32,7 @@ import teamcool.tradego.Clients.ParseClient;
 import teamcool.tradego.Fragments.CategoriesTimelineFragment;
 import teamcool.tradego.Fragments.FriendsListFragment;
 import teamcool.tradego.Fragments.TopTimelineFragment;
+import teamcool.tradego.Fragments.TransactionFragment;
 import teamcool.tradego.Fragments.UserCatalogFragment;
 import teamcool.tradego.Fragments.WishListFragment;
 import teamcool.tradego.R;
@@ -63,7 +64,8 @@ public class NewsFeedActivity extends AppCompatActivity {
         final String tab0Names[] = {"All", "Sports", "Clothes", "Accessories", "Stationary", "Other"};
         final String tab1Names[] = {"Available", "Onhold", "Sold"};
         final String tab2Names[] = {"Friends"};
-        final String tab3Names[] = {"Sold", "Bought", "Onhold"};
+        //final String tab3Names[] = {"Sold", "Bought", "Onhold"};
+        final String tab3Names[] = {"Graph"};
         final String tab4Names[] = {"Wishlist"};
 
         @Override
@@ -90,13 +92,14 @@ public class NewsFeedActivity extends AppCompatActivity {
                 return new FriendsListFragment();
             }
             else if (selector == R.id.nav_transaction_status_fragment) {
-                String currentUserObjID = ParseUser.getCurrentUser().getObjectId();
+                /*String currentUserObjID = ParseUser.getCurrentUser().getObjectId();
                 if (position == 0) //Sold
                     return UserCatalogFragment.newInstance(currentUserObjID,"Sold");
                 else if (position == 1) //Bought
                     return UserCatalogFragment.newInstance(currentUserObjID,"Bought");
                 else //on hold
-                    return UserCatalogFragment.newInstance(currentUserObjID,"On hold");
+                    return UserCatalogFragment.newInstance(currentUserObjID,"On hold");*/
+                return new TransactionFragment();
             }
             else if (selector == R.id.nav_wishlist_fragment) {
                 return new WishListFragment();
