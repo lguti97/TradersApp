@@ -208,9 +208,9 @@ public class NewsFeedActivity extends AppCompatActivity {
         Glide.with(this).load(currUser.getString("profilePicUrl")).fitCenter().bitmapTransform(new jp.wasabeef.glide.transformations.CropCircleTransformation(getApplicationContext())).into(ivNavProfilePic);
         tvNavUserName.setText(currUser.getString("username"));
         parseClient.countNumFriendsOfUser(currUser,tvNavNumFriends," friends");
-        parseClient.countNumItemsOnStatus(currUser,"Sold",tvNavItemsSold," items sold");
-        parseClient.countNumItemsOnStatus(currUser,"On hold",tvNavItemsOnhold," items on hold");
-        parseClient.countNumItemsOnStatus(currUser,"Available",tvNavItemsAvailable," items available");
+        parseClient.countNumItemsOnStatus(currUser,"Sold",tvNavItemsSold,""," items sold");
+        parseClient.countNumItemsOnStatus(currUser,"On hold",tvNavItemsOnhold,""," items on hold");
+        parseClient.countNumItemsOnStatus(currUser,"Available",tvNavItemsAvailable,""," items available");
 
         //Launching profile activity when profile picture in the navigation drawer is clicked
         ivNavProfilePic.setOnClickListener(new View.OnClickListener() {

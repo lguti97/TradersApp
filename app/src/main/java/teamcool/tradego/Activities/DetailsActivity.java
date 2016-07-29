@@ -148,7 +148,6 @@ public class DetailsActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
 
-        Item item_2 = parseClient.queryItemBasedonObjectID(itemId);
         List<Item> items = parseClient.queryItemsOnUser(ParseUser.getCurrentUser());
 
         for(Item item: items) {
@@ -174,7 +173,7 @@ public class DetailsActivity extends AppCompatActivity {
     }
 
     public void showAlertDialog() {
-        AlertDeleteFragment frag = AlertDeleteFragment.newInstance(itemId);
+        AlertDeleteFragment frag = AlertDeleteFragment.newInstance(true,tvItemName.getText().toString(),itemId);
         frag.show(getSupportFragmentManager(), "fragment_alert");
     }
 

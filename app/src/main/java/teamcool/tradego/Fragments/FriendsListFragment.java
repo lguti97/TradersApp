@@ -122,6 +122,12 @@ public class FriendsListFragment extends Fragment {
         return friendsListFragment;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        friendsAdapter.notifyDataSetChanged();
+    }
+
     public void populate() {
         new AsyncDataLoading().execute();
     }

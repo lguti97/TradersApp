@@ -40,7 +40,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/tvItemsCatalog"
-            android:text="Items in Catalog: 0"
+            android:text="Items in Catalog: ..."
             android:layout_below="@id/tvUserName"
             android:gravity="center"
             android:layout_centerHorizontal="true"

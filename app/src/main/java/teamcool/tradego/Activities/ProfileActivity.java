@@ -4,10 +4,13 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -16,11 +19,15 @@ import com.astuetz.PagerSlidingTabStrip;
 import com.bumptech.glide.Glide;
 import com.parse.ParseUser;
 
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 import teamcool.tradego.Clients.ParseClient;
+import teamcool.tradego.Fragments.AlertDeleteFragment;
 import teamcool.tradego.Fragments.UserCatalogFragment;
+import teamcool.tradego.Models.Item;
 import teamcool.tradego.R;
 
 public class ProfileActivity extends AppCompatActivity {
@@ -28,8 +35,7 @@ public class ProfileActivity extends AppCompatActivity {
     @BindView(R.id.ivProfileImage) ImageView ivProfileImage;
     @BindView(R.id.tvUserName) TextView tvUserName;
     @BindView(R.id.tvItemsSold) TextView tvItemsSold;
-    @BindView(R.id.tvItemsOnHold) TextView tvItemsonHold;
-    @BindView(R.id.tvItemsAvailable) TextView tvItemsAvailable;
+    @BindView(R.id.tvNumFriends) TextView tvNumFriends;
 
 
     ParseUser user;
@@ -42,26 +48,11 @@ public class ProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_profile);
         ButterKnife.bind(this);
 
-
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-
         setSupportActionBar(toolbar);
-
         ActionBar actionbar = getSupportActionBar();
         actionbar.setDisplayHomeAsUpEnabled(true);
         actionbar.setDisplayShowHomeEnabled(true);
-
-
-        //Get the viewpager
-        //Set the viewpager adapter for the pager
-        //find the sliding tabstrip
-        //attach the tabstrip to the viewpager
-
-        ViewPager vpPager = (ViewPager) findViewById(R.id.viewpager);
-        vpPager.setAdapter(new CatalogPagerAdapter(getSupportFragmentManager()));
-
-        PagerSlidingTabStrip tabStrip = (PagerSlidingTabStrip) findViewById(R.id.tabs);
-        tabStrip.setViewPager(vpPager);
 
         parseClient = new ParseClient();
 
@@ -71,30 +62,28 @@ public class ProfileActivity extends AppCompatActivity {
 
         if(savedInstanceState == null) {
             populateUserHeader(user);
+            UserCatalogFragment frag = UserCatalogFragment.newInstance(userObjId,"Available");
+            frag.setUserVisibleHint(true); //manually call it since viewpager is not present
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            ft.replace(R.id.flProfileContainer, frag);
+            ft.commit();
         }
 
         else {
-
             CharSequence name = savedInstanceState.getCharSequence("Name");
-            CharSequence available = savedInstanceState.getCharSequence("Available");
             CharSequence sold = savedInstanceState.getCharSequence("Sold");
-            CharSequence on_hold = savedInstanceState.getCharSequence("On Hold");
-            tvUserName.setText(name);
-            tvItemsAvailable.setText(available);
-            tvItemsSold.setText(sold);
-            tvItemsonHold.setText(on_hold);
-
+            CharSequence friends = savedInstanceState.getCharSequence("Friends");
             String image = savedInstanceState.getString("image");
 
+            tvUserName.setText(name);
+            tvItemsSold.setText(sold);
+            tvNumFriends.setText(friends);
             Glide.with(this).load(image)
                     .bitmapTransform(new CropCircleTransformation(this))
                     .into(ivProfileImage);
         }
 
-
-
     }
-
 
     //populate user header
     private void populateUserHeader(ParseUser user) {
@@ -105,9 +94,8 @@ public class ProfileActivity extends AppCompatActivity {
                 .bitmapTransform(new CropCircleTransformation(this))
                 .into(ivProfileImage);
 
-        parseClient.countNumItemsOnStatus(user,"Sold",tvItemsSold," items sold");
-        parseClient.countNumItemsOnStatus(user,"On hold",tvItemsonHold," items on hold");
-        parseClient.countNumItemsOnStatus(user,"Available",tvItemsAvailable," items available");
+        parseClient.countNumItemsOnStatus(user,"Sold",tvItemsSold,""," items sold");
+        parseClient.countNumFriendsOfUser(user,tvNumFriends," friends");
 
     }
 
@@ -116,50 +104,9 @@ public class ProfileActivity extends AppCompatActivity {
         super.onSaveInstanceState(outState);
         outState.putCharSequence("Name", tvUserName.getText());
         outState.putCharSequence("Sold", tvItemsSold.getText());
-        outState.putCharSequence("Available", tvItemsAvailable.getText());
-        outState.putCharSequence("On Hold", tvItemsonHold.getText());
+        outState.putCharSequence("Friends", tvNumFriends.getText());
         outState.putString("image", user.getString("profilePicUrl"));
     }
-
-    //return the order of the fragments in the viewpager
-    public class CatalogPagerAdapter extends FragmentPagerAdapter {
-
-
-        private String tabTitles[] = {"Available", "OnHold", "Sold"};
-
-        public CatalogPagerAdapter(FragmentManager fm) {
-            super(fm);
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-
-            if(position==0) {
-                return UserCatalogFragment.newInstance(userObjId,"Available");
-            }
-
-            else if (position == 1) {
-                return UserCatalogFragment.newInstance(userObjId,"On hold");
-            }
-            else if (position == 2) {
-                return UserCatalogFragment.newInstance(userObjId,"Sold");
-            }
-            else {
-                return null;
-            }
-        }
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-            return tabTitles[position];
-        }
-
-        @Override
-        public int getCount() {
-            return tabTitles.length;
-        }
-    }
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -169,5 +116,24 @@ public class ProfileActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        if (!userObjId.equals(ParseUser.getCurrentUser().getObjectId())) {
+            getMenuInflater().inflate(R.menu.menu_profile_activity, menu);
+        }
+        return true;
+    }
+
+    public void onDeleteFriend(MenuItem item) {
+        showAlertDialog();
+    }
+
+    public void showAlertDialog() {
+        AlertDeleteFragment frag = AlertDeleteFragment.newInstance(false,tvUserName.getText().toString(),userObjId);
+        frag.show(getSupportFragmentManager(), "fragment_alert");
+    }
+
 
 }

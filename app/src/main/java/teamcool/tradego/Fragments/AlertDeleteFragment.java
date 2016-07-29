@@ -17,10 +17,12 @@ public class AlertDeleteFragment extends DialogFragment {
 
     }
 
-    public static AlertDeleteFragment newInstance(String itemId) {
+    public static AlertDeleteFragment newInstance(boolean isItem, String identifier, String id) {
         AlertDeleteFragment frag = new AlertDeleteFragment();
         Bundle args = new Bundle();
-        args.putString("itemId",itemId);
+        args.putBoolean("isItem",isItem);
+        args.putString("identifier",identifier);
+        args.putString("id",id);
         frag.setArguments(args);
         return frag;
     }
@@ -32,11 +34,15 @@ public class AlertDeleteFragment extends DialogFragment {
 
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
         alertDialogBuilder.setTitle("Delete?");
-        alertDialogBuilder.setMessage("Are you sure you want to delete this item?");
+        alertDialogBuilder.setMessage(String.format("Are you sure you want to delete %s?",getArguments().getString("identifier")));
         alertDialogBuilder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                parseClient.deleteItem(getArguments().getString("itemId"));
+                if (getArguments().getBoolean("isItem")) {
+                    parseClient.deleteItem(getArguments().getString("id"));
+                } else {
+                    parseClient.deleteFriend(getArguments().getString("id"));
+                }
                 getActivity().finish();
             }
         });
