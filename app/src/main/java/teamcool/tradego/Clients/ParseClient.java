@@ -12,8 +12,6 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -373,6 +371,20 @@ public class ParseClient {
             }
         });
         */
+    }
+
+    public int countNumItemsOnStatus(ParseUser user, String status) {
+        int count = -15251;
+        ParseQuery<Item> query = ParseQuery.getQuery(Item.class);
+        query.whereEqualTo("owner",user);
+        query.whereEqualTo("status",status);
+        try {
+            count = query.count();
+        }
+        catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return count;
     }
 
 }
