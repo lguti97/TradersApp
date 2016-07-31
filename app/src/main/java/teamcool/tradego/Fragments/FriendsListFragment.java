@@ -1,12 +1,15 @@
 package teamcool.tradego.Fragments;
 
 import android.app.ProgressDialog;
+import android.content.res.Configuration;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,9 +35,11 @@ public class FriendsListFragment extends Fragment {
 
     @BindView(R.id.rvFriends) RecyclerView rvFriends;
     @BindView(R.id.ivNoFriends) ImageView ivNoFriends;
+    @BindView(R.id.swipeContainerFriends) SwipeRefreshLayout swipeContainer;
 
     List<Friend> friends = new ArrayList<>();
     private FriendsAdapter friendsAdapter;
+    boolean isRefresh = false;
 
     private class AsyncDataLoading extends AsyncTask<Void,Void,List<Friend>> {
 
@@ -42,13 +47,15 @@ public class FriendsListFragment extends Fragment {
 
         @Override
         protected void onPreExecute() {
-            progressDialog = new ProgressDialog(getActivity());
-            progressDialog.setTitle("Loading");
-            progressDialog.setMessage("Please wait...");
-            progressDialog.setCancelable(false);
-            progressDialog.setIndeterminate(true);
-            progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-            progressDialog.show();
+            if (!isRefresh) {
+                progressDialog = new ProgressDialog(getActivity());
+                progressDialog.setTitle("Loading");
+                progressDialog.setMessage("Please wait...");
+                progressDialog.setCancelable(false);
+                progressDialog.setIndeterminate(true);
+                progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                progressDialog.show();
+            }
             super.onPreExecute();
         }
 
@@ -66,7 +73,10 @@ public class FriendsListFragment extends Fragment {
 
         @Override
         protected void onPostExecute(List<Friend> friends) {
-            progressDialog.dismiss();
+            if (progressDialog != null) {
+                progressDialog.dismiss();
+            }
+            swipeContainer.setRefreshing(false);
             if (friends.size() == 0) {
                 Glide.with(getContext()).load(R.drawable.placeholder_transparent).into(ivNoFriends);
             }
@@ -98,17 +108,20 @@ public class FriendsListFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         friendsAdapter = new FriendsAdapter(friends);
-
-
-        //rvFriends.addOnScrollLisnener for endless scrolling
-        //swipeContainer set on refresh listener
-        //swipeContainer setColorSchemeResources to configure refreshing colors
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         populate();
+        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                isRefresh = true;
+                populate();
+            }
+        });
         super.onViewCreated(view, savedInstanceState);
+
     }
 
     public static FriendsListFragment newInstance(String query, ArrayList<String> filters) {
@@ -119,13 +132,19 @@ public class FriendsListFragment extends Fragment {
             //put more
         }
         friendsListFragment.setArguments(args);
+
         return friendsListFragment;
     }
 
     @Override
     public void onResume() {
-        super.onResume();
+        if(getContext().getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+        rvFriends.setLayoutManager(new StaggeredGridLayoutManager(3,StaggeredGridLayoutManager.VERTICAL));
+    } else {
+        rvFriends.setLayoutManager(new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL));
+    }
         friendsAdapter.notifyDataSetChanged();
+        super.onResume();
     }
 
     public void populate() {

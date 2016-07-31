@@ -131,7 +131,7 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     public void showAlertDialog() {
-        AlertDeleteFragment frag = AlertDeleteFragment.newInstance(false,tvUserName.getText().toString(),userObjId);
+        AlertDeleteFragment frag = AlertDeleteFragment.newInstance(false,tvUserName.getText().toString(),user.getString("user_id"));
         frag.show(getSupportFragmentManager(), "fragment_alert");
     }
 

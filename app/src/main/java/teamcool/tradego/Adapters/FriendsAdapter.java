@@ -96,6 +96,7 @@ public class FriendsAdapter extends RecyclerView.Adapter<FriendsAdapter.ViewHold
         notifyDataSetChanged();
     }
     public void clearAndAddAll(List<Friend> newFriends) {
+        friends.clear();
         friends.addAll(newFriends);
         notifyDataSetChanged();
     }

@@ -91,10 +91,15 @@ public class FriendImportActivity extends AppCompatActivity {
 
     //To skip the import activity part if you choose to do so.
     public void skipActivity(View view) {
-        Intent i = new Intent(FriendImportActivity.this, AddItemActivity.class);
-        i.putExtra("initial",true);
-        startActivity(i);
-        overridePendingTransition(R.anim.right_in, R.anim.left_out);
+        if (initial) {
+            Intent i = new Intent(FriendImportActivity.this, AddItemActivity.class);
+            i.putExtra("initial", true);
+            startActivity(i);
+            overridePendingTransition(R.anim.right_in, R.anim.left_out);
+        } else {
+            finish();
+            overridePendingTransition(R.anim.left_in, R.anim.right_out);
+        }
     }
 
     //Creates the ParseObject Acquaintance + makes sure it's not created again for the current ParseUser

@@ -4,6 +4,7 @@ package teamcool.tradego.Clients;
 
 
 import android.text.format.DateFormat;
+import android.util.Log;
 import android.widget.TextView;
 
 import com.parse.CountCallback;
@@ -365,9 +366,11 @@ public class ParseClient {
 
     public void deleteFriend(String objId) {
         ParseQuery<Friend> query = ParseQuery.getQuery(Friend.class);
+        Log.d("DEBUG",objId);
         query.whereEqualTo("userID",objId);
         try {
             Friend f = query.find().get(0);
+            Log.d("DEBUG",f.getName()+"--");
             f.delete();
         } catch (ParseException e) {
             e.printStackTrace();
