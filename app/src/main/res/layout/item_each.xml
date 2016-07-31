@@ -48,7 +48,7 @@
                 android:textColor="#359714"
                 android:layout_marginTop="20dp"
                 android:paddingLeft="5dp"
-                 />
+                />
 
         </RelativeLayout>
 

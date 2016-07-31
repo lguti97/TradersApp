@@ -5,6 +5,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -52,6 +54,7 @@ public class AddItemActivity extends AppCompatActivity {
     @BindView(R.id.Add_New_Item) TextView header;
     @BindView(R.id.skipAddItem) Button skipAddItem;
     ParseClient parseClient;
+    ParseUser user;
 
 
     String negotiable;
@@ -77,73 +80,77 @@ public class AddItemActivity extends AppCompatActivity {
         actionbar.setDisplayShowHomeEnabled(true);
 
         if (getIntent() != null) {
-            initial = getIntent().getBooleanExtra("initial",false);
+            initial = getIntent().getBooleanExtra("initial", false);
         }
 
         if (initial) {
-            skipAddItem.setText(getResources().getString(R.string.skip_add_item));
+            skipAddItem.setText(getResources().getString(R.string.skip));
+
+            if (ParseUser.getCurrentUser().isNew()) {
+                actionbar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#d3d3d3")));
+                actionbar.setTitle("Getting Started");
+            }
+
+
+            ivItem1.setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View view) {
+                    //onLaunchCamera(view);
+                    //onPickPhoto(view);
+                    startDialog(view);
+                    index = 1;
+                }
+            });
+
+            //Take the second image of the item to be sold
+            ivItem2.setOnClickListener(new View.OnClickListener() {
+
+
+                @Override
+                public void onClick(View view) {
+                    //onLaunchCamera(view);
+                    //onPickPhoto(view);
+                    startDialog(view);
+                    index = 2;
+                }
+            });
+
+            //keyboard focus changing:
+            etPrice.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                @Override
+                public void onFocusChange(View view, boolean b) {
+                    if (!b) {
+                        hideKeyboard(view);
+                    }
+                }
+            });
+            etItemName.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                @Override
+                public void onFocusChange(View view, boolean b) {
+                    if (!b) {
+                        hideKeyboard(view);
+                    }
+                }
+            });
+            etItemDescription.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                @Override
+                public void onFocusChange(View view, boolean b) {
+                    if (!b) {
+                        hideKeyboard(view);
+                    }
+                }
+            });
+
+            onCategorySpinner();
+            onStatusSpinner();
+
+
+            if (getIntent().getStringExtra("item_id") != null) {
+                populateEditItem();
+            }
+
         }
-
-
-        ivItem1.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View view) {
-                //onLaunchCamera(view);
-                //onPickPhoto(view);
-                startDialog(view);
-                index = 1;
-            }
-        });
-
-        //Take the second image of the item to be sold
-        ivItem2.setOnClickListener(new View.OnClickListener() {
-
-
-            @Override
-            public void onClick(View view) {
-                //onLaunchCamera(view);
-                //onPickPhoto(view);
-                startDialog(view);
-                index = 2;
-            }
-        });
-
-        //keyboard focus changing:
-        etPrice.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View view, boolean b) {
-                if(!b) {
-                    hideKeyboard(view);
-                }
-            }
-        });
-        etItemName.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View view, boolean b) {
-                if(!b) {
-                    hideKeyboard(view);
-                }
-            }
-        });
-        etItemDescription.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View view, boolean b) {
-                if(!b) {
-                    hideKeyboard(view);
-                }
-            }
-        });
-
-        onCategorySpinner();
-        onStatusSpinner();
-
-
-        if (getIntent().getStringExtra("item_id") != null) {
-            populateEditItem();
-        }
-
-
     }
 
     private void populateEditItem() {
@@ -156,6 +163,8 @@ public class AddItemActivity extends AppCompatActivity {
         String price = String.valueOf(item.getPrice());
         etPrice.setText(price);
         etItemDescription.setText(item.getDescription());
+
+        //Coverting image to bitmap.
         ivItem1.setImageBitmap(decodeBase64(item.getImage1()));
         ivItem2.setImageBitmap(decodeBase64(item.getImage2()));
 
@@ -273,11 +282,18 @@ public class AddItemActivity extends AppCompatActivity {
             return;
         }
 
+        //Retrieve fbID from the currentUser
+        user = ParseUser.getCurrentUser();
+        //Not sure of the syntax that must be used to retrieve the FB id but this is a start.
+        String fbID = user.getObjectId();
+        //Can't store this into the Item ParseObject...
+        /*
+        MUST CHANGE HERE.
+         */
         Item new_item = new Item(etItemName.getText().toString(),
                 category, etItemDescription.getText().toString(),
-                status, price, negotiable, image_1, image_2);
+                status, price, negotiable, image_1, image_2, fbID);
 
-        ParseUser user = ParseUser.getCurrentUser();
         new_item.setOwner(user);
 
 
@@ -310,6 +326,8 @@ public class AddItemActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+
 
     public static String encodeToBase64(Bitmap image, Bitmap.CompressFormat compressFormat, int quality)
     {
@@ -353,6 +371,7 @@ public class AddItemActivity extends AppCompatActivity {
                 });
         myAlertDialog.show();
 
+
     }
 
 
@@ -380,6 +399,7 @@ public class AddItemActivity extends AppCompatActivity {
         int desiredWidth = 70;
         if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
+                //So this is the URI that is retrieved when photo is taken.
                 Uri takenPhotoUri = getPhotoFileUri(photoFileName);
                 // by this point we have the camera photo on disk
                 Bitmap takenImage_unscaled = BitmapFactory.decodeFile(takenPhotoUri.getPath());
@@ -416,7 +436,6 @@ public class AddItemActivity extends AppCompatActivity {
                 }
                 // Load the selected image into a preview
 
-                //Bitmap takenImage = Bitmap.createScaledBitmap(selectedImage, 250, 250, true);
 
                 if(index==1) {
 

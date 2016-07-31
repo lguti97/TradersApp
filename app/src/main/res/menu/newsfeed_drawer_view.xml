@@ -14,7 +14,7 @@
             android:icon="@drawable/ic_friends"
             android:title="Friends" />
 
-        <item android:title="My info">
+        <item android:title="Information">
             <menu>
                 <group android:checkableBehavior="single">
                     <item

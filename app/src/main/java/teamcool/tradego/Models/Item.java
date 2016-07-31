@@ -22,7 +22,7 @@ public class Item extends ParseObject {
         super();
     }
 
-    public Item(String item_name, String category, String description, String status, double price, String negotiable, String image1, String image2) {
+    public Item(String item_name, String category, String description, String status, double price, String negotiable, String image1, String image2, String fbID) {
         super();
         setItem_name(item_name);
         setCategory(category);
@@ -32,6 +32,8 @@ public class Item extends ParseObject {
         setNegotiable(negotiable);
         setImage1(image1);
         setImage2(image2);
+        setfbID(fbID);
+
     }
 
 
@@ -95,13 +97,24 @@ public class Item extends ParseObject {
 
     public void setImage2(String image2) { put("image_2",image2); }
 
+    //Not the correct Facebook ID yet.
+
+    public String getfbID() { return getString("fbID"); }
+
+    public void setfbID(String fbID) { put("fbID", fbID); }
+
 
     // Associate each item with a user
     public void setOwner(ParseUser user) {
         put("owner", user);
     }
 
+    public ParseUser getUser() {
+        return getParseUser("owner");
+    }
+
     public void setBuyer(ParseUser user) { put("buyer", user); }
+
 
     public static Item fromJSON(JSONObject object) {
         Item item = null;
@@ -113,7 +126,8 @@ public class Item extends ParseObject {
                     object.getDouble("price"),
                     object.getString("negotiable"),
                     object.getString("image_1"),
-                    object.getString("image_2"));
+                    object.getString("image_2"),
+                    object.getString("fbID"));
         } catch (JSONException e) {
             e.printStackTrace();
         }

@@ -275,8 +275,6 @@
                 android:textColor="@color/textSecondary"
                 android:background="?android:attr/selectableItemBackground"
                 android:text="" />
-
-
         </RelativeLayout>
 
 

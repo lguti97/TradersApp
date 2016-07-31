@@ -14,12 +14,14 @@
     <string name="login">Login</string>
     <string name="email">Sign Up With Email</string>
     <string name="terms">By continuing you indicate that you have read and agreed to the Terms of Service and Privacy Policy</string>
-    <string name="skip">Skip</string>
+    <string name="skip">SKIP</string>
     <string name="friendImport">People you may know!</string>
     <string name="MoreInfo">Swipe right if you wish to add as a friend</string>
-    <string name="skip_add_item">Skip</string>
+    <string name="skipAddItem">Next</string>
     <string name="price">Price</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="alertSwipe">Please swipe right to add friends</string>
+    <string name="tagline">Remember, these will be the people you share and sell items to.</string>
 </resources>

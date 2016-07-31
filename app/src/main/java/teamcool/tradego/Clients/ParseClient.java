@@ -8,13 +8,15 @@ import android.util.Log;
 import android.widget.TextView;
 
 import com.parse.CountCallback;
+<<<<<<< HEAD
 import com.parse.FindCallback;
+=======
+
+>>>>>>> master
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,11 +24,13 @@ import java.util.List;
 import teamcool.tradego.Models.Acquaintance;
 import teamcool.tradego.Models.Friend;
 import teamcool.tradego.Models.Item;
+import teamcool.tradego.Models.User;
 
 
 public class ParseClient {
 
     ArrayList<ParseUser> friends;
+    int countItems = 0;
 
     public ParseClient () {
         friends = convertFriendsToParseUsers(queryFriendsOnName(null));
@@ -205,7 +209,25 @@ public class ParseClient {
         query.countInBackground(new CountCallback() {
             @Override
             public void done(int count, ParseException e) {
+<<<<<<< HEAD
                 String txt = strPre + count + strAppend;
+=======
+                String txt = count + strAppend;
+                textView.setText(txt);
+            }
+        });
+    }
+
+
+    public void countNumItemsOnUser(ParseUser user, final TextView textView, final String strPre, final String strEnd) {
+        int count = -15251;
+        ParseQuery<Item> query = ParseQuery.getQuery(Item.class);
+        query.whereEqualTo("owner",user);
+        query.countInBackground(new CountCallback() {
+            @Override
+            public void done(int count, ParseException e) {
+                String txt = strPre + count + strEnd;
+>>>>>>> master
                 textView.setText(txt);
             }
         });
@@ -375,6 +397,20 @@ public class ParseClient {
         } catch (ParseException e) {
             e.printStackTrace();
         }
+    }
+
+    public int countNumItemsOnStatus(ParseUser user, String status) {
+        int count = -15251;
+        ParseQuery<Item> query = ParseQuery.getQuery(Item.class);
+        query.whereEqualTo("owner",user);
+        query.whereEqualTo("status",status);
+        try {
+            count = query.count();
+        }
+        catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return count;
     }
 
 }

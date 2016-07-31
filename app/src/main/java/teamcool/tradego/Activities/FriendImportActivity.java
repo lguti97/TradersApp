@@ -1,6 +1,7 @@
 package teamcool.tradego.Activities;
 
 import android.content.Intent;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -28,6 +29,7 @@ import butterknife.ButterKnife;
 import teamcool.tradego.Adapters.AcquaintanceAdapter;
 import teamcool.tradego.Clients.FBGraphClient;
 import teamcool.tradego.Clients.ParseClient;
+import teamcool.tradego.Fragments.AlertSwipeFragment;
 import teamcool.tradego.Models.Acquaintance;
 import teamcool.tradego.R;
 import teamcool.tradego.SimpleItemTouchHelperCallback;
@@ -52,6 +54,10 @@ public class FriendImportActivity extends AppCompatActivity {
         HashMap<String, String> test = new HashMap<>();
         test.put("channel", "testing");
         ParseCloud.callFunctionInBackground("pushChannelTest", test);
+
+        //Show Alert Dialog Fragment
+        showAlertDialog();
+
 
         if (getIntent() != null) {
             initial = getIntent().getBooleanExtra("initial",false);
@@ -102,6 +108,9 @@ public class FriendImportActivity extends AppCompatActivity {
         }
     }
 
-    //Creates the ParseObject Acquaintance + makes sure it's not created again for the current ParseUser
+    public void showAlertDialog() {
+        AlertSwipeFragment alertDialog = AlertSwipeFragment.newInstance("Welcome!");
+        alertDialog.show(getFragmentManager(), "fragment_alert");
+    }
 
 }

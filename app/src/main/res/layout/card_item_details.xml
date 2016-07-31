@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    card_view:cardBackgroundColor="#FFFFFF"
+    card_view:cardUseCompatPadding="true"
+    android:layout_weight="0.10">
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:padding="16dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="25sp"
+            android:id="@+id/tvItemName"
+            android:text="NAME OF OBJECT"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvItemDescription"
+            android:layout_marginTop="10dp"
+            android:layout_below="@+id/tvItemName"
+            android:textSize="15sp"
+            android:text="This will be allocated for a description of the object. It will contain as many details as it needs"/>
+
+
+    </RelativeLayout>
+
+</android.support.v7.widget.CardView>
