@@ -308,7 +308,13 @@ public class AddItemActivity extends AppCompatActivity {
             new_item.saveInBackground();
         }
 
-        finish();
+        if (!initial) {
+            finish();
+        } else {
+            Intent i = new Intent(AddItemActivity.this, NewsFeedActivity.class);
+            startActivity(i);
+            overridePendingTransition(R.anim.right_in, R.anim.left_out);
+        }
     }
 
 

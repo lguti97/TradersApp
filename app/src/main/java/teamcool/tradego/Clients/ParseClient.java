@@ -8,11 +8,6 @@ import android.util.Log;
 import android.widget.TextView;
 
 import com.parse.CountCallback;
-<<<<<<< HEAD
-import com.parse.FindCallback;
-=======
-
->>>>>>> master
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
@@ -209,29 +204,12 @@ public class ParseClient {
         query.countInBackground(new CountCallback() {
             @Override
             public void done(int count, ParseException e) {
-<<<<<<< HEAD
                 String txt = strPre + count + strAppend;
-=======
-                String txt = count + strAppend;
                 textView.setText(txt);
             }
         });
     }
 
-
-    public void countNumItemsOnUser(ParseUser user, final TextView textView, final String strPre, final String strEnd) {
-        int count = -15251;
-        ParseQuery<Item> query = ParseQuery.getQuery(Item.class);
-        query.whereEqualTo("owner",user);
-        query.countInBackground(new CountCallback() {
-            @Override
-            public void done(int count, ParseException e) {
-                String txt = strPre + count + strEnd;
->>>>>>> master
-                textView.setText(txt);
-            }
-        });
-    }
 
     public int countNumItemsBought(ParseUser user) {
         int count = -15210; //placeholder value
