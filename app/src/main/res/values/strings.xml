@@ -24,4 +24,15 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="alertSwipe">Please swipe right to add friends</string>
     <string name="tagline">Remember, these will be the people you share and sell items to.</string>
+
+
+    <string name="action_settings">Settings</string>
+    <string name="product_name">Product Name</string>
+    <string name="txt_image_slider">Image Slideshow</string>
+    <string name="no_internet_connection">No Internet Connection</string>
+    <string name="time_out">Time Out</string>
+    <string name="error_occured">Error Occurred</string>
+
+
+
 </resources>

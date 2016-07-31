@@ -9,4 +9,8 @@
     <color name="textSecondary">#727272</color>
     <color name="textPrimary">#212121</color>
     <color name="colorDivider">#B6B6B6</color>
+
+    <color name="holo_blue_dark">#ff0099cc</color>
+    <color name="view_divider_color">#BABABA</color>
+    <color name="view_divider_color_2">#DADADA</color>
 </resources>

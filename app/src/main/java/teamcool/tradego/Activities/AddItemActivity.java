@@ -29,6 +29,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.parse.ParseFile;
 import com.parse.ParseUser;
 
 import java.io.ByteArrayOutputStream;
@@ -280,16 +281,19 @@ public class AddItemActivity extends AppCompatActivity {
         user = ParseUser.getCurrentUser();
         //Not sure of the syntax that must be used to retrieve the FB id but this is a start.
         String fbID = user.getObjectId();
-        //Can't store this into the Item ParseObject...
-        /*
-        MUST CHANGE HERE.
-         */
+
+        byte[] data = image_1.getBytes();
+        ParseFile testFile = new ParseFile("itemImage.jpg", data);
+        testFile.saveInBackground();
+
+
         Item new_item = new Item(etItemName.getText().toString(),
                 category, etItemDescription.getText().toString(),
                 status, price, negotiable, image_1, image_2, fbID);
 
         new_item.setOwner(user);
-
+        new_item.put("efficientImage", testFile);
+        new_item.saveInBackground();
 
 
         if(getIntent().getStringExtra("item_id") != null) {
@@ -372,6 +376,7 @@ public class AddItemActivity extends AppCompatActivity {
 
     public final String APP_TAG = "MyCustomApp";
     public final static int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 1034;
+    //PhotoFile.
     String photoFileName = "PHOTO.jpg";
 
     public void onLaunchCamera(View view) {
@@ -400,8 +405,6 @@ public class AddItemActivity extends AppCompatActivity {
 
                 Bitmap takenImage = Bitmap.createScaledBitmap(takenImage_unscaled, 250, 250, true);
                 // Load the taken image into a preview
-
-
                 if(index==1) {
 
                     ivItem1.setImageBitmap(takenImage);
