@@ -33,18 +33,15 @@ public class FriendsAdapter extends RecyclerView.Adapter<FriendsAdapter.ViewHold
 
         //butterknife binding goes here:
         //@BindView(R.id.someId) Type someId;
-        @BindView(R.id.ivProfile)
-        ImageView ivProfile;
-        @BindView(R.id.tvName)
-        TextView tvUserName;
-        @BindView(R.id.tvItems)
-        TextView tvItemsCatalog;
+        @BindView(R.id.ivProfile) ImageView ivProfile;
+        @BindView(R.id.tvName) TextView tvName;
+        @BindView(R.id.tvItems) TextView tvItems;
         View rootView;
 
 
         public ViewHolder(View itemView) {
             super(itemView);
-            ButterKnife.bind(this, itemView);
+            ButterKnife.bind(this,itemView);
             rootView = itemView;
         }
     }
@@ -72,7 +69,7 @@ public class FriendsAdapter extends RecyclerView.Adapter<FriendsAdapter.ViewHold
         final Friend friend = friends.get(position);
         //populate each item by setting its text and media
 
-        holder.tvUserName.setText(friend.getString("name"));
+        holder.tvName.setText(friend.getString("name"));
         holder.ivProfile.setImageResource(0);
         Glide.with(context)
                 .load(friend.getProfile_url())
@@ -81,9 +78,9 @@ public class FriendsAdapter extends RecyclerView.Adapter<FriendsAdapter.ViewHold
 
         parseClient = new ParseClient();
         final ParseUser friend_to_user = parseClient.queryUserBasedonFBid(friend.getUserID());
-        parseClient.countNumItemsOnStatus(friend_to_user, "Available", holder.tvItemsCatalog, "Items in Catalog: ", "");
+        parseClient.countNumItemsOnStatus(friend_to_user, "Available", holder.tvItems, "Items in Catalog: ", "");
 
-
+        //Goes into detail mode for each friend.
         holder.rootView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -92,20 +89,17 @@ public class FriendsAdapter extends RecyclerView.Adapter<FriendsAdapter.ViewHold
                 context.startActivity(i);
             }
         });
-
     }
-        @Override
-        public int getItemCount () {
-            return friends.size();
-        }
+    @Override
+    public int getItemCount() {
+        return friends.size();
+    }
 
     public void clear() {
         friends.clear();
         notifyDataSetChanged();
     }
-
     public void clearAndAddAll(List<Friend> newFriends) {
-        friends.clear();
         friends.addAll(newFriends);
         notifyDataSetChanged();
     }
