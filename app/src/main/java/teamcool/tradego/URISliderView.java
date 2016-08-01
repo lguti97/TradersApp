@@ -53,7 +53,8 @@ public class URISliderView extends BaseSliderView {
         }
         mUrl = url;
 
-        bitmap = decodeBase64(mUrl);
+        //bitmap = decodeBase64(mUrl);
+        bitmap = StringToBitMap(mUrl);
         takenImage = Bitmap.createScaledBitmap(bitmap, 400, 250, true);
         return this;
     }
@@ -70,6 +71,17 @@ public class URISliderView extends BaseSliderView {
     {
         byte[] decodedBytes = Base64.decode(input, 0);
         return BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.length);
+    }
+
+    public Bitmap StringToBitMap(String encodedString){
+        try {
+            byte [] encodeByte=Base64.decode(encodedString,Base64.DEFAULT);
+            Bitmap bitmap=BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
+            return bitmap;
+        } catch(Exception e) {
+            e.getMessage();
+            return null;
+        }
     }
 
 

@@ -94,7 +94,6 @@ public class TopTimelineFragment extends CatalogListFragment {
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        if (savedInstanceState == null) {
             isViewCreated = true;
             if (isSeen && !isLoaded) {
                 populateTimeLine();
@@ -111,9 +110,7 @@ public class TopTimelineFragment extends CatalogListFragment {
                     android.R.color.holo_green_light,
                     android.R.color.holo_orange_light,
                     android.R.color.holo_red_light);
-        } else {
-            addAll(items);
-        }
+
         super.onViewCreated(view, savedInstanceState);
     }
 
