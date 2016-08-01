@@ -174,7 +174,7 @@ public class DetailsActivity extends AppCompatActivity {
             // initialize a SliderLayout.
             //String image = item.getImage1();
             //Attempt to retrieve image from ParseFile
-            ParseFile something = (ParseFile) item.get("efficientImage");
+            ParseFile something = (ParseFile) item.get("item_photo");
             something.getDataInBackground(new GetDataCallback() {
                 @Override
                 public void done(byte[] data, ParseException e) {
