@@ -270,10 +270,8 @@ public class AddItemActivity extends AppCompatActivity {
     public void onAddItemClick(View view) {
 
         if(getIntent().getStringExtra("item_id") != null) {
-
             image_1 = item.getImage1();
             image_2 = item.getImage2();
-
         }
 
         Double price;
@@ -330,10 +328,12 @@ public class AddItemActivity extends AppCompatActivity {
         }
 
         if (!initial) {
-            /* if (spStatus.getSelectedItem().toString().equals("Sold")) {
+            /*
+            if (spStatus.getSelectedItem().toString().equals("Sold")) {
                 AlertBuyerInfoFragment frag = AlertBuyerInfoFragment.newInstance();
                 frag.show(getSupportFragmentManager(), "fragment_alert");
-            } */
+            }
+            */
             finish();
         } else {
             Intent i = new Intent(AddItemActivity.this, NewsFeedActivity.class);

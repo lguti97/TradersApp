@@ -1,10 +1,12 @@
 package teamcool.tradego.Fragments;
 
 import android.app.ProgressDialog;
+import android.content.res.Configuration;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +31,7 @@ public class CategoriesTimelineFragment extends CatalogListFragment {
     boolean isSeen = false;
     boolean isLoaded = false;
     boolean isRefresh = false;
+    List<Item> items;
 
     @BindView(R.id.swipeContainerCatalog) SwipeRefreshLayout swipeContainer;
     @BindView(R.id.ivNoItems) ImageView ivNoItems;
@@ -66,7 +69,7 @@ public class CategoriesTimelineFragment extends CatalogListFragment {
         @Override
         protected List<Item> doInBackground(String... category) {
             ParseClient parseClient = new ParseClient();
-            List<Item> items = parseClient.queryItemsOnCategory(category[0]);
+            items = parseClient.queryItemsOnCategory(category[0]);
             return items;
         }
 
@@ -100,21 +103,25 @@ public class CategoriesTimelineFragment extends CatalogListFragment {
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        isViewCreated = true;
-        if (isSeen && !isLoaded)
-            populate(getArguments().getString("category"));
-        //if swipe container exists, must setOnRefreshListener here, not onCreateView or onCreate
-        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                isRefresh = true;
+        if (savedInstanceState == null) {
+            isViewCreated = true;
+            if (isSeen && !isLoaded)
                 populate(getArguments().getString("category"));
-            }
-        });
-        swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
-                android.R.color.holo_green_light,
-                android.R.color.holo_orange_light,
-                android.R.color.holo_red_light);
+            //if swipe container exists, must setOnRefreshListener here, not onCreateView or onCreate
+            swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+                @Override
+                public void onRefresh() {
+                    isRefresh = true;
+                    populate(getArguments().getString("category"));
+                }
+            });
+            swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
+                    android.R.color.holo_green_light,
+                    android.R.color.holo_orange_light,
+                    android.R.color.holo_red_light);
+        } else {
+            addAll(items);
+        }
         super.onViewCreated(view, savedInstanceState);
     }
 
@@ -130,6 +137,16 @@ public class CategoriesTimelineFragment extends CatalogListFragment {
     public void populate(String category) {
         isLoaded = true;
         new AsyncDataLoading().execute(category);
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        if(getContext().getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            rvItems.setLayoutManager(new StaggeredGridLayoutManager(3,StaggeredGridLayoutManager.VERTICAL));
+        } else {
+            rvItems.setLayoutManager(new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL));
+        }
     }
 
 }
