@@ -78,6 +78,7 @@ public class FriendsAdapter extends RecyclerView.Adapter<FriendsAdapter.ViewHold
 
         parseClient = new ParseClient();
         final ParseUser friend_to_user = parseClient.queryUserBasedonFBid(friend.getUserID());
+        holder.tvItems.setText("Items in Catalog: ...");
         parseClient.countNumItemsOnStatus(friend_to_user, "Available", holder.tvItems, "Items in Catalog: ", "");
 
         //Goes into detail mode for each friend.

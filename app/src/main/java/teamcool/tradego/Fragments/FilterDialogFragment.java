@@ -82,9 +82,6 @@ public class FilterDialogFragment extends DialogFragment implements View.OnClick
         ArrayList<String> res = new ArrayList<>();
         res.add(spnrCategoryType.getSelectedItem().toString());
         res.add(spnrSortOrder.getSelectedItem().toString());
-        for(int i = 0; i < res.size(); i++) {
-            Log.d("DEBUG",res.get(i).toString()+"===1===2===");
-        }
         listener.onFinishDialog(res);
         dismiss();
     }

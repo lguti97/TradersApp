@@ -139,11 +139,7 @@ public class FriendsListFragment extends Fragment {
 
     @Override
     public void onResume() {
-        if(getContext().getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
-        rvFriends.setLayoutManager(new StaggeredGridLayoutManager(3,StaggeredGridLayoutManager.VERTICAL));
-    } else {
-        rvFriends.setLayoutManager(new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL));
-    }
+        rvFriends.setLayoutManager(new LinearLayoutManager(getContext()));
         friendsAdapter.notifyDataSetChanged();
         super.onResume();
     }
