@@ -30,6 +30,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.parse.ParseFile;
 import com.parse.ParseUser;
 
 import java.io.ByteArrayOutputStream;
@@ -293,6 +294,7 @@ public class AddItemActivity extends AppCompatActivity {
         Item new_item = new Item(etItemName.getText().toString(),
                 category, etItemDescription.getText().toString(),
                 status, price, negotiable, image_1, image_2, fbID);
+
 
         new_item.setOwner(user);
 
