@@ -170,11 +170,21 @@ public class AddItemActivity extends AppCompatActivity {
         String price = String.valueOf(item.getPrice());
         etPrice.setText(price);
         etItemDescription.setText(item.getDescription());
-        spStatus.setSelection(adapter.getPosition(item.getStatus()));
+        Log.d("DEBUG","!!"+item.getStatus());
+        int statusIndx = -1;
+        String currStatus = item.getStatus();
+        if (currStatus.equalsIgnoreCase("On hold"))
+            statusIndx = 0;
+        else if (currStatus.equalsIgnoreCase("Available"))
+            statusIndx = 1;
+        else
+            statusIndx = 2;
+        spStatus.setSelection(statusIndx);
+        Log.d("DEBUG","!!"+item.getNegotiable());
         if (item.getNegotiable().equalsIgnoreCase("Yes")) {
-            rbYes.setSelected(true);
+            rbYes.setChecked(true);
         } else if (item.getNegotiable().equalsIgnoreCase("No")) {
-            rbNo.setSelected(true);
+            rbNo.setChecked(true);
         }
 
         //Coverting image to bitmap.
@@ -271,10 +281,8 @@ public class AddItemActivity extends AppCompatActivity {
     public void onAddItemClick(View view) {
 
         if(getIntent().getStringExtra("item_id") != null) {
-
             image_1 = item.getImage1();
             image_2 = item.getImage2();
-
         }
 
         Double price;
@@ -330,10 +338,12 @@ public class AddItemActivity extends AppCompatActivity {
         }
 
         if (!initial) {
-            /* if (spStatus.getSelectedItem().toString().equals("Sold")) {
+            /*
+            if (spStatus.getSelectedItem().toString().equals("Sold")) {
                 AlertBuyerInfoFragment frag = AlertBuyerInfoFragment.newInstance();
                 frag.show(getSupportFragmentManager(), "fragment_alert");
-            } */
+            }
+            */
             finish();
         } else {
             Intent i = new Intent(AddItemActivity.this, NewsFeedActivity.class);
