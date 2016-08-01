@@ -14,6 +14,10 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.parse.GetDataCallback;
+import com.parse.ParseException;
+import com.parse.ParseFile;
+
 import java.io.ByteArrayOutputStream;
 import java.util.List;
 
@@ -63,7 +67,7 @@ public class CatalogAdapter extends RecyclerView.Adapter<CatalogAdapter.ViewHold
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(final ViewHolder holder, int position) {
         final Item item = items.get(position);
         //populate each item by setting its text and media
 
@@ -83,7 +87,21 @@ public class CatalogAdapter extends RecyclerView.Adapter<CatalogAdapter.ViewHold
         holder.tvPrice.setText(price);
 
         if(item.getImage1() != null) {
-            holder.ivItemImage.setImageBitmap(decodeBase64(item.getImage1()));
+            //holder.ivItemImage.setImageBitmap(decodeBase64(item.getImage1()));
+            ParseFile itemPhoto = (ParseFile) item.get("item_photo");
+            itemPhoto.getDataInBackground(new GetDataCallback() {
+                public void done(byte[] data, ParseException e) {
+                    if (e == null) {
+                        Bitmap bmp = BitmapFactory
+                                .decodeByteArray(data, 0, data.length);
+                        holder.ivItemImage.setImageBitmap(bmp);
+                    } else {
+                        // something went wrong
+                    }
+                }
+            });
+
+
         }
 
 

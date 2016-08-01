@@ -202,6 +202,7 @@ public class DetailsActivity extends AppCompatActivity {
                     }
                     else {
                         // Fuck something went wrong.
+
                     }
                 }
             });

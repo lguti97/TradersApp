@@ -286,17 +286,25 @@ public class AddItemActivity extends AppCompatActivity {
         //Retrieve fbID from the currentUser
         user = ParseUser.getCurrentUser();
         //Not sure of the syntax that must be used to retrieve the FB id but this is a start.
-        String fbID = user.getObjectId();
+        String fbID = user.getString("fb_id");
         //Can't store this into the Item ParseObject...
         /*
         MUST CHANGE HERE.
          */
+
+        byte[] data = image_1.getBytes();
+        ParseFile file = new ParseFile("item_photo", data);
+        file.saveInBackground();
+
+
         Item new_item = new Item(etItemName.getText().toString(),
                 category, etItemDescription.getText().toString(),
                 status, price, negotiable, image_1, image_2, fbID);
 
 
         new_item.setOwner(user);
+        new_item.put("item_photo", file);
+        new_item.saveInBackground();
 
 
 

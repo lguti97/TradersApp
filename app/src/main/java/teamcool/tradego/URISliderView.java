@@ -63,10 +63,7 @@ public class URISliderView extends BaseSliderView {
         if(mUrl!=null) {
             targetImageView.setImageBitmap(takenImage);
         }
-
         v.findViewById(R.id.loading_bar).setVisibility(View.INVISIBLE);
-
-
     }
 
     public static Bitmap decodeBase64(String input)
