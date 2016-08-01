@@ -201,8 +201,6 @@ public class DetailsActivity extends AppCompatActivity {
                         mSlider.addSlider(uriSliderView);
                     }
                     else {
-                        // Fuck something went wrong.
-
                     }
                 }
             });
