@@ -1,25 +1,17 @@
 package teamcool.tradego.Activities;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.astuetz.PagerSlidingTabStrip;
 import com.bumptech.glide.Glide;
 import com.parse.ParseUser;
-
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -27,7 +19,6 @@ import jp.wasabeef.glide.transformations.CropCircleTransformation;
 import teamcool.tradego.Clients.ParseClient;
 import teamcool.tradego.Fragments.AlertDeleteFragment;
 import teamcool.tradego.Fragments.UserCatalogFragment;
-import teamcool.tradego.Models.Item;
 import teamcool.tradego.R;
 
 public class ProfileActivity extends AppCompatActivity {
@@ -41,6 +32,7 @@ public class ProfileActivity extends AppCompatActivity {
     ParseUser user;
     ParseClient parseClient;
     String userObjId;
+    UserCatalogFragment frag;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +54,7 @@ public class ProfileActivity extends AppCompatActivity {
 
         if(savedInstanceState == null) {
             populateUserHeader(user);
-            UserCatalogFragment frag = UserCatalogFragment.newInstance(userObjId,"Available");
+            frag = UserCatalogFragment.newInstance(userObjId,"Available");
             frag.setUserVisibleHint(true); //manually call it since viewpager is not present
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             ft.replace(R.id.flProfileContainer, frag);
@@ -74,6 +66,13 @@ public class ProfileActivity extends AppCompatActivity {
             CharSequence sold = savedInstanceState.getCharSequence("Sold");
             CharSequence friends = savedInstanceState.getCharSequence("Friends");
             String image = savedInstanceState.getString("image");
+            frag = (UserCatalogFragment) getSupportFragmentManager().getFragment(savedInstanceState, "frag");
+            frag.setUserVisibleHint(true); //manually call it since viewpager is not present
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            ft.replace(R.id.flProfileContainer, frag);
+            ft.commit();
+
+
 
             tvUserName.setText(name);
             tvItemsSold.setText(sold);
@@ -106,6 +105,7 @@ public class ProfileActivity extends AppCompatActivity {
         outState.putCharSequence("Sold", tvItemsSold.getText());
         outState.putCharSequence("Friends", tvNumFriends.getText());
         outState.putString("image", user.getString("profilePicUrl"));
+        getSupportFragmentManager().putFragment(outState, "frag",frag );
     }
 
     @Override
