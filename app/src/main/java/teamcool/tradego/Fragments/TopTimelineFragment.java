@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +15,6 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.parse.ParseUser;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -84,11 +82,6 @@ public class TopTimelineFragment extends CatalogListFragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if(getContext().getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            Log.d("DEBUG","landscape");
-        } else {
-            Log.d("DEBUG","vertical");
-        }
     }
 
     @Nullable
@@ -101,7 +94,7 @@ public class TopTimelineFragment extends CatalogListFragment {
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        if (true) {
+        if (savedInstanceState == null) {
             isViewCreated = true;
             if (isSeen && !isLoaded) {
                 populateTimeLine();
@@ -119,11 +112,6 @@ public class TopTimelineFragment extends CatalogListFragment {
                     android.R.color.holo_orange_light,
                     android.R.color.holo_red_light);
         } else {
-            Log.d("DEBUG","save instant is not null");
-            if (items == null) {
-                Log.d("DEBUG","err null");
-            }
-
             addAll(items);
         }
         super.onViewCreated(view, savedInstanceState);
@@ -146,7 +134,6 @@ public class TopTimelineFragment extends CatalogListFragment {
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        Log.d("DEBUG","flip orientation");
         if(getContext().getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
             rvItems.setLayoutManager(new StaggeredGridLayoutManager(3,StaggeredGridLayoutManager.VERTICAL));
         } else {
