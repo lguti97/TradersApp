@@ -27,11 +27,15 @@ import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.SliderTypes.TextSliderView;
 import com.facebook.messenger.MessengerUtils;
 import com.facebook.messenger.ShareToMessengerParams;
+import com.parse.GetDataCallback;
+import com.parse.ParseException;
+import com.parse.ParseFile;
 import com.parse.ParseUser;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -42,6 +46,7 @@ import teamcool.tradego.Clients.ParseClient;
 import teamcool.tradego.Fragments.AlertDeleteFragment;
 import teamcool.tradego.Models.Item;
 import teamcool.tradego.R;
+import teamcool.tradego.URISliderView;
 
 public class DetailsActivity extends AppCompatActivity {
 
@@ -172,26 +177,44 @@ public class DetailsActivity extends AppCompatActivity {
 
     public void populateSlider() {
         for (int i = 1; i < 3; i++) {
-            TextSliderView textSliderView = new TextSliderView(this);
+
+            final URISliderView uriSliderView = new URISliderView(this);
+            //final TextSliderView textSliderView = new TextSliderView(this);
             // initialize a SliderLayout.
-            String image = item.getImage1();
-            textSliderView
-                    .description("Item")
-                    .image("image")
-                    .setScaleType(BaseSliderView.ScaleType.Fit)
-                    .setOnSliderClickListener(new BaseSliderView.OnSliderClickListener() {
-                        @Override
-                        public void onSliderClick(BaseSliderView slider) {
-                            //
-                        }
-                    });
+            //String image = item.getImage1();
+            //Attempt to retrieve image from ParseFile
+            ParseFile something = (ParseFile) item.get("efficientImage");
+            something.getDataInBackground(new GetDataCallback() {
+                @Override
+                public void done(byte[] data, ParseException e) {
+                    if (e == null) {
+                        //retrieve image
+                        String URI = item.getImage1();
 
-            //add your extra information
-            textSliderView.bundle(new Bundle());
-            textSliderView.getBundle()
-                    .putString("extra", "Item");
+                        uriSliderView
+                                .description("Item")
+                                .image(URI)
+                                .setScaleType(BaseSliderView.ScaleType.Fit)
+                                .setOnSliderClickListener(new BaseSliderView.OnSliderClickListener() {
+                                    @Override
+                                    public void onSliderClick(BaseSliderView slider) {
+                                        //
+                                    }
+                                });
 
-            mSlider.addSlider(textSliderView);
+                        //add your extra information
+                        uriSliderView.bundle(new Bundle());
+                        uriSliderView.getBundle()
+                                .putString("extra", "Item");
+
+                        mSlider.addSlider(uriSliderView);
+                    }
+                    else {
+                        // Fuck something went wrong.
+                    }
+                }
+            });
+
         }
     }
 }
