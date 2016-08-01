@@ -55,6 +55,9 @@ public class AddItemActivity extends AppCompatActivity {
     @BindView(R.id.Add_New_Item) TextView header;
     @BindView(R.id.skipAddItem) Button skipAddItem;
     @BindView(R.id.spStatus) Spinner spStatus;
+    @BindView(R.id.rbNo) RadioButton rbNo;
+    @BindView(R.id.rbYes) RadioButton rbYes;
+
     ParseClient parseClient;
     ParseUser user;
 
@@ -166,6 +169,11 @@ public class AddItemActivity extends AppCompatActivity {
         etPrice.setText(price);
         etItemDescription.setText(item.getDescription());
         spStatus.setSelection(adapter.getPosition(item.getStatus()));
+        if (item.getNegotiable().equalsIgnoreCase("Yes")) {
+            rbYes.setSelected(true);
+        } else if (item.getNegotiable().equalsIgnoreCase("No")) {
+            rbNo.setSelected(true);
+        }
 
         //Coverting image to bitmap.
         ivItem1.setImageBitmap(decodeBase64(item.getImage1()));

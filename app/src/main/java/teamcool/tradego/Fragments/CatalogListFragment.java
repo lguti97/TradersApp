@@ -38,6 +38,7 @@ public class CatalogListFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_catalog_list, container, false);
         ButterKnife.bind(this, v);
         rvItems.setAdapter(catalogAdapter);
+        Log.d("DEBUG","?CatalogListFrag onCreateView");
         if(getContext().getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
             rvItems.setLayoutManager(new StaggeredGridLayoutManager(3,StaggeredGridLayoutManager.VERTICAL));
         } else {
@@ -55,6 +56,8 @@ public class CatalogListFragment extends Fragment {
         catalogAdapter = new CatalogAdapter(items);
     }
 
+
+    /*
     @Override
     public void onResume() {
         if(getContext().getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
@@ -62,9 +65,10 @@ public class CatalogListFragment extends Fragment {
         } else {
             rvItems.setLayoutManager(new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL));
         }
-        catalogAdapter.notifyDataSetChanged();
         super.onResume();
     }
+    */
+
 
     public void addAll(List<Item> items) {
         catalogAdapter.clearAndAddAll(items);
