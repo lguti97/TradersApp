@@ -52,12 +52,16 @@
         <activity android:name=".Activities.DetailsActivity" />
         <activity android:name=".Activities.AddItemActivity" android:screenOrientation="portrait" />
         <activity android:name=".Activities.MainActivity" />
-        <activity android:name=".Activities.FriendImportActivity" />
-        <activity android:name=".Activities.ProfileActivity" />
-        <activity android:name=".Activities.FriendListActivity" />
-        <activity android:name=".Activities.SearchActivity" />
-        <activity android:name=".Activities.NewsFeedActivity" />
-
+        <activity android:name=".Activities.FriendImportActivity"
+            android:configChanges="orientation|screenSize"/>
+        <activity android:name=".Activities.ProfileActivity"
+            android:configChanges="orientation|screenSize"/>
+        <activity android:name=".Activities.FriendListActivity"
+            android:configChanges="orientation|screenSize"/>
+        <activity android:name=".Activities.SearchActivity"
+            android:configChanges="orientation|screenSize"/>
+        <activity android:name=".Activities.NewsFeedActivity"
+            android:configChanges="orientation|screenSize"/>
         <service android:name="com.parse.PushService" />
 
         <receiver
@@ -80,7 +84,8 @@
             </intent-filter>
         </receiver>
 
-        <activity android:name=".Activities.LoginActivity" />
+        <activity android:name=".Activities.LoginActivity"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

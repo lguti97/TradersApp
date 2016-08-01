@@ -40,6 +40,7 @@ import java.io.IOException;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import teamcool.tradego.Clients.ParseClient;
+import teamcool.tradego.Fragments.AlertBuyerInfoFragment;
 import teamcool.tradego.Models.Item;
 import teamcool.tradego.R;
 
@@ -54,6 +55,10 @@ public class AddItemActivity extends AppCompatActivity {
     @BindView(R.id.etItemDescription) EditText etItemDescription;
     @BindView(R.id.Add_New_Item) TextView header;
     @BindView(R.id.skipAddItem) Button skipAddItem;
+    @BindView(R.id.spStatus) Spinner spStatus;
+    @BindView(R.id.rbNo) RadioButton rbNo;
+    @BindView(R.id.rbYes) RadioButton rbYes;
+
     ParseClient parseClient;
     ParseUser user;
 
@@ -66,6 +71,7 @@ public class AddItemActivity extends AppCompatActivity {
     String itemId;
     Item item;
     boolean initial;
+    ArrayAdapter<CharSequence> adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,67 +97,66 @@ public class AddItemActivity extends AppCompatActivity {
                 actionbar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#d3d3d3")));
                 actionbar.setTitle("Getting Started");
             }
-
-
-            ivItem1.setOnClickListener(new View.OnClickListener() {
-
-                @Override
-                public void onClick(View view) {
-                    //onLaunchCamera(view);
-                    //onPickPhoto(view);
-                    startDialog(view);
-                    index = 1;
-                }
-            });
-
-            //Take the second image of the item to be sold
-            ivItem2.setOnClickListener(new View.OnClickListener() {
-
-
-                @Override
-                public void onClick(View view) {
-                    //onLaunchCamera(view);
-                    //onPickPhoto(view);
-                    startDialog(view);
-                    index = 2;
-                }
-            });
-
-            //keyboard focus changing:
-            etPrice.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-                @Override
-                public void onFocusChange(View view, boolean b) {
-                    if (!b) {
-                        hideKeyboard(view);
-                    }
-                }
-            });
-            etItemName.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-                @Override
-                public void onFocusChange(View view, boolean b) {
-                    if (!b) {
-                        hideKeyboard(view);
-                    }
-                }
-            });
-            etItemDescription.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-                @Override
-                public void onFocusChange(View view, boolean b) {
-                    if (!b) {
-                        hideKeyboard(view);
-                    }
-                }
-            });
-
-            onCategorySpinner();
-            onStatusSpinner();
-
-
-            if (getIntent().getStringExtra("item_id") != null) {
-                populateEditItem();
-            }
-
         }
+
+        ivItem1.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                //onLaunchCamera(view);
+                //onPickPhoto(view);
+                startDialog(view);
+                index = 1;
+            }
+        });
+
+        //Take the second image of the item to be sold
+        ivItem2.setOnClickListener(new View.OnClickListener() {
+
+
+            @Override
+            public void onClick(View view) {
+                //onLaunchCamera(view);
+                //onPickPhoto(view);
+                startDialog(view);
+                index = 2;
+            }
+        });
+
+        //keyboard focus changing:
+        etPrice.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                if (!b) {
+                    hideKeyboard(view);
+                }
+            }
+        });
+        etItemName.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                if (!b) {
+                    hideKeyboard(view);
+                }
+            }
+        });
+        etItemDescription.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                if (!b) {
+                    hideKeyboard(view);
+                }
+            }
+        });
+
+        onCategorySpinner();
+        onStatusSpinner();
+
+
+        if (getIntent().getStringExtra("item_id") != null) {
+            populateEditItem();
+        }
+
     }
 
     private void populateEditItem() {
@@ -164,6 +169,12 @@ public class AddItemActivity extends AppCompatActivity {
         String price = String.valueOf(item.getPrice());
         etPrice.setText(price);
         etItemDescription.setText(item.getDescription());
+        spStatus.setSelection(adapter.getPosition(item.getStatus()));
+        if (item.getNegotiable().equalsIgnoreCase("Yes")) {
+            rbYes.setSelected(true);
+        } else if (item.getNegotiable().equalsIgnoreCase("No")) {
+            rbNo.setSelected(true);
+        }
 
         //Coverting image to bitmap.
         ivItem1.setImageBitmap(decodeBase64(item.getImage1()));
@@ -196,7 +207,7 @@ public class AddItemActivity extends AppCompatActivity {
     public void onCategorySpinner() {
         Spinner spinner = (Spinner) findViewById(R.id.spCategory);
 // Create an ArrayAdapter using the string array and a default spinner layout
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+        adapter = ArrayAdapter.createFromResource(this,
                 R.array.categories, R.layout.custom_spinner_category);
 // Specify the layout to use when the list of choices appears
         adapter.setDropDownViewResource(R.layout.spinner_dropdown);
@@ -319,6 +330,10 @@ public class AddItemActivity extends AppCompatActivity {
         }
 
         if (!initial) {
+            /* if (spStatus.getSelectedItem().toString().equals("Sold")) {
+                AlertBuyerInfoFragment frag = AlertBuyerInfoFragment.newInstance();
+                frag.show(getSupportFragmentManager(), "fragment_alert");
+            } */
             finish();
         } else {
             Intent i = new Intent(AddItemActivity.this, NewsFeedActivity.class);
