@@ -213,7 +213,7 @@ public class NewsFeedActivity extends AppCompatActivity {
                         .into(ivNavProfilePic);
         tvNavUserName.setText(currUser.getString("username"));
         parseClient.countNumFriendsOfUser(currUser,tvNavNumFriends," friends");
-        parseClient.countNumItemsOnStatus(currUser,"Available",tvNavItemsAvailable," items available");
+        parseClient.countNumItemsOnStatus(currUser,"Available",tvNavItemsAvailable,""," items available");
 
         //Launching profile activity when profile picture in the navigation drawer is clicked
         ivNavProfilePic.setOnClickListener(new View.OnClickListener() {

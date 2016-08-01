@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content" android:background="@color/colorBackground">
+    <!--android:background="@android:drawable/dialog_holo_light_frame"-->
+    <!--RelativeLayout here is for background color-->
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clipToPadding="false"
+        android:id="@+id/rlFriendEach"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:background="@android:drawable/dialog_holo_light_frame">
+
+        <ImageView
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/ivProfileImage"
+            android:scaleType="fitStart"
+            android:adjustViewBounds="true"
+            android:src="@mipmap/ic_launcher"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="5dp"
+            android:layout_centerHorizontal="true"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvUserName"
+            android:text="John Doe"
+            android:layout_below="@id/ivProfileImage"
+            android:textStyle="bold"
+            android:layout_marginTop="5dp"
+            android:padding="2dp"
+            android:layout_centerHorizontal="true"
+            android:gravity="center"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvItemsCatalog"
+            android:text="Items in Catalog: ..."
+            android:layout_below="@id/tvUserName"
+            android:gravity="center"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="5dp"/>
+
+    </RelativeLayout>
+</LinearLayout>

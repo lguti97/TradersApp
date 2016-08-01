@@ -78,7 +78,8 @@ public class FriendsAdapter extends RecyclerView.Adapter<FriendsAdapter.ViewHold
 
         parseClient = new ParseClient();
         final ParseUser friend_to_user = parseClient.queryUserBasedonFBid(friend.getUserID());
-        parseClient.countNumItemsOnUser(friend_to_user, holder.tvItems ,"Items in Catalog: ", "");
+        holder.tvItems.setText("Items in Catalog: ...");
+        parseClient.countNumItemsOnStatus(friend_to_user, "Available", holder.tvItems, "Items in Catalog: ", "");
 
         //Goes into detail mode for each friend.
         holder.rootView.setOnClickListener(new View.OnClickListener() {
@@ -94,11 +95,7 @@ public class FriendsAdapter extends RecyclerView.Adapter<FriendsAdapter.ViewHold
     public int getItemCount() {
         return friends.size();
     }
-
-    public void clear() {
-        friends.clear();
-        notifyDataSetChanged();
-    }
+    
     public void clearAndAddAll(List<Friend> newFriends) {
         friends.addAll(newFriends);
         notifyDataSetChanged();

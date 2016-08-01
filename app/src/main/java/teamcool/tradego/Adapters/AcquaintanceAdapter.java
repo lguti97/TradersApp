@@ -23,6 +23,8 @@ import com.bumptech.glide.Glide;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -49,6 +51,7 @@ public class AcquaintanceAdapter extends RecyclerView.Adapter<AcquaintanceAdapte
     private RecyclerView rvAcquaintances;
     private Friend friend;
     private Friend friendData;
+
     //ViewHolder gives access to our views
     public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView tvName;
@@ -160,6 +163,7 @@ public class AcquaintanceAdapter extends RecyclerView.Adapter<AcquaintanceAdapte
                     }
                 })
                 .setDuration(3000).show();
+
     }
 
 

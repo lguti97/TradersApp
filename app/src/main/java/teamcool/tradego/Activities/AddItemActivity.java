@@ -22,6 +22,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
@@ -51,6 +52,7 @@ public class AddItemActivity extends AppCompatActivity {
     @BindView(R.id.etItemName) EditText etItemName;
     @BindView(R.id.etItemDescription) EditText etItemDescription;
     @BindView(R.id.Add_New_Item) TextView header;
+    @BindView(R.id.skipAddItem) Button skipAddItem;
     ParseClient parseClient;
     ParseUser user;
 
@@ -62,6 +64,7 @@ public class AddItemActivity extends AppCompatActivity {
     String image_2;
     String itemId;
     Item item;
+    boolean initial;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,81 +73,84 @@ public class AddItemActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         //Take first image of the item to be sold
 
-
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-
         setSupportActionBar(toolbar);
-
         ActionBar actionbar = getSupportActionBar();
         actionbar.setDisplayHomeAsUpEnabled(true);
         actionbar.setDisplayShowHomeEnabled(true);
 
-        if(ParseUser.getCurrentUser().isNew()) {
-            actionbar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#d3d3d3")));
-            actionbar.setTitle("Getting Started");
+        if (getIntent() != null) {
+            initial = getIntent().getBooleanExtra("initial", false);
         }
 
+        if (initial) {
+            skipAddItem.setText(getResources().getString(R.string.skip));
 
-        ivItem1.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View view) {
-                //onLaunchCamera(view);
-                //onPickPhoto(view);
-                startDialog(view);
-                index = 1;
+            if (ParseUser.getCurrentUser().isNew()) {
+                actionbar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#d3d3d3")));
+                actionbar.setTitle("Getting Started");
             }
-        });
-
-        //Take the second image of the item to be sold
-        ivItem2.setOnClickListener(new View.OnClickListener() {
 
 
-            @Override
-            public void onClick(View view) {
-                //onLaunchCamera(view);
-                //onPickPhoto(view);
-                startDialog(view);
-                index = 2;
-            }
-        });
+            ivItem1.setOnClickListener(new View.OnClickListener() {
 
-
-        //keyboard focus changing:
-        etPrice.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View view, boolean b) {
-                if(!b) {
-                    hideKeyboard(view);
+                @Override
+                public void onClick(View view) {
+                    //onLaunchCamera(view);
+                    //onPickPhoto(view);
+                    startDialog(view);
+                    index = 1;
                 }
-            }
-        });
-        etItemName.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View view, boolean b) {
-                if(!b) {
-                    hideKeyboard(view);
+            });
+
+            //Take the second image of the item to be sold
+            ivItem2.setOnClickListener(new View.OnClickListener() {
+
+
+                @Override
+                public void onClick(View view) {
+                    //onLaunchCamera(view);
+                    //onPickPhoto(view);
+                    startDialog(view);
+                    index = 2;
                 }
-            }
-        });
-        etItemDescription.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View view, boolean b) {
-                if(!b) {
-                    hideKeyboard(view);
+            });
+
+            //keyboard focus changing:
+            etPrice.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                @Override
+                public void onFocusChange(View view, boolean b) {
+                    if (!b) {
+                        hideKeyboard(view);
+                    }
                 }
+            });
+            etItemName.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                @Override
+                public void onFocusChange(View view, boolean b) {
+                    if (!b) {
+                        hideKeyboard(view);
+                    }
+                }
+            });
+            etItemDescription.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                @Override
+                public void onFocusChange(View view, boolean b) {
+                    if (!b) {
+                        hideKeyboard(view);
+                    }
+                }
+            });
+
+            onCategorySpinner();
+            onStatusSpinner();
+
+
+            if (getIntent().getStringExtra("item_id") != null) {
+                populateEditItem();
             }
-        });
 
-        onCategorySpinner();
-        onStatusSpinner();
-
-
-        if (getIntent().getStringExtra("item_id") != null) {
-            populateEditItem();
         }
-
-
     }
 
     private void populateEditItem() {
@@ -302,7 +308,13 @@ public class AddItemActivity extends AppCompatActivity {
             new_item.saveInBackground();
         }
 
-        finish();
+        if (!initial) {
+            finish();
+        } else {
+            Intent i = new Intent(AddItemActivity.this, NewsFeedActivity.class);
+            startActivity(i);
+            overridePendingTransition(R.anim.right_in, R.anim.left_out);
+        }
     }
 
 

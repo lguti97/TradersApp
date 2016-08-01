@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 
 import com.facebook.AccessToken;
 import com.facebook.GraphRequest;
@@ -23,6 +24,8 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import teamcool.tradego.Adapters.AcquaintanceAdapter;
 import teamcool.tradego.Clients.FBGraphClient;
 import teamcool.tradego.Clients.ParseClient;
@@ -36,18 +39,35 @@ ACTIVITY USED TO IMPORT FRIENDS VIA FACEBOOK/EMAIL
  */
 
 public class FriendImportActivity extends AppCompatActivity {
-    String currentUserFbId;
-    ArrayList<Acquaintance> acquaintances;
-    ParseUser parseUser;
 
+    @BindView(R.id.skipFriendImport) TextView skipFriendImport;
+    boolean initial;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_friend_import);
+
+        ButterKnife.bind(this);
+
+        //Doing some channel testing here. Why is this not working?
+        HashMap<String, String> test = new HashMap<>();
+        test.put("channel", "testing");
+        ParseCloud.callFunctionInBackground("pushChannelTest", test);
+
         //Show Alert Dialog Fragment
         showAlertDialog();
 
+
+        if (getIntent() != null) {
+            initial = getIntent().getBooleanExtra("initial",false);
+        }
+
+        if (initial) {
+            skipFriendImport.setText(getResources().getString(R.string.skip));
+        } else {
+            skipFriendImport.setText("Done");
+        }
 
         //This is where I make the acquaintance objects.
         final ArrayList<Acquaintance> acquaintances = new ArrayList<>();
@@ -77,9 +97,15 @@ public class FriendImportActivity extends AppCompatActivity {
 
     //To skip the import activity part if you choose to do so.
     public void skipActivity(View view) {
-        Intent i = new Intent(FriendImportActivity.this, AddItemActivity.class);
-        startActivity(i);
-        overridePendingTransition(R.anim.right_in, R.anim.left_out);
+        if (initial) {
+            Intent i = new Intent(FriendImportActivity.this, AddItemActivity.class);
+            i.putExtra("initial", true);
+            startActivity(i);
+            overridePendingTransition(R.anim.right_in, R.anim.left_out);
+        } else {
+            finish();
+            overridePendingTransition(R.anim.left_in, R.anim.right_out);
+        }
     }
 
     public void showAlertDialog() {

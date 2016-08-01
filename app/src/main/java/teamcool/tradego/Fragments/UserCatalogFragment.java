@@ -5,6 +5,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -141,14 +142,14 @@ public class UserCatalogFragment extends CatalogListFragment {
         super.onViewCreated(view, savedInstanceState);
     }
 
-
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         if (isVisibleToUser)
             isSeen = true;
-        if (isViewCreated && !isLoaded)
+        if (isViewCreated && !isLoaded) {
             populateCatalog(getArguments().getString("id"), getArguments().getString("status"));
+        }
     }
 
     public void populateCatalog(String id, String status) {

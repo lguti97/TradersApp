@@ -274,9 +274,7 @@
                 android:onClick="skipAddItemActivity"
                 android:textColor="@color/textSecondary"
                 android:background="?android:attr/selectableItemBackground"
-                android:text="@string/skip" />
-
-
+                android:text="" />
         </RelativeLayout>
 
 

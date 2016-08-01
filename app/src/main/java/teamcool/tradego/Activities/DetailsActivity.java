@@ -1,12 +1,9 @@
 package teamcool.tradego.Activities;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -16,11 +13,6 @@ import android.util.Base64;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
@@ -37,9 +29,9 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.util.Arrays;
 import java.util.Date;
+
 import java.util.List;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
 import teamcool.tradego.Adapters.DetailAdapter;
 import teamcool.tradego.Clients.ParseClient;
@@ -125,7 +117,6 @@ public class DetailsActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
 
-        Item item_2 = parseClient.queryItemBasedonObjectID(itemId);
         List<Item> items = parseClient.queryItemsOnUser(ParseUser.getCurrentUser());
 
         for(Item item: items) {
@@ -150,7 +141,7 @@ public class DetailsActivity extends AppCompatActivity {
     }
 
     public void showAlertDialog() {
-        AlertDeleteFragment frag = AlertDeleteFragment.newInstance(itemId);
+        AlertDeleteFragment frag = AlertDeleteFragment.newInstance(true,item.getItem_name(),itemId);
         frag.show(getSupportFragmentManager(), "fragment_alert");
     }
 

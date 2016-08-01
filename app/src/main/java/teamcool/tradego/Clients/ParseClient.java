@@ -4,10 +4,10 @@ package teamcool.tradego.Clients;
 
 
 import android.text.format.DateFormat;
+import android.util.Log;
 import android.widget.TextView;
 
 import com.parse.CountCallback;
-
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
@@ -196,7 +196,7 @@ public class ParseClient {
     }
 
     //REQUIRES: user must be a friend of currentUser
-    public void countNumItemsOnStatus(ParseUser user, String status, final TextView textView, final String strAppend) {
+    public void countNumItemsOnStatus(ParseUser user, String status, final TextView textView, final String strPre, final String strAppend) {
         int count = -15251; //placeholder value
         ParseQuery<Item> query = ParseQuery.getQuery(Item.class);
         query.whereEqualTo("owner",user);
@@ -204,25 +204,12 @@ public class ParseClient {
         query.countInBackground(new CountCallback() {
             @Override
             public void done(int count, ParseException e) {
-                String txt = count + strAppend;
+                String txt = strPre + count + strAppend;
                 textView.setText(txt);
             }
         });
     }
 
-
-    public void countNumItemsOnUser(ParseUser user, final TextView textView, final String strPre, final String strEnd) {
-        int count = -15251;
-        ParseQuery<Item> query = ParseQuery.getQuery(Item.class);
-        query.whereEqualTo("owner",user);
-        query.countInBackground(new CountCallback() {
-            @Override
-            public void done(int count, ParseException e) {
-                String txt = strPre + count + strEnd;
-                textView.setText(txt);
-            }
-        });
-    }
 
     public int countNumItemsBought(ParseUser user) {
         int count = -15210; //placeholder value
@@ -361,20 +348,33 @@ public class ParseClient {
     public void deleteItem(String itemId) {
         ParseQuery<Item> query = ParseQuery.getQuery(Item.class);
         query.whereEqualTo("objectId",itemId);
+        /*
+        query.findInBackground(new FindCallback<Item>() {
+            @Override
+            public void done(List<Item> objects, ParseException e) {
+                objects.get(0).deleteInBackground();
+            }
+        });
+        */
         try {
             Item i = query.find().get(0);
             i.delete();
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        /*
-        query.findInBackground(new FindCallback<Item>() {
-            @Override
-            public void done(List<Item> objects, ParseException e) {
-                objects.get(0).delete();
-            }
-        });
-        */
+    }
+
+    public void deleteFriend(String objId) {
+        ParseQuery<Friend> query = ParseQuery.getQuery(Friend.class);
+        Log.d("DEBUG",objId);
+        query.whereEqualTo("userID",objId);
+        try {
+            Friend f = query.find().get(0);
+            Log.d("DEBUG",f.getName()+"--");
+            f.delete();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
 
     public int countNumItemsOnStatus(ParseUser user, String status) {
