@@ -169,11 +169,21 @@ public class AddItemActivity extends AppCompatActivity {
         String price = String.valueOf(item.getPrice());
         etPrice.setText(price);
         etItemDescription.setText(item.getDescription());
-        spStatus.setSelection(adapter.getPosition(item.getStatus()));
+        Log.d("DEBUG","!!"+item.getStatus());
+        int statusIndx = -1;
+        String currStatus = item.getStatus();
+        if (currStatus.equalsIgnoreCase("On hold"))
+            statusIndx = 0;
+        else if (currStatus.equalsIgnoreCase("Available"))
+            statusIndx = 1;
+        else
+            statusIndx = 2;
+        spStatus.setSelection(statusIndx);
+        Log.d("DEBUG","!!"+item.getNegotiable());
         if (item.getNegotiable().equalsIgnoreCase("Yes")) {
-            rbYes.setSelected(true);
+            rbYes.setChecked(true);
         } else if (item.getNegotiable().equalsIgnoreCase("No")) {
-            rbNo.setSelected(true);
+            rbNo.setChecked(true);
         }
 
         //Coverting image to bitmap.
