@@ -179,8 +179,11 @@ public class DetailsActivity extends AppCompatActivity {
                 @Override
                 public void done(byte[] data, ParseException e) {
                     if (e == null) {
-                        //retrieve image
-                        String URI = item.getImage1();
+                        Bitmap bmp = BitmapFactory
+                                .decodeByteArray(data, 0, data.length);
+                        String URI = BitMapToString(bmp);
+
+
 
                         uriSliderView
                                 .description("Item")
@@ -206,5 +209,13 @@ public class DetailsActivity extends AppCompatActivity {
             });
 
         }
+    }
+
+    public String BitMapToString(Bitmap bitmap){
+        ByteArrayOutputStream baos=new  ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG,100, baos);
+        byte [] b=baos.toByteArray();
+        String temp=Base64.encodeToString(b, Base64.DEFAULT);
+        return temp;
     }
 }
