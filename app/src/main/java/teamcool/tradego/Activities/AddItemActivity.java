@@ -169,7 +169,6 @@ public class AddItemActivity extends AppCompatActivity {
         String price = String.valueOf(item.getPrice());
         etPrice.setText(price);
         etItemDescription.setText(item.getDescription());
-        Log.d("DEBUG","!!"+item.getStatus());
         int statusIndx = -1;
         String currStatus = item.getStatus();
         if (currStatus.equalsIgnoreCase("On hold"))
@@ -179,7 +178,6 @@ public class AddItemActivity extends AppCompatActivity {
         else
             statusIndx = 2;
         spStatus.setSelection(statusIndx);
-        Log.d("DEBUG","!!"+item.getNegotiable());
         if (item.getNegotiable().equalsIgnoreCase("Yes")) {
             rbYes.setChecked(true);
         } else if (item.getNegotiable().equalsIgnoreCase("No")) {
