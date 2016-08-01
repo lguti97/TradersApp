@@ -127,6 +127,7 @@ public class LoginActivity extends AppCompatActivity {
                 // it might be because you have3 no PERMISSION to access it
                 // look it up in API and add more permissions to the array
 
+
                 Intent i = new Intent (LoginActivity.this, FriendImportActivity.class);
                 i.putExtra("initial",true);
                 startActivity(i);
