@@ -12,6 +12,8 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.parse.ParseUser;
+
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -29,7 +31,7 @@ public class TopTimelineFragment extends CatalogListFragment {
     boolean isSeen = false;
     boolean isLoaded = false;
     boolean isRefresh = false;
-
+    List<Item> items;
 
     @BindView(R.id.swipeContainerCatalog)
     SwipeRefreshLayout swipeContainer;
@@ -57,7 +59,7 @@ public class TopTimelineFragment extends CatalogListFragment {
         @Override
         protected List<Item> doInBackground(Void... voids) {
             ParseClient parseClient = new ParseClient();
-            List<Item> items = parseClient.queryItemsOnOtherUserAndStatus(ParseUser.getCurrentUser(), "Available");
+            items = parseClient.queryItemsOnOtherUserAndStatus(ParseUser.getCurrentUser(), "Available");
             return items;
         }
 
