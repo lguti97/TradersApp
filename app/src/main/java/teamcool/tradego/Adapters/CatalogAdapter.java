@@ -86,15 +86,17 @@ public class CatalogAdapter extends RecyclerView.Adapter<CatalogAdapter.ViewHold
         }
         holder.tvPrice.setText(price);
 
-        if(item.getImage1() != null) {
+        if(1 == 1) {
             //holder.ivItemImage.setImageBitmap(decodeBase64(item.getImage1()));
 
             ParseFile itemPhoto = (ParseFile) item.get("item_photo");
             itemPhoto.getDataInBackground(new GetDataCallback() {
                 public void done(byte[] data, ParseException e) {
                     if (e == null) {
+
                         Bitmap bmp = BitmapFactory
                                 .decodeByteArray(data, 0, data.length);
+                        //Not decoding properly.
                         Log.d("DEBUG", bmp.toString());
                         holder.ivItemImage.setImageBitmap(bmp);
                     } else {

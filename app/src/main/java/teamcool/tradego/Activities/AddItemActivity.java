@@ -72,6 +72,7 @@ public class AddItemActivity extends AppCompatActivity {
     Item item;
     boolean initial;
     ArrayAdapter<CharSequence> adapter;
+    byte[] datas;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -302,15 +303,14 @@ public class AddItemActivity extends AppCompatActivity {
         /*
         MUST CHANGE HERE.
          */
-
-        byte[] data = image_1.getBytes();
-        ParseFile file = new ParseFile("item_photo", data);
+        //byte[] data = image_1.getBytes();
+        ParseFile file = new ParseFile("item_photo", datas);
         file.saveInBackground();
 
 
         Item new_item = new Item(etItemName.getText().toString(),
                 category, etItemDescription.getText().toString(),
-                status, price, negotiable, image_1, image_2, fbID);
+                status, price, negotiable, fbID);
 
 
         new_item.setOwner(user);
@@ -437,6 +437,10 @@ public class AddItemActivity extends AppCompatActivity {
 
                 Bitmap takenImage = Bitmap.createScaledBitmap(takenImage_unscaled, 250, 250, true);
                 // Load the taken image into a preview
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                takenImage.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                datas = stream.toByteArray();
+
 
 
                 if(index==1) {

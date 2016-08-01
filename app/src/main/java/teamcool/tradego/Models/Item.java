@@ -22,7 +22,7 @@ public class Item extends ParseObject {
         super();
     }
 
-    public Item(String item_name, String category, String description, String status, double price, String negotiable, String image1, String image2, String fbID) {
+    public Item(String item_name, String category, String description, String status, double price, String negotiable, String fbID) {
         super();
         setItem_name(item_name);
         setCategory(category);
@@ -30,8 +30,8 @@ public class Item extends ParseObject {
         setStatus(status);
         setDescription(description);
         setNegotiable(negotiable);
-        setImage1(image1);
-        setImage2(image2);
+        //setImage1(image1);
+        //setImage2(image2);
         setfbID(fbID);
 
     }
@@ -125,8 +125,6 @@ public class Item extends ParseObject {
                     object.getString("status"),
                     object.getDouble("price"),
                     object.getString("negotiable"),
-                    object.getString("image_1"),
-                    object.getString("image_2"),
                     object.getString("fbID"));
         } catch (JSONException e) {
             e.printStackTrace();
