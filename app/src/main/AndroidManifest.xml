@@ -55,7 +55,7 @@
         <activity android:name=".Activities.FriendImportActivity"
             android:configChanges="orientation|screenSize"/>
         <activity android:name=".Activities.ProfileActivity"
-            android:configChanges="orientation|screenSize"/>
+            />
         <activity android:name=".Activities.FriendListActivity"
             android:configChanges="orientation|screenSize"/>
         <activity android:name=".Activities.SearchActivity"
