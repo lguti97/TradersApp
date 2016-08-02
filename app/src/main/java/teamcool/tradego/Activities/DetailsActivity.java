@@ -130,6 +130,8 @@ public class DetailsActivity extends AppCompatActivity {
     }
 
 
+
+    //Used for editing items
     public void onEditItem(MenuItem item) {
         Intent i = new Intent(DetailsActivity.this, AddItemActivity.class);
         i.putExtra("item_id", itemId);
