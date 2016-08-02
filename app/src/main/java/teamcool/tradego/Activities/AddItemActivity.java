@@ -72,7 +72,9 @@ public class AddItemActivity extends AppCompatActivity {
     Item item;
     boolean initial;
     ArrayAdapter<CharSequence> adapter;
-    byte[] datas;
+    byte[] dataImage;
+    ParseFile file1;
+    ParseFile file2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -310,8 +312,7 @@ public class AddItemActivity extends AppCompatActivity {
         MUST CHANGE HERE.
          */
         //byte[] data = image_1.getBytes();
-        ParseFile file = new ParseFile("item_photo", datas);
-        file.saveInBackground();
+
 
 
         Item new_item = new Item(etItemName.getText().toString(),
@@ -320,7 +321,8 @@ public class AddItemActivity extends AppCompatActivity {
 
 
         new_item.setOwner(user);
-        new_item.put("item_photo", file);
+        new_item.put("item_photo1", file1);
+        new_item.put("item_photo2", file2);
         new_item.saveInBackground();
 
 
@@ -447,17 +449,20 @@ public class AddItemActivity extends AppCompatActivity {
                 // Load the taken image into a preview
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
                 takenImage.compress(Bitmap.CompressFormat.PNG, 100, stream);
-                datas = stream.toByteArray();
+                dataImage = stream.toByteArray();
 
 
 
                 if(index==1) {
-
+                    //Save photo1.
+                    file1 = new ParseFile("item_photo1", dataImage);
+                    file1.saveInBackground();
                     ivItem1.setImageBitmap(takenImage);
                     image_1 = encodeToBase64(takenImage, Bitmap.CompressFormat.JPEG, 100);
                 }
                 else if(index ==2) {
-
+                    file2 = new ParseFile("item_photo2", dataImage);
+                    file2.saveInBackground();
                     ivItem2.setImageBitmap(takenImage);
                     image_2 = encodeToBase64(takenImage, Bitmap.CompressFormat.JPEG, 100);
                 }
@@ -481,11 +486,15 @@ public class AddItemActivity extends AppCompatActivity {
 
 
                 if(index==1) {
+                    file1 = new ParseFile("item_photo1", dataImage);
+                    file1.saveInBackground();
 
                     ivItem1.setImageBitmap(selectedImage);
                     image_1 = encodeToBase64(selectedImage, Bitmap.CompressFormat.JPEG, 100);
                 }
                 else if(index ==2) {
+                    file2 = new ParseFile("item_photo2", dataImage);
+                    file2.saveInBackground();
 
                     ivItem2.setImageBitmap(selectedImage);
                     image_2 = encodeToBase64(selectedImage, Bitmap.CompressFormat.JPEG, 100);

@@ -86,28 +86,20 @@ public class CatalogAdapter extends RecyclerView.Adapter<CatalogAdapter.ViewHold
         }
         holder.tvPrice.setText(price);
 
-        if(1 == 1) {
-            //holder.ivItemImage.setImageBitmap(decodeBase64(item.getImage1()));
+        ParseFile itemPhoto = (ParseFile) item.get("item_photo1");
+        itemPhoto.getDataInBackground(new GetDataCallback() {
+            public void done(byte[] data, ParseException e) {
+                if (e == null) {
 
-            ParseFile itemPhoto = (ParseFile) item.get("item_photo");
-            itemPhoto.getDataInBackground(new GetDataCallback() {
-                public void done(byte[] data, ParseException e) {
-                    if (e == null) {
-
-                        Bitmap bmp = BitmapFactory
-                                .decodeByteArray(data, 0, data.length);
-                        //Not decoding properly.
-                        Log.d("DEBUG", bmp.toString());
-                        holder.ivItemImage.setImageBitmap(bmp);
-                    } else {
+                    Bitmap bmp = BitmapFactory
+                            .decodeByteArray(data, 0, data.length);
+                    Log.d("DEBUG", bmp.toString());
+                    holder.ivItemImage.setImageBitmap(bmp);
+                } else {
                         // something went wrong
-                    }
                 }
-            });
-
-
-        }
-
+            }
+        });
 
         //on click listener to launch detail activity
         holder.rlItemEach.setOnClickListener(new View.OnClickListener() {
