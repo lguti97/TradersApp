@@ -358,13 +358,10 @@ public class AddItemActivity extends AppCompatActivity {
                 category, etItemDescription.getText().toString(),
                 status, price, negotiable, fbID);
 
-
         new_item.setOwner(user);
         new_item.put("item_photo1", file1);
         new_item.put("item_photo2", file2);
         new_item.saveInBackground();
-
-
 
         if(getIntent().getStringExtra("item_id") != null) {
             parseClient.updateItem(getIntent().getStringExtra("item_id"), new_item);
@@ -377,12 +374,6 @@ public class AddItemActivity extends AppCompatActivity {
         }
 
         if (!initial) {
-            /*
-            if (spStatus.getSelectedItem().toString().equals("Sold")) {
-                AlertBuyerInfoFragment frag = AlertBuyerInfoFragment.newInstance();
-                frag.show(getSupportFragmentManager(), "fragment_alert");
-            }
-            */
             finish();
         } else {
             Intent i = new Intent(AddItemActivity.this, NewsFeedActivity.class);
@@ -609,9 +600,7 @@ public class AddItemActivity extends AppCompatActivity {
 
         if(orientation == ExifInterface.ORIENTATION_ROTATE_90) {
             takenImage = Bitmap.createScaledBitmap(rotatedBitmap, 250, 300, true);
-        }
-
-        else {
+        } else {
             takenImage = Bitmap.createScaledBitmap(rotatedBitmap, 320, 250, true);
         }
         return takenImage;
