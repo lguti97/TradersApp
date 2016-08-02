@@ -32,6 +32,9 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.parse.GetDataCallback;
+import com.parse.Parse;
+import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseUser;
 
@@ -188,9 +191,39 @@ public class AddItemActivity extends AppCompatActivity {
             rbNo.setChecked(true);
         }
 
-        //Coverting image to bitmap.
+
+        /*
         ivItem1.setImageBitmap(decodeBase64(item.getImage1()));
-        ivItem2.setImageBitmap(decodeBase64(item.getImage2()));
+        ivItem2.setImageBitmap(decodeBase64(item.getImage2()));*/
+        //Sets the two imageViews to the bitmaps found inside the ParseFile of each item object.
+        for (int i = 0; i < 2; i ++){
+
+            if (i == 0) {
+                ParseFile something =  (ParseFile) item.get("item_photo1");
+                something.getDataInBackground(new GetDataCallback() {
+                    @Override
+                    public void done(byte[] data, ParseException e) {
+                        //bitmap that will be set to the imageview
+                        Bitmap bmp = BitmapFactory
+                                .decodeByteArray(data, 0, data.length);
+                        ivItem1.setImageBitmap(bmp);
+                    }
+                });
+            } else if (i == 1) {
+                ParseFile something =  (ParseFile) item.get("item_photo2");
+                something.getDataInBackground(new GetDataCallback() {
+                    @Override
+                    public void done(byte[] data, ParseException e) {
+                        //bitmap that will be set to the imageview
+                        Bitmap bmp = BitmapFactory
+                                .decodeByteArray(data, 0, data.length);
+                        ivItem2.setImageBitmap(bmp);
+                    }
+                });
+            }
+
+
+        }
 
     }
 

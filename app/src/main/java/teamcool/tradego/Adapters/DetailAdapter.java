@@ -144,7 +144,7 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
             holder1.btnMessenger.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Uri messenger = Uri.parse((new StringBuilder("http://m.me/")).append(Uri.encode("100005948748513")).toString());
+                    Uri messenger = Uri.parse((new StringBuilder("http://m.me/")).append(Uri.encode("1224884170855690")).toString());
                     Intent i = new Intent(Intent.ACTION_VIEW, messenger);
                     view.getContext().startActivity(i);
 
