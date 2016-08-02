@@ -16,20 +16,12 @@ import android.view.MenuItem;
 
 import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
-import com.daimajia.slider.library.SliderTypes.TextSliderView;
-import com.facebook.messenger.MessengerUtils;
-import com.facebook.messenger.ShareToMessengerParams;
 import com.parse.GetDataCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseUser;
 
 import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.util.Arrays;
-import java.util.Date;
-
 import java.util.List;
 
 import butterknife.ButterKnife;
@@ -89,25 +81,6 @@ public class DetailsActivity extends AppCompatActivity {
         mAdapter = new DetailAdapter(mDataset, mDatasetTypes, item, this);
         rvDetails.setAdapter(mAdapter);
 
-
-        //For the images of the person.
-        //ivItem1.setImageBitmap(decodeBase64(item.getImage1()));
-        //ivItem2.setImageBitmap(decodeBase64(item.getImage2()));
-
-    }
-
-    //For Image Compression
-    public static String encodeToBase64(Bitmap image, Bitmap.CompressFormat compressFormat, int quality)
-    {
-        ByteArrayOutputStream byteArrayOS = new ByteArrayOutputStream();
-        image.compress(compressFormat, quality, byteArrayOS);
-        return Base64.encodeToString(byteArrayOS.toByteArray(), Base64.DEFAULT);
-    }
-
-    public static Bitmap decodeBase64(String input)
-    {
-        byte[] decodedBytes = Base64.decode(input, 0);
-        return BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.length);
     }
 
 
@@ -147,16 +120,6 @@ public class DetailsActivity extends AppCompatActivity {
         frag.show(getSupportFragmentManager(), "fragment_alert");
     }
 
-    public Bitmap StringToBitMap(String encodedString){
-        try {
-            byte [] encodeByte= Base64.decode(encodedString,Base64.DEFAULT);
-            Bitmap bitmap= BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
-            return bitmap;
-        } catch(Exception e) {
-            e.getMessage();
-            return null;
-        }
-    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

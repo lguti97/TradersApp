@@ -55,7 +55,7 @@ public class URISliderView extends BaseSliderView {
 
         //bitmap = decodeBase64(mUrl);
         bitmap = StringToBitMap(mUrl);
-        takenImage = Bitmap.createScaledBitmap(bitmap, 400, 250, true);
+        takenImage = Bitmap.createScaledBitmap(bitmap, 250, 250, true);
         return this;
     }
 

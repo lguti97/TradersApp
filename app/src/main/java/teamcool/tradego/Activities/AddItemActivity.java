@@ -17,7 +17,6 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Base64;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -33,7 +32,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.parse.GetDataCallback;
-import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseUser;
@@ -187,14 +185,14 @@ public class AddItemActivity extends AppCompatActivity {
         spStatus.setSelection(statusIndx);
         if (item.getNegotiable().equalsIgnoreCase("Yes")) {
             rbYes.setChecked(true);
+            negotiable = "Yes";
         } else if (item.getNegotiable().equalsIgnoreCase("No")) {
             rbNo.setChecked(true);
+            negotiable = "No";
         }
 
 
-        /*
-        ivItem1.setImageBitmap(decodeBase64(item.getImage1()));
-        ivItem2.setImageBitmap(decodeBase64(item.getImage2()));*/
+
         //Sets the two imageViews to the bitmaps found inside the ParseFile of each item object.
         for (int i = 0; i < 2; i ++){
 
@@ -221,9 +219,10 @@ public class AddItemActivity extends AppCompatActivity {
                     }
                 });
             }
-
-
         }
+        //At last delete the item in the data -> notify adapter.
+        item.deleteInBackground();
+        adapter.notifyDataSetChanged();
 
     }
 
@@ -313,10 +312,16 @@ public class AddItemActivity extends AppCompatActivity {
 
 
     public void onAddItemClick(View view) {
-
+        //This is for the editing part.
         if(getIntent().getStringExtra("item_id") != null) {
-            image_1 = item.getImage1();
-            image_2 = item.getImage2();
+            image_1 = "";
+            image_2 = "";
+
+            //Have to retrieve file 1 and file 2 from the parseServer.
+            file1 = (ParseFile) item.get("item_photo1");
+            file2 = (ParseFile) item.get("item_photo2");
+
+
         }
 
         Double price;
@@ -332,7 +337,7 @@ public class AddItemActivity extends AppCompatActivity {
             return;
         }
 
-        if (image_1 == null && image_2 == null) {
+        if (file1 == null && file2 == null) {
             Toast.makeText(this, "Please add two images of this item", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -394,19 +399,6 @@ public class AddItemActivity extends AppCompatActivity {
     }
 
 
-
-    public static String encodeToBase64(Bitmap image, Bitmap.CompressFormat compressFormat, int quality)
-    {
-        ByteArrayOutputStream byteArrayOS = new ByteArrayOutputStream();
-        image.compress(compressFormat, quality, byteArrayOS);
-        return Base64.encodeToString(byteArrayOS.toByteArray(), Base64.DEFAULT);
-    }
-
-    public static Bitmap decodeBase64(String input)
-    {
-        byte[] decodedBytes = Base64.decode(input, 0);
-        return BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.length);
-    }
 
     public void skipAddItemActivity(View view) {
         Intent i = new Intent(AddItemActivity.this, NewsFeedActivity.class);
@@ -483,13 +475,13 @@ public class AddItemActivity extends AppCompatActivity {
                     file1 = new ParseFile("item_photo1", dataImage);
                     file1.saveInBackground();
                     ivItem1.setImageBitmap(takenImage);
-                    image_1 = encodeToBase64(takenImage, Bitmap.CompressFormat.JPEG, 100);
+                    //image_1 = encodeToBase64(takenImage, Bitmap.CompressFormat.JPEG, 100);
                 }
                 else if(index ==2) {
                     file2 = new ParseFile("item_photo2", dataImage);
                     file2.saveInBackground();
                     ivItem2.setImageBitmap(takenImage);
-                    image_2 = encodeToBase64(takenImage, Bitmap.CompressFormat.JPEG, 100);
+                    //image_2 = encodeToBase64(takenImage, Bitmap.CompressFormat.JPEG, 100);
                 }
 
             } else { // Result was a failure
@@ -504,6 +496,10 @@ public class AddItemActivity extends AppCompatActivity {
                 Bitmap selectedImage = null;
                 try {
                     selectedImage = MediaStore.Images.Media.getBitmap(this.getContentResolver(), photoUri);
+                    ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                    selectedImage.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                    dataImage = stream.toByteArray();
+
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -515,14 +511,14 @@ public class AddItemActivity extends AppCompatActivity {
                     file1.saveInBackground();
 
                     ivItem1.setImageBitmap(selectedImage);
-                    image_1 = encodeToBase64(selectedImage, Bitmap.CompressFormat.JPEG, 100);
+                    //image_1 = encodeToBase64(selectedImage, Bitmap.CompressFormat.JPEG, 100);
                 }
                 else if(index ==2) {
                     file2 = new ParseFile("item_photo2", dataImage);
                     file2.saveInBackground();
 
                     ivItem2.setImageBitmap(selectedImage);
-                    image_2 = encodeToBase64(selectedImage, Bitmap.CompressFormat.JPEG, 100);
+                    //image_2 = encodeToBase64(selectedImage, Bitmap.CompressFormat.JPEG, 100);
                 }
 
             }
@@ -576,6 +572,8 @@ public class AddItemActivity extends AppCompatActivity {
     }
 
 
+    //This is to rotate the image to the right orientation
+
     public Bitmap rotateBitmapOrientation(String photoFilePath) {
         // Create and configure BitmapFactory
         BitmapFactory.Options bounds = new BitmapFactory.Options();
@@ -611,7 +609,6 @@ public class AddItemActivity extends AppCompatActivity {
         }
         return takenImage;
     }
-
 
 }
 
