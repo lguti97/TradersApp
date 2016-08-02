@@ -167,9 +167,6 @@ public class ParseClient {
         query.whereContains("item_name",name);
         query.whereEqualTo("status","Available");
         query.whereEqualTo("category",category);
-        if (!owner.equalsIgnoreCase("")) {
-            query.whereContainedIn("owner",queryFriendsOnName(owner));
-        }
         if (sort.equalsIgnoreCase("Oldest")) {
             query.orderByAscending("createdAt");
         }
