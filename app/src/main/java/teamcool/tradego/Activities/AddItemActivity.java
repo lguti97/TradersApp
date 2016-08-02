@@ -17,7 +17,6 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Base64;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -33,7 +32,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.parse.GetDataCallback;
-import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseUser;
@@ -194,9 +192,7 @@ public class AddItemActivity extends AppCompatActivity {
         }
 
 
-        /*
-        ivItem1.setImageBitmap(decodeBase64(item.getImage1()));
-        ivItem2.setImageBitmap(decodeBase64(item.getImage2()));*/
+
         //Sets the two imageViews to the bitmaps found inside the ParseFile of each item object.
         for (int i = 0; i < 2; i ++){
 
@@ -413,19 +409,6 @@ public class AddItemActivity extends AppCompatActivity {
 
 
 
-    /*public static String encodeToBase64(Bitmap image, Bitmap.CompressFormat compressFormat, int quality)
-    {
-        ByteArrayOutputStream byteArrayOS = new ByteArrayOutputStream();
-        image.compress(compressFormat, quality, byteArrayOS);
-        return Base64.encodeToString(byteArrayOS.toByteArray(), Base64.DEFAULT);
-    }
-*/
-    public static Bitmap decodeBase64(String input)
-    {
-        byte[] decodedBytes = Base64.decode(input, 0);
-        return BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.length);
-    }
-
     public void skipAddItemActivity(View view) {
         Intent i = new Intent(AddItemActivity.this, NewsFeedActivity.class);
         startActivity(i);
@@ -594,6 +577,8 @@ public class AddItemActivity extends AppCompatActivity {
     }
 
 
+    //This is to rotate the image to the right orientation
+
     public Bitmap rotateBitmapOrientation(String photoFilePath) {
         // Create and configure BitmapFactory
         BitmapFactory.Options bounds = new BitmapFactory.Options();
@@ -631,7 +616,6 @@ public class AddItemActivity extends AppCompatActivity {
         }
         return takenImage;
     }
-
 
 }
 
