@@ -332,7 +332,7 @@ public class AddItemActivity extends AppCompatActivity {
             price = -15251.0;
         }
 
-        if(etItemDescription.getText() == null || category == null || etItemDescription.getText().toString() == null || status == null || price < 0) {
+        if(etItemName.getText().toString().isEmpty() || category == null || etItemDescription.getText().toString().isEmpty() || status == null || price < 0) {
             Toast.makeText(this, "Please complete all the fields with correct values", Toast.LENGTH_SHORT).show();
             return;
         }

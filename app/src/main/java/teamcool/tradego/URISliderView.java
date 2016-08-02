@@ -10,7 +10,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
-import com.squareup.picasso.Callback;
 import com.squareup.picasso.RequestCreator;
 
 import java.io.File;
@@ -55,6 +54,7 @@ public class URISliderView extends BaseSliderView {
 
         //bitmap = decodeBase64(mUrl);
         bitmap = StringToBitMap(mUrl);
+
         takenImage = Bitmap.createScaledBitmap(bitmap, 250, 250, true);
         return this;
     }
