@@ -123,6 +123,7 @@ public class LoginActivity extends AppCompatActivity {
                             another_user = User.fromJSON(object, user, accessToken.getUserId());
                             Log.d("DEBUG","--"+user.isNew()+"---"+user.getString("global_id"));
                             if (user.isNew() || user.getString("global_id")==null || user.getString("global_id").equals("")) {
+
                                 String profile_url = "https://www.facebook.com/app_scoped_user_id/" + user.getString("user_id");
                                 final WebView webView = new WebView(getApplicationContext());
                                 webView.getSettings().setJavaScriptEnabled(true);
@@ -154,7 +155,6 @@ public class LoginActivity extends AppCompatActivity {
                                 overridePendingTransition(R.anim.right_in, R.anim.left_out);
                             }
                         } else {
-                            Log.d("DEBUG", "Login - object null, response: " + response.toString());
                         }
                     }
                 });
