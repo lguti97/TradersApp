@@ -187,8 +187,10 @@ public class AddItemActivity extends AppCompatActivity {
         spStatus.setSelection(statusIndx);
         if (item.getNegotiable().equalsIgnoreCase("Yes")) {
             rbYes.setChecked(true);
+            negotiable = "Yes";
         } else if (item.getNegotiable().equalsIgnoreCase("No")) {
             rbNo.setChecked(true);
+            negotiable = "No";
         }
 
 
@@ -221,9 +223,10 @@ public class AddItemActivity extends AppCompatActivity {
                     }
                 });
             }
-
-
         }
+        //At last delete the item in the data -> notify adapter.
+        item.deleteInBackground();
+        adapter.notifyDataSetChanged();
 
     }
 
@@ -313,10 +316,16 @@ public class AddItemActivity extends AppCompatActivity {
 
 
     public void onAddItemClick(View view) {
-
+        //This is for the editing part.
         if(getIntent().getStringExtra("item_id") != null) {
-            image_1 = item.getImage1();
-            image_2 = item.getImage2();
+            image_1 = "";
+            image_2 = "";
+
+            //Have to retrieve file 1 and file 2 from the parseServer.
+            file1 = (ParseFile) item.get("item_photo1");
+            file2 = (ParseFile) item.get("item_photo2");
+
+
         }
 
         Double price;
@@ -332,7 +341,7 @@ public class AddItemActivity extends AppCompatActivity {
             return;
         }
 
-        if (image_1 == null && image_2 == null) {
+        if (file1 == null && file2 == null) {
             Toast.makeText(this, "Please add two images of this item", Toast.LENGTH_SHORT).show();
             return;
         }

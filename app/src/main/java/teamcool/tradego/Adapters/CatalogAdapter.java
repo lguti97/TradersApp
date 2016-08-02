@@ -105,6 +105,7 @@ public class CatalogAdapter extends RecyclerView.Adapter<CatalogAdapter.ViewHold
         holder.rlItemEach.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                CatalogAdapter adapter;
 
                 Intent i = new Intent(context, DetailsActivity.class);
                 i.putExtra("item_id", item.getObjectId());

@@ -339,8 +339,7 @@ public class ParseClient {
         point.put("status",newItem.getStatus());
         point.put("negotiable",newItem.getNegotiable());
         point.put("description",newItem.getDescription());
-        point.put("image_1",newItem.getImage1());
-        point.put("image_2",newItem.getImage2());
+
         if (newItem.getStatus().equalsIgnoreCase("sold"))
             point.put("transaction_time", DateFormat.format("dd-MM-yyyy hh:mm:ss", new java.util.Date()).toString());
         point.saveInBackground();

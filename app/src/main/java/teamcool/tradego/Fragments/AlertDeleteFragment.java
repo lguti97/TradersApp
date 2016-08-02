@@ -4,14 +4,20 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
+import android.widget.ArrayAdapter;
 
+import teamcool.tradego.Activities.AddItemActivity;
+import teamcool.tradego.Adapters.CatalogAdapter;
 import teamcool.tradego.Clients.ParseClient;
 import teamcool.tradego.R;
 
 public class AlertDeleteFragment extends DialogFragment {
+
+    public CatalogAdapter adapter;
 
     public AlertDeleteFragment() {
 
@@ -40,8 +46,12 @@ public class AlertDeleteFragment extends DialogFragment {
             public void onClick(DialogInterface dialogInterface, int i) {
                 if (getArguments().getBoolean("isItem")) {
                     parseClient.deleteItem(getArguments().getString("id"));
+                    Intent x = new Intent (getContext(), AddItemActivity.class);
+                    startActivity(x);
+
                 } else {
                     parseClient.deleteFriend(getArguments().getString("id"));
+
                 }
                 getActivity().finish();
             }
