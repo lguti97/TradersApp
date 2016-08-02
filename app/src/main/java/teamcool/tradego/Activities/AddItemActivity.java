@@ -582,9 +582,7 @@ public class AddItemActivity extends AppCompatActivity {
 
         if(orientation == ExifInterface.ORIENTATION_ROTATE_90) {
             takenImage = Bitmap.createScaledBitmap(rotatedBitmap, 250, 300, true);
-        }
-
-        else {
+        } else {
             takenImage = Bitmap.createScaledBitmap(rotatedBitmap, 320, 250, true);
         }
         return takenImage;
