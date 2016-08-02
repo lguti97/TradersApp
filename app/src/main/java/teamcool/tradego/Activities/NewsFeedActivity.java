@@ -65,7 +65,7 @@ public class NewsFeedActivity extends AppCompatActivity {
         final String tab1Names[] = {"Available", "Onhold", "Sold"};
         final String tab2Names[] = {"Friends"};
         //final String tab3Names[] = {"Sold", "Bought", "Onhold"};
-        final String tab3Names[] = {"Graph"};
+        final String tab3Names[] = {"Transaction History"};
         final String tab4Names[] = {"Wishlist"};
 
         @Override
