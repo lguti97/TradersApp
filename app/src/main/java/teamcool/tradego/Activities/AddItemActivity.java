@@ -6,7 +6,9 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.Matrix;
 import android.graphics.drawable.ColorDrawable;
+import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -40,7 +42,6 @@ import java.io.IOException;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import teamcool.tradego.Clients.ParseClient;
-import teamcool.tradego.Fragments.AlertBuyerInfoFragment;
 import teamcool.tradego.Models.Item;
 import teamcool.tradego.R;
 
@@ -443,9 +444,9 @@ public class AddItemActivity extends AppCompatActivity {
                 //So this is the URI that is retrieved when photo is taken.
                 Uri takenPhotoUri = getPhotoFileUri(photoFileName);
                 // by this point we have the camera photo on disk
-                Bitmap takenImage_unscaled = BitmapFactory.decodeFile(takenPhotoUri.getPath());
-
-                Bitmap takenImage = Bitmap.createScaledBitmap(takenImage_unscaled, 300, 275, true);
+                Bitmap takenImage = rotateBitmapOrientation(takenPhotoUri.getPath());
+                //Bitmap takenImage_unscaled = BitmapFactory.decodeFile(takenPhotoUri.getPath());
+                //Bitmap takenImage = Bitmap.createScaledBitmap(takenImage_unscaled, 300, 300, true);
                 // Load the taken image into a preview
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
                 takenImage.compress(Bitmap.CompressFormat.PNG, 100, stream);
@@ -548,6 +549,45 @@ public class AddItemActivity extends AppCompatActivity {
             // Bring up gallery to select a photo
             startActivityForResult(intent, PICK_PHOTO_CODE);
         }
+    }
+
+
+    public Bitmap rotateBitmapOrientation(String photoFilePath) {
+        // Create and configure BitmapFactory
+        BitmapFactory.Options bounds = new BitmapFactory.Options();
+        bounds.inJustDecodeBounds = true;
+        BitmapFactory.decodeFile(photoFilePath, bounds);
+        BitmapFactory.Options opts = new BitmapFactory.Options();
+        Bitmap bm = BitmapFactory.decodeFile(photoFilePath, opts);
+        // Read EXIF Data
+        ExifInterface exif = null;
+        try {
+            exif = new ExifInterface(photoFilePath);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        String orientString = exif.getAttribute(ExifInterface.TAG_ORIENTATION);
+        int orientation = orientString != null ? Integer.parseInt(orientString) : ExifInterface.ORIENTATION_NORMAL;
+        int rotationAngle = 0;
+        if (orientation == ExifInterface.ORIENTATION_ROTATE_90) rotationAngle = 90;
+        if (orientation == ExifInterface.ORIENTATION_ROTATE_180) rotationAngle = 180;
+        if (orientation == ExifInterface.ORIENTATION_ROTATE_270) rotationAngle = 270;
+        // Rotate Bitmap
+        Matrix matrix = new Matrix();
+        matrix.setRotate(rotationAngle, (float) bm.getWidth() / 2, (float) bm.getHeight() / 2);
+        Bitmap rotatedBitmap = Bitmap.createBitmap(bm, 0, 0, bounds.outWidth, bounds.outHeight, matrix, true);
+        // Return result
+
+        Bitmap takenImage;
+
+        if(orientation == ExifInterface.ORIENTATION_ROTATE_90) {
+            takenImage = Bitmap.createScaledBitmap(rotatedBitmap, 250, 300, true);
+        }
+
+        else {
+            takenImage = Bitmap.createScaledBitmap(rotatedBitmap, 320, 250, true);
+        }
+        return takenImage;
     }
 
 

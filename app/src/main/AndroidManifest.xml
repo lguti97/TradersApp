@@ -49,13 +49,13 @@
                     android:scheme="oauth" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activities.DetailsActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".Activities.DetailsActivity" android:screenOrientation="portrait" />
         <activity android:name=".Activities.AddItemActivity" android:screenOrientation="portrait" />
         <activity android:name=".Activities.MainActivity" />
         <activity android:name=".Activities.FriendImportActivity"
             android:configChanges="orientation|screenSize"/>
         <activity android:name=".Activities.ProfileActivity"
-            android:configChanges="orientation|screenSize"/>
+            />
         <activity android:name=".Activities.FriendListActivity"
             android:configChanges="orientation|screenSize"/>
         <activity android:name=".Activities.SearchActivity"
