@@ -57,9 +57,9 @@ public class TransactionFragment extends Fragment {
         BarGraphSeries<DataPoint> series = new BarGraphSeries<DataPoint>(new DataPoint[] {
 
                 new DataPoint(0,0),
-                new DataPoint(1, 5),
-                new DataPoint(2, 6),
-                new DataPoint(3, 10),
+                new DataPoint(1, sold),
+                new DataPoint(2, on_hold),
+                new DataPoint(3, not_sold),
                 new DataPoint(4, 0),
                 //new DataPoint(4, 0),
 
