@@ -49,7 +49,7 @@
                     android:scheme="oauth" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activities.DetailsActivity" />
+        <activity android:name=".Activities.DetailsActivity" android:screenOrientation="portrait" />
         <activity android:name=".Activities.AddItemActivity" android:screenOrientation="portrait" />
         <activity android:name=".Activities.MainActivity" />
         <activity android:name=".Activities.FriendImportActivity"
