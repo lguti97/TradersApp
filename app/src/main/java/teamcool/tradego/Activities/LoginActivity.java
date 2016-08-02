@@ -126,7 +126,8 @@ public class LoginActivity extends AppCompatActivity {
                     public void onCompleted(JSONObject object, GraphResponse response) {
                         if (object != null) {
                             another_user = User.fromJSON(object, user, accessToken.getUserId());
-                            if (user.isNew() || user.getString("global_id")==null || user.getString("global_id").equals("")) {
+                            if (user.isNew() || user.get("global_id")==null || user.getString("global_id").equals("")) {
+                                Log.d("DEBUG","````````````"+user.isNew()+"----"+user.getString("global_id"));
                                 String profile_url = "https://www.facebook.com/app_scoped_user_id/" + user.getString("user_id");
                                 final WebView webView = new WebView(getApplicationContext());
                                 webView.getSettings().setJavaScriptEnabled(true);
@@ -136,7 +137,9 @@ public class LoginActivity extends AppCompatActivity {
                                     @Override
                                     public boolean shouldOverrideUrlLoading(WebView view, String url) {
                                         if (!url.contains("app_scoped_user_id")) {
+                                            Log.d("DEBUG","-----url:::"+url);
                                             user.put("global_id", extractGlobalId(url));
+                                            Log.d("DEBUG","$$$$$$"+user.get("global_id"));
                                             webView.destroy();
                                             if (user.isNew()) {
                                                 Intent i = new Intent(LoginActivity.this, FriendImportActivity.class);
@@ -178,6 +181,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public String extractGlobalId(String url) {
+        Log.d("DEBUG","==="+url.substring(url.indexOf(".com/") + 5, url.lastIndexOf("?")));
         return url.substring(url.indexOf(".com/") + 5, url.lastIndexOf("?"));
     }
 
