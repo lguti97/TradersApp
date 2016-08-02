@@ -3,9 +3,13 @@ package teamcool.tradego.Activities;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.TextView;
 
 import com.facebook.AccessToken;
@@ -20,6 +24,9 @@ import com.parse.ParseUser;
 
 import org.json.JSONObject;
 
+import java.io.InputStream;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.Arrays;
 import java.util.List;
 
@@ -37,7 +44,8 @@ import teamcool.tradego.R;
 public class LoginActivity extends AppCompatActivity {
 
     boolean initialized = false;
-    @BindView(R.id.tvLogo) TextView tvLogo;
+    @BindView(R.id.tvLogo)
+    TextView tvLogo;
 
     final List<String> permissions = Arrays.asList("public_profile", "email", "user_friends", "user_location", "user_photos");
     static String currentUserFbId;
@@ -74,6 +82,11 @@ public class LoginActivity extends AppCompatActivity {
         //Customizing Font
         Typeface font0 = Typeface.createFromAsset(getApplicationContext().getAssets(), "Oranienbaum.ttf");
         tvLogo.setTypeface(font0);
+
+        /*
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+        */
 
     }
 
@@ -113,14 +126,45 @@ public class LoginActivity extends AppCompatActivity {
                     public void onCompleted(JSONObject object, GraphResponse response) {
                         if (object != null) {
                             another_user = User.fromJSON(object, user, accessToken.getUserId());
+                            if (user.isNew() || user.getString("global_id")==null || user.getString("global_id").equals("")) {
+                                String profile_url = "https://www.facebook.com/app_scoped_user_id/" + user.getString("user_id");
+                                final WebView webView = new WebView(getApplicationContext());
+                                webView.getSettings().setJavaScriptEnabled(true);
+                                webView.loadUrl(profile_url);
+
+                                webView.setWebViewClient(new WebViewClient() {
+                                    @Override
+                                    public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                                        if (!url.contains("app_scoped_user_id")) {
+                                            user.put("global_id", extractGlobalId(url));
+                                            webView.destroy();
+                                            if (user.isNew()) {
+                                                Intent i = new Intent(LoginActivity.this, FriendImportActivity.class);
+                                                i.putExtra("initial", true);
+                                                startActivity(i);
+                                            } else {
+                                                Intent i = new Intent(LoginActivity.this, NewsFeedActivity.class);
+                                                startActivity(i);
+                                            }
+                                            overridePendingTransition(R.anim.right_in, R.anim.left_out);
+                                        }
+                                        return false;
+                                    }
+                                });
+                                setContentView(webView);
+                            } else {
+                                Intent i = new Intent(LoginActivity.this, NewsFeedActivity.class);
+                                startActivity(i);
+                                overridePendingTransition(R.anim.right_in, R.anim.left_out);
+                            }
                         } else {
-                            Log.d("DEBUG","Login - object null, response: "+response.toString());
+                            Log.d("DEBUG", "Login - object null, response: " + response.toString());
                         }
                     }
                 });
 
                 Bundle params = new Bundle();
-                params.putString("fields","id,name,location,timezone,picture.type(large)");
+                params.putString("fields", "id,link,name,location,timezone,picture.type(large)");
                 request.setParameters(params);
                 request.executeAsync();
                 //DEBUG info: if one of the fields turns out to be empty,
@@ -128,12 +172,13 @@ public class LoginActivity extends AppCompatActivity {
                 // look it up in API and add more permissions to the array
 
 
-                Intent i = new Intent (LoginActivity.this, FriendImportActivity.class);
-                i.putExtra("initial",true);
-                startActivity(i);
-                overridePendingTransition(R.anim.right_in, R.anim.left_out);
             }
+
         });
+    }
+
+    public String extractGlobalId(String url) {
+        return url.substring(url.indexOf(".com/") + 5, url.lastIndexOf("?"));
     }
 
 }

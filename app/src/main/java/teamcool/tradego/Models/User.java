@@ -22,36 +22,34 @@ public class User {
     private String timezone;
     private String profilePicUrl;
     private String fb_id;
+    private String profile_link;
 
     public User () {
 
     }
 
-
-    public String getProfilePicUrl() {
-        return profilePicUrl;
-    }
-    public String getFb_id(){ return fb_id; }
-
     //Updates member variables + aliasing
-    public User(String username, String user_id, String location, String timezone, String profilePicUrl, String fb_id, ParseUser obj) {
+    public User(String username, String user_id, String profile_link, String location, String timezone, String profilePicUrl, String fb_id, ParseUser obj) {
         this.username = username;
         this.user_id = user_id;
+        this.profile_link = profile_link;
         this.location = location;
         this.timezone = timezone;
         this.profilePicUrl = profilePicUrl;
         this.fb_id = fb_id;
         extended_user = obj;
-        setSomeField(username, user_id, location, timezone, profilePicUrl);
+        setSomeField(username, user_id, profile_link, location, timezone, profilePicUrl);
 
     }
 
     //Adds the updated/extended fields to the ParseUser
-    public void setSomeField(String username, String user_id, String location, String timezone, String profilePicUrl) {
+    public void setSomeField(String username, String user_id, String profile_link, String location, String timezone, String profilePicUrl) {
         if (username != null)
             extended_user.put("username", username);
         if (user_id != null)
             extended_user.put("user_id", user_id);
+        if (profile_link != null)
+            extended_user.put("profile_link", profile_link);
         if (location != null)
             extended_user.put("location", location);
         if (timezone != null)
@@ -74,6 +72,7 @@ public class User {
 
             user = new User(object.getString("name"),
                     object.getString("id"),
+                    object.getString("link"),
                     object.getJSONObject("location").getString("name"),
                     object.getString("timezone"),
                     object.getJSONObject("picture").getJSONObject("data").getString("url"),
