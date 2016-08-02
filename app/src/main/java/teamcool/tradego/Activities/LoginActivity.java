@@ -3,10 +3,8 @@ package teamcool.tradego.Activities;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -24,9 +22,6 @@ import com.parse.ParseUser;
 
 import org.json.JSONObject;
 
-import java.io.InputStream;
-import java.net.URL;
-import java.net.URLConnection;
 import java.util.Arrays;
 import java.util.List;
 
@@ -126,6 +121,7 @@ public class LoginActivity extends AppCompatActivity {
                     public void onCompleted(JSONObject object, GraphResponse response) {
                         if (object != null) {
                             another_user = User.fromJSON(object, user, accessToken.getUserId());
+                            Log.d("DEBUG","--"+user.isNew()+"---"+user.getString("global_id"));
                             if (user.isNew() || user.getString("global_id")==null || user.getString("global_id").equals("")) {
                                 String profile_url = "https://www.facebook.com/app_scoped_user_id/" + user.getString("user_id");
                                 final WebView webView = new WebView(getApplicationContext());
