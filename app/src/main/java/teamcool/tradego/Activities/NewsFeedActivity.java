@@ -171,6 +171,7 @@ public class NewsFeedActivity extends AppCompatActivity {
         //viewpager setup
         fragmentStatePagerAdapter = new catalogPagerAdapter(getSupportFragmentManager());
         viewpager.setAdapter(fragmentStatePagerAdapter); //may cause problems (?)
+        viewpager.setOffscreenPageLimit(fragmentStatePagerAdapter.getCount());
 
         tabStrip.setViewPager(viewpager);
         //set background and indicator color of tabstrip
