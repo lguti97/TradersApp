@@ -444,11 +444,9 @@ public class AddItemActivity extends AppCompatActivity {
                 //So this is the URI that is retrieved when photo is taken.
                 Uri takenPhotoUri = getPhotoFileUri(photoFileName);
                 // by this point we have the camera photo on disk
-                Bitmap takenImage_unscaled = rotateBitmapOrientation(takenPhotoUri.getPath());
+                Bitmap takenImage = rotateBitmapOrientation(takenPhotoUri.getPath());
                 //Bitmap takenImage_unscaled = BitmapFactory.decodeFile(takenPhotoUri.getPath());
-
-
-                Bitmap takenImage = Bitmap.createScaledBitmap(takenImage_unscaled, 300, 300, true);
+                //Bitmap takenImage = Bitmap.createScaledBitmap(takenImage_unscaled, 300, 300, true);
                 // Load the taken image into a preview
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
                 takenImage.compress(Bitmap.CompressFormat.PNG, 100, stream);
@@ -579,7 +577,17 @@ public class AddItemActivity extends AppCompatActivity {
         matrix.setRotate(rotationAngle, (float) bm.getWidth() / 2, (float) bm.getHeight() / 2);
         Bitmap rotatedBitmap = Bitmap.createBitmap(bm, 0, 0, bounds.outWidth, bounds.outHeight, matrix, true);
         // Return result
-        return rotatedBitmap;
+
+        Bitmap takenImage;
+
+        if(orientation == ExifInterface.ORIENTATION_ROTATE_90) {
+            takenImage = Bitmap.createScaledBitmap(rotatedBitmap, 250, 300, true);
+        }
+
+        else {
+            takenImage = Bitmap.createScaledBitmap(rotatedBitmap, 320, 250, true);
+        }
+        return takenImage;
     }
 
 
