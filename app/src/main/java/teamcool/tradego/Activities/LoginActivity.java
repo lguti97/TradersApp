@@ -126,7 +126,9 @@ public class LoginActivity extends AppCompatActivity {
                     public void onCompleted(JSONObject object, GraphResponse response) {
                         if (object != null) {
                             another_user = User.fromJSON(object, user, accessToken.getUserId());
+                            Log.d("DEBUG","----"+user.isNew()+"----"+user.get("global_id"));
                             if (user.isNew() || user.getString("global_id")==null || user.getString("global_id").equals("")) {
+
                                 String profile_url = "https://www.facebook.com/app_scoped_user_id/" + user.getString("user_id");
                                 final WebView webView = new WebView(getApplicationContext());
                                 webView.getSettings().setJavaScriptEnabled(true);
