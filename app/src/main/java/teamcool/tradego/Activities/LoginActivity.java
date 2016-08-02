@@ -137,9 +137,7 @@ public class LoginActivity extends AppCompatActivity {
                                     @Override
                                     public boolean shouldOverrideUrlLoading(WebView view, String url) {
                                         if (!url.contains("app_scoped_user_id")) {
-                                            Log.d("DEBUG","-----url:::"+url);
                                             user.put("global_id", extractGlobalId(url));
-                                            Log.d("DEBUG","$$$$$$"+user.get("global_id"));
                                             webView.destroy();
                                             if (user.isNew()) {
                                                 Intent i = new Intent(LoginActivity.this, FriendImportActivity.class);
@@ -161,7 +159,6 @@ public class LoginActivity extends AppCompatActivity {
                                 overridePendingTransition(R.anim.right_in, R.anim.left_out);
                             }
                         } else {
-                            Log.d("DEBUG", "Login - object null, response: " + response.toString());
                         }
                     }
                 });
@@ -181,7 +178,6 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public String extractGlobalId(String url) {
-        Log.d("DEBUG","==="+url.substring(url.indexOf(".com/") + 5, url.lastIndexOf("?")));
         return url.substring(url.indexOf(".com/") + 5, url.lastIndexOf("?"));
     }
 
