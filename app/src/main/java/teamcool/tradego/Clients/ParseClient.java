@@ -330,6 +330,7 @@ public class ParseClient {
     }
 
 
+
     public void updateItem(String objectId, Item newItem) {
         ParseObject point = ParseObject.createWithoutData(Item.class,objectId);
         point.put("item_name",newItem.getItem_name());

@@ -168,45 +168,84 @@ public class DetailsActivity extends AppCompatActivity {
 
     public void populateSlider() {
         for (int i = 1; i < 3; i++) {
+            if (i == 1) {
+                final URISliderView uriSliderView = new URISliderView(this);
+                //final TextSliderView textSliderView = new TextSliderView(this);
+                // initialize a SliderLayout.
+                //String image = item.getImage1();
+                //Attempt to retrieve image from ParseFile
+                ParseFile something = (ParseFile) item.get("item_photo1");
+                something.getDataInBackground(new GetDataCallback() {
+                    @Override
+                    public void done(byte[] data, ParseException e) {
+                        if (e == null) {
+                            Bitmap bmp = BitmapFactory
+                                    .decodeByteArray(data, 0, data.length);
+                            String URI = BitMapToString(bmp);
 
-            final URISliderView uriSliderView = new URISliderView(this);
-            //final TextSliderView textSliderView = new TextSliderView(this);
-            // initialize a SliderLayout.
-            //String image = item.getImage1();
-            //Attempt to retrieve image from ParseFile
-            ParseFile something = (ParseFile) item.get("item_photo1");
-            something.getDataInBackground(new GetDataCallback() {
-                @Override
-                public void done(byte[] data, ParseException e) {
-                    if (e == null) {
-                        Bitmap bmp = BitmapFactory
-                                .decodeByteArray(data, 0, data.length);
-                        String URI = BitMapToString(bmp);
 
+                            uriSliderView
+                                    .description("Item1")
+                                    .image(URI)
+                                    .setScaleType(BaseSliderView.ScaleType.Fit)
+                                    .setOnSliderClickListener(new BaseSliderView.OnSliderClickListener() {
+                                        @Override
+                                        public void onSliderClick(BaseSliderView slider) {
+                                            //
+                                        }
+                                    });
 
+                            //add your extra information
+                            uriSliderView.bundle(new Bundle());
+                            uriSliderView.getBundle()
+                                    .putString("extra", "Item");
 
-                        uriSliderView
-                                .description("Item")
-                                .image(URI)
-                                .setScaleType(BaseSliderView.ScaleType.Fit)
-                                .setOnSliderClickListener(new BaseSliderView.OnSliderClickListener() {
-                                    @Override
-                                    public void onSliderClick(BaseSliderView slider) {
-                                        //
-                                    }
-                                });
-
-                        //add your extra information
-                        uriSliderView.bundle(new Bundle());
-                        uriSliderView.getBundle()
-                                .putString("extra", "Item");
-
-                        mSlider.addSlider(uriSliderView);
+                            mSlider.addSlider(uriSliderView);
+                        } else {
+                            //Do nothing
+                        }
                     }
-                    else {
+                });
+            }
+            else if (i == 2){
+                final URISliderView uriSliderView = new URISliderView(this);
+                //final TextSliderView textSliderView = new TextSliderView(this);
+                // initialize a SliderLayout.
+                //String image = item.getImage1();
+                //Attempt to retrieve image from ParseFile
+                ParseFile something = (ParseFile) item.get("item_photo2");
+                something.getDataInBackground(new GetDataCallback() {
+                    @Override
+                    public void done(byte[] data, ParseException e) {
+                        if (e == null) {
+                            Bitmap bmp = BitmapFactory
+                                    .decodeByteArray(data, 0, data.length);
+                            String URI = BitMapToString(bmp);
+
+
+                            uriSliderView
+                                    .description("Item2")
+                                    .image(URI)
+                                    .setScaleType(BaseSliderView.ScaleType.Fit)
+                                    .setOnSliderClickListener(new BaseSliderView.OnSliderClickListener() {
+                                        @Override
+                                        public void onSliderClick(BaseSliderView slider) {
+                                            //
+                                        }
+                                    });
+
+                            //add your extra information
+                            uriSliderView.bundle(new Bundle());
+                            uriSliderView.getBundle()
+                                    .putString("extra", "Item");
+
+                            mSlider.addSlider(uriSliderView);
+                        } else {
+                            //Do nothing
+                        }
                     }
-                }
-            });
+                });
+            }
 
         }
     }
@@ -218,4 +257,5 @@ public class DetailsActivity extends AppCompatActivity {
         String temp=Base64.encodeToString(b, Base64.DEFAULT);
         return temp;
     }
+
 }

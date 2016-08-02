@@ -129,27 +129,27 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
         } else {
             SellerViewHolder holder1 = (SellerViewHolder) holder;
             parseClient = new ParseClient();
+            user = parseClient.queryUserBasedonFBid(item.getString("fbID"));
             //TODO. Get picURl from the user.
-            /*
+
             holder1.ivProfileImage.setImageResource(0);
             Log.d("DEBUG", user.getString("profilePicUrl"));
             Glide.with(context)
                     .load(user.getString("profilePicUrl"))
                     .bitmapTransform(new CropCircleTransformation(context))
                     .into(holder1.ivProfileImage);
-            holder1.tvName.setText(user.getString("username")); */
+            holder1.tvName.setText(user.getString("username"));
 
             //Hardcoded messaging but all we need to is gather userName of person we want to message.
-            /*
             holder1.btnMessenger.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Uri messenger = Uri.parse((new StringBuilder("http://m.me/")).append(Uri.encode("kinjal.shah.7505")).toString());
+                    Uri messenger = Uri.parse((new StringBuilder("http://m.me/")).append(Uri.encode("100005948748513")).toString());
                     Intent i = new Intent(Intent.ACTION_VIEW, messenger);
-                    startActivity(i);
+                    view.getContext().startActivity(i);
 
                 }
-            }); */
+            });
         }
     }
 
