@@ -496,6 +496,10 @@ public class AddItemActivity extends AppCompatActivity {
                 Bitmap selectedImage = null;
                 try {
                     selectedImage = MediaStore.Images.Media.getBitmap(this.getContentResolver(), photoUri);
+                    ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                    selectedImage.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                    dataImage = stream.toByteArray();
+
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
