@@ -31,53 +31,6 @@ public class SearchItemsFragment extends CatalogListFragment {
     @BindView(R.id.swipeContainerCatalog) SwipeRefreshLayout swipeContainer;
     @BindView(R.id.ivNoItems) ImageView ivNoItems;
 
-    private class AsyncDataLoading extends AsyncTask<Void,Void,List<Item>> {
-
-        ProgressDialog progressDialog;
-
-        @Override
-        protected void onPreExecute() {
-            if (!isRefresh) {
-                progressDialog = new ProgressDialog(getActivity());
-                progressDialog.setTitle("Loading");
-                progressDialog.setMessage("Please wait...");
-                progressDialog.setCancelable(false);
-                progressDialog.setIndeterminate(true);
-                progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-                progressDialog.show();
-            }
-            super.onPreExecute();
-        }
-
-        @Override
-        protected List<Item> doInBackground(Void... voids) {
-            ParseClient parseClient = new ParseClient();
-            String query = getArguments().getString("query");
-            if(getArguments().getBoolean("hasFilter")) {
-                String category = getArguments().getString("category");
-                String sort = getArguments().getString("sort");
-                items = parseClient.queryItemsOnFilteredQuery(query,category,sort,null);
-            } else {
-                items = parseClient.queryItemsOnName(query, false);
-            }
-            return items;
-        }
-
-        @Override
-        protected void onPostExecute(List<Item> items) {
-            addAll(items);
-            swipeContainer.setRefreshing(false);
-            isRefresh = false;
-            if (progressDialog != null) {
-                progressDialog.dismiss();
-            }
-            if (items.size() == 0) {
-                Glide.with(getContext()).load(R.drawable.placeholder_transparent).into(ivNoItems);
-            }
-            super.onPostExecute(items);
-        }
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -123,8 +76,16 @@ public class SearchItemsFragment extends CatalogListFragment {
     }
 
     private void populate() {
-        Log.d("DEBUG","-----------");
-        new AsyncDataLoading().execute();
+        ParseClient parseClient = new ParseClient();
+        String query = getArguments().getString("query");
+        if(getArguments().getBoolean("hasFilter")) {
+            String category = getArguments().getString("category");
+            String sort = getArguments().getString("sort");
+            items = parseClient.queryItemsOnFilteredQuery(query,category,sort,null);
+        } else {
+            items = parseClient.queryItemsOnName(query, false);
+        }
+        addAll(items);
     }
 
 }

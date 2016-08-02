@@ -22,7 +22,6 @@
             android:id="@+id/ivNewsFeedDisplayImg"
             android:scaleType="fitStart"
             android:adjustViewBounds="true"
-            android:src="@mipmap/ic_launcher"
             android:layout_alignParentTop="true"
             android:layout_marginTop="5dp"
             android:paddingLeft="5dp"
