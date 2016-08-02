@@ -443,7 +443,7 @@ public class AddItemActivity extends AppCompatActivity {
                 // by this point we have the camera photo on disk
                 Bitmap takenImage_unscaled = BitmapFactory.decodeFile(takenPhotoUri.getPath());
 
-                Bitmap takenImage = Bitmap.createScaledBitmap(takenImage_unscaled, 250, 250, true);
+                Bitmap takenImage = Bitmap.createScaledBitmap(takenImage_unscaled, 300, 275, true);
                 // Load the taken image into a preview
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
                 takenImage.compress(Bitmap.CompressFormat.PNG, 100, stream);

@@ -103,7 +103,6 @@ public class CategoriesTimelineFragment extends CatalogListFragment {
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        if (savedInstanceState == null) {
             isViewCreated = true;
             if (isSeen && !isLoaded)
                 populate(getArguments().getString("category"));
@@ -119,9 +118,7 @@ public class CategoriesTimelineFragment extends CatalogListFragment {
                     android.R.color.holo_green_light,
                     android.R.color.holo_orange_light,
                     android.R.color.holo_red_light);
-        } else {
-            addAll(items);
-        }
+
         super.onViewCreated(view, savedInstanceState);
     }
 

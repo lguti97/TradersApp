@@ -6,13 +6,11 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.WindowManager;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import butterknife.ButterKnife;
@@ -45,7 +43,6 @@ public class SearchActivity extends AppCompatActivity implements FilterDialogFra
         if (savedInstanceState == null) {
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             if (selector != R.id.nav_friends_fragment) {
-                Log.d("DEBUG","reached at searchactivity");
                 ft.replace(R.id.flContainerSearch, SearchItemsFragment.newInstance(query,null));
             } else {
                 ft.replace(R.id.flContainerSearch, FriendsListFragment.newInstance(query,null));
