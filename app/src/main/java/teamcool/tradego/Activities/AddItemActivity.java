@@ -324,7 +324,7 @@ public class AddItemActivity extends AppCompatActivity {
 
         }
 
-        Double price;
+        Double price; 
 
         try {
             price = Double.parseDouble(etPrice.getText().toString());
