@@ -59,8 +59,8 @@ public class TransactionFragment extends Fragment {
                 new DataPoint(0, sold),
                 new DataPoint(1, on_hold),
                 new DataPoint(2, not_sold),
-                new DataPoint(3, 4),
-                //new DataPoint(4, 5)
+                //new DataPoint(3, 4),
+                //new DataPoint(4, 0),
 
                });
         graph.addSeries(series);
@@ -73,7 +73,7 @@ public class TransactionFragment extends Fragment {
         series.setValuesOnTopColor(Color.RED);
 
         StaticLabelsFormatter staticLabelsFormatter = new StaticLabelsFormatter(graph);
-        staticLabelsFormatter.setHorizontalLabels(new String[] {"Sold", "On hold", "Not Sold", "Bought"});
+        staticLabelsFormatter.setHorizontalLabels(new String[] {"Sold", "On hold", "Not Sold"});
         graph.getGridLabelRenderer().setLabelFormatter(staticLabelsFormatter);
 
     }

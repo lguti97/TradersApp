@@ -413,13 +413,13 @@ public class AddItemActivity extends AppCompatActivity {
 
 
 
-    public static String encodeToBase64(Bitmap image, Bitmap.CompressFormat compressFormat, int quality)
+    /*public static String encodeToBase64(Bitmap image, Bitmap.CompressFormat compressFormat, int quality)
     {
         ByteArrayOutputStream byteArrayOS = new ByteArrayOutputStream();
         image.compress(compressFormat, quality, byteArrayOS);
         return Base64.encodeToString(byteArrayOS.toByteArray(), Base64.DEFAULT);
     }
-
+*/
     public static Bitmap decodeBase64(String input)
     {
         byte[] decodedBytes = Base64.decode(input, 0);
@@ -501,13 +501,13 @@ public class AddItemActivity extends AppCompatActivity {
                     file1 = new ParseFile("item_photo1", dataImage);
                     file1.saveInBackground();
                     ivItem1.setImageBitmap(takenImage);
-                    image_1 = encodeToBase64(takenImage, Bitmap.CompressFormat.JPEG, 100);
+                    //image_1 = encodeToBase64(takenImage, Bitmap.CompressFormat.JPEG, 100);
                 }
                 else if(index ==2) {
                     file2 = new ParseFile("item_photo2", dataImage);
                     file2.saveInBackground();
                     ivItem2.setImageBitmap(takenImage);
-                    image_2 = encodeToBase64(takenImage, Bitmap.CompressFormat.JPEG, 100);
+                    //image_2 = encodeToBase64(takenImage, Bitmap.CompressFormat.JPEG, 100);
                 }
 
             } else { // Result was a failure
@@ -533,14 +533,14 @@ public class AddItemActivity extends AppCompatActivity {
                     file1.saveInBackground();
 
                     ivItem1.setImageBitmap(selectedImage);
-                    image_1 = encodeToBase64(selectedImage, Bitmap.CompressFormat.JPEG, 100);
+                    //image_1 = encodeToBase64(selectedImage, Bitmap.CompressFormat.JPEG, 100);
                 }
                 else if(index ==2) {
                     file2 = new ParseFile("item_photo2", dataImage);
                     file2.saveInBackground();
 
                     ivItem2.setImageBitmap(selectedImage);
-                    image_2 = encodeToBase64(selectedImage, Bitmap.CompressFormat.JPEG, 100);
+                    //image_2 = encodeToBase64(selectedImage, Bitmap.CompressFormat.JPEG, 100);
                 }
 
             }
