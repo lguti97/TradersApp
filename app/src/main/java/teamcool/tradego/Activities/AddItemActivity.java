@@ -320,8 +320,6 @@ public class AddItemActivity extends AppCompatActivity {
             //Have to retrieve file 1 and file 2 from the parseServer.
             file1 = (ParseFile) item.get("item_photo1");
             file2 = (ParseFile) item.get("item_photo2");
-
-
         }
 
         Double price; 
