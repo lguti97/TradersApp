@@ -2,6 +2,7 @@
 <resources>
     <string-array name="categories">
         <item>Sports</item>
+        <item> Electronics </item>
         <item>Clothes</item>
         <item>Accessories</item>
         <item>Stationary</item>

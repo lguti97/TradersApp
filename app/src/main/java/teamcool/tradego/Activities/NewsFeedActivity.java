@@ -61,7 +61,7 @@ public class NewsFeedActivity extends AppCompatActivity {
 
         public catalogPagerAdapter(FragmentManager fragmentManager) { super(fragmentManager); }
 
-        final String tab0Names[] = {"All", "Sports", "Clothes", "Accessories", "Stationary", "Other"};
+        final String tab0Names[] = {"All", "Sports", "Clothes", "Accessories", "Stationary", "Electronics", "Other"};
         final String tab1Names[] = {"Available", "Onhold", "Sold"};
         final String tab2Names[] = {"Friends"};
         //final String tab3Names[] = {"Sold", "Bought", "Onhold"};
